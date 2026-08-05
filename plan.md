@@ -168,13 +168,13 @@ Reach the target architecture above **without changing user-visible behavior**. 
 
 1. ✅ **List state** — Zustand store with `persist` middleware (localStorage) — no Context boilerplate, minimal re-renders.
 2. ✅ **List UI** — `src/features/lists/` — pages/components to create/edit/delete lists; "Add to list" buttons on `PaintCard`.
-3. **Markdown export** — `src/features/export/` — generate `## Paint List: [name]\n- [Brand] Paint Name — [link](vliegeruit.com/...)`.
+3. ✅ **Markdown export** — `src/features/export/` — generate `## Paint List: [name]\n- [Brand] Paint Name — [link](vliegeruit.com/...)`.
 4. **Shop link integration** — Map paint names to vliegeruit.com product links (data source TBD — scrape or hand-maintain).
-5. 🟡 **Tests** — List CRUD and store behavior tests implemented; export format tests pending.
+5. ✅ **Tests** — List CRUD and store behavior tests implemented, including export format tests.
 
 **Verification**
 - [x] Create/delete/edit lists
-- [ ] Markdown export includes paint names + shop links
+- [x] Markdown export includes paint names + shop links
 - [x] Lists persist across browser sessions
 
 ---

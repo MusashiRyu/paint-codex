@@ -1,0 +1,60 @@
+import { describe, expect, it } from 'vitest';
+import type { PaintList } from '../app/providers/store';
+import {
+  buildVliegeruitLink,
+  generatePaintListMarkdown,
+  getExportFilename,
+} from '../features/export/markdownExport';
+
+const sampleList: PaintList = {
+  id: 'list-1',
+  name: 'Starter Reds',
+  paints: [
+    {
+      id: 'citadel-mephiston-red',
+      brand: 'Citadel',
+      name: 'Mephiston Red',
+      hex: '#9b0e05',
+      category: 'Base Layer',
+      matches: [],
+    },
+    {
+      id: 'vallejo-gory-red',
+      brand: 'Vallejo',
+      name: 'Gory Red',
+      hex: '#810504',
+      category: 'Game',
+      matches: [],
+    },
+  ],
+};
+
+describe('markdownExport', () => {
+  it('builds vliegeruit search links with encoded query', () => {
+    const link = buildVliegeruitLink(sampleList.paints[0]);
+    expect(link).toContain('https://www.vliegeruit.com/paint/?s=');
+    expect(link).toContain('Citadel%20Mephiston%20Red');
+  });
+
+  it('generates markdown with header and list lines', () => {
+    const markdown = generatePaintListMarkdown(sampleList);
+
+    expect(markdown).toContain('## Paint List: Starter Reds');
+    expect(markdown).toContain('- [Citadel] Mephiston Red — [link](');
+    expect(markdown).toContain('- [Vallejo] Gory Red — [link](');
+  });
+
+  it('handles empty lists with a placeholder message', () => {
+    const emptyMarkdown = generatePaintListMarkdown({
+      ...sampleList,
+      paints: [],
+    });
+
+    expect(emptyMarkdown).toContain('_No paints in this list yet._');
+  });
+
+  it('creates safe markdown filenames', () => {
+    expect(getExportFilename('Starter Reds! 01')).toBe('starter-reds-01.md');
+    expect(getExportFilename('')).toBe('paint-list.md');
+  });
+});

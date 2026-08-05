@@ -8,6 +8,7 @@ import { BrandFilter } from '../features/browse/BrandFilter';
 import { ResultsGrid } from '../features/browse/ResultsGrid';
 import { getUniqueBrands } from '../features/browse/browse';
 import { ListsPanel } from '../features/lists/ListsPanel';
+import { ExportPanel } from '../features/export/ExportPanel';
 import { useDarkMode } from '../shared/hooks/useDarkMode';
 
 function App() {
@@ -30,6 +31,10 @@ function App() {
 
   const paintList = useMemo(() => getPaints(), []);
   const brands = useMemo(() => getUniqueBrands(paintList), [paintList]);
+  const selectedList = useMemo(
+    () => lists.find((list) => list.id === selectedListId),
+    [lists, selectedListId]
+  );
 
   const results = useMemo(() => {
     if (selectedPaint) {
@@ -97,6 +102,8 @@ function App() {
               setListNotice('Paint removed from list.');
             }}
           />
+
+          <ExportPanel selectedList={selectedList} />
 
           <SearchBar
             paints={paintList}
