@@ -30,3 +30,9 @@ If you are developing a production application, we recommend enabling type-aware
 ```
 
 See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+
+## Feature Flags
+
+Application feature toggles live in [src/app/config.ts](src/app/config.ts).
+
+- Set `featureFlags.markdownExport` to `true` or `false` to enable or disable Markdown export UI.

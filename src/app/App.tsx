@@ -10,6 +10,7 @@ import { getUniqueBrands } from '../features/browse/browse';
 import { ListsPanel } from '../features/lists/ListsPanel';
 import { ExportPanel } from '../features/export/ExportPanel';
 import { useDarkMode } from '../shared/hooks/useDarkMode';
+import { appConfig } from './config';
 
 function App() {
   const [query, setQuery] = useState('');
@@ -103,7 +104,9 @@ function App() {
             }}
           />
 
-          <ExportPanel selectedList={selectedList} />
+          {appConfig.featureFlags.markdownExport && (
+            <ExportPanel selectedList={selectedList} />
+          )}
 
           <SearchBar
             paints={paintList}
