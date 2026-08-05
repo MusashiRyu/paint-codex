@@ -72,9 +72,9 @@ function App() {
     <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
       <header className="app-header">
         <div className="header-content">
-          <h1 className="app-title">🎨 Paint Converter</h1>
+          <h1 className="app-title">Paco Paint Codex</h1>
           <p className="app-subtitle">
-            Find equivalent miniature paints across brands
+            Grimdark paint matching across Citadel, Vallejo, and Army Painter.
           </p>
         </div>
       </header>

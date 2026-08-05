@@ -1,86 +1,59 @@
 .resultsContainer {
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 0.35rem;
 }
 
 .resultsHeader {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid #e0e0e0;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--line);
 }
 
 .resultsCount {
   margin: 0;
-  font-size: 0.95rem;
-  color: #666;
-  font-weight: 500;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .resultsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: 1fr;
+  gap: 0.85rem;
 }
 
 .loading {
   text-align: center;
-  padding: 3rem 1rem;
-  font-size: 1.1rem;
-  color: #666;
+  padding: 2.4rem 1rem;
+  font-size: 0.94rem;
+  color: var(--text-muted);
 }
 
 .noResults {
   text-align: center;
-  padding: 3rem 1rem;
-  background-color: #f9f9f9;
-  border: 2px dashed #e0e0e0;
+  padding: 2.4rem 1rem;
+  background: var(--panel);
+  border: 1px dashed var(--line);
   border-radius: 12px;
-  color: #999;
+  color: var(--text-dim);
 }
 
 .noResults p {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
-@media (prefers-color-scheme: dark) {
-  .resultsHeader {
-    border-bottom-color: #333;
-  }
-
-  .resultsCount {
-    color: #aaa;
-  }
-
-  .loading {
-    color: #aaa;
-  }
-
-  .noResults {
-    background-color: #1e1e1e;
-    border-color: #333;
-    color: #666;
-  }
-}
-
-@media (max-width: 1024px) {
+@media (min-width: 860px) {
   .resultsGrid {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  }
-}
-
-@media (max-width: 640px) {
-  .resultsGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1rem;
   }
 
-  .resultsHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+  .resultsCount {
+    font-size: 0.86rem;
   }
 }

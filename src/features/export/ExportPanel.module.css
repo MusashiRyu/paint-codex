@@ -1,98 +1,95 @@
 .panel {
-  margin-bottom: 2rem;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 1rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.024), transparent 35%),
+    var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.9rem;
 }
 
 .header {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.7rem;
 }
 
 .title {
   margin: 0;
-  font-size: 1.1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 1.02rem;
 }
 
 .subtitle {
-  margin: 0.25rem 0 0 0;
-  color: #6b7280;
-  font-size: 0.9rem;
+  margin: 0.24rem 0 0 0;
+  color: var(--text-muted);
+  font-size: 0.84rem;
 }
 
 .actions {
-  display: flex;
+  display: grid;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.55rem;
 }
 
 .primaryButton,
 .secondaryButton {
-  border: 1px solid transparent;
+  border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 0.45rem 0.7rem;
+  padding: 0.55rem 0.74rem;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .primaryButton {
-  background: #4f46e5;
-  color: #fff;
+  background: linear-gradient(140deg, rgba(184, 154, 99, 0.85), rgba(140, 116, 71, 0.9));
+  color: #1a1309;
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .secondaryButton {
-  background: #f3f4f6;
-  color: #374151;
+  background: var(--panel-soft);
+  color: var(--text-main);
 }
 
 .secondaryButton:disabled {
-  opacity: 0.6;
+  opacity: 0.52;
   cursor: not-allowed;
 }
 
 .preview {
   width: 100%;
-  min-height: 140px;
-  border: 1px solid #d1d5db;
+  min-height: 170px;
+  border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 0.75rem;
-  font-family: Consolas, Monaco, monospace;
-  font-size: 0.85rem;
-  line-height: 1.45;
-  background: #fafafa;
+  padding: 0.7rem;
+  font-size: 0.78rem;
+  line-height: 1.42;
+  background: rgba(7, 8, 10, 0.5);
+  color: var(--text-main);
 }
 
 .message {
-  margin: 0.4rem 0 0.6rem 0;
-  color: #065f46;
-  font-size: 0.9rem;
+  margin: 0.35rem 0 0.55rem 0;
+  color: var(--accent-brass);
+  font-size: 0.82rem;
 }
 
 .emptyMessage {
   margin: 0;
-  color: #6b7280;
-  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-size: 0.84rem;
 }
 
-@media (prefers-color-scheme: dark) {
+@media (min-width: 760px) {
   .panel {
-    background: #1e1e1e;
-    border-color: #333;
+    padding: 1.05rem;
   }
 
-  .subtitle,
-  .emptyMessage {
-    color: #a3a3a3;
-  }
-
-  .secondaryButton {
-    background: #2b2b2b;
-    color: #f3f4f6;
+  .actions {
+    grid-template-columns: auto auto;
+    justify-content: flex-start;
   }
 
   .preview {
-    background: #18181b;
-    color: #e5e7eb;
-    border-color: #3f3f46;
+    min-height: 190px;
+    font-size: 0.82rem;
   }
 }
