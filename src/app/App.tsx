@@ -73,9 +73,6 @@ function App() {
       <header className="app-header">
         <div className="header-content">
           <h1 className="app-title">Paco Paint Codex</h1>
-          <p className="app-subtitle">
-            Grimdark paint matching across Citadel, Vallejo, and Army Painter.
-          </p>
         </div>
       </header>
 

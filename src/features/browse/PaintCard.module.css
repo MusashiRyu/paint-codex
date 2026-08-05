@@ -4,6 +4,7 @@
   padding: 0.9rem;
   background:
     linear-gradient(160deg, rgba(255, 255, 255, 0.03), transparent 35%),
+    url('/imagery/iron-texture.svg') center/220px 220px,
     var(--panel);
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
   transition: border-color 0.2s ease, transform 0.2s ease;
@@ -122,7 +123,9 @@
   align-items: center;
   gap: 0.36rem;
   padding: 0.55rem;
-  background: var(--panel-soft);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent),
+    var(--panel-soft);
   border-radius: 10px;
   border: 1px solid var(--line);
   transition: border-color 0.2s ease;
