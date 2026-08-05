@@ -190,7 +190,7 @@ Reach the target architecture above **without changing user-visible behavior**. 
 3. ✅ **capacitor.config.ts** — `{ appId: 'com.musashi.paco', appName: 'Paco', webDir: 'dist' }`
 4. ✅ **iOS project** — generated with `npx cap add ios` (Xcode wrapper scaffolded)
 5. ✅ **Android project** — generated with `npx cap add android` (Android Studio wrapper scaffolded)
-6. ⬜ **Native testing** — simulator/device, safe area insets, touch targets
+6. 🟡 **Native testing** — safe area insets + touch targets implemented in web shell; simulator/device validation pending.
 
 **Verification**
 - [x] `capacitor.config.ts` present with `com.musashi.paco` / `Paco`
