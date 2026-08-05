@@ -26,6 +26,7 @@
 
 .actions {
   display: grid;
+  grid-template-columns: 1fr;
   gap: 0.5rem;
   margin-bottom: 0.55rem;
 }
@@ -37,6 +38,12 @@
   padding: 0.55rem 0.74rem;
   cursor: pointer;
   font-weight: 600;
+  min-height: 44px;
+  min-width: 124px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .primaryButton {
@@ -88,7 +95,7 @@
   }
 
   .actions {
-    grid-template-columns: auto auto;
+    grid-template-columns: 124px 124px;
     justify-content: flex-start;
   }
 

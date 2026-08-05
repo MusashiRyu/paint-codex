@@ -48,6 +48,12 @@
   padding: 0.52rem 0.75rem;
   cursor: pointer;
   font-weight: 600;
+  min-height: 44px;
+  min-width: 124px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .primaryButton {
@@ -81,7 +87,8 @@
 }
 
 .listTabRow {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 124px;
   gap: 0.42rem;
 }
 
@@ -108,6 +115,7 @@
 
 .selectedListHeader {
   display: grid;
+  grid-template-columns: 1fr;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
@@ -129,9 +137,10 @@
 }
 
 .paintItem {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 124px;
   align-items: center;
+  gap: 0.42rem;
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 0.45rem 0.5rem;
@@ -164,11 +173,11 @@
   }
 
   .createRow {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 124px;
   }
 
   .selectedListHeader {
-    grid-template-columns: 1fr auto;
+    grid-template-columns: 1fr 124px;
     align-items: center;
   }
 
