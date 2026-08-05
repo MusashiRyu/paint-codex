@@ -22,7 +22,7 @@ export function generatePaintListMarkdown(list: PaintList): string {
   }
 
   const lines = list.paints.map(
-    (paint) => `- [${paint.brand}] ${paint.name} — [link](${buildVliegeruitLink(paint)})`
+    (paint) => `- [${paint.brand}] [${paint.name}](${buildVliegeruitLink(paint)})`
   );
 
   return `${header}\n${lines.join('\n')}`;

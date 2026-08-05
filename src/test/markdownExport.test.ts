@@ -50,8 +50,8 @@ describe('markdownExport', () => {
     const markdown = generatePaintListMarkdown(sampleList);
 
     expect(markdown).toContain('## Paint List: Starter Reds');
-    expect(markdown).toContain('- [Citadel] Mephiston Red — [link](');
-    expect(markdown).toContain('- [Vallejo] Gory Red — [link](');
+    expect(markdown).toContain('- [Citadel] [Mephiston Red](');
+    expect(markdown).toContain('- [Vallejo] [Gory Red](');
   });
 
   it('handles empty lists with a placeholder message', () => {
