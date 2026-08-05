@@ -13,6 +13,12 @@ const BRAND_SOURCES = {
   'Army Painter': '/warpaints-the-army-painter/',
 };
 
+const BRAND_SEARCH_HINTS = {
+  Citadel: 'citadel',
+  Vallejo: 'vallejo',
+  'Army Painter': 'army painter',
+};
+
 const SET_KEYWORDS = [
   'set',
   'bundle',
@@ -83,6 +89,21 @@ function scoreCandidate(paintName, productTitle) {
   const overlap = intersection / aTokens.size;
   const jaccard = intersection / new Set([...aTokens, ...bTokens]).size;
   return overlap * 0.75 + jaccard * 0.25;
+}
+
+function buildSearchPath(query) {
+  const params = new URLSearchParams({
+    route: 'product/search',
+    search: query,
+    description: '1',
+  });
+  return `/index.php?${params.toString()}`;
+}
+
+function wait(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 }
 
 async function fetchPage(path) {
@@ -183,6 +204,56 @@ function pickBestProduct(paint, products) {
   return bestScore >= 0.62 ? best : null;
 }
 
+function pickBestProductFromSearch(paint, products) {
+  let best = null;
+  let bestScore = 0;
+
+  for (const product of products) {
+    if (isLikelySet(product.title)) continue;
+    const score = scoreCandidate(paint.name, product.title);
+
+    const titleNorm = normalizeText(product.title);
+    const hintNorm = normalizeText(BRAND_SEARCH_HINTS[paint.brand] || paint.brand);
+    const brandBoost = titleNorm.includes(hintNorm) ? 0.06 : 0;
+    const adjusted = Math.min(1, score + brandBoost);
+
+    if (adjusted > bestScore) {
+      bestScore = adjusted;
+      best = product;
+    }
+  }
+
+  return bestScore >= 0.66 ? best : null;
+}
+
+async function resolveBySearch(paint) {
+  const queries = [
+    `${BRAND_SEARCH_HINTS[paint.brand] || paint.brand} ${paint.name}`,
+    paint.name,
+  ];
+
+  for (const query of queries) {
+    const path = buildSearchPath(query);
+    let html;
+    try {
+      html = await fetchPage(path);
+    } catch (error) {
+      console.warn(`Search failed for "${query}": ${error.message}`);
+      continue;
+    }
+
+    const products = extractProducts(html);
+    const best = pickBestProductFromSearch(paint, products);
+    if (best) {
+      return best;
+    }
+
+    await wait(140);
+  }
+
+  return null;
+}
+
 async function main() {
   const paints = JSON.parse(readFileSync(PAINTS_PATH, 'utf8'));
   const linksMap = {};
@@ -205,9 +276,32 @@ async function main() {
     }
   }
 
+  const firstPassCount = mappedCount;
+  let secondPassAdded = 0;
+  const unmapped = paints.filter((paint) => !linksMap[paint.id]);
+
+  console.log(`Second pass search for ${unmapped.length} unmapped paints...`);
+  for (let i = 0; i < unmapped.length; i++) {
+    const paint = unmapped[i];
+    const found = await resolveBySearch(paint);
+    if (found) {
+      linksMap[paint.id] = found.url;
+      mappedCount += 1;
+      secondPassAdded += 1;
+    }
+
+    if ((i + 1) % 30 === 0) {
+      console.log(`  Search progress: ${i + 1}/${unmapped.length}, added ${secondPassAdded}`);
+    }
+
+    await wait(80);
+  }
+
   writeFileSync(OUT_PATH, JSON.stringify(linksMap, null, 2) + '\n');
 
   const coverage = ((mappedCount / paints.length) * 100).toFixed(2);
+  console.log(`First pass: ${firstPassCount}/${paints.length}`);
+  console.log(`Second pass added: ${secondPassAdded}`);
   console.log(`Mapped ${mappedCount}/${paints.length} paints (${coverage}%)`);
   console.log(`Wrote ${OUT_PATH}`);
 }
