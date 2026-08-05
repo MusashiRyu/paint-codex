@@ -35,11 +35,12 @@
 .secondaryButton {
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 0.55rem 0.74rem;
+  padding: 0.42rem 0.62rem;
   cursor: pointer;
   font-weight: 600;
-  min-height: 44px;
-  min-width: 124px;
+  min-height: 36px;
+  min-width: 108px;
+  width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -95,7 +96,7 @@
   }
 
   .actions {
-    grid-template-columns: 124px 124px;
+    grid-template-columns: 108px 108px;
     justify-content: flex-start;
   }
 

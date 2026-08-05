@@ -27,6 +27,8 @@
 
 .createRow {
   display: grid;
+  grid-template-columns: 1fr 124px;
+  align-items: stretch;
   gap: 0.5rem;
   margin-bottom: 0.7rem;
 }
@@ -50,6 +52,7 @@
   font-weight: 600;
   min-height: 44px;
   min-width: 124px;
+  width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -89,11 +92,13 @@
 .listTabRow {
   display: grid;
   grid-template-columns: 1fr 124px;
+  align-items: stretch;
   gap: 0.42rem;
 }
 
 .listTab {
-  flex: 1;
+  min-height: 44px;
+  width: 100%;
   text-align: left;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -115,7 +120,8 @@
 
 .selectedListHeader {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 124px;
+  align-items: stretch;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
 }
@@ -126,6 +132,7 @@
   padding: 0.52rem 0.66rem;
   background: var(--panel-soft);
   color: var(--text-main);
+  min-height: 44px;
 }
 
 .paintItems {
@@ -139,7 +146,7 @@
 .paintItem {
   display: grid;
   grid-template-columns: 1fr 124px;
-  align-items: center;
+  align-items: stretch;
   gap: 0.42rem;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -170,15 +177,6 @@
 @media (min-width: 760px) {
   .panel {
     padding: 1.05rem;
-  }
-
-  .createRow {
-    grid-template-columns: 1fr 124px;
-  }
-
-  .selectedListHeader {
-    grid-template-columns: 1fr 124px;
-    align-items: center;
   }
 
   .paintItemLeft {
