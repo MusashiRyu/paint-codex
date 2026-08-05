@@ -39,12 +39,13 @@
   cursor: pointer;
   font-weight: 600;
   min-height: 36px;
-  min-width: 108px;
+  min-width: 132px;
   width: 100%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  white-space: nowrap;
 }
 
 .primaryButton {
@@ -96,7 +97,7 @@
   }
 
   .actions {
-    grid-template-columns: 108px 108px;
+    grid-template-columns: 132px 132px;
     justify-content: flex-start;
   }
 
