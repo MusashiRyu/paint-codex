@@ -1,9 +1,17 @@
 import type { Paint } from '../../domain/types';
 import type { PaintList } from '../../app/providers/store';
+import { getShopLinks, type ShopLinkMap } from '../../domain/shopLinkRepository';
 
-export function buildVliegeruitLink(paint: Paint): string {
+function buildVliegeruitSearchLink(paint: Paint): string {
   const query = encodeURIComponent(`${paint.brand} ${paint.name}`);
   return `https://www.vliegeruit.com/paint/?s=${query}`;
+}
+
+export function buildVliegeruitLink(
+  paint: Paint,
+  linksMap: ShopLinkMap = getShopLinks()
+): string {
+  return linksMap[paint.id] ?? buildVliegeruitSearchLink(paint);
 }
 
 export function generatePaintListMarkdown(list: PaintList): string {

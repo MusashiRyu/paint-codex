@@ -5,6 +5,7 @@ import {
   generatePaintListMarkdown,
   getExportFilename,
 } from '../features/export/markdownExport';
+import type { ShopLinkMap } from '../domain/shopLinkRepository';
 
 const sampleList: PaintList = {
   id: 'list-1',
@@ -30,10 +31,19 @@ const sampleList: PaintList = {
 };
 
 describe('markdownExport', () => {
-  it('builds vliegeruit search links with encoded query', () => {
-    const link = buildVliegeruitLink(sampleList.paints[0]);
+  it('uses mapped product links when available', () => {
+    const linksMap: ShopLinkMap = {
+      'citadel-mephiston-red': 'https://www.vliegeruit.com/product/citadel-base-mephiston-red/',
+    };
+
+    const link = buildVliegeruitLink(sampleList.paints[0], linksMap);
+    expect(link).toBe('https://www.vliegeruit.com/product/citadel-base-mephiston-red/');
+  });
+
+  it('falls back to vliegeruit search links with encoded query', () => {
+    const link = buildVliegeruitLink(sampleList.paints[1], {});
     expect(link).toContain('https://www.vliegeruit.com/paint/?s=');
-    expect(link).toContain('Citadel%20Mephiston%20Red');
+    expect(link).toContain('Vallejo%20Gory%20Red');
   });
 
   it('generates markdown with header and list lines', () => {
