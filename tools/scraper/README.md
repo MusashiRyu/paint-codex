@@ -8,12 +8,17 @@ This folder contains development-only tooling and is never shipped in the app bu
 
 - `src/data/paints.snapshot.json`
 
+`scrapeShopLinks.mjs` crawls Vliegeruit brand paint pages and writes product link mappings to:
+
+- `src/data/shopLinks.snapshot.json`
+
 ## Run
 
 From repository root:
 
 ```bash
 npm run scrape
+npm run scrape:shoplinks
 ```
 
 ## Notes
