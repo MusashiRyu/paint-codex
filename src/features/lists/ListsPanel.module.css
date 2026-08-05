@@ -1,4 +1,5 @@
 .panel {
+  --action-col: 124px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 35%),
     url('/imagery/aquila-inspired.svg') right -120px top -66px/300px 170px no-repeat,
@@ -27,7 +28,7 @@
 
 .createRow {
   display: grid;
-  grid-template-columns: 1fr 124px;
+  grid-template-columns: 1fr var(--action-col);
   align-items: stretch;
   gap: 0.5rem;
   margin-bottom: 0.7rem;
@@ -51,7 +52,7 @@
   cursor: pointer;
   font-weight: 600;
   min-height: 44px;
-  min-width: 124px;
+  min-width: var(--action-col);
   width: 100%;
   display: inline-flex;
   align-items: center;
@@ -91,7 +92,7 @@
 
 .listTabRow {
   display: grid;
-  grid-template-columns: 1fr 124px;
+  grid-template-columns: 1fr var(--action-col);
   align-items: stretch;
   gap: 0.42rem;
 }
@@ -120,7 +121,7 @@
 
 .selectedListHeader {
   display: grid;
-  grid-template-columns: 1fr 124px;
+  grid-template-columns: 1fr var(--action-col);
   align-items: stretch;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
@@ -145,12 +146,12 @@
 
 .paintItem {
   display: grid;
-  grid-template-columns: 1fr 124px;
+  grid-template-columns: 1fr var(--action-col);
   align-items: stretch;
   gap: 0.42rem;
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 0.45rem 0.5rem;
+  padding: 0.45rem 0;
   background: rgba(0, 0, 0, 0.18);
 }
 
@@ -158,6 +159,8 @@
   display: flex;
   align-items: center;
   gap: 0.45rem;
+  min-height: 44px;
+  padding: 0 0.55rem;
   font-size: 0.82rem;
 }
 
