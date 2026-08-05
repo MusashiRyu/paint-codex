@@ -1,7 +1,7 @@
 .panel {
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.024), transparent 35%),
-    url('/imagery/heraldic-mark.svg') right -78px top -86px/198px 198px no-repeat,
+    url('/imagery/inquisition-inspired-i.svg') right -70px top -102px/184px 220px no-repeat,
     var(--panel);
   border: 1px solid var(--line);
   border-radius: 14px;
