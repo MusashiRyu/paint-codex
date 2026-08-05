@@ -1,0 +1,257 @@
+.paintCard {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.paintCard:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+.paintCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 1rem;
+}
+
+.paintInfo {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+}
+
+.paintSwatch {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.paintDetails {
+  flex: 1;
+}
+
+.paintName {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.paintBrand {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+  color: #4f46e5;
+  font-weight: 500;
+}
+
+.paintCategory {
+  margin: 0.25rem 0;
+  font-size: 0.85rem;
+  color: #666;
+  font-style: italic;
+}
+
+.paintHex {
+  margin: 0.5rem 0 0 0;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 0.85rem;
+  color: #999;
+}
+
+.addToListBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addToListBtn:hover {
+  background-color: #4338ca;
+  transform: scale(1.1);
+}
+
+.addToListBtn:active {
+  transform: scale(0.95);
+}
+
+.paintMatches {
+  margin-top: 1rem;
+}
+
+.matchesTitle {
+  margin: 0 0 1rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.matchesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.75rem;
+}
+
+.matchItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease;
+}
+
+.matchItem:hover {
+  background-color: #f0f0f0;
+  border-color: #d0d0d0;
+}
+
+.matchSwatch {
+  width: 48px;
+  height: 48px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.matchInfo {
+  text-align: center;
+  width: 100%;
+  min-height: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.matchName {
+  margin: 0;
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: #333;
+  line-height: 1.3;
+}
+
+.matchBrand {
+  margin: 0.25rem 0 0 0;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.deltaBadge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+  width: 100%;
+}
+
+.delta-green {
+  background-color: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+.delta-yellow {
+  background-color: #fef3c7;
+  color: #854d0e;
+  border: 1px solid #fcd34d;
+}
+
+.delta-red {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .paintCard {
+    background-color: #2a2a2a;
+    border-color: #444;
+  }
+
+  .paintCard:hover {
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+  }
+
+  .paintCardHeader {
+    border-bottom-color: #333;
+  }
+
+  .paintName {
+    color: #fff;
+  }
+
+  .paintBrand {
+    color: #818cf8;
+  }
+
+  .paintCategory {
+    color: #aaa;
+  }
+
+  .paintHex {
+    color: #666;
+  }
+
+  .paintSwatch {
+    border-color: #555;
+  }
+
+  .matchesTitle {
+    color: #aaa;
+  }
+
+  .matchItem {
+    background-color: #1e1e1e;
+    border-color: #333;
+  }
+
+  .matchItem:hover {
+    background-color: #333;
+    border-color: #444;
+  }
+
+  .matchName {
+    color: #fff;
+  }
+
+  .matchBrand {
+    color: #aaa;
+  }
+
+  .matchSwatch {
+    border-color: #555;
+  }
+
+  .addToListBtn {
+    background-color: #6366f1;
+  }
+
+  .addToListBtn:hover {
+    background-color: #4f46e5;
+  }
+}

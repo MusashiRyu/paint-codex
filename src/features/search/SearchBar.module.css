@@ -1,0 +1,163 @@
+.searchBarContainer {
+  position: relative;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.searchInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 1rem;
+  font-size: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: #fff;
+  color: #333;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.searchInput::placeholder {
+  color: #999;
+}
+
+.clearButton {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #999;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.clearButton:hover {
+  color: #333;
+}
+
+.suggestionsDropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 10;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.suggestionItem {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.suggestionItem:last-child {
+  border-bottom: none;
+}
+
+.suggestionItem:hover {
+  background-color: #f5f5f5;
+}
+
+.suggestionColor {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.suggestionText {
+  flex-grow: 1;
+}
+
+.suggestionName {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.suggestionBrand {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  .searchInput {
+    background-color: #2a2a2a;
+    color: #fff;
+    border-color: #444;
+  }
+
+  .searchInput:focus {
+    border-color: #6366f1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+  }
+
+  .searchInput::placeholder {
+    color: #999;
+  }
+
+  .clearButton {
+    color: #666;
+  }
+
+  .clearButton:hover {
+    color: #fff;
+  }
+
+  .suggestionsDropdown {
+    background-color: #2a2a2a;
+    border-color: #444;
+  }
+
+  .suggestionItem {
+    border-bottom-color: #333;
+  }
+
+  .suggestionItem:hover {
+    background-color: #333;
+  }
+
+  .suggestionName {
+    color: #fff;
+  }
+
+  .suggestionBrand {
+    color: #aaa;
+  }
+}
+
+@media (max-width: 640px) {
+  .searchInput {
+    font-size: 16px;
+  }
+
+  .suggestionsDropdown {
+    max-height: 200px;
+  }
+}

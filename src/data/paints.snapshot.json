@@ -1,0 +1,8708 @@
+[
+  {
+    "id": "citadel-ceramite-white",
+    "brand": "Citadel",
+    "name": "Ceramite White",
+    "hex": "#FFFFFF",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Dead White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Vallejo",
+        "name": "White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Matt White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      }
+    ]
+  },
+  {
+    "id": "citadel-white-scar",
+    "brand": "Citadel",
+    "name": "White Scar",
+    "hex": "#FFFFFF",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Dead White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Vallejo",
+        "name": "White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Matt White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      }
+    ]
+  },
+  {
+    "id": "citadel-averland-sunset",
+    "brand": "Citadel",
+    "name": "Averland Sunset",
+    "hex": "#FBBA00",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Gold Yellow",
+        "hex": "#FDB318",
+        "delta": 2.85
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Golden Yellow",
+        "hex": "#F7C65E",
+        "delta": 6.07
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Phoenix Flames",
+        "hex": "#FAA61A",
+        "delta": 7.1
+      }
+    ]
+  },
+  {
+    "id": "citadel-yriel-yellow",
+    "brand": "Citadel",
+    "name": "Yriel Yellow",
+    "hex": "#FFDA00",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Sun Yellow",
+        "hex": "#FFCF07",
+        "delta": 3.69
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Deep Yellow",
+        "hex": "#FFE30C",
+        "delta": 2.97
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Daemonic Yellow",
+        "hex": "#FADA06",
+        "delta": 1.04
+      }
+    ]
+  },
+  {
+    "id": "citadel-flash-gitz-yellow",
+    "brand": "Citadel",
+    "name": "Flash Gitz Yellow",
+    "hex": "#FFEE00",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Moon Yellow",
+        "hex": "#FFF103",
+        "delta": 0.97
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Lemon Yellow",
+        "hex": "#FEF10E",
+        "delta": 1.05
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Babe Blonde",
+        "hex": "#F8DD0D",
+        "delta": 5.46
+      }
+    ]
+  },
+  {
+    "id": "citadel-jokaero-orange",
+    "brand": "Citadel",
+    "name": "Jokaero Orange",
+    "hex": "#E6200F",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Hot Orange",
+        "hex": "#E43027",
+        "delta": 2.9
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Scarlet",
+        "hex": "#DA3630",
+        "delta": 4.5
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mythical Orange",
+        "hex": "#E73D24",
+        "delta": 3.48
+      }
+    ]
+  },
+  {
+    "id": "citadel-troll-slayer-orange",
+    "brand": "Citadel",
+    "name": "Troll Slayer Orange",
+    "hex": "#EB641B",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Orange Fire",
+        "hex": "#F1652E",
+        "delta": 2.89
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Bright Orange",
+        "hex": "#F26833",
+        "delta": 3.48
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Fire Lizard",
+        "hex": "#D67128",
+        "delta": 4.67
+      }
+    ]
+  },
+  {
+    "id": "citadel-fire-dragon-bright",
+    "brand": "Citadel",
+    "name": "Fire Dragon Bright",
+    "hex": "#F1844A",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Bronze Fleshtone",
+        "hex": "#DB945C",
+        "delta": 6.36
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Light Orange",
+        "hex": "#F68627",
+        "delta": 5.97
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Barbarian Flesh",
+        "hex": "#E89C6C",
+        "delta": 7
+      }
+    ]
+  },
+  {
+    "id": "citadel-mephiston-red",
+    "brand": "Citadel",
+    "name": "Mephiston Red",
+    "hex": "#9B0E05",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Gory Red",
+        "hex": "#810504",
+        "delta": 6.78
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Red",
+        "hex": "#AA3037",
+        "delta": 10.28
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dragon Red",
+        "hex": "#9A1B1E",
+        "delta": 4.47
+      }
+    ]
+  },
+  {
+    "id": "citadel-evil-suns-scarlet",
+    "brand": "Citadel",
+    "name": "Evil Suns Scarlet",
+    "hex": "#C00B0C",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Bloody Red",
+        "hex": "#BF282E",
+        "delta": 5.5
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Carmine Red",
+        "hex": "#B73035",
+        "delta": 6.79
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Pure Red",
+        "hex": "#CF2127",
+        "delta": 5.54
+      }
+    ]
+  },
+  {
+    "id": "citadel-wild-rider-red",
+    "brand": "Citadel",
+    "name": "Wild Rider Red",
+    "hex": "#E21516",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Hot Orange",
+        "hex": "#E43027",
+        "delta": 2.9
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Scarlet",
+        "hex": "#DA3630",
+        "delta": 3.64
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Pure Red",
+        "hex": "#CF2127",
+        "delta": 4.67
+      }
+    ]
+  },
+  {
+    "id": "citadel-khorne-red",
+    "brand": "Citadel",
+    "name": "Khorne Red",
+    "hex": "#6A0A01",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Terracota",
+        "hex": "#6B1306",
+        "delta": 1.41
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Hull Red",
+        "hex": "#522724",
+        "delta": 9.07
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Chaotic Red",
+        "hex": "#6C1E10",
+        "delta": 3.69
+      }
+    ]
+  },
+  {
+    "id": "citadel-wazdakka-red",
+    "brand": "Citadel",
+    "name": "Wazdakka Red",
+    "hex": "#8D0D01",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Gory Red",
+        "hex": "#810504",
+        "delta": 3.65
+      },
+      {
+        "brand": "Vallejo",
+        "name": "German Cam. Medium Brown",
+        "hex": "#722B2F",
+        "delta": 10.59
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dragon Red",
+        "hex": "#9A1B1E",
+        "delta": 6.03
+      }
+    ]
+  },
+  {
+    "id": "citadel-squig-orange",
+    "brand": "Citadel",
+    "name": "Squig Orange",
+    "hex": "#B04D3E",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Tan",
+        "hex": "#9F4746",
+        "delta": 6.09
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Red",
+        "hex": "#A24A46",
+        "delta": 4.77
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mars Red",
+        "hex": "#B73B37",
+        "delta": 4.35
+      }
+    ]
+  },
+  {
+    "id": "citadel-screamer-pink",
+    "brand": "Citadel",
+    "name": "Screamer Pink",
+    "hex": "#831740",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Warlord Purple",
+        "hex": "#7D1A44",
+        "delta": 2.51
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Violet Red",
+        "hex": "#6B2946",
+        "delta": 6.43
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Vampire Red",
+        "hex": "#981D34",
+        "delta": 9.58
+      }
+    ]
+  },
+  {
+    "id": "citadel-pink-horror",
+    "brand": "Citadel",
+    "name": "Pink Horror",
+    "hex": "#96325C",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Warlord Purple",
+        "hex": "#7D1A44",
+        "delta": 8.94
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Magenta",
+        "hex": "#A92A56",
+        "delta": 5.53
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Wasteland Soil",
+        "hex": "#774B58",
+        "delta": 8.26
+      }
+    ]
+  },
+  {
+    "id": "citadel-emperors-children",
+    "brand": "Citadel",
+    "name": "Emperors Children",
+    "hex": "#BD3F75",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Tan",
+        "hex": "#9F4746",
+        "delta": 14.82
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Sunset Red",
+        "hex": "#C22C5F",
+        "delta": 6.33
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Orc Blood",
+        "hex": "#925F6E",
+        "delta": 9.29
+      }
+    ]
+  },
+  {
+    "id": "citadel-naggaroth-night",
+    "brand": "Citadel",
+    "name": "Naggaroth Night",
+    "hex": "#433656",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Hexed Lichen",
+        "hex": "#34274D",
+        "delta": 6.85
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Violet",
+        "hex": "#4B2F65",
+        "delta": 7.68
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Deep Blue",
+        "hex": "#083251",
+        "delta": 12.85
+      }
+    ]
+  },
+  {
+    "id": "citadel-xereus-purple",
+    "brand": "Citadel",
+    "name": "Xereus Purple",
+    "hex": "#4B205C",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Violet",
+        "hex": "#4C2E65",
+        "delta": 4.74
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Royal Purple",
+        "hex": "#4B2967",
+        "delta": 3.55
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Alien Purple",
+        "hex": "#50317B",
+        "delta": 8.1
+      }
+    ]
+  },
+  {
+    "id": "citadel-genestealer-purple",
+    "brand": "Citadel",
+    "name": "Genestealer Purple",
+    "hex": "#7C5CA4",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Sombre Grey",
+        "hex": "#4C5C7D",
+        "delta": 14.05
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Blue Violet",
+        "hex": "#795C9A",
+        "delta": 2.09
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dungeon Grey",
+        "hex": "#686C71",
+        "delta": 14.88
+      }
+    ]
+  },
+  {
+    "id": "citadel-daemonette-hide",
+    "brand": "Citadel",
+    "name": "Daemonette Hide",
+    "hex": "#696685",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Sombre Grey",
+        "hex": "#4C5C7D",
+        "delta": 7.44
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Azure",
+        "hex": "#717CAD",
+        "delta": 10.4
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dungeon Grey",
+        "hex": "#686C71",
+        "delta": 9.11
+      }
+    ]
+  },
+  {
+    "id": "citadel-warpfiend-grey",
+    "brand": "Citadel",
+    "name": "Warpfiend Grey",
+    "hex": "#6B6A74",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Cold Grey",
+        "hex": "#54646D",
+        "delta": 7.09
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Grey Green",
+        "hex": "#565A60",
+        "delta": 7.62
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dungeon Grey",
+        "hex": "#686C71",
+        "delta": 3.11
+      }
+    ]
+  },
+  {
+    "id": "citadel-slaanesh-grey",
+    "brand": "Citadel",
+    "name": "Slaanesh Grey",
+    "hex": "#8E8C97",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Stonewall Grey",
+        "hex": "#828E95",
+        "delta": 5.31
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Medium Sea Grey",
+        "hex": "#869393",
+        "delta": 7.9
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ash Grey",
+        "hex": "#A2A5A4",
+        "delta": 10.62
+      }
+    ]
+  },
+  {
+    "id": "citadel-kantor-blue",
+    "brand": "Citadel",
+    "name": "Kantor Blue",
+    "hex": "#06234F",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Royal Purple",
+        "hex": "#23264F",
+        "delta": 4.17
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Prussian Blue",
+        "hex": "#192C43",
+        "delta": 7.88
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Deep Blue",
+        "hex": "#083251",
+        "delta": 8.77
+      }
+    ]
+  },
+  {
+    "id": "citadel-alaitoc-blue",
+    "brand": "Citadel",
+    "name": "Alaitoc Blue",
+    "hex": "#2E5689",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Sombre Grey",
+        "hex": "#4C5C7D",
+        "delta": 5.74
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Royal Blue",
+        "hex": "#41558D",
+        "delta": 4.15
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Griffon Blue",
+        "hex": "#215383",
+        "delta": 2.47
+      }
+    ]
+  },
+  {
+    "id": "citadel-hoeth-blue",
+    "brand": "Citadel",
+    "name": "Hoeth Blue",
+    "hex": "#4F7FB5",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Electric Blue",
+        "hex": "#008CBF",
+        "delta": 8.73
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Azure",
+        "hex": "#717CAD",
+        "delta": 6.29
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Crystal Blue",
+        "hex": "#0083C2",
+        "delta": 5.1
+      }
+    ]
+  },
+  {
+    "id": "citadel-macragge-blue",
+    "brand": "Citadel",
+    "name": "Macragge Blue",
+    "hex": "#14397A",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Magic Blue",
+        "hex": "#024381",
+        "delta": 4.51
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Blue",
+        "hex": "#043667",
+        "delta": 5.36
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ultramarine Blue",
+        "hex": "#0F4E85",
+        "delta": 9.37
+      }
+    ]
+  },
+  {
+    "id": "citadel-altdorf-guard-blue",
+    "brand": "Citadel",
+    "name": "Altdorf Guard Blue",
+    "hex": "#274B9B",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Magic Blue",
+        "hex": "#024381",
+        "delta": 7
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Royal Blue",
+        "hex": "#41558D",
+        "delta": 5.97
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ultramarine Blue",
+        "hex": "#0F4E85",
+        "delta": 7.64
+      }
+    ]
+  },
+  {
+    "id": "citadel-calgar-blue",
+    "brand": "Citadel",
+    "name": "Calgar Blue",
+    "hex": "#456EB5",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Sombre Grey",
+        "hex": "#4C5C7D",
+        "delta": 10.77
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Ultramarine",
+        "hex": "#3B5DA7",
+        "delta": 6.56
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Viking Blue",
+        "hex": "#00609A",
+        "delta": 9.49
+      }
+    ]
+  },
+  {
+    "id": "citadel-caledor-sky",
+    "brand": "Citadel",
+    "name": "Caledor Sky",
+    "hex": "#38689C",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Sombre Grey",
+        "hex": "#4C5C7D",
+        "delta": 6.68
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Blue",
+        "hex": "#336991",
+        "delta": 4.5
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Viking Blue",
+        "hex": "#00609A",
+        "delta": 4.57
+      }
+    ]
+  },
+  {
+    "id": "citadel-teclis-blue",
+    "brand": "Citadel",
+    "name": "Teclis Blue",
+    "hex": "#387BBF",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Electric Blue",
+        "hex": "#008CBF",
+        "delta": 10.36
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Azure",
+        "hex": "#717CAD",
+        "delta": 7.44
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Crystal Blue",
+        "hex": "#0083C2",
+        "delta": 5.27
+      }
+    ]
+  },
+  {
+    "id": "citadel-lothern-blue",
+    "brand": "Citadel",
+    "name": "Lothern Blue",
+    "hex": "#3BA1D1",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Electric Blue",
+        "hex": "#008CBF",
+        "delta": 8.05
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Deep Sky Blue",
+        "hex": "#00A6DA",
+        "delta": 2.46
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Voidshield Blue",
+        "hex": "#2CA2D9",
+        "delta": 1.85
+      }
+    ]
+  },
+  {
+    "id": "citadel-thousand-sons-blue",
+    "brand": "Citadel",
+    "name": "Thousand Sons Blue",
+    "hex": "#18ABCC",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Wolf Grey",
+        "hex": "#90A2BC",
+        "delta": 13.12
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Deep Sky Blue",
+        "hex": "#00A6DA",
+        "delta": 7.22
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Voidshield Blue",
+        "hex": "#2CA2D9",
+        "delta": 9.61
+      }
+    ]
+  },
+  {
+    "id": "citadel-ahriman-blue",
+    "brand": "Citadel",
+    "name": "Ahriman Blue",
+    "hex": "#1F8C9C",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Steel Grey",
+        "hex": "#64889D",
+        "delta": 9.47
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Turquoise",
+        "hex": "#008E9C",
+        "delta": 1.73
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Hydra Turquoise",
+        "hex": "#199BA3",
+        "delta": 6.51
+      }
+    ]
+  },
+  {
+    "id": "citadel-the-fang",
+    "brand": "Citadel",
+    "name": "The Fang",
+    "hex": "#457479",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Turquoise",
+        "hex": "#03676F",
+        "delta": 7.97
+      },
+      {
+        "brand": "Vallejo",
+        "name": "French Mirage Blue",
+        "hex": "#557880",
+        "delta": 3.78
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Uniform Grey",
+        "hex": "#5E6A73",
+        "delta": 8.36
+      }
+    ]
+  },
+  {
+    "id": "citadel-russ-grey",
+    "brand": "Citadel",
+    "name": "Russ Grey",
+    "hex": "#55768A",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Steel Grey",
+        "hex": "#64889D",
+        "delta": 6.93
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Grey Blue",
+        "hex": "#45708D",
+        "delta": 4.4
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Wolf Grey",
+        "hex": "#5B8093",
+        "delta": 3.86
+      }
+    ]
+  },
+  {
+    "id": "citadel-fenrisian-grey",
+    "brand": "Citadel",
+    "name": "Fenrisian Grey",
+    "hex": "#789EBB",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Wolf Grey",
+        "hex": "#90A2BC",
+        "delta": 4.99
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Pastel Blue",
+        "hex": "#67859B",
+        "delta": 9.56
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ice Storm",
+        "hex": "#639EC9",
+        "delta": 4.78
+      }
+    ]
+  },
+  {
+    "id": "citadel-stegadon-scale-green",
+    "brand": "Citadel",
+    "name": "Stegadon Scale Green",
+    "hex": "#004261",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Blue",
+        "hex": "#29556D",
+        "delta": 8.65
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Oxford Blue",
+        "hex": "#3A465F",
+        "delta": 7.53
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dark Sky",
+        "hex": "#2B4B5F",
+        "delta": 5.88
+      }
+    ]
+  },
+  {
+    "id": "citadel-sotek-green",
+    "brand": "Citadel",
+    "name": "Sotek Green",
+    "hex": "#056976",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Turquoise",
+        "hex": "#03676F",
+        "delta": 2.52
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Field Blue",
+        "hex": "#436872",
+        "delta": 5.52
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Wizards Orb",
+        "hex": "#00726A",
+        "delta": 10.41
+      }
+    ]
+  },
+  {
+    "id": "citadel-temple-guard-blue",
+    "brand": "Citadel",
+    "name": "Temple Guard Blue",
+    "hex": "#35998E",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Foul Green",
+        "hex": "#239378",
+        "delta": 6.72
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Blue Green",
+        "hex": "#1A9496",
+        "delta": 5.44
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Elemental Bolt",
+        "hex": "#009A82",
+        "delta": 5.37
+      }
+    ]
+  },
+  {
+    "id": "citadel-thunderhawk-blue",
+    "brand": "Citadel",
+    "name": "Thunderhawk Blue",
+    "hex": "#417074",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Turquoise",
+        "hex": "#03676F",
+        "delta": 6.74
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Field Blue",
+        "hex": "#436872",
+        "delta": 4.67
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Uniform Grey",
+        "hex": "#5E6A73",
+        "delta": 8.41
+      }
+    ]
+  },
+  {
+    "id": "citadel-incubi-darkness",
+    "brand": "Citadel",
+    "name": "Incubi Darkness",
+    "hex": "#094345",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Scurvy Green",
+        "hex": "#09474E",
+        "delta": 3.18
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Black Green",
+        "hex": "#19423E",
+        "delta": 3.4
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necromance Cloak",
+        "hex": "#3C3D37",
+        "delta": 11.76
+      }
+    ]
+  },
+  {
+    "id": "citadel-kabalite-green",
+    "brand": "Citadel",
+    "name": "Kabalite Green",
+    "hex": "#008660",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Foul Green",
+        "hex": "#239378",
+        "delta": 6.42
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Park Green Flat",
+        "hex": "#008C5D",
+        "delta": 3.14
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Elemental Bolt",
+        "hex": "#009A82",
+        "delta": 9.15
+      }
+    ]
+  },
+  {
+    "id": "citadel-sybarite-green",
+    "brand": "Citadel",
+    "name": "Sybarite Green",
+    "hex": "#36A062",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Foul Green",
+        "hex": "#239378",
+        "delta": 10.15
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Light Green",
+        "hex": "#00A850",
+        "delta": 5.6
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Goblin Green",
+        "hex": "#348941",
+        "delta": 9.25
+      }
+    ]
+  },
+  {
+    "id": "citadel-caliban-green",
+    "brand": "Citadel",
+    "name": "Caliban Green",
+    "hex": "#003B1D",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Dark Green",
+        "hex": "#083C2A",
+        "delta": 4.63
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Yellow Olive",
+        "hex": "#26392E",
+        "delta": 7.93
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Angel Green",
+        "hex": "#0C391D",
+        "delta": 1.63
+      }
+    ]
+  },
+  {
+    "id": "citadel-warpstone-glow",
+    "brand": "Citadel",
+    "name": "Warpstone Glow",
+    "hex": "#257326",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Goblin Green",
+        "hex": "#23743C",
+        "delta": 4.73
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Medium Olive",
+        "hex": "#226B2E",
+        "delta": 4.01
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mouldy Clothes",
+        "hex": "#447B3A",
+        "delta": 5.05
+      }
+    ]
+  },
+  {
+    "id": "citadel-moot-green",
+    "brand": "Citadel",
+    "name": "Moot Green",
+    "hex": "#57AA2D",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Scorpion Green",
+        "hex": "#48B851",
+        "delta": 7.19
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Lime Green",
+        "hex": "#6FAE4E",
+        "delta": 4.33
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Jungle Green",
+        "hex": "#88AC2E",
+        "delta": 8.55
+      }
+    ]
+  },
+  {
+    "id": "citadel-waaagh-flesh",
+    "brand": "Citadel",
+    "name": "Waaagh! Flesh",
+    "hex": "#275627",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Mutation Green",
+        "hex": "#296934",
+        "delta": 7.45
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Green",
+        "hex": "#2A6531",
+        "delta": 5.89
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Greenskin",
+        "hex": "#136232",
+        "delta": 5.85
+      }
+    ]
+  },
+  {
+    "id": "citadel-warboss-green",
+    "brand": "Citadel",
+    "name": "Warboss Green",
+    "hex": "#3B7D54",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Goblin Green",
+        "hex": "#23743C",
+        "delta": 6.12
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Park Green Flat",
+        "hex": "#008C5D",
+        "delta": 6.94
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mouldy Clothes",
+        "hex": "#447B3A",
+        "delta": 7.76
+      }
+    ]
+  },
+  {
+    "id": "citadel-skarsnik-green",
+    "brand": "Citadel",
+    "name": "Skarsnik Green",
+    "hex": "#5E9067",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Foul Green",
+        "hex": "#239378",
+        "delta": 10.23
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Intermediate Green",
+        "hex": "#49944F",
+        "delta": 7.74
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Goblin Green",
+        "hex": "#348941",
+        "delta": 10.21
+      }
+    ]
+  },
+  {
+    "id": "citadel-castellan-green",
+    "brand": "Citadel",
+    "name": "Castellan Green",
+    "hex": "#384D20",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Green",
+        "hex": "#566840",
+        "delta": 11.71
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Reflective Green",
+        "hex": "#496244",
+        "delta": 10.22
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Elf Green",
+        "hex": "#495122",
+        "delta": 5.08
+      }
+    ]
+  },
+  {
+    "id": "citadel-death-world-forest",
+    "brand": "Citadel",
+    "name": "Death World Forest",
+    "hex": "#666C2D",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Camoflage Green",
+        "hex": "#71753A",
+        "delta": 3.93
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Luftwaffe Cam. Green",
+        "hex": "#596B3F",
+        "delta": 6.18
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Army Green",
+        "hex": "#6E7645",
+        "delta": 5.18
+      }
+    ]
+  },
+  {
+    "id": "citadel-loren-forest",
+    "brand": "Citadel",
+    "name": "Loren Forest",
+    "hex": "#5B7426",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Camoflage Green",
+        "hex": "#71753A",
+        "delta": 6.04
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Uniform Green",
+        "hex": "#577A38",
+        "delta": 4.36
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Army Green",
+        "hex": "#6E7645",
+        "delta": 6.26
+      }
+    ]
+  },
+  {
+    "id": "citadel-straken-green",
+    "brand": "Citadel",
+    "name": "Straken Green",
+    "hex": "#6E8611",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Camoflage Green",
+        "hex": "#71753A",
+        "delta": 8.52
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Olive Green",
+        "hex": "#6A8B3A",
+        "delta": 5.63
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Commando Green",
+        "hex": "#827B39",
+        "delta": 8.47
+      }
+    ]
+  },
+  {
+    "id": "citadel-nurgling-green",
+    "brand": "Citadel",
+    "name": "Nurgling Green",
+    "hex": "#90A15F",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Khaki",
+        "hex": "#9D965D",
+        "delta": 6.95
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Middlestone",
+        "hex": "#9C9660",
+        "delta": 6.77
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Scaly Hide",
+        "hex": "#859852",
+        "delta": 3.73
+      }
+    ]
+  },
+  {
+    "id": "citadel-elysian-green",
+    "brand": "Citadel",
+    "name": "Elysian Green",
+    "hex": "#81932E",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Khaki",
+        "hex": "#9D965D",
+        "delta": 8.74
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Golden Olive",
+        "hex": "#78923B",
+        "delta": 3.3
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Witch Brew",
+        "hex": "#92963E",
+        "delta": 4.13
+      }
+    ]
+  },
+  {
+    "id": "citadel-ogryn-camo",
+    "brand": "Citadel",
+    "name": "Ogryn Camo",
+    "hex": "#A9AF42",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Dead Flesh",
+        "hex": "#BCB686",
+        "delta": 9.77
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Middlestone",
+        "hex": "#9C9660",
+        "delta": 10.87
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Jungle Green",
+        "hex": "#88AC2E",
+        "delta": 7.34
+      }
+    ]
+  },
+  {
+    "id": "citadel-zandri-dust",
+    "brand": "Citadel",
+    "name": "Zandri Dust",
+    "hex": "#A89758",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Khaki",
+        "hex": "#9D965D",
+        "delta": 3.29
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Yellow",
+        "hex": "#9D9059",
+        "delta": 3.43
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Witch Brew",
+        "hex": "#92963E",
+        "delta": 7.92
+      }
+    ]
+  },
+  {
+    "id": "citadel-ushabti-bone",
+    "brand": "Citadel",
+    "name": "Ushabti Bone",
+    "hex": "#C6C180",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Pale Yellow",
+        "hex": "#D5C179",
+        "delta": 4.47
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Sand Yellow",
+        "hex": "#D7BF75",
+        "delta": 5.54
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necrotic Flesh",
+        "hex": "#BFC292",
+        "delta": 4.22
+      }
+    ]
+  },
+  {
+    "id": "citadel-screaming-skull",
+    "brand": "Citadel",
+    "name": "Screaming Skull",
+    "hex": "#D9D8A6",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Elfic Flesh",
+        "hex": "#CDC29C",
+        "delta": 7.97
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Buff",
+        "hex": "#D2CA9F",
+        "delta": 5.02
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Skeleton Bone",
+        "hex": "#D3C89D",
+        "delta": 5.83
+      }
+    ]
+  },
+  {
+    "id": "citadel-flayed-one-flesh",
+    "brand": "Citadel",
+    "name": "Flayed One Flesh",
+    "hex": "#F3CA8A",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Bone White",
+        "hex": "#E8BE86",
+        "delta": 4.43
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Beige",
+        "hex": "#DBC58E",
+        "delta": 5.71
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Corpse Pale",
+        "hex": "#EDCCAD",
+        "delta": 7.02
+      }
+    ]
+  },
+  {
+    "id": "citadel-steel-legion-drab",
+    "brand": "Citadel",
+    "name": "Steel Legion Drab",
+    "hex": "#695634",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Brown",
+        "hex": "#705D41",
+        "delta": 3.56
+      },
+      {
+        "brand": "Vallejo",
+        "name": "English Uniform",
+        "hex": "#715833",
+        "delta": 2.52
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Venom Wyrm",
+        "hex": "#6A653E",
+        "delta": 7.15
+      }
+    ]
+  },
+  {
+    "id": "citadel-tallarn-sand",
+    "brand": "Citadel",
+    "name": "Tallarn Sand",
+    "hex": "#AB7D00",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Gold Brown",
+        "hex": "#BA8636",
+        "delta": 5.92
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Gold Brown",
+        "hex": "#BA8636",
+        "delta": 5.92
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Sulphide Ochre",
+        "hex": "#C68512",
+        "delta": 6.55
+      }
+    ]
+  },
+  {
+    "id": "citadel-karak-stone",
+    "brand": "Citadel",
+    "name": "Karak Stone",
+    "hex": "#C1A069",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Dead Flesh",
+        "hex": "#BCB686",
+        "delta": 9.6
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Iraqi Sand",
+        "hex": "#B89972",
+        "delta": 4.44
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kobold Skin",
+        "hex": "#C9A484",
+        "delta": 6.51
+      }
+    ]
+  },
+  {
+    "id": "citadel-bugmans-glow",
+    "brand": "Citadel",
+    "name": "Bugmans Glow",
+    "hex": "#8C5144",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Tan",
+        "hex": "#9F4746",
+        "delta": 6.85
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Saddle Brown",
+        "hex": "#89584F",
+        "delta": 3.16
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Werewolf Fur",
+        "hex": "#785E4E",
+        "delta": 8.04
+      }
+    ]
+  },
+  {
+    "id": "citadel-cadian-fleshtone",
+    "brand": "Citadel",
+    "name": "Cadian Fleshtone",
+    "hex": "#CB7953",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Dwarf Skin",
+        "hex": "#CC7C67",
+        "delta": 4.91
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Light Brown",
+        "hex": "#BF764E",
+        "delta": 2.92
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Tanned Flesh",
+        "hex": "#BC745E",
+        "delta": 5.23
+      }
+    ]
+  },
+  {
+    "id": "citadel-kislev-flesh",
+    "brand": "Citadel",
+    "name": "Kislev Flesh",
+    "hex": "#DBAD75",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Bone White",
+        "hex": "#E8BE86",
+        "delta": 5.89
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Flesh",
+        "hex": "#D8A977",
+        "delta": 1.96
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kobold Skin",
+        "hex": "#C9A484",
+        "delta": 6.59
+      }
+    ]
+  },
+  {
+    "id": "citadel-ratskin-flesh",
+    "brand": "Citadel",
+    "name": "Ratskin Flesh",
+    "hex": "#AD6B4C",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Skintone",
+        "hex": "#AA7B62",
+        "delta": 5.79
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Orange Brown",
+        "hex": "#B86F44",
+        "delta": 4.03
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Tanned Flesh",
+        "hex": "#BC745E",
+        "delta": 5.41
+      }
+    ]
+  },
+  {
+    "id": "citadel-bestigor-flesh",
+    "brand": "Citadel",
+    "name": "Bestigor Flesh",
+    "hex": "#D38A57",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Bronze Fleshtone",
+        "hex": "#DB945C",
+        "delta": 3.64
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Beige Red",
+        "hex": "#C79166",
+        "delta": 3.88
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Troll Claws",
+        "hex": "#CB8B4E",
+        "delta": 3.48
+      }
+    ]
+  },
+  {
+    "id": "citadel-ungor-flesh",
+    "brand": "Citadel",
+    "name": "Ungor Flesh",
+    "hex": "#DBAC63",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Bone White",
+        "hex": "#E8BE86",
+        "delta": 7.08
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Flesh",
+        "hex": "#D9A262",
+        "delta": 4.06
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kobold Skin",
+        "hex": "#C9A484",
+        "delta": 8.63
+      }
+    ]
+  },
+  {
+    "id": "citadel-mournfang-brown",
+    "brand": "Citadel",
+    "name": "Mournfang Brown",
+    "hex": "#681104",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Terracota",
+        "hex": "#6B1306",
+        "delta": 0.93
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Hull Red",
+        "hex": "#522724",
+        "delta": 8.69
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Chaotic Red",
+        "hex": "#6C1E10",
+        "delta": 3.05
+      }
+    ]
+  },
+  {
+    "id": "citadel-skrag-brown",
+    "brand": "Citadel",
+    "name": "Skrag Brown",
+    "hex": "#954B00",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Parasite Brown",
+        "hex": "#B1481F",
+        "delta": 8.84
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Earth",
+        "hex": "#87643C",
+        "delta": 9.9
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Monster Brown",
+        "hex": "#855C2A",
+        "delta": 7.48
+      }
+    ]
+  },
+  {
+    "id": "citadel-deathclaw-brown",
+    "brand": "Citadel",
+    "name": "Deathclaw Brown",
+    "hex": "#BA6952",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Dwarf Skin",
+        "hex": "#CC7C67",
+        "delta": 7.06
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Orange Brown",
+        "hex": "#B86F44",
+        "delta": 6.22
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Tanned Flesh",
+        "hex": "#BC745E",
+        "delta": 3.48
+      }
+    ]
+  },
+  {
+    "id": "citadel-xv-88",
+    "brand": "Citadel",
+    "name": "XV-88",
+    "hex": "#7B4D1C",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Leather Brown",
+        "hex": "#7B5D2A",
+        "delta": 6.77
+      },
+      {
+        "brand": "Vallejo",
+        "name": "English Uniform",
+        "hex": "#715833",
+        "delta": 6.36
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Leather Brown",
+        "hex": "#764823",
+        "delta": 3.41
+      }
+    ]
+  },
+  {
+    "id": "citadel-tau-light-ochre",
+    "brand": "Citadel",
+    "name": "Tau Light Ochre",
+    "hex": "#C26E02",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Ochre",
+        "hex": "#A87536",
+        "delta": 6.58
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Ochre Brown",
+        "hex": "#A77237",
+        "delta": 6.68
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Fire Lizard",
+        "hex": "#D67128",
+        "delta": 6.04
+      }
+    ]
+  },
+  {
+    "id": "citadel-balor-brown",
+    "brand": "Citadel",
+    "name": "Balor Brown",
+    "hex": "#915E02",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Leather Brown",
+        "hex": "#7B5D2A",
+        "delta": 6.73
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Earth",
+        "hex": "#87643C",
+        "delta": 7.19
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Monster Brown",
+        "hex": "#855C2A",
+        "delta": 5.44
+      }
+    ]
+  },
+  {
+    "id": "citadel-zamesi-desert",
+    "brand": "Citadel",
+    "name": "Zamesi Desert",
+    "hex": "#E0A503",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Plague Brown",
+        "hex": "#CC9B34",
+        "delta": 5.86
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Flesh",
+        "hex": "#D9A262",
+        "delta": 8.67
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Phoenix Flames",
+        "hex": "#FAA61A",
+        "delta": 5.96
+      }
+    ]
+  },
+  {
+    "id": "citadel-rhinox-hide",
+    "brand": "Citadel",
+    "name": "Rhinox Hide",
+    "hex": "#4E3433",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Dark Fleshtone",
+        "hex": "#4F2B26",
+        "delta": 5.21
+      },
+      {
+        "brand": "Vallejo",
+        "name": "German Cam. Black Brown",
+        "hex": "#553528",
+        "delta": 6.65
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dirt Spatter",
+        "hex": "#5E3827",
+        "delta": 9.58
+      }
+    ]
+  },
+  {
+    "id": "citadel-doombull-brown",
+    "brand": "Citadel",
+    "name": "Doombull Brown",
+    "hex": "#5E0605",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Terracota",
+        "hex": "#6B1306",
+        "delta": 5.03
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Hull Red",
+        "hex": "#522724",
+        "delta": 8.35
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Chaotic Red",
+        "hex": "#6C1E10",
+        "delta": 6.63
+      }
+    ]
+  },
+  {
+    "id": "citadel-tuskgor-fur",
+    "brand": "Citadel",
+    "name": "Tuskgor Fur",
+    "hex": "#8E3734",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Red",
+        "hex": "#943238",
+        "delta": 2.7
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Cavalry Brown",
+        "hex": "#853F3D",
+        "delta": 3.17
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Vampire Red",
+        "hex": "#981D34",
+        "delta": 6.43
+      }
+    ]
+  },
+  {
+    "id": "citadel-dryad-bark",
+    "brand": "Citadel",
+    "name": "Dryad Bark",
+    "hex": "#3B342E",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Charred Brown",
+        "hex": "#39343B",
+        "delta": 8.09
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Leather Brown",
+        "hex": "#4A4639",
+        "delta": 8.44
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necromance Cloak",
+        "hex": "#3C3D37",
+        "delta": 4.81
+      }
+    ]
+  },
+  {
+    "id": "citadel-gorthor-brown",
+    "brand": "Citadel",
+    "name": "Gorthor Brown",
+    "hex": "#6E4E46",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Sienna",
+        "hex": "#744642",
+        "delta": 4.67
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Burnt Umber",
+        "hex": "#665148",
+        "delta": 3.36
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dark Stone",
+        "hex": "#605752",
+        "delta": 6.87
+      }
+    ]
+  },
+  {
+    "id": "citadel-baneblade-brown",
+    "brand": "Citadel",
+    "name": "Baneblade Brown",
+    "hex": "#99826B",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Khaki",
+        "hex": "#8C806D",
+        "delta": 3.91
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Tan Earth",
+        "hex": "#9C7962",
+        "delta": 4.46
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Filthy Cape",
+        "hex": "#7C7863",
+        "delta": 8.37
+      }
+    ]
+  },
+  {
+    "id": "citadel-mechanicus-standard-grey",
+    "brand": "Citadel",
+    "name": "Mechanicus Standard Grey",
+    "hex": "#454E50",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Cold Grey",
+        "hex": "#54646D",
+        "delta": 9.83
+      },
+      {
+        "brand": "Vallejo",
+        "name": "USA Olive Drab",
+        "hex": "#3B4947",
+        "delta": 4.1
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Hardened Carapace",
+        "hex": "#4C473F",
+        "delta": 8.49
+      }
+    ]
+  },
+  {
+    "id": "citadel-dawnstone",
+    "brand": "Citadel",
+    "name": "Dawnstone",
+    "hex": "#7B7E74",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Khaki",
+        "hex": "#8C806D",
+        "delta": 7.2
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Sea Grey",
+        "hex": "#787D7A",
+        "delta": 3.48
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Field Grey",
+        "hex": "#787C78",
+        "delta": 2.94
+      }
+    ]
+  },
+  {
+    "id": "citadel-administratum-grey",
+    "brand": "Citadel",
+    "name": "Administratum Grey",
+    "hex": "#9DA299",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Blue Grey",
+        "hex": "#9CA7A7",
+        "delta": 5.24
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Blue Grey Pale",
+        "hex": "#9EA7A5",
+        "delta": 4.12
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ash Grey",
+        "hex": "#A2A5A4",
+        "delta": 4.02
+      }
+    ]
+  },
+  {
+    "id": "citadel-celestra-grey",
+    "brand": "Citadel",
+    "name": "Celestra Grey",
+    "hex": "#9CAEAE",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Blue Grey",
+        "hex": "#9CA7A7",
+        "delta": 2.85
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Light Sea Grey",
+        "hex": "#97B4B5",
+        "delta": 3.29
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ash Grey",
+        "hex": "#A2A5A4",
+        "delta": 4.83
+      }
+    ]
+  },
+  {
+    "id": "citadel-ulthuan-grey",
+    "brand": "Citadel",
+    "name": "Ulthuan Grey",
+    "hex": "#D2E4DF",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Verdigris",
+        "hex": "#B3CECA",
+        "delta": 8.81
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Silver Grey",
+        "hex": "#D8DFD5",
+        "delta": 4.28
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Spaceship Exterior",
+        "hex": "#CDCED0",
+        "delta": 8.63
+      }
+    ]
+  },
+  {
+    "id": "citadel-rakarth-flesh",
+    "brand": "Citadel",
+    "name": "Rakarth Flesh",
+    "hex": "#ABA495",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Blue Grey",
+        "hex": "#9CA7A7",
+        "delta": 9.17
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Stone Grey",
+        "hex": "#959980",
+        "delta": 7.73
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ash Grey",
+        "hex": "#A2A5A4",
+        "delta": 6.6
+      }
+    ]
+  },
+  {
+    "id": "citadel-pallid-wych-flesh",
+    "brand": "Citadel",
+    "name": "Pallid Wych Flesh",
+    "hex": "#D6D5C4",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Elfic Flesh",
+        "hex": "#CDC29C",
+        "delta": 10.84
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Silver Grey",
+        "hex": "#D8DFD5",
+        "delta": 4.94
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Drake Tooth",
+        "hex": "#CFCBB4",
+        "delta": 4.3
+      }
+    ]
+  },
+  {
+    "id": "citadel-abaddon-black",
+    "brand": "Citadel",
+    "name": "Abaddon Black",
+    "hex": "#010100",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Black",
+        "hex": "#000000",
+        "delta": 0.47
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Glossy Black",
+        "hex": "#010101",
+        "delta": 0.4
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Matt Black",
+        "hex": "#231F20",
+        "delta": 12.19
+      }
+    ]
+  },
+  {
+    "id": "citadel-eshin-grey",
+    "brand": "Citadel",
+    "name": "Eshin Grey",
+    "hex": "#535659",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Cold Grey",
+        "hex": "#54646D",
+        "delta": 7.37
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Grey Green",
+        "hex": "#565A60",
+        "delta": 2.4
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dark Stone",
+        "hex": "#605752",
+        "delta": 6.98
+      }
+    ]
+  },
+  {
+    "id": "citadel-skavenblight-dinge",
+    "brand": "Citadel",
+    "name": "Skavenblight Dinge",
+    "hex": "#4F4840",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Beasty Brown",
+        "hex": "#55432D",
+        "delta": 8.62
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Leather Brown",
+        "hex": "#4A4639",
+        "delta": 3.19
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Hardened Carapace",
+        "hex": "#4C473F",
+        "delta": 1.04
+      }
+    ]
+  },
+  {
+    "id": "citadel-stormvermin-fur",
+    "brand": "Citadel",
+    "name": "Stormvermin Fur",
+    "hex": "#7D736A",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Khaki",
+        "hex": "#8C806D",
+        "delta": 6.76
+      },
+      {
+        "brand": "Vallejo",
+        "name": "German Cam. Pale Brown",
+        "hex": "#82685E",
+        "delta": 6.52
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Cultist Robe",
+        "hex": "#756E60",
+        "delta": 3.62
+      }
+    ]
+  },
+  {
+    "id": "citadel-dark-reaper",
+    "brand": "Citadel",
+    "name": "Dark Reaper",
+    "hex": "#3B5150",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Cayman Green",
+        "hex": "#285648",
+        "delta": 9.24
+      },
+      {
+        "brand": "Vallejo",
+        "name": "USA Olive Drab",
+        "hex": "#3B4947",
+        "delta": 3.64
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necromance Cloak",
+        "hex": "#3C3D37",
+        "delta": 10.38
+      }
+    ]
+  },
+  {
+    "id": "citadel-death-guard-armor",
+    "brand": "Citadel",
+    "name": "Death Guard Armor",
+    "hex": "#848A66",
+    "category": "Base Layer",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Warm Grey",
+        "hex": "#939066",
+        "delta": 4.55
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Green Grey",
+        "hex": "#827E61",
+        "delta": 5.23
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Combat Fatigue",
+        "hex": "#878E5C",
+        "delta": 4.16
+      }
+    ]
+  },
+  {
+    "id": "citadel-baharroth-blue",
+    "brand": "Citadel",
+    "name": "Baharroth Blue",
+    "hex": "#58C1CD",
+    "category": "Edge",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Blue Grey",
+        "hex": "#9CA7A7",
+        "delta": 12.33
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Pale Blue",
+        "hex": "#83B5B2",
+        "delta": 7.68
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Toxic Mist",
+        "hex": "#39C0C5",
+        "delta": 4.2
+      }
+    ]
+  },
+  {
+    "id": "citadel-blue-horror",
+    "brand": "Citadel",
+    "name": "Blue Horror",
+    "hex": "#A2BAD2",
+    "category": "Edge",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Ghost Grey",
+        "hex": "#A7C5DB",
+        "delta": 4.04
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Pale Grey Blue",
+        "hex": "#BACDD0",
+        "delta": 10.51
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Gorgon Hide",
+        "hex": "#C7D2E4",
+        "delta": 10.02
+      }
+    ]
+  },
+  {
+    "id": "citadel-dechala-lilac",
+    "brand": "Citadel",
+    "name": "Dechala Lilac",
+    "hex": "#B69FCC",
+    "category": "Edge",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Wolf Grey",
+        "hex": "#90A2BC",
+        "delta": 11.88
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Blue Grey Pale",
+        "hex": "#9EA7A5",
+        "delta": 16.32
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Oozing Purple",
+        "hex": "#AA94B4",
+        "delta": 5.75
+      }
+    ]
+  },
+  {
+    "id": "citadel-dorn-yellow",
+    "brand": "Citadel",
+    "name": "Dorn Yellow",
+    "hex": "#FFF200",
+    "category": "Edge",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Moon Yellow",
+        "hex": "#FFF103",
+        "delta": 0.33
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Lemon Yellow",
+        "hex": "#FEF10E",
+        "delta": 0.42
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Babe Blonde",
+        "hex": "#F8DD0D",
+        "delta": 6.7
+      }
+    ]
+  },
+  {
+    "id": "citadel-fulgrim-pink",
+    "brand": "Citadel",
+    "name": "Fulgrim Pink",
+    "hex": "#F4AFCD",
+    "category": "Edge",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Pale Flesh",
+        "hex": "#F6BDB3",
+        "delta": 14.2
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Sky Grey",
+        "hex": "#B3B6B2",
+        "delta": 17.04
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Spaceship Exterior",
+        "hex": "#CDCED0",
+        "delta": 13.91
+      }
+    ]
+  },
+  {
+    "id": "citadel-gauss-blaster-green",
+    "brand": "Citadel",
+    "name": "Gauss Blaster Green",
+    "hex": "#84C3AA",
+    "category": "Edge",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Verdigris",
+        "hex": "#B3CECA",
+        "delta": 10.8
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Grey Grey",
+        "hex": "#AECBBB",
+        "delta": 7.89
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kraken Skin",
+        "hex": "#71C591",
+        "delta": 8.68
+      }
+    ]
+  },
+  {
+    "id": "citadel-krieg-khaki",
+    "brand": "Citadel",
+    "name": "Krieg Khaki",
+    "hex": "#C0BD81",
+    "category": "Edge",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Dead Flesh",
+        "hex": "#BCB686",
+        "delta": 3.37
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Pale Sand",
+        "hex": "#D1C49C",
+        "delta": 6.43
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necrotic Flesh",
+        "hex": "#BFC292",
+        "delta": 3.57
+      }
+    ]
+  },
+  {
+    "id": "citadel-lugganath-orange",
+    "brand": "Citadel",
+    "name": "Lugganath Orange",
+    "hex": "#F79E86",
+    "category": "Edge",
+    "matches": [
+      {
+        "brand": "Vallejo",
+        "name": "Rosy Flesh",
+        "hex": "#F89E84",
+        "delta": 0.6
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Salmon Rose",
+        "hex": "#F89D87",
+        "delta": 0.72
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Centaur Skin",
+        "hex": "#DEABA0",
+        "delta": 6.88
+      }
+    ]
+  },
+  {
+    "id": "vallejo-dead-white",
+    "brand": "Vallejo",
+    "name": "Dead White",
+    "hex": "#FFFFFF",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ceramite White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Citadel",
+        "name": "White Scar",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Matt White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      }
+    ]
+  },
+  {
+    "id": "vallejo-white",
+    "brand": "Vallejo",
+    "name": "White",
+    "hex": "#FFFFFF",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ceramite White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Citadel",
+        "name": "White Scar",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Matt White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      }
+    ]
+  },
+  {
+    "id": "vallejo-gold-yellow",
+    "brand": "Vallejo",
+    "name": "Gold Yellow",
+    "hex": "#FDB318",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Averland Sunset",
+        "hex": "#FBBA00",
+        "delta": 2.85
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Phoenix Flames",
+        "hex": "#FAA61A",
+        "delta": 7.1
+      }
+    ]
+  },
+  {
+    "id": "vallejo-golden-yellow",
+    "brand": "Vallejo",
+    "name": "Golden Yellow",
+    "hex": "#F7C65E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Averland Sunset",
+        "hex": "#FBBA00",
+        "delta": 6.07
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Phoenix Flames",
+        "hex": "#FAA61A",
+        "delta": 7.1
+      }
+    ]
+  },
+  {
+    "id": "vallejo-sun-yellow",
+    "brand": "Vallejo",
+    "name": "Sun Yellow",
+    "hex": "#FFCF07",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Yriel Yellow",
+        "hex": "#FFDA00",
+        "delta": 3.69
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Daemonic Yellow",
+        "hex": "#FADA06",
+        "delta": 1.04
+      }
+    ]
+  },
+  {
+    "id": "vallejo-deep-yellow",
+    "brand": "Vallejo",
+    "name": "Deep Yellow",
+    "hex": "#FFE30C",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Yriel Yellow",
+        "hex": "#FFDA00",
+        "delta": 2.97
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Daemonic Yellow",
+        "hex": "#FADA06",
+        "delta": 1.04
+      }
+    ]
+  },
+  {
+    "id": "vallejo-moon-yellow",
+    "brand": "Vallejo",
+    "name": "Moon Yellow",
+    "hex": "#FFF103",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Flash Gitz Yellow",
+        "hex": "#FFEE00",
+        "delta": 0.97
+      },
+      {
+        "brand": "Citadel",
+        "name": "Dorn Yellow",
+        "hex": "#FFF200",
+        "delta": 0.33
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Babe Blonde",
+        "hex": "#F8DD0D",
+        "delta": 5.46
+      }
+    ]
+  },
+  {
+    "id": "vallejo-lemon-yellow",
+    "brand": "Vallejo",
+    "name": "Lemon Yellow",
+    "hex": "#FEF10E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Flash Gitz Yellow",
+        "hex": "#FFEE00",
+        "delta": 1.05
+      },
+      {
+        "brand": "Citadel",
+        "name": "Dorn Yellow",
+        "hex": "#FFF200",
+        "delta": 0.42
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Babe Blonde",
+        "hex": "#F8DD0D",
+        "delta": 5.46
+      }
+    ]
+  },
+  {
+    "id": "vallejo-hot-orange",
+    "brand": "Vallejo",
+    "name": "Hot Orange",
+    "hex": "#E43027",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Jokaero Orange",
+        "hex": "#E6200F",
+        "delta": 2.9
+      },
+      {
+        "brand": "Citadel",
+        "name": "Wild Rider Red",
+        "hex": "#E21516",
+        "delta": 2.9
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mythical Orange",
+        "hex": "#E73D24",
+        "delta": 3.48
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Pure Red",
+        "hex": "#CF2127",
+        "delta": 4.67
+      }
+    ]
+  },
+  {
+    "id": "vallejo-scarlet",
+    "brand": "Vallejo",
+    "name": "Scarlet",
+    "hex": "#DA3630",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Jokaero Orange",
+        "hex": "#E6200F",
+        "delta": 4.5
+      },
+      {
+        "brand": "Citadel",
+        "name": "Wild Rider Red",
+        "hex": "#E21516",
+        "delta": 3.64
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mythical Orange",
+        "hex": "#E73D24",
+        "delta": 3.48
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Pure Red",
+        "hex": "#CF2127",
+        "delta": 4.67
+      }
+    ]
+  },
+  {
+    "id": "vallejo-orange-fire",
+    "brand": "Vallejo",
+    "name": "Orange Fire",
+    "hex": "#F1652E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Troll Slayer Orange",
+        "hex": "#EB641B",
+        "delta": 2.89
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Fire Lizard",
+        "hex": "#D67128",
+        "delta": 4.67
+      }
+    ]
+  },
+  {
+    "id": "vallejo-bright-orange",
+    "brand": "Vallejo",
+    "name": "Bright Orange",
+    "hex": "#F26833",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Troll Slayer Orange",
+        "hex": "#EB641B",
+        "delta": 3.48
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Fire Lizard",
+        "hex": "#D67128",
+        "delta": 4.67
+      }
+    ]
+  },
+  {
+    "id": "vallejo-bronze-fleshtone",
+    "brand": "Vallejo",
+    "name": "Bronze Fleshtone",
+    "hex": "#DB945C",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Fire Dragon Bright",
+        "hex": "#F1844A",
+        "delta": 6.36
+      },
+      {
+        "brand": "Citadel",
+        "name": "Bestigor Flesh",
+        "hex": "#D38A57",
+        "delta": 3.64
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Barbarian Flesh",
+        "hex": "#E89C6C",
+        "delta": 7
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Troll Claws",
+        "hex": "#CB8B4E",
+        "delta": 3.48
+      }
+    ]
+  },
+  {
+    "id": "vallejo-light-orange",
+    "brand": "Vallejo",
+    "name": "Light Orange",
+    "hex": "#F68627",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Fire Dragon Bright",
+        "hex": "#F1844A",
+        "delta": 5.97
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Barbarian Flesh",
+        "hex": "#E89C6C",
+        "delta": 7
+      }
+    ]
+  },
+  {
+    "id": "vallejo-gory-red",
+    "brand": "Vallejo",
+    "name": "Gory Red",
+    "hex": "#810504",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Mephiston Red",
+        "hex": "#9B0E05",
+        "delta": 6.78
+      },
+      {
+        "brand": "Citadel",
+        "name": "Wazdakka Red",
+        "hex": "#8D0D01",
+        "delta": 3.65
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dragon Red",
+        "hex": "#9A1B1E",
+        "delta": 4.47
+      }
+    ]
+  },
+  {
+    "id": "vallejo-flat-red",
+    "brand": "Vallejo",
+    "name": "Flat Red",
+    "hex": "#AA3037",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Mephiston Red",
+        "hex": "#9B0E05",
+        "delta": 10.28
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dragon Red",
+        "hex": "#9A1B1E",
+        "delta": 4.47
+      }
+    ]
+  },
+  {
+    "id": "vallejo-bloody-red",
+    "brand": "Vallejo",
+    "name": "Bloody Red",
+    "hex": "#BF282E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Evil Suns Scarlet",
+        "hex": "#C00B0C",
+        "delta": 5.5
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Pure Red",
+        "hex": "#CF2127",
+        "delta": 5.54
+      }
+    ]
+  },
+  {
+    "id": "vallejo-carmine-red",
+    "brand": "Vallejo",
+    "name": "Carmine Red",
+    "hex": "#B73035",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Evil Suns Scarlet",
+        "hex": "#C00B0C",
+        "delta": 6.79
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Pure Red",
+        "hex": "#CF2127",
+        "delta": 5.54
+      }
+    ]
+  },
+  {
+    "id": "vallejo-terracota",
+    "brand": "Vallejo",
+    "name": "Terracota",
+    "hex": "#6B1306",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Khorne Red",
+        "hex": "#6A0A01",
+        "delta": 1.41
+      },
+      {
+        "brand": "Citadel",
+        "name": "Mournfang Brown",
+        "hex": "#681104",
+        "delta": 0.93
+      },
+      {
+        "brand": "Citadel",
+        "name": "Doombull Brown",
+        "hex": "#5E0605",
+        "delta": 5.03
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Chaotic Red",
+        "hex": "#6C1E10",
+        "delta": 3.69
+      }
+    ]
+  },
+  {
+    "id": "vallejo-hull-red",
+    "brand": "Vallejo",
+    "name": "Hull Red",
+    "hex": "#522724",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Khorne Red",
+        "hex": "#6A0A01",
+        "delta": 9.07
+      },
+      {
+        "brand": "Citadel",
+        "name": "Mournfang Brown",
+        "hex": "#681104",
+        "delta": 8.69
+      },
+      {
+        "brand": "Citadel",
+        "name": "Doombull Brown",
+        "hex": "#5E0605",
+        "delta": 8.35
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Chaotic Red",
+        "hex": "#6C1E10",
+        "delta": 3.69
+      }
+    ]
+  },
+  {
+    "id": "vallejo-german-cam-medium-brown",
+    "brand": "Vallejo",
+    "name": "German Cam. Medium Brown",
+    "hex": "#722B2F",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Wazdakka Red",
+        "hex": "#8D0D01",
+        "delta": 10.59
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dragon Red",
+        "hex": "#9A1B1E",
+        "delta": 6.03
+      }
+    ]
+  },
+  {
+    "id": "vallejo-tan",
+    "brand": "Vallejo",
+    "name": "Tan",
+    "hex": "#9F4746",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Squig Orange",
+        "hex": "#B04D3E",
+        "delta": 6.09
+      },
+      {
+        "brand": "Citadel",
+        "name": "Emperors Children",
+        "hex": "#BD3F75",
+        "delta": 14.82
+      },
+      {
+        "brand": "Citadel",
+        "name": "Bugmans Glow",
+        "hex": "#8C5144",
+        "delta": 6.85
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mars Red",
+        "hex": "#B73B37",
+        "delta": 4.35
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Orc Blood",
+        "hex": "#925F6E",
+        "delta": 9.29
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Werewolf Fur",
+        "hex": "#785E4E",
+        "delta": 8.04
+      }
+    ]
+  },
+  {
+    "id": "vallejo-dark-red",
+    "brand": "Vallejo",
+    "name": "Dark Red",
+    "hex": "#A24A46",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Squig Orange",
+        "hex": "#B04D3E",
+        "delta": 4.77
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mars Red",
+        "hex": "#B73B37",
+        "delta": 4.35
+      }
+    ]
+  },
+  {
+    "id": "vallejo-warlord-purple",
+    "brand": "Vallejo",
+    "name": "Warlord Purple",
+    "hex": "#7D1A44",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Screamer Pink",
+        "hex": "#831740",
+        "delta": 2.51
+      },
+      {
+        "brand": "Citadel",
+        "name": "Pink Horror",
+        "hex": "#96325C",
+        "delta": 8.94
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Vampire Red",
+        "hex": "#981D34",
+        "delta": 9.58
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Wasteland Soil",
+        "hex": "#774B58",
+        "delta": 8.26
+      }
+    ]
+  },
+  {
+    "id": "vallejo-violet-red",
+    "brand": "Vallejo",
+    "name": "Violet Red",
+    "hex": "#6B2946",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Screamer Pink",
+        "hex": "#831740",
+        "delta": 6.43
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Vampire Red",
+        "hex": "#981D34",
+        "delta": 9.58
+      }
+    ]
+  },
+  {
+    "id": "vallejo-magenta",
+    "brand": "Vallejo",
+    "name": "Magenta",
+    "hex": "#A92A56",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Pink Horror",
+        "hex": "#96325C",
+        "delta": 5.53
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Wasteland Soil",
+        "hex": "#774B58",
+        "delta": 8.26
+      }
+    ]
+  },
+  {
+    "id": "vallejo-sunset-red",
+    "brand": "Vallejo",
+    "name": "Sunset Red",
+    "hex": "#C22C5F",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Emperors Children",
+        "hex": "#BD3F75",
+        "delta": 6.33
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Orc Blood",
+        "hex": "#925F6E",
+        "delta": 9.29
+      }
+    ]
+  },
+  {
+    "id": "vallejo-hexed-lichen",
+    "brand": "Vallejo",
+    "name": "Hexed Lichen",
+    "hex": "#34274D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Naggaroth Night",
+        "hex": "#433656",
+        "delta": 6.85
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Deep Blue",
+        "hex": "#083251",
+        "delta": 12.85
+      }
+    ]
+  },
+  {
+    "id": "vallejo-violet",
+    "brand": "Vallejo",
+    "name": "Violet",
+    "hex": "#4B2F65",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Naggaroth Night",
+        "hex": "#433656",
+        "delta": 7.68
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Deep Blue",
+        "hex": "#083251",
+        "delta": 12.85
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-violet",
+    "brand": "Vallejo",
+    "name": "Heavy Violet",
+    "hex": "#4C2E65",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Xereus Purple",
+        "hex": "#4B205C",
+        "delta": 4.74
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Alien Purple",
+        "hex": "#50317B",
+        "delta": 8.1
+      }
+    ]
+  },
+  {
+    "id": "vallejo-royal-purple",
+    "brand": "Vallejo",
+    "name": "Royal Purple",
+    "hex": "#4B2967",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Xereus Purple",
+        "hex": "#4B205C",
+        "delta": 3.55
+      },
+      {
+        "brand": "Citadel",
+        "name": "Kantor Blue",
+        "hex": "#06234F",
+        "delta": 4.17
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Alien Purple",
+        "hex": "#50317B",
+        "delta": 8.1
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Deep Blue",
+        "hex": "#083251",
+        "delta": 8.77
+      }
+    ]
+  },
+  {
+    "id": "vallejo-sombre-grey",
+    "brand": "Vallejo",
+    "name": "Sombre Grey",
+    "hex": "#4C5C7D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Genestealer Purple",
+        "hex": "#7C5CA4",
+        "delta": 14.05
+      },
+      {
+        "brand": "Citadel",
+        "name": "Daemonette Hide",
+        "hex": "#696685",
+        "delta": 7.44
+      },
+      {
+        "brand": "Citadel",
+        "name": "Alaitoc Blue",
+        "hex": "#2E5689",
+        "delta": 5.74
+      },
+      {
+        "brand": "Citadel",
+        "name": "Calgar Blue",
+        "hex": "#456EB5",
+        "delta": 10.77
+      },
+      {
+        "brand": "Citadel",
+        "name": "Caledor Sky",
+        "hex": "#38689C",
+        "delta": 6.68
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dungeon Grey",
+        "hex": "#686C71",
+        "delta": 14.88
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Griffon Blue",
+        "hex": "#215383",
+        "delta": 2.47
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Viking Blue",
+        "hex": "#00609A",
+        "delta": 9.49
+      }
+    ]
+  },
+  {
+    "id": "vallejo-blue-violet",
+    "brand": "Vallejo",
+    "name": "Blue Violet",
+    "hex": "#795C9A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Genestealer Purple",
+        "hex": "#7C5CA4",
+        "delta": 2.09
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dungeon Grey",
+        "hex": "#686C71",
+        "delta": 14.88
+      }
+    ]
+  },
+  {
+    "id": "vallejo-azure",
+    "brand": "Vallejo",
+    "name": "Azure",
+    "hex": "#717CAD",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Daemonette Hide",
+        "hex": "#696685",
+        "delta": 10.4
+      },
+      {
+        "brand": "Citadel",
+        "name": "Hoeth Blue",
+        "hex": "#4F7FB5",
+        "delta": 6.29
+      },
+      {
+        "brand": "Citadel",
+        "name": "Teclis Blue",
+        "hex": "#387BBF",
+        "delta": 7.44
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dungeon Grey",
+        "hex": "#686C71",
+        "delta": 9.11
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Crystal Blue",
+        "hex": "#0083C2",
+        "delta": 5.1
+      }
+    ]
+  },
+  {
+    "id": "vallejo-cold-grey",
+    "brand": "Vallejo",
+    "name": "Cold Grey",
+    "hex": "#54646D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Warpfiend Grey",
+        "hex": "#6B6A74",
+        "delta": 7.09
+      },
+      {
+        "brand": "Citadel",
+        "name": "Mechanicus Standard Grey",
+        "hex": "#454E50",
+        "delta": 9.83
+      },
+      {
+        "brand": "Citadel",
+        "name": "Eshin Grey",
+        "hex": "#535659",
+        "delta": 7.37
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dungeon Grey",
+        "hex": "#686C71",
+        "delta": 3.11
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Hardened Carapace",
+        "hex": "#4C473F",
+        "delta": 8.49
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dark Stone",
+        "hex": "#605752",
+        "delta": 6.98
+      }
+    ]
+  },
+  {
+    "id": "vallejo-grey-green",
+    "brand": "Vallejo",
+    "name": "Grey Green",
+    "hex": "#565A60",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Warpfiend Grey",
+        "hex": "#6B6A74",
+        "delta": 7.62
+      },
+      {
+        "brand": "Citadel",
+        "name": "Eshin Grey",
+        "hex": "#535659",
+        "delta": 2.4
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dungeon Grey",
+        "hex": "#686C71",
+        "delta": 3.11
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dark Stone",
+        "hex": "#605752",
+        "delta": 6.98
+      }
+    ]
+  },
+  {
+    "id": "vallejo-stonewall-grey",
+    "brand": "Vallejo",
+    "name": "Stonewall Grey",
+    "hex": "#828E95",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Slaanesh Grey",
+        "hex": "#8E8C97",
+        "delta": 5.31
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ash Grey",
+        "hex": "#A2A5A4",
+        "delta": 10.62
+      }
+    ]
+  },
+  {
+    "id": "vallejo-medium-sea-grey",
+    "brand": "Vallejo",
+    "name": "Medium Sea Grey",
+    "hex": "#869393",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Slaanesh Grey",
+        "hex": "#8E8C97",
+        "delta": 7.9
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ash Grey",
+        "hex": "#A2A5A4",
+        "delta": 10.62
+      }
+    ]
+  },
+  {
+    "id": "vallejo-dark-prussian-blue",
+    "brand": "Vallejo",
+    "name": "Dark Prussian Blue",
+    "hex": "#192C43",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Kantor Blue",
+        "hex": "#06234F",
+        "delta": 7.88
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Deep Blue",
+        "hex": "#083251",
+        "delta": 8.77
+      }
+    ]
+  },
+  {
+    "id": "vallejo-royal-blue",
+    "brand": "Vallejo",
+    "name": "Royal Blue",
+    "hex": "#41558D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Alaitoc Blue",
+        "hex": "#2E5689",
+        "delta": 4.15
+      },
+      {
+        "brand": "Citadel",
+        "name": "Altdorf Guard Blue",
+        "hex": "#274B9B",
+        "delta": 5.97
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Griffon Blue",
+        "hex": "#215383",
+        "delta": 2.47
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ultramarine Blue",
+        "hex": "#0F4E85",
+        "delta": 7.64
+      }
+    ]
+  },
+  {
+    "id": "vallejo-electric-blue",
+    "brand": "Vallejo",
+    "name": "Electric Blue",
+    "hex": "#008CBF",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Hoeth Blue",
+        "hex": "#4F7FB5",
+        "delta": 8.73
+      },
+      {
+        "brand": "Citadel",
+        "name": "Teclis Blue",
+        "hex": "#387BBF",
+        "delta": 10.36
+      },
+      {
+        "brand": "Citadel",
+        "name": "Lothern Blue",
+        "hex": "#3BA1D1",
+        "delta": 8.05
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Crystal Blue",
+        "hex": "#0083C2",
+        "delta": 5.1
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Voidshield Blue",
+        "hex": "#2CA2D9",
+        "delta": 1.85
+      }
+    ]
+  },
+  {
+    "id": "vallejo-magic-blue",
+    "brand": "Vallejo",
+    "name": "Magic Blue",
+    "hex": "#024381",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Macragge Blue",
+        "hex": "#14397A",
+        "delta": 4.51
+      },
+      {
+        "brand": "Citadel",
+        "name": "Altdorf Guard Blue",
+        "hex": "#274B9B",
+        "delta": 7
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ultramarine Blue",
+        "hex": "#0F4E85",
+        "delta": 9.37
+      }
+    ]
+  },
+  {
+    "id": "vallejo-blue",
+    "brand": "Vallejo",
+    "name": "Blue",
+    "hex": "#043667",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Macragge Blue",
+        "hex": "#14397A",
+        "delta": 5.36
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ultramarine Blue",
+        "hex": "#0F4E85",
+        "delta": 9.37
+      }
+    ]
+  },
+  {
+    "id": "vallejo-ultramarine",
+    "brand": "Vallejo",
+    "name": "Ultramarine",
+    "hex": "#3B5DA7",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Calgar Blue",
+        "hex": "#456EB5",
+        "delta": 6.56
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Viking Blue",
+        "hex": "#00609A",
+        "delta": 9.49
+      }
+    ]
+  },
+  {
+    "id": "vallejo-flat-blue",
+    "brand": "Vallejo",
+    "name": "Flat Blue",
+    "hex": "#336991",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Caledor Sky",
+        "hex": "#38689C",
+        "delta": 4.5
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Viking Blue",
+        "hex": "#00609A",
+        "delta": 4.57
+      }
+    ]
+  },
+  {
+    "id": "vallejo-deep-sky-blue",
+    "brand": "Vallejo",
+    "name": "Deep Sky Blue",
+    "hex": "#00A6DA",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Lothern Blue",
+        "hex": "#3BA1D1",
+        "delta": 2.46
+      },
+      {
+        "brand": "Citadel",
+        "name": "Thousand Sons Blue",
+        "hex": "#18ABCC",
+        "delta": 7.22
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Voidshield Blue",
+        "hex": "#2CA2D9",
+        "delta": 1.85
+      }
+    ]
+  },
+  {
+    "id": "vallejo-wolf-grey",
+    "brand": "Vallejo",
+    "name": "Wolf Grey",
+    "hex": "#90A2BC",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Thousand Sons Blue",
+        "hex": "#18ABCC",
+        "delta": 13.12
+      },
+      {
+        "brand": "Citadel",
+        "name": "Fenrisian Grey",
+        "hex": "#789EBB",
+        "delta": 4.99
+      },
+      {
+        "brand": "Citadel",
+        "name": "Dechala Lilac",
+        "hex": "#B69FCC",
+        "delta": 11.88
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Voidshield Blue",
+        "hex": "#2CA2D9",
+        "delta": 9.61
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ice Storm",
+        "hex": "#639EC9",
+        "delta": 4.78
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Oozing Purple",
+        "hex": "#AA94B4",
+        "delta": 5.75
+      }
+    ]
+  },
+  {
+    "id": "vallejo-steel-grey",
+    "brand": "Vallejo",
+    "name": "Steel Grey",
+    "hex": "#64889D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ahriman Blue",
+        "hex": "#1F8C9C",
+        "delta": 9.47
+      },
+      {
+        "brand": "Citadel",
+        "name": "Russ Grey",
+        "hex": "#55768A",
+        "delta": 6.93
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Hydra Turquoise",
+        "hex": "#199BA3",
+        "delta": 6.51
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Wolf Grey",
+        "hex": "#5B8093",
+        "delta": 3.86
+      }
+    ]
+  },
+  {
+    "id": "vallejo-turquoise",
+    "brand": "Vallejo",
+    "name": "Turquoise",
+    "hex": "#008E9C",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ahriman Blue",
+        "hex": "#1F8C9C",
+        "delta": 1.73
+      },
+      {
+        "brand": "Citadel",
+        "name": "The Fang",
+        "hex": "#457479",
+        "delta": 7.97
+      },
+      {
+        "brand": "Citadel",
+        "name": "Sotek Green",
+        "hex": "#056976",
+        "delta": 2.52
+      },
+      {
+        "brand": "Citadel",
+        "name": "Thunderhawk Blue",
+        "hex": "#417074",
+        "delta": 6.74
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Hydra Turquoise",
+        "hex": "#199BA3",
+        "delta": 6.51
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Uniform Grey",
+        "hex": "#5E6A73",
+        "delta": 8.36
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Wizards Orb",
+        "hex": "#00726A",
+        "delta": 10.41
+      }
+    ]
+  },
+  {
+    "id": "vallejo-french-mirage-blue",
+    "brand": "Vallejo",
+    "name": "French Mirage Blue",
+    "hex": "#557880",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "The Fang",
+        "hex": "#457479",
+        "delta": 3.78
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Uniform Grey",
+        "hex": "#5E6A73",
+        "delta": 8.36
+      }
+    ]
+  },
+  {
+    "id": "vallejo-grey-blue",
+    "brand": "Vallejo",
+    "name": "Grey Blue",
+    "hex": "#45708D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Russ Grey",
+        "hex": "#55768A",
+        "delta": 4.4
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Wolf Grey",
+        "hex": "#5B8093",
+        "delta": 3.86
+      }
+    ]
+  },
+  {
+    "id": "vallejo-pastel-blue",
+    "brand": "Vallejo",
+    "name": "Pastel Blue",
+    "hex": "#67859B",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Fenrisian Grey",
+        "hex": "#789EBB",
+        "delta": 9.56
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ice Storm",
+        "hex": "#639EC9",
+        "delta": 4.78
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-blue",
+    "brand": "Vallejo",
+    "name": "Heavy Blue",
+    "hex": "#29556D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Stegadon Scale Green",
+        "hex": "#004261",
+        "delta": 8.65
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dark Sky",
+        "hex": "#2B4B5F",
+        "delta": 5.88
+      }
+    ]
+  },
+  {
+    "id": "vallejo-oxford-blue",
+    "brand": "Vallejo",
+    "name": "Oxford Blue",
+    "hex": "#3A465F",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Stegadon Scale Green",
+        "hex": "#004261",
+        "delta": 7.53
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dark Sky",
+        "hex": "#2B4B5F",
+        "delta": 5.88
+      }
+    ]
+  },
+  {
+    "id": "vallejo-field-blue",
+    "brand": "Vallejo",
+    "name": "Field Blue",
+    "hex": "#436872",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Sotek Green",
+        "hex": "#056976",
+        "delta": 5.52
+      },
+      {
+        "brand": "Citadel",
+        "name": "Thunderhawk Blue",
+        "hex": "#417074",
+        "delta": 4.67
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Wizards Orb",
+        "hex": "#00726A",
+        "delta": 10.41
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Uniform Grey",
+        "hex": "#5E6A73",
+        "delta": 8.41
+      }
+    ]
+  },
+  {
+    "id": "vallejo-foul-green",
+    "brand": "Vallejo",
+    "name": "Foul Green",
+    "hex": "#239378",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Temple Guard Blue",
+        "hex": "#35998E",
+        "delta": 6.72
+      },
+      {
+        "brand": "Citadel",
+        "name": "Kabalite Green",
+        "hex": "#008660",
+        "delta": 6.42
+      },
+      {
+        "brand": "Citadel",
+        "name": "Sybarite Green",
+        "hex": "#36A062",
+        "delta": 10.15
+      },
+      {
+        "brand": "Citadel",
+        "name": "Skarsnik Green",
+        "hex": "#5E9067",
+        "delta": 10.23
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Elemental Bolt",
+        "hex": "#009A82",
+        "delta": 5.37
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Goblin Green",
+        "hex": "#348941",
+        "delta": 9.25
+      }
+    ]
+  },
+  {
+    "id": "vallejo-blue-green",
+    "brand": "Vallejo",
+    "name": "Blue Green",
+    "hex": "#1A9496",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Temple Guard Blue",
+        "hex": "#35998E",
+        "delta": 5.44
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Elemental Bolt",
+        "hex": "#009A82",
+        "delta": 5.37
+      }
+    ]
+  },
+  {
+    "id": "vallejo-scurvy-green",
+    "brand": "Vallejo",
+    "name": "Scurvy Green",
+    "hex": "#09474E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Incubi Darkness",
+        "hex": "#094345",
+        "delta": 3.18
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necromance Cloak",
+        "hex": "#3C3D37",
+        "delta": 11.76
+      }
+    ]
+  },
+  {
+    "id": "vallejo-black-green",
+    "brand": "Vallejo",
+    "name": "Black Green",
+    "hex": "#19423E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Incubi Darkness",
+        "hex": "#094345",
+        "delta": 3.4
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necromance Cloak",
+        "hex": "#3C3D37",
+        "delta": 11.76
+      }
+    ]
+  },
+  {
+    "id": "vallejo-park-green-flat",
+    "brand": "Vallejo",
+    "name": "Park Green Flat",
+    "hex": "#008C5D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Kabalite Green",
+        "hex": "#008660",
+        "delta": 3.14
+      },
+      {
+        "brand": "Citadel",
+        "name": "Warboss Green",
+        "hex": "#3B7D54",
+        "delta": 6.94
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Elemental Bolt",
+        "hex": "#009A82",
+        "delta": 9.15
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mouldy Clothes",
+        "hex": "#447B3A",
+        "delta": 7.76
+      }
+    ]
+  },
+  {
+    "id": "vallejo-light-green",
+    "brand": "Vallejo",
+    "name": "Light Green",
+    "hex": "#00A850",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Sybarite Green",
+        "hex": "#36A062",
+        "delta": 5.6
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Goblin Green",
+        "hex": "#348941",
+        "delta": 9.25
+      }
+    ]
+  },
+  {
+    "id": "vallejo-dark-green",
+    "brand": "Vallejo",
+    "name": "Dark Green",
+    "hex": "#083C2A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Caliban Green",
+        "hex": "#003B1D",
+        "delta": 4.63
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Angel Green",
+        "hex": "#0C391D",
+        "delta": 1.63
+      }
+    ]
+  },
+  {
+    "id": "vallejo-yellow-olive",
+    "brand": "Vallejo",
+    "name": "Yellow Olive",
+    "hex": "#26392E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Caliban Green",
+        "hex": "#003B1D",
+        "delta": 7.93
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Angel Green",
+        "hex": "#0C391D",
+        "delta": 1.63
+      }
+    ]
+  },
+  {
+    "id": "vallejo-goblin-green",
+    "brand": "Vallejo",
+    "name": "Goblin Green",
+    "hex": "#23743C",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Warpstone Glow",
+        "hex": "#257326",
+        "delta": 4.73
+      },
+      {
+        "brand": "Citadel",
+        "name": "Warboss Green",
+        "hex": "#3B7D54",
+        "delta": 6.12
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mouldy Clothes",
+        "hex": "#447B3A",
+        "delta": 5.05
+      }
+    ]
+  },
+  {
+    "id": "vallejo-medium-olive",
+    "brand": "Vallejo",
+    "name": "Medium Olive",
+    "hex": "#226B2E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Warpstone Glow",
+        "hex": "#257326",
+        "delta": 4.01
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Mouldy Clothes",
+        "hex": "#447B3A",
+        "delta": 5.05
+      }
+    ]
+  },
+  {
+    "id": "vallejo-scorpion-green",
+    "brand": "Vallejo",
+    "name": "Scorpion Green",
+    "hex": "#48B851",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Moot Green",
+        "hex": "#57AA2D",
+        "delta": 7.19
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Jungle Green",
+        "hex": "#88AC2E",
+        "delta": 8.55
+      }
+    ]
+  },
+  {
+    "id": "vallejo-lime-green",
+    "brand": "Vallejo",
+    "name": "Lime Green",
+    "hex": "#6FAE4E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Moot Green",
+        "hex": "#57AA2D",
+        "delta": 4.33
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Jungle Green",
+        "hex": "#88AC2E",
+        "delta": 8.55
+      }
+    ]
+  },
+  {
+    "id": "vallejo-mutation-green",
+    "brand": "Vallejo",
+    "name": "Mutation Green",
+    "hex": "#296934",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Waaagh! Flesh",
+        "hex": "#275627",
+        "delta": 7.45
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Greenskin",
+        "hex": "#136232",
+        "delta": 5.85
+      }
+    ]
+  },
+  {
+    "id": "vallejo-flat-green",
+    "brand": "Vallejo",
+    "name": "Flat Green",
+    "hex": "#2A6531",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Waaagh! Flesh",
+        "hex": "#275627",
+        "delta": 5.89
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Greenskin",
+        "hex": "#136232",
+        "delta": 5.85
+      }
+    ]
+  },
+  {
+    "id": "vallejo-intermediate-green",
+    "brand": "Vallejo",
+    "name": "Intermediate Green",
+    "hex": "#49944F",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Skarsnik Green",
+        "hex": "#5E9067",
+        "delta": 7.74
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Goblin Green",
+        "hex": "#348941",
+        "delta": 10.21
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-green",
+    "brand": "Vallejo",
+    "name": "Heavy Green",
+    "hex": "#566840",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Castellan Green",
+        "hex": "#384D20",
+        "delta": 11.71
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Elf Green",
+        "hex": "#495122",
+        "delta": 5.08
+      }
+    ]
+  },
+  {
+    "id": "vallejo-reflective-green",
+    "brand": "Vallejo",
+    "name": "Reflective Green",
+    "hex": "#496244",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Castellan Green",
+        "hex": "#384D20",
+        "delta": 10.22
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Elf Green",
+        "hex": "#495122",
+        "delta": 5.08
+      }
+    ]
+  },
+  {
+    "id": "vallejo-camoflage-green",
+    "brand": "Vallejo",
+    "name": "Camoflage Green",
+    "hex": "#71753A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Death World Forest",
+        "hex": "#666C2D",
+        "delta": 3.93
+      },
+      {
+        "brand": "Citadel",
+        "name": "Loren Forest",
+        "hex": "#5B7426",
+        "delta": 6.04
+      },
+      {
+        "brand": "Citadel",
+        "name": "Straken Green",
+        "hex": "#6E8611",
+        "delta": 8.52
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Army Green",
+        "hex": "#6E7645",
+        "delta": 5.18
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Commando Green",
+        "hex": "#827B39",
+        "delta": 8.47
+      }
+    ]
+  },
+  {
+    "id": "vallejo-luftwaffe-cam-green",
+    "brand": "Vallejo",
+    "name": "Luftwaffe Cam. Green",
+    "hex": "#596B3F",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Death World Forest",
+        "hex": "#666C2D",
+        "delta": 6.18
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Army Green",
+        "hex": "#6E7645",
+        "delta": 5.18
+      }
+    ]
+  },
+  {
+    "id": "vallejo-uniform-green",
+    "brand": "Vallejo",
+    "name": "Uniform Green",
+    "hex": "#577A38",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Loren Forest",
+        "hex": "#5B7426",
+        "delta": 4.36
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Army Green",
+        "hex": "#6E7645",
+        "delta": 6.26
+      }
+    ]
+  },
+  {
+    "id": "vallejo-olive-green",
+    "brand": "Vallejo",
+    "name": "Olive Green",
+    "hex": "#6A8B3A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Straken Green",
+        "hex": "#6E8611",
+        "delta": 5.63
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Commando Green",
+        "hex": "#827B39",
+        "delta": 8.47
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-khaki",
+    "brand": "Vallejo",
+    "name": "Heavy Khaki",
+    "hex": "#9D965D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Nurgling Green",
+        "hex": "#90A15F",
+        "delta": 6.95
+      },
+      {
+        "brand": "Citadel",
+        "name": "Elysian Green",
+        "hex": "#81932E",
+        "delta": 8.74
+      },
+      {
+        "brand": "Citadel",
+        "name": "Zandri Dust",
+        "hex": "#A89758",
+        "delta": 3.29
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Scaly Hide",
+        "hex": "#859852",
+        "delta": 3.73
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Witch Brew",
+        "hex": "#92963E",
+        "delta": 4.13
+      }
+    ]
+  },
+  {
+    "id": "vallejo-middlestone",
+    "brand": "Vallejo",
+    "name": "Middlestone",
+    "hex": "#9C9660",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Nurgling Green",
+        "hex": "#90A15F",
+        "delta": 6.77
+      },
+      {
+        "brand": "Citadel",
+        "name": "Ogryn Camo",
+        "hex": "#A9AF42",
+        "delta": 10.87
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Scaly Hide",
+        "hex": "#859852",
+        "delta": 3.73
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Jungle Green",
+        "hex": "#88AC2E",
+        "delta": 7.34
+      }
+    ]
+  },
+  {
+    "id": "vallejo-golden-olive",
+    "brand": "Vallejo",
+    "name": "Golden Olive",
+    "hex": "#78923B",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Elysian Green",
+        "hex": "#81932E",
+        "delta": 3.3
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Witch Brew",
+        "hex": "#92963E",
+        "delta": 4.13
+      }
+    ]
+  },
+  {
+    "id": "vallejo-dead-flesh",
+    "brand": "Vallejo",
+    "name": "Dead Flesh",
+    "hex": "#BCB686",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ogryn Camo",
+        "hex": "#A9AF42",
+        "delta": 9.77
+      },
+      {
+        "brand": "Citadel",
+        "name": "Karak Stone",
+        "hex": "#C1A069",
+        "delta": 9.6
+      },
+      {
+        "brand": "Citadel",
+        "name": "Krieg Khaki",
+        "hex": "#C0BD81",
+        "delta": 3.37
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Jungle Green",
+        "hex": "#88AC2E",
+        "delta": 7.34
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kobold Skin",
+        "hex": "#C9A484",
+        "delta": 6.51
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necrotic Flesh",
+        "hex": "#BFC292",
+        "delta": 3.57
+      }
+    ]
+  },
+  {
+    "id": "vallejo-dark-yellow",
+    "brand": "Vallejo",
+    "name": "Dark Yellow",
+    "hex": "#9D9059",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Zandri Dust",
+        "hex": "#A89758",
+        "delta": 3.43
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Witch Brew",
+        "hex": "#92963E",
+        "delta": 7.92
+      }
+    ]
+  },
+  {
+    "id": "vallejo-pale-yellow",
+    "brand": "Vallejo",
+    "name": "Pale Yellow",
+    "hex": "#D5C179",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ushabti Bone",
+        "hex": "#C6C180",
+        "delta": 4.47
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necrotic Flesh",
+        "hex": "#BFC292",
+        "delta": 4.22
+      }
+    ]
+  },
+  {
+    "id": "vallejo-sand-yellow",
+    "brand": "Vallejo",
+    "name": "Sand Yellow",
+    "hex": "#D7BF75",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ushabti Bone",
+        "hex": "#C6C180",
+        "delta": 5.54
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necrotic Flesh",
+        "hex": "#BFC292",
+        "delta": 4.22
+      }
+    ]
+  },
+  {
+    "id": "vallejo-elfic-flesh",
+    "brand": "Vallejo",
+    "name": "Elfic Flesh",
+    "hex": "#CDC29C",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Screaming Skull",
+        "hex": "#D9D8A6",
+        "delta": 7.97
+      },
+      {
+        "brand": "Citadel",
+        "name": "Pallid Wych Flesh",
+        "hex": "#D6D5C4",
+        "delta": 10.84
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Skeleton Bone",
+        "hex": "#D3C89D",
+        "delta": 5.83
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Drake Tooth",
+        "hex": "#CFCBB4",
+        "delta": 4.3
+      }
+    ]
+  },
+  {
+    "id": "vallejo-buff",
+    "brand": "Vallejo",
+    "name": "Buff",
+    "hex": "#D2CA9F",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Screaming Skull",
+        "hex": "#D9D8A6",
+        "delta": 5.02
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Skeleton Bone",
+        "hex": "#D3C89D",
+        "delta": 5.83
+      }
+    ]
+  },
+  {
+    "id": "vallejo-bone-white",
+    "brand": "Vallejo",
+    "name": "Bone White",
+    "hex": "#E8BE86",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Flayed One Flesh",
+        "hex": "#F3CA8A",
+        "delta": 4.43
+      },
+      {
+        "brand": "Citadel",
+        "name": "Kislev Flesh",
+        "hex": "#DBAD75",
+        "delta": 5.89
+      },
+      {
+        "brand": "Citadel",
+        "name": "Ungor Flesh",
+        "hex": "#DBAC63",
+        "delta": 7.08
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Corpse Pale",
+        "hex": "#EDCCAD",
+        "delta": 7.02
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kobold Skin",
+        "hex": "#C9A484",
+        "delta": 6.59
+      }
+    ]
+  },
+  {
+    "id": "vallejo-beige",
+    "brand": "Vallejo",
+    "name": "Beige",
+    "hex": "#DBC58E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Flayed One Flesh",
+        "hex": "#F3CA8A",
+        "delta": 5.71
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Corpse Pale",
+        "hex": "#EDCCAD",
+        "delta": 7.02
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-brown",
+    "brand": "Vallejo",
+    "name": "Heavy Brown",
+    "hex": "#705D41",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Steel Legion Drab",
+        "hex": "#695634",
+        "delta": 3.56
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Venom Wyrm",
+        "hex": "#6A653E",
+        "delta": 7.15
+      }
+    ]
+  },
+  {
+    "id": "vallejo-english-uniform",
+    "brand": "Vallejo",
+    "name": "English Uniform",
+    "hex": "#715833",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Steel Legion Drab",
+        "hex": "#695634",
+        "delta": 2.52
+      },
+      {
+        "brand": "Citadel",
+        "name": "XV-88",
+        "hex": "#7B4D1C",
+        "delta": 6.36
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Venom Wyrm",
+        "hex": "#6A653E",
+        "delta": 7.15
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Leather Brown",
+        "hex": "#764823",
+        "delta": 3.41
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-gold-brown",
+    "brand": "Vallejo",
+    "name": "Heavy Gold Brown",
+    "hex": "#BA8636",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Tallarn Sand",
+        "hex": "#AB7D00",
+        "delta": 5.92
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Sulphide Ochre",
+        "hex": "#C68512",
+        "delta": 6.55
+      }
+    ]
+  },
+  {
+    "id": "vallejo-gold-brown",
+    "brand": "Vallejo",
+    "name": "Gold Brown",
+    "hex": "#BA8636",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Tallarn Sand",
+        "hex": "#AB7D00",
+        "delta": 5.92
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Sulphide Ochre",
+        "hex": "#C68512",
+        "delta": 6.55
+      }
+    ]
+  },
+  {
+    "id": "vallejo-iraqi-sand",
+    "brand": "Vallejo",
+    "name": "Iraqi Sand",
+    "hex": "#B89972",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Karak Stone",
+        "hex": "#C1A069",
+        "delta": 4.44
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kobold Skin",
+        "hex": "#C9A484",
+        "delta": 6.51
+      }
+    ]
+  },
+  {
+    "id": "vallejo-saddle-brown",
+    "brand": "Vallejo",
+    "name": "Saddle Brown",
+    "hex": "#89584F",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Bugmans Glow",
+        "hex": "#8C5144",
+        "delta": 3.16
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Werewolf Fur",
+        "hex": "#785E4E",
+        "delta": 8.04
+      }
+    ]
+  },
+  {
+    "id": "vallejo-dwarf-skin",
+    "brand": "Vallejo",
+    "name": "Dwarf Skin",
+    "hex": "#CC7C67",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Cadian Fleshtone",
+        "hex": "#CB7953",
+        "delta": 4.91
+      },
+      {
+        "brand": "Citadel",
+        "name": "Deathclaw Brown",
+        "hex": "#BA6952",
+        "delta": 7.06
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Tanned Flesh",
+        "hex": "#BC745E",
+        "delta": 5.23
+      }
+    ]
+  },
+  {
+    "id": "vallejo-light-brown",
+    "brand": "Vallejo",
+    "name": "Light Brown",
+    "hex": "#BF764E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Cadian Fleshtone",
+        "hex": "#CB7953",
+        "delta": 2.92
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Tanned Flesh",
+        "hex": "#BC745E",
+        "delta": 5.23
+      }
+    ]
+  },
+  {
+    "id": "vallejo-flat-flesh",
+    "brand": "Vallejo",
+    "name": "Flat Flesh",
+    "hex": "#D8A977",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Kislev Flesh",
+        "hex": "#DBAD75",
+        "delta": 1.96
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kobold Skin",
+        "hex": "#C9A484",
+        "delta": 6.59
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-skintone",
+    "brand": "Vallejo",
+    "name": "Heavy Skintone",
+    "hex": "#AA7B62",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ratskin Flesh",
+        "hex": "#AD6B4C",
+        "delta": 5.79
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Tanned Flesh",
+        "hex": "#BC745E",
+        "delta": 5.41
+      }
+    ]
+  },
+  {
+    "id": "vallejo-orange-brown",
+    "brand": "Vallejo",
+    "name": "Orange Brown",
+    "hex": "#B86F44",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ratskin Flesh",
+        "hex": "#AD6B4C",
+        "delta": 4.03
+      },
+      {
+        "brand": "Citadel",
+        "name": "Deathclaw Brown",
+        "hex": "#BA6952",
+        "delta": 6.22
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Tanned Flesh",
+        "hex": "#BC745E",
+        "delta": 5.41
+      }
+    ]
+  },
+  {
+    "id": "vallejo-beige-red",
+    "brand": "Vallejo",
+    "name": "Beige Red",
+    "hex": "#C79166",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Bestigor Flesh",
+        "hex": "#D38A57",
+        "delta": 3.88
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Troll Claws",
+        "hex": "#CB8B4E",
+        "delta": 3.48
+      }
+    ]
+  },
+  {
+    "id": "vallejo-dark-flesh",
+    "brand": "Vallejo",
+    "name": "Dark Flesh",
+    "hex": "#D9A262",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ungor Flesh",
+        "hex": "#DBAC63",
+        "delta": 4.06
+      },
+      {
+        "brand": "Citadel",
+        "name": "Zamesi Desert",
+        "hex": "#E0A503",
+        "delta": 8.67
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kobold Skin",
+        "hex": "#C9A484",
+        "delta": 8.63
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Phoenix Flames",
+        "hex": "#FAA61A",
+        "delta": 5.96
+      }
+    ]
+  },
+  {
+    "id": "vallejo-parasite-brown",
+    "brand": "Vallejo",
+    "name": "Parasite Brown",
+    "hex": "#B1481F",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Skrag Brown",
+        "hex": "#954B00",
+        "delta": 8.84
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Monster Brown",
+        "hex": "#855C2A",
+        "delta": 7.48
+      }
+    ]
+  },
+  {
+    "id": "vallejo-flat-earth",
+    "brand": "Vallejo",
+    "name": "Flat Earth",
+    "hex": "#87643C",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Skrag Brown",
+        "hex": "#954B00",
+        "delta": 9.9
+      },
+      {
+        "brand": "Citadel",
+        "name": "Balor Brown",
+        "hex": "#915E02",
+        "delta": 7.19
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Monster Brown",
+        "hex": "#855C2A",
+        "delta": 7.48
+      }
+    ]
+  },
+  {
+    "id": "vallejo-leather-brown",
+    "brand": "Vallejo",
+    "name": "Leather Brown",
+    "hex": "#7B5D2A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "XV-88",
+        "hex": "#7B4D1C",
+        "delta": 6.77
+      },
+      {
+        "brand": "Citadel",
+        "name": "Balor Brown",
+        "hex": "#915E02",
+        "delta": 6.73
+      },
+      {
+        "brand": "Citadel",
+        "name": "Dryad Bark",
+        "hex": "#3B342E",
+        "delta": 8.44
+      },
+      {
+        "brand": "Citadel",
+        "name": "Skavenblight Dinge",
+        "hex": "#4F4840",
+        "delta": 3.19
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Leather Brown",
+        "hex": "#764823",
+        "delta": 3.41
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Monster Brown",
+        "hex": "#855C2A",
+        "delta": 5.44
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necromance Cloak",
+        "hex": "#3C3D37",
+        "delta": 4.81
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Hardened Carapace",
+        "hex": "#4C473F",
+        "delta": 1.04
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-ochre",
+    "brand": "Vallejo",
+    "name": "Heavy Ochre",
+    "hex": "#A87536",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Tau Light Ochre",
+        "hex": "#C26E02",
+        "delta": 6.58
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Fire Lizard",
+        "hex": "#D67128",
+        "delta": 6.04
+      }
+    ]
+  },
+  {
+    "id": "vallejo-ochre-brown",
+    "brand": "Vallejo",
+    "name": "Ochre Brown",
+    "hex": "#A77237",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Tau Light Ochre",
+        "hex": "#C26E02",
+        "delta": 6.68
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Fire Lizard",
+        "hex": "#D67128",
+        "delta": 6.04
+      }
+    ]
+  },
+  {
+    "id": "vallejo-plague-brown",
+    "brand": "Vallejo",
+    "name": "Plague Brown",
+    "hex": "#CC9B34",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Zamesi Desert",
+        "hex": "#E0A503",
+        "delta": 5.86
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Phoenix Flames",
+        "hex": "#FAA61A",
+        "delta": 5.96
+      }
+    ]
+  },
+  {
+    "id": "vallejo-dark-fleshtone",
+    "brand": "Vallejo",
+    "name": "Dark Fleshtone",
+    "hex": "#4F2B26",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Rhinox Hide",
+        "hex": "#4E3433",
+        "delta": 5.21
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dirt Spatter",
+        "hex": "#5E3827",
+        "delta": 9.58
+      }
+    ]
+  },
+  {
+    "id": "vallejo-german-cam-black-brown",
+    "brand": "Vallejo",
+    "name": "German Cam. Black Brown",
+    "hex": "#553528",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Rhinox Hide",
+        "hex": "#4E3433",
+        "delta": 6.65
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dirt Spatter",
+        "hex": "#5E3827",
+        "delta": 9.58
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-red",
+    "brand": "Vallejo",
+    "name": "Heavy Red",
+    "hex": "#943238",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Tuskgor Fur",
+        "hex": "#8E3734",
+        "delta": 2.7
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Vampire Red",
+        "hex": "#981D34",
+        "delta": 6.43
+      }
+    ]
+  },
+  {
+    "id": "vallejo-cavalry-brown",
+    "brand": "Vallejo",
+    "name": "Cavalry Brown",
+    "hex": "#853F3D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Tuskgor Fur",
+        "hex": "#8E3734",
+        "delta": 3.17
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Vampire Red",
+        "hex": "#981D34",
+        "delta": 6.43
+      }
+    ]
+  },
+  {
+    "id": "vallejo-charred-brown",
+    "brand": "Vallejo",
+    "name": "Charred Brown",
+    "hex": "#39343B",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Dryad Bark",
+        "hex": "#3B342E",
+        "delta": 8.09
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necromance Cloak",
+        "hex": "#3C3D37",
+        "delta": 4.81
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-sienna",
+    "brand": "Vallejo",
+    "name": "Heavy Sienna",
+    "hex": "#744642",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Gorthor Brown",
+        "hex": "#6E4E46",
+        "delta": 4.67
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dark Stone",
+        "hex": "#605752",
+        "delta": 6.87
+      }
+    ]
+  },
+  {
+    "id": "vallejo-burnt-umber",
+    "brand": "Vallejo",
+    "name": "Burnt Umber",
+    "hex": "#665148",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Gorthor Brown",
+        "hex": "#6E4E46",
+        "delta": 3.36
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Dark Stone",
+        "hex": "#605752",
+        "delta": 6.87
+      }
+    ]
+  },
+  {
+    "id": "vallejo-khaki",
+    "brand": "Vallejo",
+    "name": "Khaki",
+    "hex": "#8C806D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Baneblade Brown",
+        "hex": "#99826B",
+        "delta": 3.91
+      },
+      {
+        "brand": "Citadel",
+        "name": "Dawnstone",
+        "hex": "#7B7E74",
+        "delta": 7.2
+      },
+      {
+        "brand": "Citadel",
+        "name": "Stormvermin Fur",
+        "hex": "#7D736A",
+        "delta": 6.76
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Filthy Cape",
+        "hex": "#7C7863",
+        "delta": 8.37
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Field Grey",
+        "hex": "#787C78",
+        "delta": 2.94
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Cultist Robe",
+        "hex": "#756E60",
+        "delta": 3.62
+      }
+    ]
+  },
+  {
+    "id": "vallejo-tan-earth",
+    "brand": "Vallejo",
+    "name": "Tan Earth",
+    "hex": "#9C7962",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Baneblade Brown",
+        "hex": "#99826B",
+        "delta": 4.46
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Filthy Cape",
+        "hex": "#7C7863",
+        "delta": 8.37
+      }
+    ]
+  },
+  {
+    "id": "vallejo-usa-olive-drab",
+    "brand": "Vallejo",
+    "name": "USA Olive Drab",
+    "hex": "#3B4947",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Mechanicus Standard Grey",
+        "hex": "#454E50",
+        "delta": 4.1
+      },
+      {
+        "brand": "Citadel",
+        "name": "Dark Reaper",
+        "hex": "#3B5150",
+        "delta": 3.64
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Hardened Carapace",
+        "hex": "#4C473F",
+        "delta": 8.49
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necromance Cloak",
+        "hex": "#3C3D37",
+        "delta": 10.38
+      }
+    ]
+  },
+  {
+    "id": "vallejo-dark-sea-grey",
+    "brand": "Vallejo",
+    "name": "Dark Sea Grey",
+    "hex": "#787D7A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Dawnstone",
+        "hex": "#7B7E74",
+        "delta": 3.48
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Field Grey",
+        "hex": "#787C78",
+        "delta": 2.94
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-blue-grey",
+    "brand": "Vallejo",
+    "name": "Heavy Blue Grey",
+    "hex": "#9CA7A7",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Administratum Grey",
+        "hex": "#9DA299",
+        "delta": 5.24
+      },
+      {
+        "brand": "Citadel",
+        "name": "Celestra Grey",
+        "hex": "#9CAEAE",
+        "delta": 2.85
+      },
+      {
+        "brand": "Citadel",
+        "name": "Rakarth Flesh",
+        "hex": "#ABA495",
+        "delta": 9.17
+      },
+      {
+        "brand": "Citadel",
+        "name": "Baharroth Blue",
+        "hex": "#58C1CD",
+        "delta": 12.33
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ash Grey",
+        "hex": "#A2A5A4",
+        "delta": 4.02
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Toxic Mist",
+        "hex": "#39C0C5",
+        "delta": 4.2
+      }
+    ]
+  },
+  {
+    "id": "vallejo-blue-grey-pale",
+    "brand": "Vallejo",
+    "name": "Blue Grey Pale",
+    "hex": "#9EA7A5",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Administratum Grey",
+        "hex": "#9DA299",
+        "delta": 4.12
+      },
+      {
+        "brand": "Citadel",
+        "name": "Dechala Lilac",
+        "hex": "#B69FCC",
+        "delta": 16.32
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ash Grey",
+        "hex": "#A2A5A4",
+        "delta": 4.02
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Oozing Purple",
+        "hex": "#AA94B4",
+        "delta": 5.75
+      }
+    ]
+  },
+  {
+    "id": "vallejo-light-sea-grey",
+    "brand": "Vallejo",
+    "name": "Light Sea Grey",
+    "hex": "#97B4B5",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Celestra Grey",
+        "hex": "#9CAEAE",
+        "delta": 3.29
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ash Grey",
+        "hex": "#A2A5A4",
+        "delta": 4.83
+      }
+    ]
+  },
+  {
+    "id": "vallejo-verdigris",
+    "brand": "Vallejo",
+    "name": "Verdigris",
+    "hex": "#B3CECA",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ulthuan Grey",
+        "hex": "#D2E4DF",
+        "delta": 8.81
+      },
+      {
+        "brand": "Citadel",
+        "name": "Gauss Blaster Green",
+        "hex": "#84C3AA",
+        "delta": 10.8
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Spaceship Exterior",
+        "hex": "#CDCED0",
+        "delta": 8.63
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kraken Skin",
+        "hex": "#71C591",
+        "delta": 8.68
+      }
+    ]
+  },
+  {
+    "id": "vallejo-silver-grey",
+    "brand": "Vallejo",
+    "name": "Silver Grey",
+    "hex": "#D8DFD5",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ulthuan Grey",
+        "hex": "#D2E4DF",
+        "delta": 4.28
+      },
+      {
+        "brand": "Citadel",
+        "name": "Pallid Wych Flesh",
+        "hex": "#D6D5C4",
+        "delta": 4.94
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Spaceship Exterior",
+        "hex": "#CDCED0",
+        "delta": 8.63
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Drake Tooth",
+        "hex": "#CFCBB4",
+        "delta": 4.3
+      }
+    ]
+  },
+  {
+    "id": "vallejo-stone-grey",
+    "brand": "Vallejo",
+    "name": "Stone Grey",
+    "hex": "#959980",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Rakarth Flesh",
+        "hex": "#ABA495",
+        "delta": 7.73
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Ash Grey",
+        "hex": "#A2A5A4",
+        "delta": 6.6
+      }
+    ]
+  },
+  {
+    "id": "vallejo-black",
+    "brand": "Vallejo",
+    "name": "Black",
+    "hex": "#000000",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Abaddon Black",
+        "hex": "#010100",
+        "delta": 0.47
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Matt Black",
+        "hex": "#231F20",
+        "delta": 12.19
+      }
+    ]
+  },
+  {
+    "id": "vallejo-glossy-black",
+    "brand": "Vallejo",
+    "name": "Glossy Black",
+    "hex": "#010101",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Abaddon Black",
+        "hex": "#010100",
+        "delta": 0.4
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Matt Black",
+        "hex": "#231F20",
+        "delta": 12.19
+      }
+    ]
+  },
+  {
+    "id": "vallejo-beasty-brown",
+    "brand": "Vallejo",
+    "name": "Beasty Brown",
+    "hex": "#55432D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Skavenblight Dinge",
+        "hex": "#4F4840",
+        "delta": 8.62
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Hardened Carapace",
+        "hex": "#4C473F",
+        "delta": 1.04
+      }
+    ]
+  },
+  {
+    "id": "vallejo-german-cam-pale-brown",
+    "brand": "Vallejo",
+    "name": "German Cam. Pale Brown",
+    "hex": "#82685E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Stormvermin Fur",
+        "hex": "#7D736A",
+        "delta": 6.52
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Cultist Robe",
+        "hex": "#756E60",
+        "delta": 3.62
+      }
+    ]
+  },
+  {
+    "id": "vallejo-cayman-green",
+    "brand": "Vallejo",
+    "name": "Cayman Green",
+    "hex": "#285648",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Dark Reaper",
+        "hex": "#3B5150",
+        "delta": 9.24
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necromance Cloak",
+        "hex": "#3C3D37",
+        "delta": 10.38
+      }
+    ]
+  },
+  {
+    "id": "vallejo-heavy-warm-grey",
+    "brand": "Vallejo",
+    "name": "Heavy Warm Grey",
+    "hex": "#939066",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Death Guard Armor",
+        "hex": "#848A66",
+        "delta": 4.55
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Combat Fatigue",
+        "hex": "#878E5C",
+        "delta": 4.16
+      }
+    ]
+  },
+  {
+    "id": "vallejo-green-grey",
+    "brand": "Vallejo",
+    "name": "Green Grey",
+    "hex": "#827E61",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Death Guard Armor",
+        "hex": "#848A66",
+        "delta": 5.23
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Combat Fatigue",
+        "hex": "#878E5C",
+        "delta": 4.16
+      }
+    ]
+  },
+  {
+    "id": "vallejo-pale-blue",
+    "brand": "Vallejo",
+    "name": "Pale Blue",
+    "hex": "#83B5B2",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Baharroth Blue",
+        "hex": "#58C1CD",
+        "delta": 7.68
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Toxic Mist",
+        "hex": "#39C0C5",
+        "delta": 4.2
+      }
+    ]
+  },
+  {
+    "id": "vallejo-ghost-grey",
+    "brand": "Vallejo",
+    "name": "Ghost Grey",
+    "hex": "#A7C5DB",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Blue Horror",
+        "hex": "#A2BAD2",
+        "delta": 4.04
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Gorgon Hide",
+        "hex": "#C7D2E4",
+        "delta": 10.02
+      }
+    ]
+  },
+  {
+    "id": "vallejo-pale-grey-blue",
+    "brand": "Vallejo",
+    "name": "Pale Grey Blue",
+    "hex": "#BACDD0",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Blue Horror",
+        "hex": "#A2BAD2",
+        "delta": 10.51
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Gorgon Hide",
+        "hex": "#C7D2E4",
+        "delta": 10.02
+      }
+    ]
+  },
+  {
+    "id": "vallejo-pale-flesh",
+    "brand": "Vallejo",
+    "name": "Pale Flesh",
+    "hex": "#F6BDB3",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Fulgrim Pink",
+        "hex": "#F4AFCD",
+        "delta": 14.2
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Spaceship Exterior",
+        "hex": "#CDCED0",
+        "delta": 13.91
+      }
+    ]
+  },
+  {
+    "id": "vallejo-sky-grey",
+    "brand": "Vallejo",
+    "name": "Sky Grey",
+    "hex": "#B3B6B2",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Fulgrim Pink",
+        "hex": "#F4AFCD",
+        "delta": 17.04
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Spaceship Exterior",
+        "hex": "#CDCED0",
+        "delta": 13.91
+      }
+    ]
+  },
+  {
+    "id": "vallejo-grey-grey",
+    "brand": "Vallejo",
+    "name": "Grey Grey",
+    "hex": "#AECBBB",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Gauss Blaster Green",
+        "hex": "#84C3AA",
+        "delta": 7.89
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Kraken Skin",
+        "hex": "#71C591",
+        "delta": 8.68
+      }
+    ]
+  },
+  {
+    "id": "vallejo-pale-sand",
+    "brand": "Vallejo",
+    "name": "Pale Sand",
+    "hex": "#D1C49C",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Krieg Khaki",
+        "hex": "#C0BD81",
+        "delta": 6.43
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Necrotic Flesh",
+        "hex": "#BFC292",
+        "delta": 3.57
+      }
+    ]
+  },
+  {
+    "id": "vallejo-rosy-flesh",
+    "brand": "Vallejo",
+    "name": "Rosy Flesh",
+    "hex": "#F89E84",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Lugganath Orange",
+        "hex": "#F79E86",
+        "delta": 0.6
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Centaur Skin",
+        "hex": "#DEABA0",
+        "delta": 6.88
+      }
+    ]
+  },
+  {
+    "id": "vallejo-salmon-rose",
+    "brand": "Vallejo",
+    "name": "Salmon Rose",
+    "hex": "#F89D87",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Lugganath Orange",
+        "hex": "#F79E86",
+        "delta": 0.72
+      },
+      {
+        "brand": "Army Painter",
+        "name": "Centaur Skin",
+        "hex": "#DEABA0",
+        "delta": 6.88
+      }
+    ]
+  },
+  {
+    "id": "army-painter-matt-white",
+    "brand": "Army Painter",
+    "name": "Matt White",
+    "hex": "#FFFFFF",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ceramite White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Citadel",
+        "name": "White Scar",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dead White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      },
+      {
+        "brand": "Vallejo",
+        "name": "White",
+        "hex": "#FFFFFF",
+        "delta": 0
+      }
+    ]
+  },
+  {
+    "id": "army-painter-phoenix-flames",
+    "brand": "Army Painter",
+    "name": "Phoenix Flames",
+    "hex": "#FAA61A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Averland Sunset",
+        "hex": "#FBBA00",
+        "delta": 7.1
+      },
+      {
+        "brand": "Citadel",
+        "name": "Zamesi Desert",
+        "hex": "#E0A503",
+        "delta": 5.96
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Gold Yellow",
+        "hex": "#FDB318",
+        "delta": 2.85
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Golden Yellow",
+        "hex": "#F7C65E",
+        "delta": 6.07
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Plague Brown",
+        "hex": "#CC9B34",
+        "delta": 5.86
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Flesh",
+        "hex": "#D9A262",
+        "delta": 8.67
+      }
+    ]
+  },
+  {
+    "id": "army-painter-daemonic-yellow",
+    "brand": "Army Painter",
+    "name": "Daemonic Yellow",
+    "hex": "#FADA06",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Yriel Yellow",
+        "hex": "#FFDA00",
+        "delta": 1.04
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Sun Yellow",
+        "hex": "#FFCF07",
+        "delta": 3.69
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Deep Yellow",
+        "hex": "#FFE30C",
+        "delta": 2.97
+      }
+    ]
+  },
+  {
+    "id": "army-painter-babe-blonde",
+    "brand": "Army Painter",
+    "name": "Babe Blonde",
+    "hex": "#F8DD0D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Flash Gitz Yellow",
+        "hex": "#FFEE00",
+        "delta": 5.46
+      },
+      {
+        "brand": "Citadel",
+        "name": "Dorn Yellow",
+        "hex": "#FFF200",
+        "delta": 6.7
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Moon Yellow",
+        "hex": "#FFF103",
+        "delta": 0.97
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Lemon Yellow",
+        "hex": "#FEF10E",
+        "delta": 1.05
+      }
+    ]
+  },
+  {
+    "id": "army-painter-mythical-orange",
+    "brand": "Army Painter",
+    "name": "Mythical Orange",
+    "hex": "#E73D24",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Jokaero Orange",
+        "hex": "#E6200F",
+        "delta": 3.48
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Hot Orange",
+        "hex": "#E43027",
+        "delta": 2.9
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Scarlet",
+        "hex": "#DA3630",
+        "delta": 4.5
+      }
+    ]
+  },
+  {
+    "id": "army-painter-fire-lizard",
+    "brand": "Army Painter",
+    "name": "Fire Lizard",
+    "hex": "#D67128",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Troll Slayer Orange",
+        "hex": "#EB641B",
+        "delta": 4.67
+      },
+      {
+        "brand": "Citadel",
+        "name": "Tau Light Ochre",
+        "hex": "#C26E02",
+        "delta": 6.04
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Orange Fire",
+        "hex": "#F1652E",
+        "delta": 2.89
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Bright Orange",
+        "hex": "#F26833",
+        "delta": 3.48
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Ochre",
+        "hex": "#A87536",
+        "delta": 6.58
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Ochre Brown",
+        "hex": "#A77237",
+        "delta": 6.68
+      }
+    ]
+  },
+  {
+    "id": "army-painter-barbarian-flesh",
+    "brand": "Army Painter",
+    "name": "Barbarian Flesh",
+    "hex": "#E89C6C",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Fire Dragon Bright",
+        "hex": "#F1844A",
+        "delta": 7
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Bronze Fleshtone",
+        "hex": "#DB945C",
+        "delta": 6.36
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Light Orange",
+        "hex": "#F68627",
+        "delta": 5.97
+      }
+    ]
+  },
+  {
+    "id": "army-painter-dragon-red",
+    "brand": "Army Painter",
+    "name": "Dragon Red",
+    "hex": "#9A1B1E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Mephiston Red",
+        "hex": "#9B0E05",
+        "delta": 4.47
+      },
+      {
+        "brand": "Citadel",
+        "name": "Wazdakka Red",
+        "hex": "#8D0D01",
+        "delta": 6.03
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Gory Red",
+        "hex": "#810504",
+        "delta": 6.78
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Red",
+        "hex": "#AA3037",
+        "delta": 10.28
+      },
+      {
+        "brand": "Vallejo",
+        "name": "German Cam. Medium Brown",
+        "hex": "#722B2F",
+        "delta": 10.59
+      }
+    ]
+  },
+  {
+    "id": "army-painter-pure-red",
+    "brand": "Army Painter",
+    "name": "Pure Red",
+    "hex": "#CF2127",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Evil Suns Scarlet",
+        "hex": "#C00B0C",
+        "delta": 5.54
+      },
+      {
+        "brand": "Citadel",
+        "name": "Wild Rider Red",
+        "hex": "#E21516",
+        "delta": 4.67
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Bloody Red",
+        "hex": "#BF282E",
+        "delta": 5.5
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Carmine Red",
+        "hex": "#B73035",
+        "delta": 6.79
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Hot Orange",
+        "hex": "#E43027",
+        "delta": 2.9
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Scarlet",
+        "hex": "#DA3630",
+        "delta": 3.64
+      }
+    ]
+  },
+  {
+    "id": "army-painter-chaotic-red",
+    "brand": "Army Painter",
+    "name": "Chaotic Red",
+    "hex": "#6C1E10",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Khorne Red",
+        "hex": "#6A0A01",
+        "delta": 3.69
+      },
+      {
+        "brand": "Citadel",
+        "name": "Mournfang Brown",
+        "hex": "#681104",
+        "delta": 3.05
+      },
+      {
+        "brand": "Citadel",
+        "name": "Doombull Brown",
+        "hex": "#5E0605",
+        "delta": 6.63
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Terracota",
+        "hex": "#6B1306",
+        "delta": 1.41
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Hull Red",
+        "hex": "#522724",
+        "delta": 9.07
+      }
+    ]
+  },
+  {
+    "id": "army-painter-mars-red",
+    "brand": "Army Painter",
+    "name": "Mars Red",
+    "hex": "#B73B37",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Squig Orange",
+        "hex": "#B04D3E",
+        "delta": 4.35
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Tan",
+        "hex": "#9F4746",
+        "delta": 6.09
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Red",
+        "hex": "#A24A46",
+        "delta": 4.77
+      }
+    ]
+  },
+  {
+    "id": "army-painter-vampire-red",
+    "brand": "Army Painter",
+    "name": "Vampire Red",
+    "hex": "#981D34",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Screamer Pink",
+        "hex": "#831740",
+        "delta": 9.58
+      },
+      {
+        "brand": "Citadel",
+        "name": "Tuskgor Fur",
+        "hex": "#8E3734",
+        "delta": 6.43
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Warlord Purple",
+        "hex": "#7D1A44",
+        "delta": 2.51
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Violet Red",
+        "hex": "#6B2946",
+        "delta": 6.43
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Red",
+        "hex": "#943238",
+        "delta": 2.7
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Cavalry Brown",
+        "hex": "#853F3D",
+        "delta": 3.17
+      }
+    ]
+  },
+  {
+    "id": "army-painter-wasteland-soil",
+    "brand": "Army Painter",
+    "name": "Wasteland Soil",
+    "hex": "#774B58",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Pink Horror",
+        "hex": "#96325C",
+        "delta": 8.26
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Warlord Purple",
+        "hex": "#7D1A44",
+        "delta": 8.94
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Magenta",
+        "hex": "#A92A56",
+        "delta": 5.53
+      }
+    ]
+  },
+  {
+    "id": "army-painter-orc-blood",
+    "brand": "Army Painter",
+    "name": "Orc Blood",
+    "hex": "#925F6E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Emperors Children",
+        "hex": "#BD3F75",
+        "delta": 9.29
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Tan",
+        "hex": "#9F4746",
+        "delta": 14.82
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Sunset Red",
+        "hex": "#C22C5F",
+        "delta": 6.33
+      }
+    ]
+  },
+  {
+    "id": "army-painter-deep-blue",
+    "brand": "Army Painter",
+    "name": "Deep Blue",
+    "hex": "#083251",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Naggaroth Night",
+        "hex": "#433656",
+        "delta": 12.85
+      },
+      {
+        "brand": "Citadel",
+        "name": "Kantor Blue",
+        "hex": "#06234F",
+        "delta": 8.77
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Hexed Lichen",
+        "hex": "#34274D",
+        "delta": 6.85
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Violet",
+        "hex": "#4B2F65",
+        "delta": 7.68
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Royal Purple",
+        "hex": "#23264F",
+        "delta": 4.17
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Prussian Blue",
+        "hex": "#192C43",
+        "delta": 7.88
+      }
+    ]
+  },
+  {
+    "id": "army-painter-alien-purple",
+    "brand": "Army Painter",
+    "name": "Alien Purple",
+    "hex": "#50317B",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Xereus Purple",
+        "hex": "#4B205C",
+        "delta": 8.1
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Violet",
+        "hex": "#4C2E65",
+        "delta": 4.74
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Royal Purple",
+        "hex": "#4B2967",
+        "delta": 3.55
+      }
+    ]
+  },
+  {
+    "id": "army-painter-dungeon-grey",
+    "brand": "Army Painter",
+    "name": "Dungeon Grey",
+    "hex": "#686C71",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Genestealer Purple",
+        "hex": "#7C5CA4",
+        "delta": 14.88
+      },
+      {
+        "brand": "Citadel",
+        "name": "Daemonette Hide",
+        "hex": "#696685",
+        "delta": 9.11
+      },
+      {
+        "brand": "Citadel",
+        "name": "Warpfiend Grey",
+        "hex": "#6B6A74",
+        "delta": 3.11
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Sombre Grey",
+        "hex": "#4C5C7D",
+        "delta": 14.05
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Blue Violet",
+        "hex": "#795C9A",
+        "delta": 2.09
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Azure",
+        "hex": "#717CAD",
+        "delta": 10.4
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Cold Grey",
+        "hex": "#54646D",
+        "delta": 7.09
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Grey Green",
+        "hex": "#565A60",
+        "delta": 7.62
+      }
+    ]
+  },
+  {
+    "id": "army-painter-ash-grey",
+    "brand": "Army Painter",
+    "name": "Ash Grey",
+    "hex": "#A2A5A4",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Slaanesh Grey",
+        "hex": "#8E8C97",
+        "delta": 10.62
+      },
+      {
+        "brand": "Citadel",
+        "name": "Administratum Grey",
+        "hex": "#9DA299",
+        "delta": 4.02
+      },
+      {
+        "brand": "Citadel",
+        "name": "Celestra Grey",
+        "hex": "#9CAEAE",
+        "delta": 4.83
+      },
+      {
+        "brand": "Citadel",
+        "name": "Rakarth Flesh",
+        "hex": "#ABA495",
+        "delta": 6.6
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Stonewall Grey",
+        "hex": "#828E95",
+        "delta": 5.31
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Medium Sea Grey",
+        "hex": "#869393",
+        "delta": 7.9
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Blue Grey",
+        "hex": "#9CA7A7",
+        "delta": 5.24
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Blue Grey Pale",
+        "hex": "#9EA7A5",
+        "delta": 4.12
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Light Sea Grey",
+        "hex": "#97B4B5",
+        "delta": 3.29
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Stone Grey",
+        "hex": "#959980",
+        "delta": 7.73
+      }
+    ]
+  },
+  {
+    "id": "army-painter-griffon-blue",
+    "brand": "Army Painter",
+    "name": "Griffon Blue",
+    "hex": "#215383",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Alaitoc Blue",
+        "hex": "#2E5689",
+        "delta": 2.47
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Sombre Grey",
+        "hex": "#4C5C7D",
+        "delta": 5.74
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Royal Blue",
+        "hex": "#41558D",
+        "delta": 4.15
+      }
+    ]
+  },
+  {
+    "id": "army-painter-crystal-blue",
+    "brand": "Army Painter",
+    "name": "Crystal Blue",
+    "hex": "#0083C2",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Hoeth Blue",
+        "hex": "#4F7FB5",
+        "delta": 5.1
+      },
+      {
+        "brand": "Citadel",
+        "name": "Teclis Blue",
+        "hex": "#387BBF",
+        "delta": 5.27
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Electric Blue",
+        "hex": "#008CBF",
+        "delta": 8.73
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Azure",
+        "hex": "#717CAD",
+        "delta": 6.29
+      }
+    ]
+  },
+  {
+    "id": "army-painter-ultramarine-blue",
+    "brand": "Army Painter",
+    "name": "Ultramarine Blue",
+    "hex": "#0F4E85",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Macragge Blue",
+        "hex": "#14397A",
+        "delta": 9.37
+      },
+      {
+        "brand": "Citadel",
+        "name": "Altdorf Guard Blue",
+        "hex": "#274B9B",
+        "delta": 7.64
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Magic Blue",
+        "hex": "#024381",
+        "delta": 4.51
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Blue",
+        "hex": "#043667",
+        "delta": 5.36
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Royal Blue",
+        "hex": "#41558D",
+        "delta": 5.97
+      }
+    ]
+  },
+  {
+    "id": "army-painter-viking-blue",
+    "brand": "Army Painter",
+    "name": "Viking Blue",
+    "hex": "#00609A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Calgar Blue",
+        "hex": "#456EB5",
+        "delta": 9.49
+      },
+      {
+        "brand": "Citadel",
+        "name": "Caledor Sky",
+        "hex": "#38689C",
+        "delta": 4.57
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Sombre Grey",
+        "hex": "#4C5C7D",
+        "delta": 10.77
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Ultramarine",
+        "hex": "#3B5DA7",
+        "delta": 6.56
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Blue",
+        "hex": "#336991",
+        "delta": 4.5
+      }
+    ]
+  },
+  {
+    "id": "army-painter-voidshield-blue",
+    "brand": "Army Painter",
+    "name": "Voidshield Blue",
+    "hex": "#2CA2D9",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Lothern Blue",
+        "hex": "#3BA1D1",
+        "delta": 1.85
+      },
+      {
+        "brand": "Citadel",
+        "name": "Thousand Sons Blue",
+        "hex": "#18ABCC",
+        "delta": 9.61
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Electric Blue",
+        "hex": "#008CBF",
+        "delta": 8.05
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Deep Sky Blue",
+        "hex": "#00A6DA",
+        "delta": 2.46
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Wolf Grey",
+        "hex": "#90A2BC",
+        "delta": 13.12
+      }
+    ]
+  },
+  {
+    "id": "army-painter-hydra-turquoise",
+    "brand": "Army Painter",
+    "name": "Hydra Turquoise",
+    "hex": "#199BA3",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ahriman Blue",
+        "hex": "#1F8C9C",
+        "delta": 6.51
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Steel Grey",
+        "hex": "#64889D",
+        "delta": 9.47
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Turquoise",
+        "hex": "#008E9C",
+        "delta": 1.73
+      }
+    ]
+  },
+  {
+    "id": "army-painter-uniform-grey",
+    "brand": "Army Painter",
+    "name": "Uniform Grey",
+    "hex": "#5E6A73",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "The Fang",
+        "hex": "#457479",
+        "delta": 8.36
+      },
+      {
+        "brand": "Citadel",
+        "name": "Thunderhawk Blue",
+        "hex": "#417074",
+        "delta": 8.41
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Turquoise",
+        "hex": "#03676F",
+        "delta": 7.97
+      },
+      {
+        "brand": "Vallejo",
+        "name": "French Mirage Blue",
+        "hex": "#557880",
+        "delta": 3.78
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Field Blue",
+        "hex": "#436872",
+        "delta": 4.67
+      }
+    ]
+  },
+  {
+    "id": "army-painter-wolf-grey",
+    "brand": "Army Painter",
+    "name": "Wolf Grey",
+    "hex": "#5B8093",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Russ Grey",
+        "hex": "#55768A",
+        "delta": 3.86
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Steel Grey",
+        "hex": "#64889D",
+        "delta": 6.93
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Grey Blue",
+        "hex": "#45708D",
+        "delta": 4.4
+      }
+    ]
+  },
+  {
+    "id": "army-painter-ice-storm",
+    "brand": "Army Painter",
+    "name": "Ice Storm",
+    "hex": "#639EC9",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Fenrisian Grey",
+        "hex": "#789EBB",
+        "delta": 4.78
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Wolf Grey",
+        "hex": "#90A2BC",
+        "delta": 4.99
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Pastel Blue",
+        "hex": "#67859B",
+        "delta": 9.56
+      }
+    ]
+  },
+  {
+    "id": "army-painter-dark-sky",
+    "brand": "Army Painter",
+    "name": "Dark Sky",
+    "hex": "#2B4B5F",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Stegadon Scale Green",
+        "hex": "#004261",
+        "delta": 5.88
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Blue",
+        "hex": "#29556D",
+        "delta": 8.65
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Oxford Blue",
+        "hex": "#3A465F",
+        "delta": 7.53
+      }
+    ]
+  },
+  {
+    "id": "army-painter-wizards-orb",
+    "brand": "Army Painter",
+    "name": "Wizards Orb",
+    "hex": "#00726A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Sotek Green",
+        "hex": "#056976",
+        "delta": 10.41
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Turquoise",
+        "hex": "#03676F",
+        "delta": 2.52
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Field Blue",
+        "hex": "#436872",
+        "delta": 5.52
+      }
+    ]
+  },
+  {
+    "id": "army-painter-elemental-bolt",
+    "brand": "Army Painter",
+    "name": "Elemental Bolt",
+    "hex": "#009A82",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Temple Guard Blue",
+        "hex": "#35998E",
+        "delta": 5.37
+      },
+      {
+        "brand": "Citadel",
+        "name": "Kabalite Green",
+        "hex": "#008660",
+        "delta": 9.15
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Foul Green",
+        "hex": "#239378",
+        "delta": 6.72
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Blue Green",
+        "hex": "#1A9496",
+        "delta": 5.44
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Park Green Flat",
+        "hex": "#008C5D",
+        "delta": 3.14
+      }
+    ]
+  },
+  {
+    "id": "army-painter-necromance-cloak",
+    "brand": "Army Painter",
+    "name": "Necromance Cloak",
+    "hex": "#3C3D37",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Incubi Darkness",
+        "hex": "#094345",
+        "delta": 11.76
+      },
+      {
+        "brand": "Citadel",
+        "name": "Dryad Bark",
+        "hex": "#3B342E",
+        "delta": 4.81
+      },
+      {
+        "brand": "Citadel",
+        "name": "Dark Reaper",
+        "hex": "#3B5150",
+        "delta": 10.38
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Scurvy Green",
+        "hex": "#09474E",
+        "delta": 3.18
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Black Green",
+        "hex": "#19423E",
+        "delta": 3.4
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Charred Brown",
+        "hex": "#39343B",
+        "delta": 8.09
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Leather Brown",
+        "hex": "#4A4639",
+        "delta": 8.44
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Cayman Green",
+        "hex": "#285648",
+        "delta": 9.24
+      },
+      {
+        "brand": "Vallejo",
+        "name": "USA Olive Drab",
+        "hex": "#3B4947",
+        "delta": 3.64
+      }
+    ]
+  },
+  {
+    "id": "army-painter-goblin-green",
+    "brand": "Army Painter",
+    "name": "Goblin Green",
+    "hex": "#348941",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Sybarite Green",
+        "hex": "#36A062",
+        "delta": 9.25
+      },
+      {
+        "brand": "Citadel",
+        "name": "Skarsnik Green",
+        "hex": "#5E9067",
+        "delta": 10.21
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Foul Green",
+        "hex": "#239378",
+        "delta": 10.15
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Light Green",
+        "hex": "#00A850",
+        "delta": 5.6
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Intermediate Green",
+        "hex": "#49944F",
+        "delta": 7.74
+      }
+    ]
+  },
+  {
+    "id": "army-painter-angel-green",
+    "brand": "Army Painter",
+    "name": "Angel Green",
+    "hex": "#0C391D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Caliban Green",
+        "hex": "#003B1D",
+        "delta": 1.63
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Green",
+        "hex": "#083C2A",
+        "delta": 4.63
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Yellow Olive",
+        "hex": "#26392E",
+        "delta": 7.93
+      }
+    ]
+  },
+  {
+    "id": "army-painter-mouldy-clothes",
+    "brand": "Army Painter",
+    "name": "Mouldy Clothes",
+    "hex": "#447B3A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Warpstone Glow",
+        "hex": "#257326",
+        "delta": 5.05
+      },
+      {
+        "brand": "Citadel",
+        "name": "Warboss Green",
+        "hex": "#3B7D54",
+        "delta": 7.76
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Goblin Green",
+        "hex": "#23743C",
+        "delta": 4.73
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Medium Olive",
+        "hex": "#226B2E",
+        "delta": 4.01
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Park Green Flat",
+        "hex": "#008C5D",
+        "delta": 6.94
+      }
+    ]
+  },
+  {
+    "id": "army-painter-jungle-green",
+    "brand": "Army Painter",
+    "name": "Jungle Green",
+    "hex": "#88AC2E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Moot Green",
+        "hex": "#57AA2D",
+        "delta": 8.55
+      },
+      {
+        "brand": "Citadel",
+        "name": "Ogryn Camo",
+        "hex": "#A9AF42",
+        "delta": 7.34
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Scorpion Green",
+        "hex": "#48B851",
+        "delta": 7.19
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Lime Green",
+        "hex": "#6FAE4E",
+        "delta": 4.33
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dead Flesh",
+        "hex": "#BCB686",
+        "delta": 9.77
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Middlestone",
+        "hex": "#9C9660",
+        "delta": 10.87
+      }
+    ]
+  },
+  {
+    "id": "army-painter-greenskin",
+    "brand": "Army Painter",
+    "name": "Greenskin",
+    "hex": "#136232",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Waaagh! Flesh",
+        "hex": "#275627",
+        "delta": 5.85
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Mutation Green",
+        "hex": "#296934",
+        "delta": 7.45
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Green",
+        "hex": "#2A6531",
+        "delta": 5.89
+      }
+    ]
+  },
+  {
+    "id": "army-painter-elf-green",
+    "brand": "Army Painter",
+    "name": "Elf Green",
+    "hex": "#495122",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Castellan Green",
+        "hex": "#384D20",
+        "delta": 5.08
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Green",
+        "hex": "#566840",
+        "delta": 11.71
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Reflective Green",
+        "hex": "#496244",
+        "delta": 10.22
+      }
+    ]
+  },
+  {
+    "id": "army-painter-army-green",
+    "brand": "Army Painter",
+    "name": "Army Green",
+    "hex": "#6E7645",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Death World Forest",
+        "hex": "#666C2D",
+        "delta": 5.18
+      },
+      {
+        "brand": "Citadel",
+        "name": "Loren Forest",
+        "hex": "#5B7426",
+        "delta": 6.26
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Camoflage Green",
+        "hex": "#71753A",
+        "delta": 3.93
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Luftwaffe Cam. Green",
+        "hex": "#596B3F",
+        "delta": 6.18
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Uniform Green",
+        "hex": "#577A38",
+        "delta": 4.36
+      }
+    ]
+  },
+  {
+    "id": "army-painter-commando-green",
+    "brand": "Army Painter",
+    "name": "Commando Green",
+    "hex": "#827B39",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Straken Green",
+        "hex": "#6E8611",
+        "delta": 8.47
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Camoflage Green",
+        "hex": "#71753A",
+        "delta": 8.52
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Olive Green",
+        "hex": "#6A8B3A",
+        "delta": 5.63
+      }
+    ]
+  },
+  {
+    "id": "army-painter-scaly-hide",
+    "brand": "Army Painter",
+    "name": "Scaly Hide",
+    "hex": "#859852",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Nurgling Green",
+        "hex": "#90A15F",
+        "delta": 3.73
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Khaki",
+        "hex": "#9D965D",
+        "delta": 6.95
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Middlestone",
+        "hex": "#9C9660",
+        "delta": 6.77
+      }
+    ]
+  },
+  {
+    "id": "army-painter-witch-brew",
+    "brand": "Army Painter",
+    "name": "Witch Brew",
+    "hex": "#92963E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Elysian Green",
+        "hex": "#81932E",
+        "delta": 4.13
+      },
+      {
+        "brand": "Citadel",
+        "name": "Zandri Dust",
+        "hex": "#A89758",
+        "delta": 7.92
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Khaki",
+        "hex": "#9D965D",
+        "delta": 8.74
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Golden Olive",
+        "hex": "#78923B",
+        "delta": 3.3
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Yellow",
+        "hex": "#9D9059",
+        "delta": 3.43
+      }
+    ]
+  },
+  {
+    "id": "army-painter-necrotic-flesh",
+    "brand": "Army Painter",
+    "name": "Necrotic Flesh",
+    "hex": "#BFC292",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ushabti Bone",
+        "hex": "#C6C180",
+        "delta": 4.22
+      },
+      {
+        "brand": "Citadel",
+        "name": "Krieg Khaki",
+        "hex": "#C0BD81",
+        "delta": 3.57
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Pale Yellow",
+        "hex": "#D5C179",
+        "delta": 4.47
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Sand Yellow",
+        "hex": "#D7BF75",
+        "delta": 5.54
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dead Flesh",
+        "hex": "#BCB686",
+        "delta": 3.37
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Pale Sand",
+        "hex": "#D1C49C",
+        "delta": 6.43
+      }
+    ]
+  },
+  {
+    "id": "army-painter-skeleton-bone",
+    "brand": "Army Painter",
+    "name": "Skeleton Bone",
+    "hex": "#D3C89D",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Screaming Skull",
+        "hex": "#D9D8A6",
+        "delta": 5.83
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Elfic Flesh",
+        "hex": "#CDC29C",
+        "delta": 7.97
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Buff",
+        "hex": "#D2CA9F",
+        "delta": 5.02
+      }
+    ]
+  },
+  {
+    "id": "army-painter-corpse-pale",
+    "brand": "Army Painter",
+    "name": "Corpse Pale",
+    "hex": "#EDCCAD",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Flayed One Flesh",
+        "hex": "#F3CA8A",
+        "delta": 7.02
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Bone White",
+        "hex": "#E8BE86",
+        "delta": 4.43
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Beige",
+        "hex": "#DBC58E",
+        "delta": 5.71
+      }
+    ]
+  },
+  {
+    "id": "army-painter-venom-wyrm",
+    "brand": "Army Painter",
+    "name": "Venom Wyrm",
+    "hex": "#6A653E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Steel Legion Drab",
+        "hex": "#695634",
+        "delta": 7.15
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Brown",
+        "hex": "#705D41",
+        "delta": 3.56
+      },
+      {
+        "brand": "Vallejo",
+        "name": "English Uniform",
+        "hex": "#715833",
+        "delta": 2.52
+      }
+    ]
+  },
+  {
+    "id": "army-painter-sulphide-ochre",
+    "brand": "Army Painter",
+    "name": "Sulphide Ochre",
+    "hex": "#C68512",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Tallarn Sand",
+        "hex": "#AB7D00",
+        "delta": 6.55
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Gold Brown",
+        "hex": "#BA8636",
+        "delta": 5.92
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Gold Brown",
+        "hex": "#BA8636",
+        "delta": 5.92
+      }
+    ]
+  },
+  {
+    "id": "army-painter-kobold-skin",
+    "brand": "Army Painter",
+    "name": "Kobold Skin",
+    "hex": "#C9A484",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Karak Stone",
+        "hex": "#C1A069",
+        "delta": 6.51
+      },
+      {
+        "brand": "Citadel",
+        "name": "Kislev Flesh",
+        "hex": "#DBAD75",
+        "delta": 6.59
+      },
+      {
+        "brand": "Citadel",
+        "name": "Ungor Flesh",
+        "hex": "#DBAC63",
+        "delta": 8.63
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dead Flesh",
+        "hex": "#BCB686",
+        "delta": 9.6
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Iraqi Sand",
+        "hex": "#B89972",
+        "delta": 4.44
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Bone White",
+        "hex": "#E8BE86",
+        "delta": 5.89
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Flesh",
+        "hex": "#D8A977",
+        "delta": 1.96
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Flesh",
+        "hex": "#D9A262",
+        "delta": 4.06
+      }
+    ]
+  },
+  {
+    "id": "army-painter-werewolf-fur",
+    "brand": "Army Painter",
+    "name": "Werewolf Fur",
+    "hex": "#785E4E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Bugmans Glow",
+        "hex": "#8C5144",
+        "delta": 8.04
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Tan",
+        "hex": "#9F4746",
+        "delta": 6.85
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Saddle Brown",
+        "hex": "#89584F",
+        "delta": 3.16
+      }
+    ]
+  },
+  {
+    "id": "army-painter-tanned-flesh",
+    "brand": "Army Painter",
+    "name": "Tanned Flesh",
+    "hex": "#BC745E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Cadian Fleshtone",
+        "hex": "#CB7953",
+        "delta": 5.23
+      },
+      {
+        "brand": "Citadel",
+        "name": "Ratskin Flesh",
+        "hex": "#AD6B4C",
+        "delta": 5.41
+      },
+      {
+        "brand": "Citadel",
+        "name": "Deathclaw Brown",
+        "hex": "#BA6952",
+        "delta": 3.48
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dwarf Skin",
+        "hex": "#CC7C67",
+        "delta": 4.91
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Light Brown",
+        "hex": "#BF764E",
+        "delta": 2.92
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Skintone",
+        "hex": "#AA7B62",
+        "delta": 5.79
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Orange Brown",
+        "hex": "#B86F44",
+        "delta": 4.03
+      }
+    ]
+  },
+  {
+    "id": "army-painter-troll-claws",
+    "brand": "Army Painter",
+    "name": "Troll Claws",
+    "hex": "#CB8B4E",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Bestigor Flesh",
+        "hex": "#D38A57",
+        "delta": 3.48
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Bronze Fleshtone",
+        "hex": "#DB945C",
+        "delta": 3.64
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Beige Red",
+        "hex": "#C79166",
+        "delta": 3.88
+      }
+    ]
+  },
+  {
+    "id": "army-painter-monster-brown",
+    "brand": "Army Painter",
+    "name": "Monster Brown",
+    "hex": "#855C2A",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Skrag Brown",
+        "hex": "#954B00",
+        "delta": 7.48
+      },
+      {
+        "brand": "Citadel",
+        "name": "Balor Brown",
+        "hex": "#915E02",
+        "delta": 5.44
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Parasite Brown",
+        "hex": "#B1481F",
+        "delta": 8.84
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Flat Earth",
+        "hex": "#87643C",
+        "delta": 9.9
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Leather Brown",
+        "hex": "#7B5D2A",
+        "delta": 6.73
+      }
+    ]
+  },
+  {
+    "id": "army-painter-leather-brown",
+    "brand": "Army Painter",
+    "name": "Leather Brown",
+    "hex": "#764823",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "XV-88",
+        "hex": "#7B4D1C",
+        "delta": 3.41
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Leather Brown",
+        "hex": "#7B5D2A",
+        "delta": 6.77
+      },
+      {
+        "brand": "Vallejo",
+        "name": "English Uniform",
+        "hex": "#715833",
+        "delta": 6.36
+      }
+    ]
+  },
+  {
+    "id": "army-painter-dirt-spatter",
+    "brand": "Army Painter",
+    "name": "Dirt Spatter",
+    "hex": "#5E3827",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Rhinox Hide",
+        "hex": "#4E3433",
+        "delta": 9.58
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Fleshtone",
+        "hex": "#4F2B26",
+        "delta": 5.21
+      },
+      {
+        "brand": "Vallejo",
+        "name": "German Cam. Black Brown",
+        "hex": "#553528",
+        "delta": 6.65
+      }
+    ]
+  },
+  {
+    "id": "army-painter-dark-stone",
+    "brand": "Army Painter",
+    "name": "Dark Stone",
+    "hex": "#605752",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Gorthor Brown",
+        "hex": "#6E4E46",
+        "delta": 6.87
+      },
+      {
+        "brand": "Citadel",
+        "name": "Eshin Grey",
+        "hex": "#535659",
+        "delta": 6.98
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Sienna",
+        "hex": "#744642",
+        "delta": 4.67
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Burnt Umber",
+        "hex": "#665148",
+        "delta": 3.36
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Cold Grey",
+        "hex": "#54646D",
+        "delta": 7.37
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Grey Green",
+        "hex": "#565A60",
+        "delta": 2.4
+      }
+    ]
+  },
+  {
+    "id": "army-painter-filthy-cape",
+    "brand": "Army Painter",
+    "name": "Filthy Cape",
+    "hex": "#7C7863",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Baneblade Brown",
+        "hex": "#99826B",
+        "delta": 8.37
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Khaki",
+        "hex": "#8C806D",
+        "delta": 3.91
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Tan Earth",
+        "hex": "#9C7962",
+        "delta": 4.46
+      }
+    ]
+  },
+  {
+    "id": "army-painter-hardened-carapace",
+    "brand": "Army Painter",
+    "name": "Hardened Carapace",
+    "hex": "#4C473F",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Mechanicus Standard Grey",
+        "hex": "#454E50",
+        "delta": 8.49
+      },
+      {
+        "brand": "Citadel",
+        "name": "Skavenblight Dinge",
+        "hex": "#4F4840",
+        "delta": 1.04
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Cold Grey",
+        "hex": "#54646D",
+        "delta": 9.83
+      },
+      {
+        "brand": "Vallejo",
+        "name": "USA Olive Drab",
+        "hex": "#3B4947",
+        "delta": 4.1
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Beasty Brown",
+        "hex": "#55432D",
+        "delta": 8.62
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Leather Brown",
+        "hex": "#4A4639",
+        "delta": 3.19
+      }
+    ]
+  },
+  {
+    "id": "army-painter-field-grey",
+    "brand": "Army Painter",
+    "name": "Field Grey",
+    "hex": "#787C78",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Dawnstone",
+        "hex": "#7B7E74",
+        "delta": 2.94
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Khaki",
+        "hex": "#8C806D",
+        "delta": 7.2
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Dark Sea Grey",
+        "hex": "#787D7A",
+        "delta": 3.48
+      }
+    ]
+  },
+  {
+    "id": "army-painter-spaceship-exterior",
+    "brand": "Army Painter",
+    "name": "Spaceship Exterior",
+    "hex": "#CDCED0",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Ulthuan Grey",
+        "hex": "#D2E4DF",
+        "delta": 8.63
+      },
+      {
+        "brand": "Citadel",
+        "name": "Fulgrim Pink",
+        "hex": "#F4AFCD",
+        "delta": 13.91
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Verdigris",
+        "hex": "#B3CECA",
+        "delta": 8.81
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Silver Grey",
+        "hex": "#D8DFD5",
+        "delta": 4.28
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Pale Flesh",
+        "hex": "#F6BDB3",
+        "delta": 14.2
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Sky Grey",
+        "hex": "#B3B6B2",
+        "delta": 17.04
+      }
+    ]
+  },
+  {
+    "id": "army-painter-drake-tooth",
+    "brand": "Army Painter",
+    "name": "Drake Tooth",
+    "hex": "#CFCBB4",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Pallid Wych Flesh",
+        "hex": "#D6D5C4",
+        "delta": 4.3
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Elfic Flesh",
+        "hex": "#CDC29C",
+        "delta": 10.84
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Silver Grey",
+        "hex": "#D8DFD5",
+        "delta": 4.94
+      }
+    ]
+  },
+  {
+    "id": "army-painter-matt-black",
+    "brand": "Army Painter",
+    "name": "Matt Black",
+    "hex": "#231F20",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Abaddon Black",
+        "hex": "#010100",
+        "delta": 12.19
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Black",
+        "hex": "#000000",
+        "delta": 0.47
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Glossy Black",
+        "hex": "#010101",
+        "delta": 0.4
+      }
+    ]
+  },
+  {
+    "id": "army-painter-cultist-robe",
+    "brand": "Army Painter",
+    "name": "Cultist Robe",
+    "hex": "#756E60",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Stormvermin Fur",
+        "hex": "#7D736A",
+        "delta": 3.62
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Khaki",
+        "hex": "#8C806D",
+        "delta": 6.76
+      },
+      {
+        "brand": "Vallejo",
+        "name": "German Cam. Pale Brown",
+        "hex": "#82685E",
+        "delta": 6.52
+      }
+    ]
+  },
+  {
+    "id": "army-painter-combat-fatigue",
+    "brand": "Army Painter",
+    "name": "Combat Fatigue",
+    "hex": "#878E5C",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Death Guard Armor",
+        "hex": "#848A66",
+        "delta": 4.16
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Warm Grey",
+        "hex": "#939066",
+        "delta": 4.55
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Green Grey",
+        "hex": "#827E61",
+        "delta": 5.23
+      }
+    ]
+  },
+  {
+    "id": "army-painter-toxic-mist",
+    "brand": "Army Painter",
+    "name": "Toxic Mist",
+    "hex": "#39C0C5",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Baharroth Blue",
+        "hex": "#58C1CD",
+        "delta": 4.2
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Heavy Blue Grey",
+        "hex": "#9CA7A7",
+        "delta": 12.33
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Pale Blue",
+        "hex": "#83B5B2",
+        "delta": 7.68
+      }
+    ]
+  },
+  {
+    "id": "army-painter-gorgon-hide",
+    "brand": "Army Painter",
+    "name": "Gorgon Hide",
+    "hex": "#C7D2E4",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Blue Horror",
+        "hex": "#A2BAD2",
+        "delta": 10.02
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Ghost Grey",
+        "hex": "#A7C5DB",
+        "delta": 4.04
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Pale Grey Blue",
+        "hex": "#BACDD0",
+        "delta": 10.51
+      }
+    ]
+  },
+  {
+    "id": "army-painter-oozing-purple",
+    "brand": "Army Painter",
+    "name": "Oozing Purple",
+    "hex": "#AA94B4",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Dechala Lilac",
+        "hex": "#B69FCC",
+        "delta": 5.75
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Wolf Grey",
+        "hex": "#90A2BC",
+        "delta": 11.88
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Blue Grey Pale",
+        "hex": "#9EA7A5",
+        "delta": 16.32
+      }
+    ]
+  },
+  {
+    "id": "army-painter-kraken-skin",
+    "brand": "Army Painter",
+    "name": "Kraken Skin",
+    "hex": "#71C591",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Gauss Blaster Green",
+        "hex": "#84C3AA",
+        "delta": 8.68
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Verdigris",
+        "hex": "#B3CECA",
+        "delta": 10.8
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Grey Grey",
+        "hex": "#AECBBB",
+        "delta": 7.89
+      }
+    ]
+  },
+  {
+    "id": "army-painter-centaur-skin",
+    "brand": "Army Painter",
+    "name": "Centaur Skin",
+    "hex": "#DEABA0",
+    "category": "",
+    "matches": [
+      {
+        "brand": "Citadel",
+        "name": "Lugganath Orange",
+        "hex": "#F79E86",
+        "delta": 6.88
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Rosy Flesh",
+        "hex": "#F89E84",
+        "delta": 0.6
+      },
+      {
+        "brand": "Vallejo",
+        "name": "Salmon Rose",
+        "hex": "#F89D87",
+        "delta": 0.72
+      }
+    ]
+  }
+]
