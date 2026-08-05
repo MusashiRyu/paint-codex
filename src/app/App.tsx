@@ -1,18 +1,32 @@
 import { useMemo, useState } from 'react';
 import type { Paint } from '../domain/types';
 import { getPaints } from '../domain/paintRepository';
+import { useAppStore } from './providers/store';
 import { searchPaints } from '../features/search/search';
 import { SearchBar } from '../features/search/SearchBar';
 import { BrandFilter } from '../features/browse/BrandFilter';
 import { ResultsGrid } from '../features/browse/ResultsGrid';
 import { getUniqueBrands } from '../features/browse/browse';
+import { ListsPanel } from '../features/lists/ListsPanel';
 import { useDarkMode } from '../shared/hooks/useDarkMode';
 
 function App() {
   const [query, setQuery] = useState('');
   const [selectedBrand, setSelectedBrand] = useState<string | undefined>();
   const [selectedPaint, setSelectedPaint] = useState<Paint | undefined>();
+  const [listNotice, setListNotice] = useState('');
   const isDarkMode = useDarkMode();
+
+  const {
+    lists,
+    selectedListId,
+    createList,
+    renameList,
+    deleteList,
+    selectList,
+    addPaintToList,
+    removePaintFromList,
+  } = useAppStore();
 
   const paintList = useMemo(() => getPaints(), []);
   const brands = useMemo(() => getUniqueBrands(paintList), [paintList]);
@@ -34,6 +48,20 @@ function App() {
     setQuery(paint.name);
   };
 
+  const handleAddToList = (paint: Paint) => {
+    if (!selectedListId) {
+      setListNotice('Select or create a list before adding paints.');
+      return;
+    }
+
+    const added = addPaintToList(selectedListId, paint);
+    setListNotice(
+      added
+        ? `Added ${paint.name} to your selected list.`
+        : `${paint.name} is already in the selected list.`
+    );
+  };
+
   return (
     <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
       <header className="app-header">
@@ -47,6 +75,29 @@ function App() {
 
       <main className="app-main">
         <div className="container">
+          <ListsPanel
+            lists={lists}
+            selectedListId={selectedListId}
+            notice={listNotice}
+            onCreateList={(name) => {
+              createList(name);
+              setListNotice(`Created list \"${name}\".`);
+            }}
+            onSelectList={(listId) => {
+              selectList(listId);
+              setListNotice('');
+            }}
+            onRenameList={(listId, name) => renameList(listId, name)}
+            onDeleteList={(listId) => {
+              deleteList(listId);
+              setListNotice('List deleted.');
+            }}
+            onRemovePaint={(listId, paintId) => {
+              removePaintFromList(listId, paintId);
+              setListNotice('Paint removed from list.');
+            }}
+          />
+
           <SearchBar
             paints={paintList}
             onSearch={handleSearch}
@@ -59,7 +110,7 @@ function App() {
             onBrandChange={setSelectedBrand}
           />
 
-          <ResultsGrid paints={results} />
+          <ResultsGrid paints={results} onAddToList={handleAddToList} />
         </div>
       </main>
 

@@ -1,0 +1,177 @@
+.panel {
+  margin-bottom: 2rem;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.header {
+  margin-bottom: 0.75rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.subtitle {
+  margin: 0.25rem 0 0 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.createRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.input {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+}
+
+.primaryButton,
+.secondaryButton,
+.deleteButton,
+.removeButton {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  cursor: pointer;
+}
+
+.primaryButton {
+  background: #4f46e5;
+  color: #fff;
+}
+
+.secondaryButton {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.deleteButton,
+.removeButton {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.notice {
+  margin: 0.5rem 0;
+  color: #065f46;
+  font-size: 0.9rem;
+}
+
+.listTabs {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.listTabRow {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.listTab {
+  flex: 1;
+  text-align: left;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.active {
+  border-color: #4f46e5;
+  background: #eef2ff;
+}
+
+.selectedListSection {
+  border-top: 1px solid #e5e7eb;
+  padding-top: 0.75rem;
+}
+
+.selectedListHeader {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.renameInput {
+  flex: 1;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+}
+
+.paintItems {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.paintItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.4rem 0.5rem;
+}
+
+.paintItemLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.paintSwatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid #d1d5db;
+}
+
+.emptyMessage {
+  margin: 0;
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .panel {
+    background: #1e1e1e;
+    border-color: #333;
+  }
+
+  .subtitle,
+  .emptyMessage {
+    color: #a3a3a3;
+  }
+
+  .listTab,
+  .input,
+  .renameInput {
+    background: #262626;
+    color: #fff;
+    border-color: #3f3f46;
+  }
+
+  .active {
+    background: #312e81;
+    border-color: #6366f1;
+  }
+
+  .paintItem {
+    border-color: #3f3f46;
+  }
+}
