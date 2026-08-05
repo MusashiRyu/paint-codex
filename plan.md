@@ -187,13 +187,13 @@ Reach the target architecture above **without changing user-visible behavior**. 
 **Steps:**
 1. ✅ **Capacitor installed** — `@capacitor/core`, `@capacitor/ios`, `@capacitor/android`, `@capacitor/cli` added
 2. ✅ **npm scripts added** — `cap:build`, `cap:ios`, `cap:android`
-3. ⬜ **capacitor.config.ts** — `{ appId: 'com.musashi.paco', appName: 'Paco', webDir: 'dist' }`
+3. ✅ **capacitor.config.ts** — `{ appId: 'com.musashi.paco', appName: 'Paco', webDir: 'dist' }`
 4. ⬜ **iOS project** — `npm run cap:ios` generates Xcode project
 5. ⬜ **Android project** — `npm run cap:android` generates Android Studio project
 6. ⬜ **Native testing** — simulator/device, safe area insets, touch targets
 
 **Verification**
-- [ ] `capacitor.config.ts` present with `com.musashi.paco` / `Paco`
+- [x] `capacitor.config.ts` present with `com.musashi.paco` / `Paco`
 - [ ] iOS build opens in Xcode without errors
 - [ ] Android build opens in Android Studio without errors
 - [ ] App runs on iOS simulator + Android emulator
