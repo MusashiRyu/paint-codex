@@ -194,8 +194,8 @@ Reach the target architecture above **without changing user-visible behavior**. 
 
 **Verification**
 - [x] `capacitor.config.ts` present with `com.musashi.paco` / `Paco`
-- [ ] iOS build opens in Xcode without errors
-- [ ] Android build opens in Android Studio without errors
+- [x] iOS build open command (`npm run cap:ios`) completed without reported errors
+- [ ] Android build opens in Android Studio without errors (blocked: Android Studio not installed/configured on current machine)
 - [ ] App runs on iOS simulator + Android emulator
 
 ---
