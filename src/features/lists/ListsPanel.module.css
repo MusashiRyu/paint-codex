@@ -1,5 +1,6 @@
 .panel {
   --action-col: 124px;
+  --action-row-height: 46px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 35%),
     url('/imagery/aquila-inspired.svg') right -120px top -66px/300px 170px no-repeat,
@@ -32,6 +33,7 @@
   align-items: stretch;
   gap: 0.5rem;
   margin-bottom: 0.7rem;
+  min-height: var(--action-row-height);
 }
 
 .input {
@@ -40,6 +42,7 @@
   padding: 0.68rem 0.72rem;
   color: var(--text-main);
   background: var(--panel-soft);
+  min-height: var(--action-row-height);
 }
 
 .primaryButton,
@@ -51,7 +54,8 @@
   padding: 0.52rem 0.75rem;
   cursor: pointer;
   font-weight: 600;
-  min-height: 44px;
+  min-height: var(--action-row-height);
+  height: var(--action-row-height);
   min-width: var(--action-col);
   width: 100%;
   display: inline-flex;
@@ -95,10 +99,12 @@
   grid-template-columns: 1fr var(--action-col);
   align-items: stretch;
   gap: 0.42rem;
+  min-height: var(--action-row-height);
 }
 
 .listTab {
-  min-height: 44px;
+  min-height: var(--action-row-height);
+  height: var(--action-row-height);
   width: 100%;
   text-align: left;
   border: 1px solid var(--line);
@@ -125,6 +131,7 @@
   align-items: stretch;
   gap: 0.5rem;
   margin-bottom: 0.5rem;
+  min-height: var(--action-row-height);
 }
 
 .renameInput {
@@ -133,7 +140,7 @@
   padding: 0.52rem 0.66rem;
   background: var(--panel-soft);
   color: var(--text-main);
-  min-height: 44px;
+  min-height: var(--action-row-height);
 }
 
 .paintItems {
@@ -151,15 +158,16 @@
   gap: 0.42rem;
   border: 1px solid var(--line);
   border-radius: 8px;
-  padding: 0.45rem 0;
+  padding: 0;
   background: rgba(0, 0, 0, 0.18);
+  min-height: var(--action-row-height);
 }
 
 .paintItemLeft {
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  min-height: 44px;
+  min-height: var(--action-row-height);
   padding: 0 0.55rem;
   font-size: 0.82rem;
 }
