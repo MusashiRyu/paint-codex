@@ -1,166 +1,175 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import type { PaintList } from '../../app/providers/store';
+import { ListIconSvg } from '../../shared/ui/ListIconSvg';
+import { PaintItem } from './PaintItem';
 import styles from './ListsPanel.module.css';
+
+const CATEGORY_ORDER = ['Base Layer', 'Layer', 'Edge', 'Shade', 'Technical', 'Contrast'];
 
 interface ListsPanelProps {
   lists: PaintList[];
-  selectedListId?: string;
-  notice?: string;
-  onCreateList: (name: string) => void;
-  onSelectList: (listId: string | undefined) => void;
-  onRenameList: (listId: string, name: string) => void;
+  activeListId: string | undefined;
+  onSelectList: (id: string) => void;
+  onOpenNewList: () => void;
+  onOpenSearch: () => void;
+  onRemovePaint: (paintId: string) => void;
   onDeleteList: (listId: string) => void;
-  onRemovePaint: (listId: string, paintId: string) => void;
+  onExportList: () => void;
+  exportFlash: boolean;
 }
 
 export function ListsPanel({
   lists,
-  selectedListId,
-  notice,
-  onCreateList,
+  activeListId,
   onSelectList,
-  onRenameList,
-  onDeleteList,
+  onOpenNewList,
+  onOpenSearch,
   onRemovePaint,
+  onDeleteList,
+  onExportList,
+  exportFlash,
 }: ListsPanelProps) {
-  const [newListName, setNewListName] = useState('');
-  const [renameDraft, setRenameDraft] = useState('');
-  const selectedList = useMemo(
-    () => lists.find((list) => list.id === selectedListId),
-    [lists, selectedListId]
+  const [editMode, setEditMode] = useState(false);
+
+  const activeList = useMemo(
+    () => lists.find((l) => l.id === activeListId),
+    [lists, activeListId]
   );
 
-  useEffect(() => {
-    setRenameDraft(selectedList?.name ?? '');
-  }, [selectedList?.id, selectedList?.name]);
-
-  const handleCreate = () => {
-    const trimmed = newListName.trim();
-    if (!trimmed) {
-      return;
+  const sections = useMemo(() => {
+    if (!activeList || activeList.paints.length === 0) return [];
+    const byCategory = new Map<string, typeof activeList.paints>();
+    for (const paint of activeList.paints) {
+      const cat = paint.category ?? 'Other';
+      const group = byCategory.get(cat) ?? [];
+      group.push(paint);
+      byCategory.set(cat, group);
     }
-    onCreateList(trimmed);
-    setNewListName('');
-  };
+    const entries = Array.from(byCategory.entries());
+    entries.sort(([a], [b]) => {
+      const ia = CATEGORY_ORDER.indexOf(a);
+      const ib = CATEGORY_ORDER.indexOf(b);
+      if (ia === -1 && ib === -1) return a.localeCompare(b);
+      if (ia === -1) return 1;
+      if (ib === -1) return -1;
+      return ia - ib;
+    });
+    return entries.map(([type, items]) => ({ type, items }));
+  }, [activeList]);
 
-  const commitRename = () => {
-    if (!selectedList) {
-      return;
-    }
-
-    const trimmed = renameDraft.trim();
-    if (!trimmed) {
-      setRenameDraft(selectedList.name);
-      return;
-    }
-
-    if (trimmed === selectedList.name) {
-      setRenameDraft(selectedList.name);
-      return;
-    }
-
-    onRenameList(selectedList.id, trimmed);
-    setRenameDraft(trimmed);
-  };
+  const hasPaints = sections.length > 0;
+  const canDelete = lists.length > 1;
 
   return (
-    <section className={styles.panel}>
-      <div className={styles.header}>
-        <h2 className={styles.title}>Paint Lists</h2>
-        <p className={styles.subtitle}>Create and manage your saved paint sets.</p>
-      </div>
-
-      <div className={styles.createRow}>
-        <input
-          className={styles.input}
-          value={newListName}
-          onChange={(e) => setNewListName(e.target.value)}
-          placeholder="New list name"
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              handleCreate();
-            }
-          }}
-        />
-        <button className={styles.primaryButton} onClick={handleCreate}>
-          Create List
+    <>
+      {/* Tab bar */}
+      <div className={styles.tabBar}>
+        {lists.map((list) => {
+          const isActive = list.id === activeListId;
+          return (
+            <button
+              key={list.id}
+              className={styles.tabPill}
+              onClick={() => {
+                onSelectList(list.id);
+                setEditMode(false);
+              }}
+              style={{
+                border: `1px solid ${isActive ? list.color : 'rgba(255,255,255,0.1)'}`,
+                background: isActive ? `${list.color}26` : 'none',
+                color: isActive ? '#e4c98a' : '#9a8f79',
+              }}
+            >
+              <ListIconSvg icon={list.icon} size={13} />
+              <span>{list.name}</span>
+            </button>
+          );
+        })}
+        <button className={styles.newTabBtn} onClick={onOpenNewList}>
+          <span className={styles.newTabPlus}>+</span>
+          <span>New</span>
         </button>
       </div>
 
-      {notice && <p className={styles.notice}>{notice}</p>}
-
-      <div className={styles.listTabs}>
-        {lists.length === 0 && (
-          <p className={styles.emptyMessage}>No lists yet. Create one to start saving paints.</p>
-        )}
-        {lists.map((list) => {
-          const isSelected = selectedListId === list.id;
-          return (
-            <div key={list.id} className={styles.listTabRow}>
-              <button
-                className={`${styles.listTab} ${isSelected ? styles.active : ''}`}
-                onClick={() => onSelectList(list.id)}
-              >
-                {list.name}
+      {/* Scrollable content */}
+      <div className={styles.content}>
+        {hasPaints && (
+          <div className={styles.listHeader}>
+            <div className={styles.listName}>{activeList!.name}</div>
+            <div className={styles.listActions}>
+              {exportFlash && <span className={styles.exportFlash}>Exported ✓</span>}
+              <button className={styles.iconBtn} onClick={onExportList} title="Export list">
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M12 4 V15 M8 11 L12 15 L16 11 M5 19 H19" />
+                </svg>
               </button>
               <button
-                className={styles.deleteButton}
-                onClick={() => onDeleteList(list.id)}
-                title="Delete list"
+                className={`${styles.iconBtn} ${editMode ? styles.iconBtnActive : ''}`}
+                onClick={() => setEditMode((m) => !m)}
+                title="Edit paints"
               >
-                Delete
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M4 20 L4.8 16.2 L15.5 5.5 C16.3 4.7 17.6 4.7 18.4 5.5 C19.2 6.3 19.2 7.6 18.4 8.4 L7.7 19.1 Z" />
+                  <path d="M14 7 L17 10" />
+                </svg>
+              </button>
+              <button
+                className={styles.iconBtnDanger}
+                onClick={() => canDelete && onDeleteList(activeList!.id)}
+                title="Delete list"
+                style={{ opacity: canDelete ? 1 : 0.3, pointerEvents: canDelete ? 'auto' : 'none' }}
+              >
+                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 7 H19 M9 7 V5 C9 4.4 9.4 4 10 4 H14 C14.6 4 15 4.4 15 5 V7 M7 7 L7.7 19 C7.8 19.6 8.3 20 8.9 20 H15.1 C15.7 20 16.2 19.6 16.3 19 L17 7" />
+                </svg>
               </button>
             </div>
-          );
-        })}
-      </div>
-
-      {selectedList && (
-        <div className={styles.selectedListSection}>
-          <div className={styles.selectedListHeader}>
-            <input
-              className={styles.renameInput}
-              value={renameDraft}
-              onChange={(e) => setRenameDraft(e.target.value)}
-              onBlur={commitRename}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  commitRename();
-                }
-              }}
-              aria-label="Rename selected list"
-            />
-            <button className={styles.secondaryButton} onClick={() => onSelectList(undefined)}>
-              Unselect
-            </button>
           </div>
+        )}
 
-          {selectedList.paints.length === 0 ? (
-            <p className={styles.emptyMessage}>No paints in this list yet.</p>
-          ) : (
-            <ul className={styles.paintItems}>
-              {selectedList.paints.map((paint) => (
-                <li key={paint.id} className={styles.paintItem}>
-                  <div className={styles.paintItemLeft}>
-                    <span
-                      className={styles.paintSwatch}
-                      style={{ backgroundColor: paint.hex }}
-                      title={paint.hex}
-                    />
-                    <span>{paint.brand} - {paint.name}</span>
-                  </div>
-                  <button
-                    className={styles.removeButton}
-                    onClick={() => onRemovePaint(selectedList.id, paint.id)}
-                  >
-                    Remove
-                  </button>
-                </li>
+        {hasPaints &&
+          sections.map(({ type, items }) => (
+            <div key={type}>
+              <div className={styles.sectionType}>{type}</div>
+              {items.map((paint) => (
+                <PaintItem
+                  key={paint.id}
+                  name={paint.name}
+                  brand={paint.brand}
+                  type={paint.category}
+                  hex={paint.hex}
+                  editMode={editMode}
+                  onRemove={() => onRemovePaint(paint.id)}
+                />
               ))}
-            </ul>
-          )}
-        </div>
-      )}
-    </section>
+            </div>
+          ))}
+
+        {!hasPaints && (
+          <div className={styles.emptyState}>
+            <svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="#c9a86a" strokeOpacity="0.4" strokeWidth="1">
+              <path d="M12 3 L14.2 9.2 L21 9.6 L15.6 13.8 L17.4 20.4 L12 16.5 L6.6 20.4 L8.4 13.8 L3 9.6 L9.8 9.2 Z" />
+            </svg>
+            {activeList ? (
+              <>
+                <div className={styles.emptyTitle}>Your grimoire is empty</div>
+                <div className={styles.emptyMsg}>No paints have been recorded for this list yet.</div>
+                <button className={styles.addFirstBtn} onClick={onOpenSearch}>
+                  + ADD FIRST PAINT
+                </button>
+              </>
+            ) : (
+              <>
+                <div className={styles.emptyTitle}>No lists yet</div>
+                <div className={styles.emptyMsg}>Create your first list to start tracking paints.</div>
+                <button className={styles.addFirstBtn} onClick={onOpenNewList}>
+                  + CREATE FIRST LIST
+                </button>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   );
 }

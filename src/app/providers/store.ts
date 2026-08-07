@@ -2,16 +2,28 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Paint } from '../../domain/types';
 
+export type ListIcon =
+  | 'skull'
+  | 'star'
+  | 'shield'
+  | 'wing'
+  | 'crown'
+  | 'flame'
+  | 'moon'
+  | 'drop';
+
 export type PaintList = {
   id: string;
   name: string;
+  icon: ListIcon;
+  color: string;
   paints: Paint[];
 };
 
 type AppStore = {
   lists: PaintList[];
   selectedListId?: string;
-  createList: (name: string) => string;
+  createList: (name: string, icon?: ListIcon, color?: string) => string;
   renameList: (listId: string, name: string) => void;
   deleteList: (listId: string) => void;
   selectList: (listId: string | undefined) => void;
@@ -31,7 +43,7 @@ export const useAppStore = create<AppStore>()(
     (set, get) => ({
       lists: [],
       selectedListId: undefined,
-      createList: (name) => {
+      createList: (name, icon = 'star', color = '#c9a86a') => {
         const trimmed = name.trim();
         if (!trimmed) {
           return '';
@@ -39,7 +51,7 @@ export const useAppStore = create<AppStore>()(
 
         const newId = createListId();
         set((state) => ({
-          lists: [...state.lists, { id: newId, name: trimmed, paints: [] }],
+          lists: [...state.lists, { id: newId, name: trimmed, icon, color, paints: [] }],
           selectedListId: newId,
         }));
         return newId;
@@ -104,6 +116,21 @@ export const useAppStore = create<AppStore>()(
     }),
     {
       name: 'paco-app-store',
+      version: 1,
+      migrate: (persisted: unknown, version: number) => {
+        if (version === 0) {
+          const s = persisted as { lists: PaintList[]; selectedListId?: string };
+          return {
+            ...s,
+            lists: s.lists.map((l) => ({
+              ...l,
+              icon: (l.icon ?? 'star') as ListIcon,
+              color: l.color ?? '#c9a86a',
+            })),
+          };
+        }
+        return persisted;
+      },
     }
   )
 );

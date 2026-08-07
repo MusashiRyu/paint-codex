@@ -1,141 +1,119 @@
 import { useMemo, useState } from 'react';
-import type { Paint } from '../domain/types';
 import { getPaints } from '../domain/paintRepository';
 import { useAppStore } from './providers/store';
-import { searchPaints } from '../features/search/search';
-import { SearchBar } from '../features/search/SearchBar';
-import { BrandFilter } from '../features/browse/BrandFilter';
-import { ResultsGrid } from '../features/browse/ResultsGrid';
-import { getUniqueBrands } from '../features/browse/browse';
+import { generatePaintListMarkdown, getExportFilename } from '../features/export/markdownExport';
 import { ListsPanel } from '../features/lists/ListsPanel';
-import { ExportPanel } from '../features/export/ExportPanel';
-import { useDarkMode } from '../shared/hooks/useDarkMode';
-import { appConfig } from './config';
+import { SearchSheet } from '../features/search/SearchSheet';
+import { NewListSheet } from '../features/lists/NewListSheet';
+import type { ListIcon } from './providers/store';
+import styles from './App.module.css';
 
 function App() {
-  const [query, setQuery] = useState('');
-  const [selectedBrand, setSelectedBrand] = useState<string | undefined>();
-  const [selectedPaint, setSelectedPaint] = useState<Paint | undefined>();
-  const [listNotice, setListNotice] = useState('');
-  const isDarkMode = useDarkMode();
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [newListOpen, setNewListOpen] = useState(false);
+  const [exportFlash, setExportFlash] = useState(false);
 
   const {
     lists,
     selectedListId,
     createList,
-    renameList,
     deleteList,
     selectList,
     addPaintToList,
     removePaintFromList,
   } = useAppStore();
 
-  const paintList = useMemo(() => getPaints(), []);
-  const brands = useMemo(() => getUniqueBrands(paintList), [paintList]);
-  const selectedList = useMemo(
-    () => lists.find((list) => list.id === selectedListId),
+  const paintCatalog = useMemo(() => getPaints(), []);
+
+  const activeList = useMemo(
+    () => lists.find((l) => l.id === selectedListId) ?? lists[0],
     [lists, selectedListId]
   );
 
-  const results = useMemo(() => {
-    if (selectedPaint) {
-      return [selectedPaint];
-    }
-    return searchPaints(paintList, query, selectedBrand);
-  }, [query, selectedBrand, selectedPaint, paintList]);
-
-  const handleSearch = (q: string) => {
-    setQuery(q);
-    setSelectedPaint(undefined);
-  };
-
-  const handleSelectSuggestion = (paint: Paint) => {
-    setSelectedPaint(paint);
-    setQuery(paint.name);
-  };
-
-  const handleAddToList = (paint: Paint) => {
-    if (!selectedListId) {
-      setListNotice('Select or create a list before adding paints.');
-      return;
-    }
-
-    const added = addPaintToList(selectedListId, paint);
-    setListNotice(
-      added
-        ? `Added ${paint.name} to your selected list.`
-        : `${paint.name} is already in the selected list.`
-    );
+  const handleExport = () => {
+    if (!activeList) return;
+    const md = generatePaintListMarkdown(activeList);
+    const filename = getExportFilename(activeList.name);
+    const blob = new Blob([md], { type: 'text/markdown' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+    setExportFlash(true);
+    setTimeout(() => setExportFlash(false), 1500);
   };
 
   return (
-    <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
-      <header className="app-header">
-        <div className="header-content">
-          <h1 className="app-title">Paco</h1>
-          <p className="app-subtitle">Paint Codex</p>
+    <div className={styles.viewport}>
+      <div className={styles.card}>
+        {/* Header */}
+        <div className={styles.headerWrap}>
+          <div>
+            <div className={styles.title}>PAINT CODEX</div>
+            <div className={styles.subtitle}>Color Manager</div>
+          </div>
         </div>
-      </header>
+        <svg
+          width="100%"
+          height="10"
+          viewBox="0 0 346 10"
+          className={styles.divider}
+          aria-hidden="true"
+        >
+          <line x1="0" y1="5" x2="145" y2="5" stroke="#c9a86a" strokeOpacity="0.3" strokeWidth="1" />
+          <path d="M167 1 L171 5 L167 9 L163 5 Z" fill="#c9a86a" fillOpacity="0.55" />
+          <line x1="193" y1="5" x2="346" y2="5" stroke="#c9a86a" strokeOpacity="0.3" strokeWidth="1" />
+        </svg>
 
-      <main className="app-main">
-        <div className="container">
-          <ListsPanel
-            lists={lists}
-            selectedListId={selectedListId}
-            notice={listNotice}
-            onCreateList={(name) => {
-              createList(name);
-              setListNotice(`Created list \"${name}\".`);
+        {/* Lists panel (tabs + content) */}
+        <ListsPanel
+          lists={lists}
+          activeListId={activeList?.id}
+          onSelectList={selectList}
+          onOpenNewList={() => setNewListOpen(true)}
+          onOpenSearch={() => setSearchOpen(true)}
+          onRemovePaint={(paintId) => {
+            if (activeList) removePaintFromList(activeList.id, paintId);
+          }}
+          onDeleteList={(listId) => deleteList(listId)}
+          onExportList={handleExport}
+          exportFlash={exportFlash}
+        />
+
+        {/* Floating action button */}
+        <button
+          className={styles.fab}
+          onClick={() => setSearchOpen(true)}
+          aria-label="Add paint"
+        >
+          <span className={styles.fabIcon}>+</span>
+        </button>
+
+        {/* Search sheet overlay */}
+        {searchOpen && (
+          <SearchSheet
+            paintCatalog={paintCatalog}
+            activeList={activeList}
+            onAdd={(paint) => {
+              if (activeList) addPaintToList(activeList.id, paint);
             }}
-            onSelectList={(listId) => {
-              selectList(listId);
-              setListNotice('');
-            }}
-            onRenameList={(listId, name) => renameList(listId, name)}
-            onDeleteList={(listId) => {
-              deleteList(listId);
-              setListNotice('List deleted.');
-            }}
-            onRemovePaint={(listId, paintId) => {
-              removePaintFromList(listId, paintId);
-              setListNotice('Paint removed from list.');
+            onClose={() => setSearchOpen(false)}
+          />
+        )}
+
+        {/* New list sheet overlay */}
+        {newListOpen && (
+          <NewListSheet
+            onClose={() => setNewListOpen(false)}
+            onCreate={(name: string, icon: ListIcon, color: string) => {
+              createList(name, icon, color);
+              setNewListOpen(false);
             }}
           />
-
-          {appConfig.featureFlags.markdownExport && (
-            <ExportPanel selectedList={selectedList} />
-          )}
-
-          <SearchBar
-            paints={paintList}
-            onSearch={handleSearch}
-            onSelectSuggestion={handleSelectSuggestion}
-          />
-
-          <BrandFilter
-            brands={brands}
-            selectedBrand={selectedBrand}
-            onBrandChange={setSelectedBrand}
-          />
-
-          <ResultsGrid paints={results} onAddToList={handleAddToList} />
-        </div>
-      </main>
-
-      <footer className="app-footer">
-        <div className="footer-content">
-          <p>
-            Paint data sourced from{' '}
-            <a
-              href="https://redgrimm.github.io/paint-conversion/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              redgrimm.github.io
-            </a>
-          </p>
-        </div>
-      </footer>
+        )}
+      </div>
     </div>
   );
 }

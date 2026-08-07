@@ -1,0 +1,108 @@
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 3, 7, 0.7);
+  z-index: 10;
+}
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-sheet);
+  border-radius: 22px 22px 0 0;
+  box-shadow: 0 -1px 0 rgba(201, 168, 106, 0.18);
+  padding: 20px 20px 26px;
+}
+
+.sheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sheetTitle {
+  font-family: 'Cinzel', serif;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #dcb877;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 22px;
+  line-height: 1;
+  padding: 0;
+}
+
+.nameInput {
+  margin-top: 16px;
+  width: 100%;
+  padding: 11px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--gold-border);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+  font-size: 15px;
+  outline: none;
+}
+
+.sectionLabel {
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.iconGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+}
+
+.iconBtnSelected {
+  background: rgba(201, 168, 106, 0.14);
+  border-color: var(--gold);
+  color: var(--gold-bright);
+}
+
+.colorRow {
+  display: flex;
+  gap: 12px;
+}
+
+.colorSwatch {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.createBtn {
+  margin-top: 24px;
+  width: 100%;
+  padding: 13px;
+  border-radius: 20px;
+  border: 1px solid var(--gold);
+  background: rgba(201, 168, 106, 0.12);
+  color: var(--gold-bright);
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  letter-spacing: 1.5px;
+}
