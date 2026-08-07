@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import type { PaintList } from '../../app/providers/store';
 import { ListIconSvg } from '../../shared/ui/ListIconSvg';
+import { useBackDismiss } from '../../shared/hooks/useBackDismiss';
 import { PaintItem } from './PaintItem';
 import styles from './ListsPanel.module.css';
 
@@ -14,6 +15,7 @@ interface ListsPanelProps {
   onOpenSearch: () => void;
   onRemovePaint: (paintId: string) => void;
   onDeleteList: (listId: string) => void;
+  onRenameList: (listId: string, name: string) => void;
   onExportList: () => void;
   exportFlash: boolean;
 }
@@ -26,15 +28,44 @@ export function ListsPanel({
   onOpenSearch,
   onRemovePaint,
   onDeleteList,
+  onRenameList,
   onExportList,
   exportFlash,
 }: ListsPanelProps) {
-  const [editMode, setEditMode] = useState(false);
+  const [renaming, setRenaming] = useState(false);
+  const [draftName, setDraftName] = useState('');
+  // Escape unmounts the input; guard so the trailing blur can't commit anyway.
+  const skipCommitRef = useRef(false);
 
   const activeList = useMemo(
     () => lists.find((l) => l.id === activeListId),
     [lists, activeListId]
   );
+
+  const startRename = () => {
+    if (!activeList) return;
+    skipCommitRef.current = false;
+    setDraftName(activeList.name);
+    setRenaming(true);
+  };
+
+  const commitRename = () => {
+    if (skipCommitRef.current) {
+      skipCommitRef.current = false;
+      return;
+    }
+    // An empty or whitespace-only name is rejected by the store, keeping the old one.
+    if (activeList) onRenameList(activeList.id, draftName);
+    setRenaming(false);
+  };
+
+  const cancelRename = () => {
+    skipCommitRef.current = true;
+    setRenaming(false);
+  };
+
+  // Back gesture backs out of the rename rather than closing the app.
+  useBackDismiss(renaming, cancelRename);
 
   const sections = useMemo(() => {
     if (!activeList || activeList.paints.length === 0) return [];
@@ -72,7 +103,7 @@ export function ListsPanel({
               className={styles.tabPill}
               onClick={() => {
                 onSelectList(list.id);
-                setEditMode(false);
+                cancelRename();
               }}
               style={{
                 border: `1px solid ${isActive ? list.color : 'rgba(255,255,255,0.1)'}`,
@@ -95,7 +126,28 @@ export function ListsPanel({
       <div className={styles.content}>
         {hasPaints && (
           <div className={styles.listHeader}>
-            <div className={styles.listName}>{activeList!.name}</div>
+            {renaming ? (
+              <input
+                className={styles.listNameInput}
+                value={draftName}
+                autoFocus
+                onFocus={(e) => e.currentTarget.select()}
+                onChange={(e) => setDraftName(e.target.value)}
+                onBlur={commitRename}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    commitRename();
+                  } else if (e.key === 'Escape') {
+                    e.preventDefault();
+                    cancelRename();
+                  }
+                }}
+                aria-label="List name"
+              />
+            ) : (
+              <div className={styles.listName}>{activeList!.name}</div>
+            )}
             <div className={styles.listActions}>
               {exportFlash && <span className={styles.exportFlash}>Exported ✓</span>}
               <button className={styles.iconBtn} onClick={onExportList} title="Export list">
@@ -104,9 +156,13 @@ export function ListsPanel({
                 </svg>
               </button>
               <button
-                className={`${styles.iconBtn} ${editMode ? styles.iconBtnActive : ''}`}
-                onClick={() => setEditMode((m) => !m)}
-                title="Edit paints"
+                className={`${styles.iconBtn} ${renaming ? styles.iconBtnActive : ''}`}
+                // Keep focus in the input, so the click commits instead of
+                // blur-committing and then reopening a fresh rename.
+                onMouseDown={(e) => e.preventDefault()}
+                onClick={() => (renaming ? commitRename() : startRename())}
+                title="Rename list"
+                aria-label="Rename list"
               >
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M4 20 L4.8 16.2 L15.5 5.5 C16.3 4.7 17.6 4.7 18.4 5.5 C19.2 6.3 19.2 7.6 18.4 8.4 L7.7 19.1 Z" />
@@ -138,7 +194,6 @@ export function ListsPanel({
                   brand={paint.brand}
                   type={paint.category}
                   hex={paint.hex}
-                  editMode={editMode}
                   onRemove={() => onRemovePaint(paint.id)}
                 />
               ))}

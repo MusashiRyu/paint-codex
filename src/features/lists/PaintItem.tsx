@@ -5,18 +5,12 @@ interface PaintItemProps {
   brand: string;
   type?: string;
   hex: string;
-  editMode: boolean;
   onRemove: () => void;
 }
 
-export function PaintItem({ name, brand, type, hex, editMode, onRemove }: PaintItemProps) {
+export function PaintItem({ name, brand, type, hex, onRemove }: PaintItemProps) {
   return (
     <div className={styles.item}>
-      {editMode && (
-        <button className={styles.removeLeft} onClick={onRemove} aria-label="Remove paint">
-          –
-        </button>
-      )}
       <div className={styles.swatch} style={{ background: hex }} />
       <div className={styles.info}>
         <div className={styles.name}>{name}</div>

@@ -19,6 +19,7 @@ function App() {
     selectedListId,
     createList,
     deleteList,
+    renameList,
     selectList,
     addPaintToList,
     removePaintFromList,
@@ -83,6 +84,7 @@ function App() {
             if (activeList) removePaintFromList(activeList.id, paintId);
           }}
           onDeleteList={(listId) => deleteList(listId)}
+          onRenameList={(listId, name) => renameList(listId, name)}
           onExportList={handleExport}
           exportFlash={exportFlash}
         />
