@@ -128,6 +128,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.36rem;
+  height: 100%;
   padding: 0.55rem;
   background:
     linear-gradient(180deg, rgba(201, 160, 64, 0.04), transparent),
@@ -152,6 +153,7 @@
   text-align: center;
   width: 100%;
   min-height: 34px;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -173,6 +175,7 @@
 
 .deltaBadge {
   display: inline-block;
+  margin-top: auto;
   padding: 0.2rem 0.36rem;
   border-radius: 999px;
   font-size: 0.66rem;
