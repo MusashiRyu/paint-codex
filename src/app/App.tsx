@@ -5,6 +5,7 @@ import { generatePaintListMarkdown, getExportFilename } from '../features/export
 import { ListsPanel } from '../features/lists/ListsPanel';
 import { SearchSheet } from '../features/search/SearchSheet';
 import { NewListSheet } from '../features/lists/NewListSheet';
+import { useBackDismiss } from '../shared/hooks/useBackDismiss';
 import type { ListIcon } from './providers/store';
 import styles from './App.module.css';
 
@@ -24,6 +25,10 @@ function App() {
   } = useAppStore();
 
   const paintCatalog = useMemo(() => getPaints(), []);
+
+  // Back gesture closes an open sheet instead of the app.
+  useBackDismiss(searchOpen, () => setSearchOpen(false));
+  useBackDismiss(newListOpen, () => setNewListOpen(false));
 
   const activeList = useMemo(
     () => lists.find((l) => l.id === selectedListId) ?? lists[0],
