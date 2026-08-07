@@ -52,9 +52,15 @@ This runs a production Vite build and syncs `dist/` into both native projects.
 ### 2) Android release flow
 
 Prerequisites:
-- JDK 17+ installed
-- `JAVA_HOME` set
+- **JDK 21** installed and `JAVA_HOME` pointing at it
 - Android Studio SDK + build tools installed
+
+> **Do not use Android Studio's bundled JBR.** It ships Java 25, and the Gradle
+> wrapper pinned here (8.14.3) rejects it with
+> `Unsupported class file major version 69`. A build can appear to succeed on
+> Java 25 while Gradle is reusing cached compiled build scripts, then fail as
+> soon as a dependency change forces a recompile. Use JDK 21, e.g.
+> `JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-21.x.x-hotspot`.
 
 Build commands:
 
@@ -69,9 +75,22 @@ npm run android:build:release
 Release artifact path:
 - `android/app/build/outputs/bundle/release/app-release.aab`
 
+Debug artifact path:
+- `android/app/build/outputs/apk/debug/app-debug.apk`
+
+Install on a connected device:
+
+```bash
+adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+```
+
 Notes:
 - Configure signing in `android/app/build.gradle` (release signingConfig) before store upload.
 - Bump `versionCode` / `versionName` in `android/app/build.gradle` for each release.
+- The gradle scripts invoke `.\gradlew.bat` rather than `gradlew.bat`. Windows
+  environments that set `NoDefaultCurrentDirectoryInExePath=1` (Git for Windows
+  does this) stop `cmd.exe` from resolving executables in the working directory,
+  so the bare name fails in both PowerShell and Git Bash.
 
 ### 3) iOS release flow
 
@@ -101,3 +120,13 @@ npm run cap:sync
 npm run cap:android
 npm run cap:ios
 ```
+
+### 5) Native plugins
+
+- `@capacitor/app` — required for Android hardware/gesture back handling.
+  Capacitor core registers no back handler of its own, so without this plugin
+  the back gesture finishes the activity and closes the app even when an
+  overlay is open. Consumed via `src/shared/hooks/useBackDismiss.ts`.
+
+Adding or removing a plugin requires a `npm run cap:sync` so the native
+projects pick it up.
