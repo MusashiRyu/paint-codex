@@ -72,7 +72,8 @@ function App() {
     <div className={`app ${isDarkMode ? 'dark-mode' : ''}`}>
       <header className="app-header">
         <div className="header-content">
-          <h1 className="app-title">Paco Paint Codex</h1>
+          <h1 className="app-title">Paco</h1>
+          <p className="app-subtitle">Paint Codex</p>
         </div>
       </header>
 
@@ -131,16 +132,6 @@ function App() {
               rel="noopener noreferrer"
             >
               redgrimm.github.io
-            </a>
-          </p>
-          <p>
-            Paint availability from{' '}
-            <a
-              href="https://www.vliegeruit.com/paint/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              vliegeruit.com
             </a>
           </p>
         </div>

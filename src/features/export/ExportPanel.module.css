@@ -1,11 +1,13 @@
 .panel {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.024), transparent 35%),
-    url('/imagery/inquisition-inspired-i.svg') right -70px top -102px/184px 220px no-repeat,
+    linear-gradient(100deg, var(--panel) 45%, transparent 100%),
+    url('/imagery/inquisition-inspired-i.svg') right -30px center/160px auto no-repeat,
     var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 14px;
+  border: 1px solid rgba(201, 160, 64, 0.18);
+  border-radius: 22px;
   padding: 0.9rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.32);
+  overflow: hidden;
 }
 
 .header {
@@ -16,6 +18,7 @@
   margin: 0;
   font-family: 'Cinzel', serif;
   font-size: 1.02rem;
+  color: var(--accent-cream);
 }
 
 .subtitle {
@@ -34,9 +37,10 @@
 .primaryButton,
 .secondaryButton {
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0.42rem 0.62rem;
   cursor: pointer;
+  font-family: 'Barlow', sans-serif;
   font-weight: 600;
   min-height: 36px;
   min-width: 132px;
@@ -49,9 +53,10 @@
 }
 
 .primaryButton {
-  background: linear-gradient(140deg, rgba(184, 154, 99, 0.85), rgba(140, 116, 71, 0.9));
-  color: #1a1309;
-  border-color: rgba(255, 255, 255, 0.22);
+  background: linear-gradient(140deg, var(--accent-cream), var(--accent-gold));
+  color: #1a1200;
+  border-color: rgba(242, 232, 207, 0.28);
+  box-shadow: 0 2px 12px rgba(201, 160, 64, 0.3);
 }
 
 .secondaryButton {

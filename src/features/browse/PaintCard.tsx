@@ -1,6 +1,11 @@
 import React from 'react';
 import type { Match, Paint } from '../../domain/types';
-import { getDeltaColorClass, getDeltaLabel } from '../../shared/lib/color';
+import {
+  CLOSE_DELTA_MAX,
+  getDeltaColorClass,
+  getDeltaLabel,
+} from '../../shared/lib/color';
+import { getTopMatches } from './browse';
 import styles from './PaintCard.module.css';
 
 interface PaintCardProps {
@@ -9,6 +14,8 @@ interface PaintCardProps {
 }
 
 export const PaintCard: React.FC<PaintCardProps> = ({ paint, onAddToList }) => {
+  const closeMatches = getTopMatches(paint, paint.matches.length, CLOSE_DELTA_MAX);
+
   return (
     <div className={styles.paintCard}>
       <div className={styles.paintCardHeader}>
@@ -35,9 +42,13 @@ export const PaintCard: React.FC<PaintCardProps> = ({ paint, onAddToList }) => {
       <div className={styles.paintMatches}>
         <h4 className={styles.matchesTitle}>Equivalent Paints:</h4>
         <div className={styles.matchesGrid}>
-          {paint.matches.map((match, index) => (
-            <MatchItem key={index} match={match} />
-          ))}
+          {closeMatches.length > 0 ? (
+            closeMatches.map((match, index) => (
+              <MatchItem key={index} match={match} />
+            ))
+          ) : (
+            <p className={styles.matchBrand}>No close equivalents (Δ &lt; {CLOSE_DELTA_MAX}).</p>
+          )}
         </div>
       </div>
     </div>

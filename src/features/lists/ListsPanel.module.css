@@ -2,12 +2,15 @@
   --action-col: 124px;
   --action-row-height: 46px;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 35%),
-    url('/imagery/aquila-inspired.svg') right -120px top -66px/300px 170px no-repeat,
+    linear-gradient(100deg, var(--panel) 45%, transparent 100%),
+    url('/imagery/aquila-inspired.svg') right -60px center/280px auto no-repeat,
     var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 14px;
+  border: 1px solid rgba(201, 160, 64, 0.18);
+  border-radius: 22px;
   padding: 0.9rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.32);
+  position: relative;
+  overflow: hidden;
 }
 
 .header {
@@ -18,7 +21,8 @@
   margin: 0;
   font-family: 'Cinzel', serif;
   font-size: 1.06rem;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
+  color: var(--accent-cream);
 }
 
 .subtitle {
@@ -38,7 +42,7 @@
 
 .input {
   border: 1px solid var(--line);
-  border-radius: 10px;
+  border-radius: 14px;
   padding: 0.68rem 0.72rem;
   color: var(--text-main);
   background: var(--panel-soft);
@@ -50,9 +54,10 @@
 .deleteButton,
 .removeButton {
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0.52rem 0.75rem;
   cursor: pointer;
+  font-family: 'Barlow', sans-serif;
   font-weight: 600;
   min-height: var(--action-row-height);
   height: var(--action-row-height);
@@ -65,9 +70,10 @@
 }
 
 .primaryButton {
-  background: linear-gradient(140deg, rgba(184, 154, 99, 0.85), rgba(140, 116, 71, 0.9));
-  color: #1a1309;
-  border-color: rgba(255, 255, 255, 0.22);
+  background: linear-gradient(140deg, var(--accent-cream), var(--accent-gold));
+  color: #1a1200;
+  border-color: rgba(242, 232, 207, 0.28);
+  box-shadow: 0 2px 12px rgba(201, 160, 64, 0.3);
 }
 
 .secondaryButton {
@@ -108,16 +114,18 @@
   width: 100%;
   text-align: left;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0.52rem 0.66rem;
   background: var(--panel-soft);
   color: var(--text-main);
   cursor: pointer;
+  font-family: 'Barlow', sans-serif;
 }
 
 .active {
-  border-color: var(--accent-brass);
-  background: rgba(184, 154, 99, 0.14);
+  border-color: var(--accent-gold);
+  background: rgba(201, 160, 64, 0.12);
+  color: var(--accent-cream);
 }
 
 .selectedListSection {
@@ -136,7 +144,7 @@
 
 .renameInput {
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0.52rem 0.66rem;
   background: var(--panel-soft);
   color: var(--text-main);
@@ -157,9 +165,9 @@
   align-items: stretch;
   gap: 0.42rem;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0;
-  background: rgba(0, 0, 0, 0.18);
+  background: rgba(0, 0, 0, 0.2);
   min-height: var(--action-row-height);
 }
 

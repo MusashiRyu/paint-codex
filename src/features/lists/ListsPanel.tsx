@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { PaintList } from '../../app/providers/store';
 import styles from './ListsPanel.module.css';
 
@@ -24,10 +24,15 @@ export function ListsPanel({
   onRemovePaint,
 }: ListsPanelProps) {
   const [newListName, setNewListName] = useState('');
+  const [renameDraft, setRenameDraft] = useState('');
   const selectedList = useMemo(
     () => lists.find((list) => list.id === selectedListId),
     [lists, selectedListId]
   );
+
+  useEffect(() => {
+    setRenameDraft(selectedList?.name ?? '');
+  }, [selectedList?.id, selectedList?.name]);
 
   const handleCreate = () => {
     const trimmed = newListName.trim();
@@ -36,6 +41,26 @@ export function ListsPanel({
     }
     onCreateList(trimmed);
     setNewListName('');
+  };
+
+  const commitRename = () => {
+    if (!selectedList) {
+      return;
+    }
+
+    const trimmed = renameDraft.trim();
+    if (!trimmed) {
+      setRenameDraft(selectedList.name);
+      return;
+    }
+
+    if (trimmed === selectedList.name) {
+      setRenameDraft(selectedList.name);
+      return;
+    }
+
+    onRenameList(selectedList.id, trimmed);
+    setRenameDraft(trimmed);
   };
 
   return (
@@ -76,7 +101,7 @@ export function ListsPanel({
                 className={`${styles.listTab} ${isSelected ? styles.active : ''}`}
                 onClick={() => onSelectList(list.id)}
               >
-                {list.name} ({list.paints.length})
+                {list.name}
               </button>
               <button
                 className={styles.deleteButton}
@@ -95,8 +120,14 @@ export function ListsPanel({
           <div className={styles.selectedListHeader}>
             <input
               className={styles.renameInput}
-              value={selectedList.name}
-              onChange={(e) => onRenameList(selectedList.id, e.target.value)}
+              value={renameDraft}
+              onChange={(e) => setRenameDraft(e.target.value)}
+              onBlur={commitRename}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  commitRename();
+                }
+              }}
               aria-label="Rename selected list"
             />
             <button className={styles.secondaryButton} onClick={() => onSelectList(undefined)}>

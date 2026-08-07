@@ -69,6 +69,13 @@ describe('PaintCard', () => {
     expect(screen.getByText(/4\.47/)).toBeInTheDocument();
   });
 
+  it('renders equivalent matches sorted by delta ascending', () => {
+    render(<PaintCard paint={mockPaint} />);
+    const lowerDelta = screen.getByText(/4\.47/);
+    const higherDelta = screen.getByText(/6\.78/);
+    expect(lowerDelta.compareDocumentPosition(higherDelta)).toBe(Node.DOCUMENT_POSITION_FOLLOWING);
+  });
+
   it('does not render an add-to-list button when onAddToList is not provided', () => {
     render(<PaintCard paint={mockPaint} />);
     expect(screen.queryByTitle('Add this paint to a list')).not.toBeInTheDocument();
@@ -91,9 +98,10 @@ describe('PaintCard', () => {
     badges.forEach((badge) => expect(badge).toHaveClass('delta-yellow'));
   });
 
-  it('applies delta-red class for delta >= 7', () => {
+  it('does not render distant matches with delta >= 7', () => {
     render(<PaintCard paint={paintWithRedDelta} />);
-    expect(screen.getByTitle('Distant')).toHaveClass('delta-red');
+    expect(screen.queryByTitle('Distant')).not.toBeInTheDocument();
+    expect(screen.getByText('No close equivalents (Δ < 7).')).toBeInTheDocument();
   });
 
   it('renders "Equivalent Paints:" heading', () => {

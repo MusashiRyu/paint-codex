@@ -17,7 +17,20 @@ const sampleList: PaintList = {
       name: 'Mephiston Red',
       hex: '#9b0e05',
       category: 'Base Layer',
-      matches: [],
+      matches: [
+        {
+          brand: 'Vallejo',
+          name: 'Gory Red',
+          hex: '#810504',
+          delta: 3.65,
+        },
+        {
+          brand: 'Citadel',
+          name: 'Incubi Darkness',
+          hex: '#094345',
+          delta: 11.76,
+        },
+      ],
     },
     {
       id: 'vallejo-gory-red',
@@ -52,6 +65,12 @@ describe('markdownExport', () => {
     expect(markdown).toContain('## Paint List: Starter Reds');
     expect(markdown).toContain('- [Citadel] [Mephiston Red](');
     expect(markdown).toContain('- [Vallejo] [Gory Red](');
+  });
+
+  it('does not include equivalent paint lines in markdown export', () => {
+    const markdown = generatePaintListMarkdown(sampleList);
+
+    expect(markdown).not.toContain('Equivalent:');
   });
 
   it('handles empty lists with a placeholder message', () => {

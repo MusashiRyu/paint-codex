@@ -33,6 +33,14 @@ export function filterPaintsByColor(
 /**
  * Get top matches for a paint
  */
-export function getTopMatches(paint: Paint, limit = 3): Match[] {
-  return paint.matches.slice(0, limit).sort((a, b) => a.delta - b.delta);
+export function getTopMatches(
+  paint: Paint,
+  limit = 3,
+  maxDelta = Number.POSITIVE_INFINITY
+): Match[] {
+  return paint.matches
+    .slice()
+    .sort((a, b) => a.delta - b.delta)
+    .filter((match) => match.delta < maxDelta)
+    .slice(0, limit);
 }

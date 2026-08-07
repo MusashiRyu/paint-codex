@@ -1,6 +1,13 @@
 /**
  * Convert hex color to HSL (Hue, Saturation, Lightness)
  */
+export const CLOSE_DELTA_MAX = 7;
+
+/**
+ * Delta threshold for very close matches.
+ */
+const VERY_CLOSE_DELTA_MAX = 3;
+
 export function hexToHSL(hex: string): [number, number, number] {
   const r = parseInt(hex.slice(1, 3), 16) / 255;
   const g = parseInt(hex.slice(3, 5), 16) / 255;
@@ -38,8 +45,8 @@ export function hexToHSL(hex: string): [number, number, number] {
  * Green: < 3, Yellow: < 7, Red: >= 7
  */
 export function getDeltaColorClass(delta: number): string {
-  if (delta < 3) return 'delta-green';
-  if (delta < 7) return 'delta-yellow';
+  if (delta < VERY_CLOSE_DELTA_MAX) return 'delta-green';
+  if (delta < CLOSE_DELTA_MAX) return 'delta-yellow';
   return 'delta-red';
 }
 
@@ -47,7 +54,7 @@ export function getDeltaColorClass(delta: number): string {
  * Get delta quality label
  */
 export function getDeltaLabel(delta: number): string {
-  if (delta < 3) return 'Very close';
-  if (delta < 7) return 'Close';
+  if (delta < VERY_CLOSE_DELTA_MAX) return 'Very close';
+  if (delta < CLOSE_DELTA_MAX) return 'Close';
   return 'Distant';
 }
