@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
-import { getPaints, resolvePaints } from '../domain/paintRepository';
+import { resolvePaints } from '../domain/paintRepository';
 import { useAppStore } from './providers/store';
+import { usePaintCatalog } from './providers/usePaintCatalog';
 import { generatePaintListMarkdown, getExportFilename } from '../features/export/markdownExport';
 import { ListsPanel } from '../features/lists/ListsPanel';
 import { SearchSheet } from '../features/search/SearchSheet';
@@ -28,7 +29,8 @@ function App() {
     removePaintFromList,
   } = useAppStore();
 
-  const paintCatalog = useMemo(() => getPaints(), []);
+  // Re-renders if the background refresh swaps the catalogue mid-session.
+  const paintCatalog = usePaintCatalog();
 
   // Back gesture closes an open sheet instead of the app.
   useBackDismiss(searchOpen, () => setSearchOpen(false));
@@ -41,8 +43,8 @@ function App() {
 
   // Resolved from the catalogue, so a refreshed snapshot reaches saved lists.
   const activePaints = useMemo(
-    () => (activeList ? resolvePaints(activeList.paintIds) : []),
-    [activeList]
+    () => (activeList ? resolvePaints(activeList.paintIds, paintCatalog) : []),
+    [activeList, paintCatalog]
   );
 
   const handleExport = () => {
