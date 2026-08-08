@@ -1,0 +1,54 @@
+/* The scrolling half of a `tall` Sheet — the sheet is a flex column and this is
+ * the child that takes the slack. */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 16px;
+  padding-bottom: 8px;
+}
+
+.prose {
+  font-size: var(--size-lg);
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.prose + .prose {
+  margin-top: 10px;
+}
+
+.section {
+  margin-top: 26px;
+}
+
+.sectionLabel {
+  font-size: var(--size-xs);
+  font-weight: 400;
+  letter-spacing: var(--track-lg);
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--gold-line);
+}
+
+.tipRow {
+  margin-top: 16px;
+}
+
+/* Smaller and dimmer than the prose above it: a disclaimer is there to be
+ * findable, not to be read first. */
+.legal {
+  font-size: var(--size-sm);
+  line-height: 1.5;
+  color: var(--text-dim);
+}
+
+.version {
+  margin-top: 26px;
+  font-family: var(--font-display);
+  font-size: var(--size-xs);
+  letter-spacing: var(--track-xl);
+  color: var(--text-dim);
+  text-align: center;
+}

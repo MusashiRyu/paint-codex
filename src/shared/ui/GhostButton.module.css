@@ -1,10 +1,17 @@
+/* `display`, `text-align` and `text-decoration` are here for the anchor
+ * variant: a <button> already centres its label, sits inline-block and carries
+ * no underline, but an <a> does none of the three. Stating them keeps the two
+ * renderings pixel-identical instead of nearly so. */
 .btn {
+  display: inline-block;
   border-radius: var(--radius-pill);
   border: 1px solid var(--gold);
   background: var(--gold-fill);
   color: var(--gold-bright);
   font-family: var(--font-display);
   letter-spacing: var(--track-md);
+  text-align: center;
+  text-decoration: none;
 }
 
 /* No fill and a dimmer edge: an offer, not the action being urged. */

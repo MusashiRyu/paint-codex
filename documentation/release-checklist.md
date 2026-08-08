@@ -271,6 +271,8 @@ notes → review → roll out. Start at a staged percentage on production.
 | `targetSdkVersion` | `36` | Above Play's current floor. Note that API 35+ enforces edge-to-edge, which is why the splash and window backgrounds are set explicitly. |
 | `minSdkVersion` | `24` | Capacitor's default. Keeping it means the legacy (non-adaptive) launcher icons still matter on API 24–25, which is why the generator writes them. |
 | Signing | upload key only | Google holds the app signing key under Play App Signing. |
+| `In-app purchases` | `No` | Correct: the field means purchases through Google Play's billing system, and the app has no billing integration — the About screen's links hand a URL to the browser. Do not "correct" this to `Yes` — that would declare an integration the app does not have. |
+| `appConfig.featureFlags.supportLink` | `true` | Toggles the About screen's support section. The About screen stands on its own with the flag off. |
 
 ## Not covered here
 

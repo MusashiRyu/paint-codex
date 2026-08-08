@@ -46,6 +46,21 @@ We never see it.
 If the requests fail — no signal, aeroplane mode, GitHub down — Paco carries on
 with the catalogue it already has. The app is fully usable offline.
 
+## Links that leave the app
+
+The About screen contains a few links: a tip page on Ko-fi, the paint data
+source and the design credit on GitHub, and this policy.
+
+Tapping one hands the address to **your own browser** and Paco takes no further
+part in it. Paco itself never contacts any of those sites, and the handoff
+carries nothing about you — not your lists, not an identifier, and not even the
+fact that you arrived from Paco, because every link in the app is marked
+`noreferrer`.
+
+Once a page is open in your browser, that site's own privacy policy applies, not
+this one. Leaving a tip is entirely optional: nothing in Paco is locked, limited
+or switched off if you never do, and Paco is not told whether you did.
+
 ## Device backup
 
 Android's own backup feature may include Paco's data (your lists) in the
@@ -72,9 +87,14 @@ nothing in the app directed at children and nothing that identifies any user.
 
 ## Third parties
 
-There are none. No SDKs, no trackers, no ad networks, no analytics providers.
-The paint catalogue's host (GitHub) is described above and receives nothing but
-ordinary anonymous requests for public files.
+There are none inside the app. No SDKs, no trackers, no ad networks, no
+analytics providers. The paint catalogue's host (GitHub) is described above and
+receives nothing but ordinary anonymous requests for public files.
+
+The sites behind the About screen's links are third parties in the ordinary
+sense — but Paco does not embed, contact or load anything from them. They are
+addresses handed to your browser when you choose to tap one, exactly as if you
+had typed them yourself.
 
 ## Changes
 

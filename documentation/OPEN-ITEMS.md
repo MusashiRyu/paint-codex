@@ -70,6 +70,40 @@ Note that `tools/icons/` writes Android and web assets only, so
 `ios/App/App/Assets.xcassets/AppIcon.appiconset` still holds the Capacitor
 placeholder. Extending the generator is the easy part of an iOS submission.
 
+### 6. The shop links earn nothing, and could
+**Raised:** 015 · **Blocked on a commercial decision, not on code**
+
+Item 3 is about the *coverage* of `shopLinks.snapshot.json`. This is about the
+fact that even at full coverage it pays nothing: the URLs are plain product
+links to vliegeruit.com with no referral parameter, so every purchase the app
+sends over earns the app zero.
+
+That matters because this is the route with actual revenue
+potential. The app already knows exactly which paint someone wants, so a buy
+link genuinely helps them rather than taxing their attention — the opposite
+trade to an ad.
+
+Four things gate it, in order:
+
+1. **A retailer with an affiliate programme.** vliegeruit.com has no known one,
+   so the current snapshot points somewhere that pays nothing no matter how
+   complete it gets. Element Games, Wayland Games and Amazon all run programmes.
+   Choosing one is the decision everything else waits on — and it interacts with
+   item 3, since switching retailer means re-crawling anyway.
+2. **Retargeting the snapshot and the scraper** at that retailer's URL scheme,
+   including the referral parameter.
+3. **A per-paint buy affordance.** A real design decision inside `SearchSheet`
+   and `ListsPanel`, not a link drop. The app has no commercial surface anywhere
+   today; adding one changes what it feels like to use.
+4. **Disclosure.** Affiliate links need saying so in `store/listing.md` and
+   `store/privacy-policy.md` — and they would give the
+   destination a reason to know the visit came from Paco, which the privacy
+   policy currently promises does not happen. That paragraph would have to
+   change. The cost here is not only compliance; it is tone.
+
+Not started. Decision as of 2026-08-09: revisit after launch when
+there are install numbers to reason about.
+
 ---
 
 ## Recently closed

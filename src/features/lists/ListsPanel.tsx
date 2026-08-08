@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from 'react';
 import type { PaintList } from '../../app/providers/store';
 import type { Paint } from '../../domain/types';
 import { ListIconSvg } from '../../shared/ui/ListIconSvg';
+import { ACTION_ICON } from '../../shared/ui/actionIcon';
 import { GhostButton } from '../../shared/ui/GhostButton';
 import { IconButton } from '../../shared/ui/IconButton';
 import { Pill } from '../../shared/ui/Pill';
@@ -11,18 +12,6 @@ import { PaintItem } from './PaintItem';
 import styles from './ListsPanel.module.css';
 
 const CATEGORY_ORDER = ['Base Layer', 'Layer', 'Edge', 'Shade', 'Technical', 'Contrast'];
-
-/** Shared geometry for the three header action glyphs. */
-const ACTION_ICON = {
-  viewBox: '0 0 24 24',
-  width: 15,
-  height: 15,
-  fill: 'none',
-  stroke: 'currentColor',
-  strokeWidth: 1.5,
-  strokeLinecap: 'round',
-  strokeLinejoin: 'round',
-} as const;
 
 interface ListsPanelProps {
   lists: PaintList[];

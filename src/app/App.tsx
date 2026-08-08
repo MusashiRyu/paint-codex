@@ -3,10 +3,13 @@ import { resolvePaints } from '../domain/paintRepository';
 import { useAppStore } from './providers/store';
 import { usePaintCatalog } from './providers/usePaintCatalog';
 import { generatePaintListMarkdown, getExportFilename } from '../features/export/markdownExport';
+import { AboutSheet } from '../features/about/AboutSheet';
 import { ListsPanel } from '../features/lists/ListsPanel';
 import { SearchSheet } from '../features/search/SearchSheet';
 import { NewListSheet } from '../features/lists/NewListSheet';
+import { ACTION_ICON } from '../shared/ui/actionIcon';
 import { GoldButton } from '../shared/ui/GoldButton';
+import { IconButton } from '../shared/ui/IconButton';
 import { useBackDismiss } from '../shared/hooks/useBackDismiss';
 import { appConfig } from './config';
 import type { ListIcon } from './providers/store';
@@ -17,6 +20,7 @@ const markdownExportEnabled = appConfig.featureFlags.markdownExport;
 function App() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [newListOpen, setNewListOpen] = useState(false);
+  const [aboutOpen, setAboutOpen] = useState(false);
   const [exportFlash, setExportFlash] = useState(false);
 
   const {
@@ -36,6 +40,7 @@ function App() {
   // Back gesture closes an open sheet instead of the app.
   useBackDismiss(searchOpen, () => setSearchOpen(false));
   useBackDismiss(newListOpen, () => setNewListOpen(false));
+  useBackDismiss(aboutOpen, () => setAboutOpen(false));
 
   const activeList = useMemo(
     () => lists.find((l) => l.id === selectedListId) ?? lists[0],
@@ -73,6 +78,13 @@ function App() {
             <div className={styles.title}>PAINT CODEX</div>
             <div className={styles.subtitle}>Color Manager</div>
           </div>
+          <IconButton label="About Paco" onClick={() => setAboutOpen(true)}>
+            <svg {...ACTION_ICON}>
+              <circle cx="12" cy="12" r="8.5" />
+              <path d="M12 11 V16.5" />
+              <path d="M12 7.8 V8.2" />
+            </svg>
+          </IconButton>
         </div>
         <svg
           width="100%"
@@ -135,6 +147,9 @@ function App() {
             }}
           />
         )}
+
+        {/* About sheet overlay */}
+        {aboutOpen && <AboutSheet onClose={() => setAboutOpen(false)} />}
       </div>
     </div>
   );

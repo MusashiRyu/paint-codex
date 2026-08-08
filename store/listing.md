@@ -59,6 +59,10 @@ device and are never uploaded. The app talks to exactly one host, for the
 public paint colour tables it is built on, and it sends nothing about you with
 it.
 
+Paco is free, and every part of it is. There is a tip jar on the About screen
+for anyone who wants to leave something, and nothing at all behind it — no
+feature is locked, limited or nagged about.
+
 —
 
 The Paint Codex design is by Lukas Stordeur (github.com/LukasStordeur).
@@ -109,8 +113,8 @@ first release on any track; write a real changelog from 1.0.1 onward.
 | --- | --- | --- |
 | App category | **Art & Design** | Tools is the fallback, but this is a hobby utility and Art & Design is where painters browse. |
 | Tags | Painting, Hobby, Reference | |
-| Contains ads | **No** | |
-| In-app purchases | **No** | |
+| Contains ads | **No** | No ad SDK, no ad ID, no promotional content of any kind. |
+| In-app purchases | **No** | Correct: this field means purchases through Google Play's billing system, and there are none — the About screen's links hand a URL to the browser and buy nothing. |
 | Free or paid | **Free** | |
 
 ## Target audience and content
@@ -136,6 +140,11 @@ no region lock, no gated features. The reviewer needs no credentials.
 
 `appConfig.featureFlags.markdownExport` is `false`, so the export action is not
 in the build at all — there is no hidden or unreachable feature to declare.
+
+**For the reviewer:** the About screen (the ⓘ action in the header) contains an
+outbound link to a Ko-fi tip page. It buys nothing — no feature, content or
+capability in the app is behind it, which is why **In-app purchases** is
+answered **No** above.
 
 ---
 

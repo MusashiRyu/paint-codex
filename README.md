@@ -36,6 +36,13 @@ See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rule
 Application feature toggles live in [src/app/config.ts](src/app/config.ts).
 
 - `featureFlags.markdownExport` — shows or hides the "Export list" download action in the list header. **Currently `false`.** The export logic itself (`src/features/export/markdownExport.ts`) stays in place and tested; only the UI entry point is gated.
+- `featureFlags.supportLink` — shows or hides the support section in the About sheet. **Currently `true`.**
+
+Every URL the app can send someone to lives beside them in `appConfig.links`.
+Outbound links go through `EXTERNAL_LINK_PROPS`
+([src/shared/lib/externalLink.ts](src/shared/lib/externalLink.ts)) — `target="_blank"`
+is what makes the Android WebView hand a URL to the system browser, and without
+it the page loads *inside* the app.
 
 ## Credits
 

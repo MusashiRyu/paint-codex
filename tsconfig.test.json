@@ -4,7 +4,10 @@
     "target": "es2023",
     "lib": ["ES2023", "DOM"],
     "module": "esnext",
-    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
+    /* `node` is here for the tests that read repository files rather than
+     * modules — appVersion.test.ts pins a constant against build.gradle. Tests
+     * run under Node, so the APIs were always there; only the types were not. */
+    "types": ["node", "vite/client", "vitest/globals", "@testing-library/jest-dom"],
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
 
