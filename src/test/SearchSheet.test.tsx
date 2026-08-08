@@ -80,6 +80,105 @@ describe('SearchSheet equivalents', () => {
   });
 });
 
+/**
+ * A catalogue where the equivalents are themselves paints, which is what the
+ * inverted snapshot gives us and what a jump needs. Dragon Red is deliberately
+ * left as a match only.
+ */
+const jumpCatalog: Paint[] = [
+  {
+    id: 'citadel-mephiston-red',
+    brand: 'Citadel',
+    name: 'Mephiston Red',
+    hex: '#9b0e05',
+    category: 'Base Layer',
+    matches: [
+      { brand: 'Vallejo', name: 'Gory Red', hex: '#810504', delta: 3.65 },
+      { brand: 'Army Painter', name: 'Dragon Red', hex: '#9a1b1e', delta: 1.2 },
+      // One character, so the fuzzy index cannot find it by its own name.
+      { brand: 'Vallejo', name: 'X', hex: '#800000', delta: 2.1 },
+    ],
+  },
+  {
+    id: 'vallejo-gory-red',
+    brand: 'Vallejo',
+    name: 'Gory Red',
+    hex: '#810504',
+    matches: [{ brand: 'Citadel', name: 'Mephiston Red', hex: '#9b0e05', delta: 3.65 }],
+  },
+  {
+    id: 'vallejo-x',
+    brand: 'Vallejo',
+    name: 'X',
+    hex: '#800000',
+    matches: [{ brand: 'Citadel', name: 'Mephiston Red', hex: '#9b0e05', delta: 2.1 }],
+  },
+];
+
+function renderJumpSheet() {
+  const onAdd = vi.fn();
+  render(
+    <SearchSheet
+      paintCatalog={jumpCatalog}
+      listedPaintIds={undefined}
+      onAdd={onAdd}
+      onClose={vi.fn()}
+    />
+  );
+  fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
+  return { onAdd };
+}
+
+const searchBox = () => screen.getByPlaceholderText('Search by name or brand...');
+
+describe('SearchSheet equivalent jump', () => {
+  it('shows the paint an equivalent names, ready to add', () => {
+    const { onAdd } = renderJumpSheet();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Go to Gory Red by Vallejo' }));
+
+    // The clicked equivalent now has a row of its own, with its own add button.
+    fireEvent.click(screen.getByLabelText('Add Gory Red to list'));
+    expect(onAdd).toHaveBeenCalledWith(expect.objectContaining({ id: 'vallejo-gory-red' }));
+  });
+
+  it('moves the brand filter off one that would hide the clicked paint', () => {
+    renderJumpSheet();
+    fireEvent.click(screen.getByRole('button', { name: 'Citadel' }));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Go to Gory Red by Vallejo' }));
+
+    // Gory Red is a Vallejo paint; a Citadel filter left in place would hide it.
+    expect(screen.getByLabelText('Add Gory Red to list')).toBeInTheDocument();
+  });
+
+  it('lands on the clicked paint even when the fuzzy search misses it', () => {
+    renderJumpSheet();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Go to X by Vallejo' }));
+
+    expect(screen.getByLabelText('Add X to list')).toBeInTheDocument();
+  });
+
+  it('stops pinning the jumped-to paint once the user searches again', () => {
+    renderJumpSheet();
+    fireEvent.click(screen.getByRole('button', { name: 'Go to X by Vallejo' }));
+
+    fireEvent.change(searchBox(), { target: { value: 'Gory' } });
+
+    expect(screen.queryByLabelText('Add X to list')).not.toBeInTheDocument();
+  });
+
+  it('leaves an equivalent the catalogue does not carry inert', () => {
+    renderJumpSheet();
+
+    // Dragon Red is named as a match but never defined as a paint of its own.
+    expect(
+      screen.getByRole('button', { name: 'Go to Dragon Red by Army Painter' })
+    ).toBeDisabled();
+  });
+});
+
 describe('SearchSheet brand filter', () => {
   it('derives its chips from the catalogue rather than a hardcoded list', () => {
     renderSheet();

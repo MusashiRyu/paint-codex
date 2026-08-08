@@ -1,6 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Paint } from '../../domain/types';
-import { getTopMatches, getUniqueBrands } from '../../domain/paintQueries';
+import {
+  getTopMatches,
+  getUniqueBrands,
+  indexPaintsByName,
+  paintNameKey,
+} from '../../domain/paintQueries';
 import { CLOSE_DELTA_MAX, getDeltaLabel, getDeltaStyle } from '../../shared/lib/color';
 import { useDismissOnEscape } from '../../shared/hooks/useDismissOnEscape';
 import { useFocusTrap } from '../../shared/hooks/useFocusTrap';
@@ -29,9 +34,12 @@ export function SearchSheet({
   const [query, setQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState<string>(ALL_BRANDS);
   const [browseAll, setBrowseAll] = useState(false);
+  // The paint an equivalent was clicked through to, until the user searches again.
+  const [jumpTargetId, setJumpTargetId] = useState<string | null>(null);
 
   useDismissOnEscape(onClose);
   const sheetRef = useFocusTrap<HTMLDivElement>();
+  const cardRefs = useRef(new Map<string, HTMLDivElement>());
 
   // Derived from the catalogue so a new brand in the snapshot needs no code change.
   const brands = useMemo(
@@ -40,6 +48,9 @@ export function SearchSheet({
   );
 
   const activeIds = useMemo(() => new Set(listedPaintIds ?? []), [listedPaintIds]);
+
+  // An equivalent names a paint but carries no id, so jumping to it needs a lookup.
+  const paintsByName = useMemo(() => indexPaintsByName(paintCatalog), [paintCatalog]);
 
   const results = useMemo(() => {
     const q = query.trim();
@@ -50,8 +61,36 @@ export function SearchSheet({
 
     if (!q && !browseAll) return null; // show empty prompt
     if (!q && browseAll) return pool;
-    return searchPaints(pool, q);
-  }, [query, brandFilter, browseAll, paintCatalog]);
+
+    const found = searchPaints(pool, q);
+    // The jump seeds the query with the target's own name, but fuzzy scoring is
+    // not a promise: pin the target rather than land the user on a list without
+    // the paint they clicked.
+    if (jumpTargetId && !found.some((p) => p.id === jumpTargetId)) {
+      const target = paintCatalog.find((p) => p.id === jumpTargetId);
+      if (target) return [target, ...found];
+    }
+    return found;
+  }, [query, brandFilter, browseAll, paintCatalog, jumpTargetId]);
+
+  // Scroll the jumped-to card into view and hand it focus, so the next Tab
+  // reaches its add button.
+  useEffect(() => {
+    if (!jumpTargetId) return;
+    const card = cardRefs.current.get(jumpTargetId);
+    if (!card) return;
+    card.focus?.({ preventScroll: true });
+    card.scrollIntoView?.({ block: 'start' });
+  }, [jumpTargetId, results]);
+
+  /** Show the paint an equivalent stands for, ready to be added on its own row. */
+  const jumpToMatch = (brand: string, name: string) => {
+    const target = paintsByName.get(paintNameKey(brand, name));
+    if (!target) return;
+    setQuery(target.name);
+    setBrandFilter(target.brand);
+    setJumpTargetId(target.id);
+  };
 
   const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
 
@@ -78,7 +117,10 @@ export function SearchSheet({
         <input
           className={styles.searchInput}
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setJumpTargetId(null);
+          }}
           placeholder="Search by name or brand..."
           autoFocus
         />
@@ -89,7 +131,10 @@ export function SearchSheet({
             <button
               key={b}
               className={`${styles.filterChip} ${brandFilter === b ? styles.filterChipOn : ''}`}
-              onClick={() => setBrandFilter(b)}
+              onClick={() => {
+                setBrandFilter(b);
+                setJumpTargetId(null);
+              }}
             >
               {b}
             </button>
@@ -116,8 +161,17 @@ export function SearchSheet({
               {results.map((paint) => {
                 const inList = activeIds.has(paint.id);
                 const equivalents = getTopMatches(paint, MAX_EQUIVALENTS, CLOSE_DELTA_MAX);
+                const jumpedTo = paint.id === jumpTargetId;
                 return (
-                  <div key={paint.id} className={styles.resultCard}>
+                  <div
+                    key={paint.id}
+                    ref={(el) => {
+                      if (el) cardRefs.current.set(paint.id, el);
+                      else cardRefs.current.delete(paint.id);
+                    }}
+                    className={`${styles.resultCard} ${jumpedTo ? styles.resultCardJumped : ''}`}
+                    tabIndex={jumpedTo ? -1 : undefined}
+                  >
                     {/* Paint summary row */}
                     <div className={styles.paintRow}>
                       <div
@@ -153,15 +207,28 @@ export function SearchSheet({
                         <div className={styles.equivGrid}>
                           {equivalents.map((match) => {
                             const style = getDeltaStyle(match.delta);
+                            // Only paints the catalogue actually carries can be
+                            // jumped to; anything else stays a plain tile.
+                            const known = paintsByName.has(
+                              paintNameKey(match.brand, match.name)
+                            );
                             return (
-                              <div key={`${match.brand}-${match.name}`} className={styles.equivCard}>
-                                <div
+                              <button
+                                key={`${match.brand}-${match.name}`}
+                                type="button"
+                                className={styles.equivCard}
+                                disabled={!known}
+                                onClick={() => jumpToMatch(match.brand, match.name)}
+                                aria-label={`Go to ${match.name} by ${match.brand}`}
+                              >
+                                {/* Spans, since a button may only hold phrasing content. */}
+                                <span
                                   className={styles.equivSwatch}
                                   style={{ background: match.hex }}
                                 />
-                                <div className={styles.equivName}>{match.name}</div>
-                                <div className={styles.equivBrand}>{match.brand}</div>
-                                <div
+                                <span className={styles.equivName}>{match.name}</span>
+                                <span className={styles.equivBrand}>{match.brand}</span>
+                                <span
                                   className={styles.equivPill}
                                   title={getDeltaLabel(match.delta)}
                                   style={{
@@ -171,8 +238,8 @@ export function SearchSheet({
                                   }}
                                 >
                                   Δ {match.delta.toFixed(2)}
-                                </div>
-                              </div>
+                                </span>
+                              </button>
                             );
                           })}
                         </div>
