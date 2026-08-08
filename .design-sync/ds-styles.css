@@ -1,0 +1,51 @@
+/*
+ * Design-system globals — the part of the app's global.css that belongs to the
+ * component library rather than to the phone-card shell.
+ *
+ * Deliberately absent: `html, body, #root { height: 100%; overflow: hidden }`
+ * and the hidden scrollbars. Those exist so the app fills a device viewport
+ * and never page-scrolls; imposed on a design canvas they would clip whatever
+ * is being laid out. The box-sizing reset IS here, because every component's
+ * padding maths assumes it.
+ *
+ * Tokens are not @imported here — they ride inside _ds_bundle.css, pulled in
+ * through the barrel so no import has to resolve at runtime.
+ */
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-page);
+  font-family: var(--font-body);
+  font-size: var(--size-xl);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-primary);
+}
+
+input,
+button {
+  font-family: inherit;
+}
+
+input::placeholder {
+  color: var(--text-dim);
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: var(--gold);
+}
+
+a:hover {
+  color: var(--gold-bright);
+}

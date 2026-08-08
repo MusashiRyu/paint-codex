@@ -1,0 +1,43 @@
+{
+  "projectId": "74d93e85-124f-4230-9f65-33608fd6068b",
+  "shape": "package",
+  "pkg": "paco",
+  "globalName": "Paco",
+  "srcDir": "src",
+  "tsconfig": "tsconfig.app.json",
+  "cssEntry": ".design-sync/ds-styles.css",
+  "extraFonts": [
+    ".design-sync/fonts.bundle.css"
+  ],
+  "docsDir": "documentation",
+  "componentSrcMap": {
+    "Sheet": "src/shared/ui/Sheet.tsx",
+    "Pill": "src/shared/ui/Pill.tsx",
+    "Badge": "src/shared/ui/Badge.tsx",
+    "IconButton": "src/shared/ui/IconButton.tsx",
+    "GoldButton": "src/shared/ui/GoldButton.tsx",
+    "GhostButton": "src/shared/ui/GhostButton.tsx",
+    "TextField": "src/shared/ui/TextField.tsx",
+    "Swatch": "src/shared/ui/Swatch.tsx",
+    "ListIconSvg": "src/shared/ui/ListIconSvg.tsx",
+    "PaintItem": "src/features/lists/PaintItem.tsx",
+    "ListsPanel": "src/features/lists/ListsPanel.tsx",
+    "NewListSheet": "src/features/lists/NewListSheet.tsx",
+    "SearchSheet": "src/features/search/SearchSheet.tsx"
+  },
+  "overrides": {
+    "ListsPanel": {
+      "cardMode": "column"
+    },
+    "PaintItem": {
+      "cardMode": "column"
+    },
+    "Sheet": {
+      "cardMode": "column"
+    },
+    "TextField": {
+      "cardMode": "column"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}
