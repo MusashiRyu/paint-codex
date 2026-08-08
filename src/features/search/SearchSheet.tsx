@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 import type { Paint } from '../../domain/types';
 import type { PaintList } from '../../app/providers/store';
+import { getTopMatches, getUniqueBrands } from '../../domain/paintQueries';
+import { CLOSE_DELTA_MAX, getDeltaLabel, getDeltaStyle } from '../../shared/lib/color';
+import { useDismissOnEscape } from '../../shared/hooks/useDismissOnEscape';
 import { searchPaints } from './search';
 import styles from './SearchSheet.module.css';
 
@@ -11,18 +14,23 @@ interface SearchSheetProps {
   onClose: () => void;
 }
 
-type BrandFilter = 'All' | 'Citadel' | 'Vallejo' | 'Army Painter';
+const ALL_BRANDS = 'All';
 
-function deltaStyle(delta: number): { bg: string; border: string; color: string } {
-  if (delta <= 2) return { bg: 'var(--ok-bg)', border: 'var(--ok-border)', color: 'var(--ok-text)' };
-  if (delta <= 4) return { bg: 'var(--warn-bg)', border: 'var(--warn-border)', color: 'var(--warn-text)' };
-  return { bg: 'var(--bad-bg)', border: 'var(--bad-border)', color: 'var(--bad-text)' };
-}
+/** Equivalents shown per paint; the snapshot carries up to 10, most of them distant. */
+const MAX_EQUIVALENTS = 6;
 
 export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: SearchSheetProps) {
   const [query, setQuery] = useState('');
-  const [brandFilter, setBrandFilter] = useState<BrandFilter>('All');
+  const [brandFilter, setBrandFilter] = useState<string>(ALL_BRANDS);
   const [browseAll, setBrowseAll] = useState(false);
+
+  useDismissOnEscape(onClose);
+
+  // Derived from the catalogue so a new brand in the snapshot needs no code change.
+  const brands = useMemo(
+    () => [ALL_BRANDS, ...getUniqueBrands(paintCatalog)],
+    [paintCatalog]
+  );
 
   const activeIds = useMemo(
     () => new Set(activeList?.paints.map((p) => p.id) ?? []),
@@ -32,7 +40,7 @@ export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: Search
   const results = useMemo(() => {
     const q = query.trim();
     const pool =
-      brandFilter === 'All'
+      brandFilter === ALL_BRANDS
         ? paintCatalog
         : paintCatalog.filter((p) => p.brand === brandFilter);
 
@@ -41,20 +49,23 @@ export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: Search
     return searchPaints(pool, q);
   }, [query, brandFilter, browseAll, paintCatalog]);
 
-  const showEmptyPrompt = results === null;
-  const showResults = results !== null;
-
   const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
-
-  const BRANDS: BrandFilter[] = ['All', 'Citadel', 'Vallejo', 'Army Painter'];
 
   return (
     <div className={styles.backdrop} onClick={onClose}>
-      <div className={styles.sheet} onClick={stopPropagation}>
+      <div
+        className={styles.sheet}
+        onClick={stopPropagation}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Search paints"
+      >
         {/* Sheet header */}
         <div className={styles.sheetHeader}>
           <div className={styles.sheetTitle}>SEARCH PAINTS</div>
-          <button className={styles.closeBtn} onClick={onClose}>×</button>
+          <button className={styles.closeBtn} onClick={onClose} aria-label="Close search">
+            ×
+          </button>
         </div>
 
         {/* Search input */}
@@ -68,7 +79,7 @@ export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: Search
 
         {/* Brand filters */}
         <div className={styles.filterRow}>
-          {BRANDS.map((b) => (
+          {brands.map((b) => (
             <button
               key={b}
               className={`${styles.filterChip} ${brandFilter === b ? styles.filterChipOn : ''}`}
@@ -81,7 +92,7 @@ export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: Search
 
         {/* Results */}
         <div className={styles.results}>
-          {showEmptyPrompt && (
+          {results === null && (
             <div className={styles.emptyPrompt}>
               <div className={styles.emptyPromptText}>Search the grimoire for a paint...</div>
               <button
@@ -93,11 +104,12 @@ export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: Search
             </div>
           )}
 
-          {showResults && (
+          {results !== null && (
             <>
-              <div className={styles.resultCount}>Found {results!.length} paint(s)</div>
-              {results!.map((paint) => {
+              <div className={styles.resultCount}>Found {results.length} paint(s)</div>
+              {results.map((paint) => {
                 const inList = activeIds.has(paint.id);
+                const equivalents = getTopMatches(paint, MAX_EQUIVALENTS, CLOSE_DELTA_MAX);
                 return (
                   <div key={paint.id} className={styles.resultCard}>
                     {/* Paint summary row */}
@@ -128,13 +140,13 @@ export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: Search
                       )}
                     </div>
 
-                    {/* Equivalents */}
-                    {paint.matches.length > 0 && (
-                      <div className={styles.equivalents}>
-                        <div className={styles.equivLabel}>Equivalent Paints:</div>
+                    {/* Equivalents, closest first */}
+                    <div className={styles.equivalents}>
+                      <div className={styles.equivLabel}>Equivalent Paints:</div>
+                      {equivalents.length > 0 ? (
                         <div className={styles.equivGrid}>
-                          {paint.matches.map((match) => {
-                            const ds = deltaStyle(match.delta);
+                          {equivalents.map((match) => {
+                            const style = getDeltaStyle(match.delta);
                             return (
                               <div key={`${match.brand}-${match.name}`} className={styles.equivCard}>
                                 <div
@@ -145,10 +157,11 @@ export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: Search
                                 <div className={styles.equivBrand}>{match.brand}</div>
                                 <div
                                   className={styles.equivPill}
+                                  title={getDeltaLabel(match.delta)}
                                   style={{
-                                    background: ds.bg,
-                                    border: `1px solid ${ds.border}`,
-                                    color: ds.color,
+                                    background: style.background,
+                                    border: `1px solid ${style.border}`,
+                                    color: style.color,
                                   }}
                                 >
                                   Δ {match.delta.toFixed(2)}
@@ -157,15 +170,10 @@ export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: Search
                             );
                           })}
                         </div>
-                      </div>
-                    )}
-
-                    {paint.matches.length === 0 && (
-                      <div className={styles.equivalents}>
-                        <div className={styles.equivLabel}>Equivalent Paints:</div>
-                        <div className={styles.noEquiv}>No equivalent paints catalogued.</div>
-                      </div>
-                    )}
+                      ) : (
+                        <div className={styles.noEquiv}>No close equivalents catalogued.</div>
+                      )}
+                    </div>
                   </div>
                 );
               })}
