@@ -8,10 +8,12 @@ import {
   getUniqueBrands,
   filterPaintsByColor,
   getTopMatches,
-} from '../features/browse/browse';
+} from '../domain/paintQueries';
 import {
   getDeltaColorClass,
   getDeltaLabel,
+  getDeltaQuality,
+  getDeltaStyle,
   hexToHSL,
 } from '../shared/lib/color';
 
@@ -184,6 +186,50 @@ describe('getDeltaLabel', () => {
   it('returns "Distant" for delta >= 7', () => {
     expect(getDeltaLabel(7)).toBe('Distant');
     expect(getDeltaLabel(15)).toBe('Distant');
+  });
+});
+
+// ─── getDeltaQuality / getDeltaStyle ─────────────────────────────────────────
+
+describe('getDeltaQuality', () => {
+  it('classifies against the shared thresholds', () => {
+    expect(getDeltaQuality(0)).toBe('very-close');
+    expect(getDeltaQuality(2.99)).toBe('very-close');
+    expect(getDeltaQuality(3)).toBe('close');
+    expect(getDeltaQuality(6.99)).toBe('close');
+    expect(getDeltaQuality(7)).toBe('distant');
+  });
+});
+
+describe('getDeltaStyle', () => {
+  it('maps each quality onto its own token group', () => {
+    expect(getDeltaStyle(1)).toEqual({
+      background: 'var(--ok-bg)',
+      border: 'var(--ok-border)',
+      color: 'var(--ok-text)',
+    });
+    expect(getDeltaStyle(5)).toEqual({
+      background: 'var(--warn-bg)',
+      border: 'var(--warn-border)',
+      color: 'var(--warn-text)',
+    });
+    expect(getDeltaStyle(9)).toEqual({
+      background: 'var(--bad-bg)',
+      border: 'var(--bad-border)',
+      color: 'var(--bad-text)',
+    });
+  });
+
+  it('agrees with the class-name form on every boundary', () => {
+    const pairs: Array<[number, string]> = [
+      [2.99, 'delta-green'],
+      [3, 'delta-yellow'],
+      [6.99, 'delta-yellow'],
+      [7, 'delta-red'],
+    ];
+    for (const [delta, expected] of pairs) {
+      expect(getDeltaColorClass(delta)).toBe(expected);
+    }
   });
 });
 
