@@ -176,9 +176,9 @@ privacy policy.
 Required for every app, whether or not it collects anything.
 
 `npm run privacy` renders [`privacy-policy.md`](./privacy-policy.md) into
-[`privacy.html`](./privacy.html) — a single self-contained file with no
-external stylesheet, font or script. Host that file anywhere public and paste
-the URL into Play Console → App content → Privacy policy.
+[`docs/privacy.html`](../docs/privacy.html) — a single self-contained file with
+no external stylesheet, font or script, served by GitHub Pages from `docs/`.
+Paste the resulting URL into Play Console → App content → Privacy policy.
 
 The markdown stays the source; edit it and re-run, never edit the HTML.
 

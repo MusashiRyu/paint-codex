@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paco — Paint Codex</title>
+<style>
+  :root {
+    --ink: #1c1a17;
+    --ink-soft: #55504a;
+    --paper: #fbfaf8;
+    --rule: #e2ddd4;
+    --accent: #8a6d2f;
+    --code-bg: #f1eee8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ink: #ece4d2;
+      --ink-soft: #ab9f8c;
+      --paper: #0b0a10;
+      --rule: rgba(201, 168, 106, 0.22);
+      --accent: #dcb877;
+      --code-bg: rgba(255, 255, 255, 0.05);
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0 auto;
+    padding: 3rem 1.25rem 6rem;
+    max-width: 46rem;
+    background: var(--paper);
+    color: var(--ink);
+    font: 1.0625rem/1.7 Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  h1, h2, h3 { line-height: 1.25; color: var(--accent); font-weight: 600; }
+  h1 { font-size: 2rem; margin: 0 0 .5rem; letter-spacing: .01em; }
+  h2 { font-size: 1.3rem; margin: 2.75rem 0 .75rem; }
+  h3 { font-size: 1.1rem; margin: 2rem 0 .5rem; }
+  p, li { color: var(--ink); }
+  a { color: var(--accent); text-underline-offset: 2px; }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 2.5rem 0; }
+  strong { font-weight: 700; }
+  code, pre {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: .875em;
+    background: var(--code-bg);
+    border-radius: 4px;
+  }
+  code { padding: .15em .35em; }
+  /* The catalogue URL is long and must not force the page to scroll sideways
+     on a phone, which is where most people will open this. */
+  pre {
+    padding: .9rem 1rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+  pre code { background: none; padding: 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.25rem 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--rule); padding: .55rem .7rem; text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); font-weight: 700; }
+  /* A wide table would otherwise widen the whole document. */
+  .table-scroll { overflow-x: auto; }
+  blockquote {
+    margin: 1.5rem 0; padding-left: 1rem;
+    border-left: 3px solid var(--rule); color: var(--ink-soft);
+  }
+  footer {
+    margin-top: 4rem; padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-soft); font-size: .9rem;
+  }
+</style>
+</head>
+<body>
+<h1>Paco &mdash; Paint Codex</h1>
+<p>A paint conversion table and list keeper for miniature painters. Find
+equivalents across Citadel, Vallejo and The Army Painter, ranked by measured
+colour distance.</p>
+<p><a href="./privacy.html">Privacy policy</a></p>
+<footer>
+  An independent app. Not affiliated with Games Workshop Limited,
+  Acrylicos Vallejo S.L., or The Army Painter ApS.
+</footer>
+</body>
+</html>

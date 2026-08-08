@@ -13,7 +13,7 @@ the mechanics.
 Play requires one for every app, including apps that collect nothing. The page
 is written, accurate and built: `npm run privacy` renders
 [`store/privacy-policy.md`](../store/privacy-policy.md) into
-`store/privacy.html`, a single self-contained file with no external stylesheet,
+`docs/privacy.html`, a single self-contained file with no external stylesheet,
 font or script. It will work on any host.
 
 What is missing is a host. Three options, in the order they make sense here:

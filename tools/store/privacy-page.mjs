@@ -15,7 +15,7 @@
  * Usage:
  *   npm run privacy
  */
-import { readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { marked } from 'marked';
@@ -23,7 +23,19 @@ import { marked } from 'marked';
 const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(here, '..', '..');
 const sourcePath = join(repoRoot, 'store', 'privacy-policy.md');
-const outPath = join(repoRoot, 'store', 'privacy.html');
+
+/**
+ * Output goes to docs/, because that is one of the two places GitHub Pages
+ * will serve from without a build step or a second branch.
+ *
+ * The policy is at an explicit /privacy.html rather than at the site root on
+ * purpose: the URL goes into the Play Console and has to keep working for as
+ * long as the app is listed. Putting it at the root would mean moving it the
+ * first time this site wants a landing page, and a dead privacy-policy link is
+ * a compliance problem, not a broken bookmark.
+ */
+const outPath = join(repoRoot, 'docs', 'privacy.html');
+const indexPath = join(repoRoot, 'docs', 'index.html');
 
 /**
  * Light by default and dark when the reader prefers it, rather than the app's
@@ -127,6 +139,33 @@ ${wrapped}
 </html>
 `;
 
+// A bare /docs site with no index.html serves a 404 at its root, which looks
+// broken to anyone who trims the URL back. This is the whole site.
+const index = `<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Paco — Paint Codex</title>
+<style>${CSS}</style>
+</head>
+<body>
+<h1>Paco &mdash; Paint Codex</h1>
+<p>A paint conversion table and list keeper for miniature painters. Find
+equivalents across Citadel, Vallejo and The Army Painter, ranked by measured
+colour distance.</p>
+<p><a href="./privacy.html">Privacy policy</a></p>
+<footer>
+  An independent app. Not affiliated with Games Workshop Limited,
+  Acrylicos Vallejo S.L., or The Army Painter ApS.
+</footer>
+</body>
+</html>
+`;
+
+await mkdir(dirname(outPath), { recursive: true });
 await writeFile(outPath, html, 'utf8');
+await writeFile(indexPath, index, 'utf8');
 console.log(`wrote ${outPath.replace(repoRoot, '.')}  (${(Buffer.byteLength(html) / 1024).toFixed(1)} KB, self-contained)`);
-console.log('Host it anywhere public and paste the URL into Play Console -> App content -> Privacy policy.');
+console.log(`wrote ${indexPath.replace(repoRoot, '.')}`);
+console.log('Served by GitHub Pages from the docs/ folder on master.');
