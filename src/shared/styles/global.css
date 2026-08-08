@@ -1,4 +1,5 @@
-/* Fonts are loaded in index.html */
+/* Self-hosted Cinzel + EB Garamond; see fonts.css for why they are not on a CDN. */
+@import './fonts.css';
 
 :root {
   /* Core backgrounds */
