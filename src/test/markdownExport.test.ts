@@ -10,6 +10,8 @@ import type { ShopLinkMap } from '../domain/shopLinkRepository';
 const sampleList: PaintList = {
   id: 'list-1',
   name: 'Starter Reds',
+  icon: 'star',
+  color: '#c9a86a',
   paints: [
     {
       id: 'citadel-mephiston-red',
