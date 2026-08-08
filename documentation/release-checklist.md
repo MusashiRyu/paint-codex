@@ -6,41 +6,29 @@ the mechanics.
 
 ---
 
-## Blocking before the first submission
+## Nothing is blocking the first submission
 
-### 1. The privacy policy needs a public URL
+The privacy policy is live. Paste this into Play Console → App content →
+Privacy policy:
 
-Play requires one for every app, including apps that collect nothing. The page
-is written, accurate and built: `npm run privacy` renders
-[`store/privacy-policy.md`](../store/privacy-policy.md) into
-`docs/privacy.html`, a single self-contained file with no external stylesheet,
-font or script. It will work on any host.
+```
+https://musashiryu.github.io/paint-codex/privacy.html
+```
 
-What is missing is a host. Three options, in the order they make sense here:
+Served by GitHub Pages from `docs/` on `master`, at
+[github.com/MusashiRyu/paint-codex](https://github.com/MusashiRyu/paint-codex).
+`npm run privacy` regenerates it from `store/privacy-policy.md`; push and Pages
+redeploys within a minute.
 
-1. **GitHub Pages.** Free and permanent, and it solves two other things at the
-   same time — see the note below.
-2. **An owned domain.** Most durable, depends on nobody.
-3. **Google Sites.** No repo, no code, accepted by Play. The fallback.
+**Keep that URL alive for as long as the app is listed.** Deleting the repo,
+making it private, or renaming it breaks the link, and a dead privacy-policy
+URL is a compliance problem rather than a broken bookmark. Renaming the repo in
+particular is a silent trap: GitHub redirects the *repo*, not the Pages domain.
 
-Then: Play Console → App content → Privacy policy.
-
-> **This repo has no git remote, and two GitHub Actions workflows that have
-> therefore never run.** `ci.yml` has never verified a commit, and
-> `upstream-check.yml` — described in the architecture doc as *the alarm for
-> the silent refresh* — has never armed. That alarm matters considerably more
-> once real users are on the catalogue refresh, because the refresh is silent
-> by design: a markup change upstream would otherwise strand every install on
-> its bundled snapshot with no signal at all. Pushing to GitHub fixes the
-> policy hosting, CI and the alarm in one move.
-
-**Do not use a privacy-policy generator site to host it.** They produce
+**Never replace this with a privacy-policy generator's page.** They emit
 boilerplate asserting analytics, cookies and third-party sharing this app does
 not do, and Play cross-checks the policy against the Data safety answers. A
-contradiction there is a rejection risk. The accurate text already exists; only
-hosting is missing. Also avoid Gists, Notion pages, expiring drag-and-drop
-hosts, and PDFs — Play wants a live page, publicly reachable without a login
-and not publicly editable.
+contradiction there is a rejection risk.
 
 ---
 

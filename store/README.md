@@ -6,7 +6,7 @@ Everything Google Play asks for that is text or artwork rather than code.
 | --- | --- |
 | [`listing.md`](./listing.md) | App name, descriptions, release notes, contact details, categorisation, target audience, App access, and every Data safety answer with its reasoning. |
 | [`privacy-policy.md`](./privacy-policy.md) | The privacy policy. **The source** — edit this one. |
-| `docs/privacy.html` | Generated from the markdown. Self-contained: no external stylesheet, font or script, so it can be dropped on any host. **Still needs publishing at a public URL** — Play requires a link, not a file. |
+| `docs/privacy.html` | Generated from the markdown. Self-contained: no external stylesheet, font or script, so it can be dropped on any host. Live at `https://musashiryu.github.io/paint-codex/privacy.html`. |
 | `graphics/` | Generated. Do not hand-edit; regenerate. |
 
 The mechanics of building and uploading a release are in

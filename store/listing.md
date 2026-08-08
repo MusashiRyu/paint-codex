@@ -94,7 +94,7 @@ first release on any track; write a real changelog from 1.0.1 onward.
 | Field | Value | Notes |
 | --- | --- | --- |
 | Contact email | `redacted@example.invalid` | **Required**, and shown publicly on the listing. |
-| Contact website | — | Optional. Point it at the privacy policy host once that exists. |
+| Contact website | `https://musashiryu.github.io/paint-codex/` | Optional but worth filling; it is the app's landing page and links to the policy. |
 | Contact phone | — | Optional. Leave blank; it is also shown publicly. |
 | External marketing | Leave unticked | The app does not advertise outside Play. |
 

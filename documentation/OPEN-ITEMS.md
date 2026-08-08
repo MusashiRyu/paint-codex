@@ -13,14 +13,7 @@ closed it is the record.
 
 ## Open
 
-### 1. The privacy policy has no public URL
-**Raised:** 008 · **Blocks shipping**
-
-Play requires a policy URL for every app, including one that collects nothing.
-The text is written and accurate — [`store/privacy-policy.md`](../store/privacy-policy.md)
-— but it needs hosting. GitHub Pages on this repo is the least effort.
-
-### 2. Markdown export cannot work in the Android WebView
+### 1. Markdown export cannot work in the Android WebView
 **Raised:** 005 · **Dormant while the flag is off**
 
 Capacitor registers no `DownloadListener`, so the anchor-click blob download in
@@ -32,7 +25,7 @@ Before that flag goes back on, mobile export needs `@capacitor/filesystem` to
 write the file and `@capacitor/share` to hand it off. Decision taken
 2026-08-08: leave as is for now.
 
-### 3. iOS signing and archive are Mac-only
+### 2. iOS signing and archive are Mac-only
 **Raised:** 001 · **Environmental**
 
 Nothing to fix in the repo. The flow in the README's iOS section requires Xcode
@@ -65,6 +58,8 @@ Prune this section once it stops being useful.
 | `android:allowBackup="true"` | 005 | Accepted 2026-08-08; paint lists are not sensitive |
 | Android release signing not configured | 002 | 008 — upload key generated, `signingConfig` wired, release build fails loudly without it |
 | App icon and splash were Capacitor's placeholder | 008 | 011 — real mark supplied, all 29 assets generated |
+| Privacy policy had no public URL | 008 | 013 — published to GitHub Pages |
+| Repo had no remote, so CI and the upstream alarm had never run | 012 | 013 — pushed to github.com/MusashiRyu/paint-codex |
 | Sheet chrome duplicated across the two overlays | 009 | 009 — extracted into `shared/ui/` primitives |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
