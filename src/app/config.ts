@@ -8,6 +8,7 @@ export interface AppConfig {
 
 export const appConfig: AppConfig = {
   featureFlags: {
-    markdownExport: true,
+    // Off for now: Markdown download is opt-in until the format settles.
+    markdownExport: false,
   },
 };

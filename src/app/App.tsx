@@ -6,8 +6,11 @@ import { ListsPanel } from '../features/lists/ListsPanel';
 import { SearchSheet } from '../features/search/SearchSheet';
 import { NewListSheet } from '../features/lists/NewListSheet';
 import { useBackDismiss } from '../shared/hooks/useBackDismiss';
+import { appConfig } from './config';
 import type { ListIcon } from './providers/store';
 import styles from './App.module.css';
+
+const markdownExportEnabled = appConfig.featureFlags.markdownExport;
 
 function App() {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -46,7 +49,8 @@ function App() {
     a.href = url;
     a.download = filename;
     a.click();
-    URL.revokeObjectURL(url);
+    // Revoking in the same tick can cancel the download before it starts.
+    setTimeout(() => URL.revokeObjectURL(url), 0);
     setExportFlash(true);
     setTimeout(() => setExportFlash(false), 1500);
   };
@@ -85,8 +89,8 @@ function App() {
           }}
           onDeleteList={(listId) => deleteList(listId)}
           onRenameList={(listId, name) => renameList(listId, name)}
-          onExportList={handleExport}
-          exportFlash={exportFlash}
+          onExportList={markdownExportEnabled ? handleExport : undefined}
+          exportFlash={markdownExportEnabled && exportFlash}
         />
 
         {/* Floating action button */}

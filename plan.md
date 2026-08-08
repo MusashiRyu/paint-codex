@@ -229,7 +229,7 @@ Reach the target architecture above **without changing user-visible behavior**. 
 - **Search**: Fuse.js fuzzy matching (threshold 0.3) + autocomplete
 - **Styling**: Plain CSS Modules with `prefers-color-scheme` dark mode; **Tailwind removed** (unused).
 - **Mobile**: Capacitor. App ID `com.musashi.paco`, display name `Paco`.
-- **Export** (Phase 2): Markdown format with vliegeruit.com links
+- **Export** (Phase 2): Markdown format with vliegeruit.com links. Behind `appConfig.featureFlags.markdownExport`, **off by default** — the generator ships and stays tested, but no UI entry point.
 - **Types contract**: Scraper duplicates its own types; the JSON snapshot's shape is the interface between producer and consumer.
 - **Excludes now**: User auth, backend, native-only features (Phase 3)
 

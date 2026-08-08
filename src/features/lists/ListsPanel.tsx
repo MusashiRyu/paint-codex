@@ -16,8 +16,9 @@ interface ListsPanelProps {
   onRemovePaint: (paintId: string) => void;
   onDeleteList: (listId: string) => void;
   onRenameList: (listId: string, name: string) => void;
-  onExportList: () => void;
-  exportFlash: boolean;
+  /** Omitted when the markdownExport feature flag is off; hides the export action. */
+  onExportList?: () => void;
+  exportFlash?: boolean;
 }
 
 export function ListsPanel({
@@ -150,11 +151,13 @@ export function ListsPanel({
             )}
             <div className={styles.listActions}>
               {exportFlash && <span className={styles.exportFlash}>Exported ✓</span>}
-              <button className={styles.iconBtn} onClick={onExportList} title="Export list">
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M12 4 V15 M8 11 L12 15 L16 11 M5 19 H19" />
-                </svg>
-              </button>
+              {onExportList && (
+                <button className={styles.iconBtn} onClick={onExportList} title="Export list">
+                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 4 V15 M8 11 L12 15 L16 11 M5 19 H19" />
+                  </svg>
+                </button>
+              )}
               <button
                 className={`${styles.iconBtn} ${renaming ? styles.iconBtnActive : ''}`}
                 // Keep focus in the input, so the click commits instead of
