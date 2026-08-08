@@ -252,8 +252,20 @@ Worth actually looking at, because these only misbehave in a packaged build:
 - The launcher icon and its shape on the home screen.
 - The splash: it should be the app's near-black, with no white flash into the
   first painted frame.
-- The back gesture closing an open sheet rather than the app.
+- The back gesture closing an open sheet rather than the app — including the
+  About sheet, which is the third layer registered with `useBackDismiss`.
 - The app working with the radio off — the catalogue refresh must fail quietly.
+- **Every link in the About sheet opening the system browser**, and each one
+  landing on its real destination. This is the one that has never been proven on
+  hardware. Nothing in the app opened an external URL before; the handoff relies
+  on Capacitor's WebView intercepting a `target="_blank"` navigation, and the
+  failure mode is either nothing happening at all or the page loading *inside*
+  the app with no way back. The repo already has one web API that silently does
+  nothing in the WebView — the blob download in OPEN-ITEMS item 1 — so `npm run
+  dev` proves nothing here. If it fails, the fix is `@capacitor/browser`, which
+  makes it the app's fifth runtime dependency and invalidates the "four runtime
+  dependencies" sentence in the Data safety reasoning in `store/listing.md`.
+- Returning to Paco from the browser, with the selected list still selected.
 
 ### 6. Upload and roll out
 

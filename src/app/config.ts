@@ -34,8 +34,7 @@ export const appConfig: AppConfig = {
     supportLink: true,
   },
   links: {
-    // Placeholder — the About sheet must not ship pointing at a 404.
-    support: 'https://ko-fi.com/paintcodex',
+    support: 'https://ko-fi.com/musashiryu',
     privacy: 'https://musashiryu.github.io/paint-codex/privacy.html',
     paintData: 'https://github.com/Arcturus5404/miniature-paints',
     design: 'https://github.com/LukasStordeur',

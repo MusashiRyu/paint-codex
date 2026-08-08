@@ -116,10 +116,10 @@ Bumping `versionName` for a release now fails CI until the constant follows.
 
 ## Assumptions made
 
-- **The support URL is a placeholder.** `config.ts` carries a placeholder URL
-  and a `TODO`. The page does not exist yet. This must not ship pointing at a
-  404 — it is the one thing in this change that cannot be verified from the
-  repo.
+- **The support page is taken on trust.** `config.ts` points at a page supplied
+  by the developer. It could not be checked from here — the host answers
+  automated requests with a 403 — so the on-device test in the release
+  checklist is the only thing that confirms the link lands somewhere real.
 - **The paint-data credit follows `listing.md`** as of retro 014
   (`Arcturus5404/miniature-paints`, MIT, Miniature Painter Pro team) rather than
   the older redgrimm attribution.
@@ -127,5 +127,5 @@ Bumping `versionName` for a release now fails CI until the constant follows.
 ## Open items
 
 See [OPEN-ITEMS.md](OPEN-ITEMS.md). Item 6 is new. Nothing here blocks
-submission, but two things gate it: the real support URL, and the on-device
-check that the About sheet's links open the system browser at all.
+submission, but one thing gates it: the on-device check that the About sheet's
+links open the system browser at all, and land on the right pages.
