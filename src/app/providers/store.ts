@@ -12,13 +12,22 @@ export type ListIcon =
   | 'moon'
   | 'drop';
 
+/**
+ * A list stores paint *ids*, not paint objects. Embedding copies meant a
+ * corrected hex or a new equivalent in the catalogue snapshot never reached
+ * paints already saved in a list. Resolve against the catalogue at read time
+ * with `resolvePaints` from the domain layer.
+ */
 export type PaintList = {
   id: string;
   name: string;
   icon: ListIcon;
   color: string;
-  paints: Paint[];
+  paintIds: string[];
 };
+
+/** Shape persisted before version 2, kept for the migration. */
+type LegacyPaintList = Omit<PaintList, 'paintIds'> & { paints?: Paint[] };
 
 type AppStore = {
   lists: PaintList[];
@@ -27,7 +36,7 @@ type AppStore = {
   renameList: (listId: string, name: string) => void;
   deleteList: (listId: string) => void;
   selectList: (listId: string | undefined) => void;
-  addPaintToList: (listId: string, paint: Paint) => boolean;
+  addPaintToList: (listId: string, paintId: string) => boolean;
   removePaintFromList: (listId: string, paintId: string) => void;
 };
 
@@ -51,7 +60,7 @@ export const useAppStore = create<AppStore>()(
 
         const newId = createListId();
         set((state) => ({
-          lists: [...state.lists, { id: newId, name: trimmed, icon, color, paints: [] }],
+          lists: [...state.lists, { id: newId, name: trimmed, icon, color, paintIds: [] }],
           selectedListId: newId,
         }));
         return newId;
@@ -83,20 +92,15 @@ export const useAppStore = create<AppStore>()(
       selectList: (listId) => {
         set({ selectedListId: listId });
       },
-      addPaintToList: (listId, paint) => {
+      addPaintToList: (listId, paintId) => {
         const targetList = get().lists.find((list) => list.id === listId);
-        if (!targetList) {
-          return false;
-        }
-
-        const alreadyInList = targetList.paints.some((item) => item.id === paint.id);
-        if (alreadyInList) {
+        if (!targetList || targetList.paintIds.includes(paintId)) {
           return false;
         }
 
         set((state) => ({
           lists: state.lists.map((list) =>
-            list.id === listId ? { ...list, paints: [...list.paints, paint] } : list
+            list.id === listId ? { ...list, paintIds: [...list.paintIds, paintId] } : list
           ),
         }));
         return true;
@@ -105,10 +109,7 @@ export const useAppStore = create<AppStore>()(
         set((state) => ({
           lists: state.lists.map((list) =>
             list.id === listId
-              ? {
-                  ...list,
-                  paints: list.paints.filter((paint) => paint.id !== paintId),
-                }
+              ? { ...list, paintIds: list.paintIds.filter((id) => id !== paintId) }
               : list
           ),
         }));
@@ -116,20 +117,32 @@ export const useAppStore = create<AppStore>()(
     }),
     {
       name: 'paco-app-store',
-      version: 1,
+      version: 2,
       migrate: (persisted: unknown, version: number) => {
-        if (version === 0) {
-          const s = persisted as { lists: PaintList[]; selectedListId?: string };
-          return {
-            ...s,
-            lists: s.lists.map((l) => ({
-              ...l,
-              icon: (l.icon ?? 'star') as ListIcon,
-              color: l.color ?? '#c9a86a',
-            })),
-          };
+        const state = persisted as {
+          lists: LegacyPaintList[];
+          selectedListId?: string;
+        };
+        let lists = state.lists ?? [];
+
+        // v0 -> v1: lists gained an icon and a banner colour.
+        if (version < 1) {
+          lists = lists.map((l) => ({
+            ...l,
+            icon: (l.icon ?? 'star') as ListIcon,
+            color: l.color ?? '#c9a86a',
+          }));
         }
-        return persisted;
+
+        // v1 -> v2: embedded paint copies become ids resolved from the catalogue.
+        if (version < 2) {
+          lists = lists.map(({ paints, ...rest }) => ({
+            ...rest,
+            paintIds: (paints ?? []).map((paint) => paint.id),
+          }));
+        }
+
+        return { ...state, lists };
       },
     }
   )

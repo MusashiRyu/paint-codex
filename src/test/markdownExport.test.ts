@@ -1,17 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import type { PaintList } from '../app/providers/store';
 import {
   buildVliegeruitLink,
   generatePaintListMarkdown,
   getExportFilename,
+  type ExportableList,
 } from '../features/export/markdownExport';
 import type { ShopLinkMap } from '../domain/shopLinkRepository';
 
-const sampleList: PaintList = {
-  id: 'list-1',
+const sampleList: ExportableList = {
   name: 'Starter Reds',
-  icon: 'star',
-  color: '#c9a86a',
   paints: [
     {
       id: 'citadel-mephiston-red',

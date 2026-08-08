@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import type { PaintList } from '../../app/providers/store';
+import type { Paint } from '../../domain/types';
 import { ListIconSvg } from '../../shared/ui/ListIconSvg';
 import { useBackDismiss } from '../../shared/hooks/useBackDismiss';
 import { PaintItem } from './PaintItem';
@@ -10,6 +11,8 @@ const CATEGORY_ORDER = ['Base Layer', 'Layer', 'Edge', 'Shade', 'Technical', 'Co
 interface ListsPanelProps {
   lists: PaintList[];
   activeListId: string | undefined;
+  /** Active list's paints, already resolved from the catalogue by the caller. */
+  activePaints: Paint[];
   onSelectList: (id: string) => void;
   onOpenNewList: () => void;
   onOpenSearch: () => void;
@@ -24,6 +27,7 @@ interface ListsPanelProps {
 export function ListsPanel({
   lists,
   activeListId,
+  activePaints,
   onSelectList,
   onOpenNewList,
   onOpenSearch,
@@ -69,9 +73,9 @@ export function ListsPanel({
   useBackDismiss(renaming, cancelRename);
 
   const sections = useMemo(() => {
-    if (!activeList || activeList.paints.length === 0) return [];
-    const byCategory = new Map<string, typeof activeList.paints>();
-    for (const paint of activeList.paints) {
+    if (!activeList || activePaints.length === 0) return [];
+    const byCategory = new Map<string, Paint[]>();
+    for (const paint of activePaints) {
       const cat = paint.category ?? 'Other';
       const group = byCategory.get(cat) ?? [];
       group.push(paint);
@@ -87,7 +91,7 @@ export function ListsPanel({
       return ia - ib;
     });
     return entries.map(([type, items]) => ({ type, items }));
-  }, [activeList]);
+  }, [activeList, activePaints]);
 
   const hasPaints = sections.length > 0;
   const canDelete = lists.length > 1;

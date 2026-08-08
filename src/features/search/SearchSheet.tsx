@@ -1,6 +1,5 @@
 import { useMemo, useState } from 'react';
 import type { Paint } from '../../domain/types';
-import type { PaintList } from '../../app/providers/store';
 import { getTopMatches, getUniqueBrands } from '../../domain/paintQueries';
 import { CLOSE_DELTA_MAX, getDeltaLabel, getDeltaStyle } from '../../shared/lib/color';
 import { useDismissOnEscape } from '../../shared/hooks/useDismissOnEscape';
@@ -9,7 +8,8 @@ import styles from './SearchSheet.module.css';
 
 interface SearchSheetProps {
   paintCatalog: Paint[];
-  activeList: PaintList | undefined;
+  /** Ids already in the active list, used for the IN LIST badge. */
+  listedPaintIds: string[] | undefined;
   onAdd: (paint: Paint) => void;
   onClose: () => void;
 }
@@ -19,7 +19,12 @@ const ALL_BRANDS = 'All';
 /** Equivalents shown per paint; the snapshot carries up to 10, most of them distant. */
 const MAX_EQUIVALENTS = 6;
 
-export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: SearchSheetProps) {
+export function SearchSheet({
+  paintCatalog,
+  listedPaintIds,
+  onAdd,
+  onClose,
+}: SearchSheetProps) {
   const [query, setQuery] = useState('');
   const [brandFilter, setBrandFilter] = useState<string>(ALL_BRANDS);
   const [browseAll, setBrowseAll] = useState(false);
@@ -32,10 +37,7 @@ export function SearchSheet({ paintCatalog, activeList, onAdd, onClose }: Search
     [paintCatalog]
   );
 
-  const activeIds = useMemo(
-    () => new Set(activeList?.paints.map((p) => p.id) ?? []),
-    [activeList]
-  );
+  const activeIds = useMemo(() => new Set(listedPaintIds ?? []), [listedPaintIds]);
 
   const results = useMemo(() => {
     const q = query.trim();

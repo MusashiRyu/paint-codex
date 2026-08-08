@@ -2,31 +2,33 @@ import React from 'react';
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import type { PaintList } from '../app/providers/store';
+import type { Paint } from '../domain/types';
 import { ListsPanel } from '../features/lists/ListsPanel';
 
 afterEach(cleanup);
+
+const macraggeBlue: Paint = {
+  id: 'citadel-macragge-blue',
+  brand: 'Citadel',
+  name: 'Macragge Blue',
+  hex: '#0f4b8f',
+  category: 'Base Layer',
+  matches: [],
+};
 
 const mockList: PaintList = {
   id: 'list-1',
   name: 'Ultramarines',
   icon: 'star',
   color: '#c9a86a',
-  paints: [
-    {
-      id: 'citadel-macragge-blue',
-      brand: 'Citadel',
-      name: 'Macragge Blue',
-      hex: '#0f4b8f',
-      category: 'Base Layer',
-      matches: [],
-    },
-  ],
+  paintIds: [macraggeBlue.id],
 };
 
 function renderPanel(overrides: Partial<React.ComponentProps<typeof ListsPanel>> = {}) {
   const props = {
     lists: [mockList],
     activeListId: mockList.id,
+    activePaints: [macraggeBlue],
     onSelectList: vi.fn(),
     onOpenNewList: vi.fn(),
     onOpenSearch: vi.fn(),

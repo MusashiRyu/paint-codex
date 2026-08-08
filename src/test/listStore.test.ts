@@ -33,19 +33,78 @@ describe('list store', () => {
 
   it('adds a paint once and blocks duplicates', () => {
     const id = useAppStore.getState().createList('Favorites');
-    const first = useAppStore.getState().addPaintToList(id, samplePaint);
-    const second = useAppStore.getState().addPaintToList(id, samplePaint);
+    const first = useAppStore.getState().addPaintToList(id, samplePaint.id);
+    const second = useAppStore.getState().addPaintToList(id, samplePaint.id);
 
     expect(first).toBe(true);
     expect(second).toBe(false);
-    expect(useAppStore.getState().lists[0].paints).toHaveLength(1);
+    expect(useAppStore.getState().lists[0].paintIds).toEqual([samplePaint.id]);
   });
 
   it('removes a paint from a list', () => {
     const id = useAppStore.getState().createList('Favorites');
-    useAppStore.getState().addPaintToList(id, samplePaint);
+    useAppStore.getState().addPaintToList(id, samplePaint.id);
     useAppStore.getState().removePaintFromList(id, samplePaint.id);
-    expect(useAppStore.getState().lists[0].paints).toHaveLength(0);
+    expect(useAppStore.getState().lists[0].paintIds).toHaveLength(0);
+  });
+
+  it('stores only ids, so a refreshed catalogue reaches saved lists', () => {
+    const id = useAppStore.getState().createList('Favorites');
+    useAppStore.getState().addPaintToList(id, samplePaint.id);
+
+    const stored = JSON.stringify(useAppStore.getState().lists);
+    expect(stored).not.toContain(samplePaint.hex);
+    expect(stored).toContain(samplePaint.id);
+  });
+
+  it('migrates v1 lists with embedded paints down to ids', async () => {
+    localStorage.setItem(
+      'paco-app-store',
+      JSON.stringify({
+        version: 1,
+        state: {
+          selectedListId: 'l1',
+          lists: [
+            {
+              id: 'l1',
+              name: 'Old List',
+              icon: 'skull',
+              color: '#7a2430',
+              paints: [samplePaint, { ...samplePaint, id: 'vallejo-gory-red' }],
+            },
+          ],
+        },
+      })
+    );
+
+    await useAppStore.persist.rehydrate();
+
+    const [list] = useAppStore.getState().lists;
+    expect(list.paintIds).toEqual(['citadel-mephiston-red', 'vallejo-gory-red']);
+    expect(list).not.toHaveProperty('paints');
+    // Fields from the earlier migration survive.
+    expect(list.icon).toBe('skull');
+    expect(list.color).toBe('#7a2430');
+  });
+
+  it('migrates a v0 list through both steps at once', async () => {
+    localStorage.setItem(
+      'paco-app-store',
+      JSON.stringify({
+        version: 0,
+        state: {
+          selectedListId: 'l1',
+          lists: [{ id: 'l1', name: 'Ancient', paints: [samplePaint] }],
+        },
+      })
+    );
+
+    await useAppStore.persist.rehydrate();
+
+    const [list] = useAppStore.getState().lists;
+    expect(list.paintIds).toEqual(['citadel-mephiston-red']);
+    expect(list.icon).toBe('star');
+    expect(list.color).toBe('#c9a86a');
   });
 
   it('deletes a selected list and selects the next one', () => {

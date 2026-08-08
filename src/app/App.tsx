@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { getPaints } from '../domain/paintRepository';
+import { getPaints, resolvePaints } from '../domain/paintRepository';
 import { useAppStore } from './providers/store';
 import { generatePaintListMarkdown, getExportFilename } from '../features/export/markdownExport';
 import { ListsPanel } from '../features/lists/ListsPanel';
@@ -39,9 +39,15 @@ function App() {
     [lists, selectedListId]
   );
 
+  // Resolved from the catalogue, so a refreshed snapshot reaches saved lists.
+  const activePaints = useMemo(
+    () => (activeList ? resolvePaints(activeList.paintIds) : []),
+    [activeList]
+  );
+
   const handleExport = () => {
     if (!activeList) return;
-    const md = generatePaintListMarkdown(activeList);
+    const md = generatePaintListMarkdown({ name: activeList.name, paints: activePaints });
     const filename = getExportFilename(activeList.name);
     const blob = new Blob([md], { type: 'text/markdown' });
     const url = URL.createObjectURL(blob);
@@ -81,6 +87,7 @@ function App() {
         <ListsPanel
           lists={lists}
           activeListId={activeList?.id}
+          activePaints={activePaints}
           onSelectList={selectList}
           onOpenNewList={() => setNewListOpen(true)}
           onOpenSearch={() => setSearchOpen(true)}
@@ -106,9 +113,9 @@ function App() {
         {searchOpen && (
           <SearchSheet
             paintCatalog={paintCatalog}
-            activeList={activeList}
+            listedPaintIds={activeList?.paintIds}
             onAdd={(paint) => {
-              if (activeList) addPaintToList(activeList.id, paint);
+              if (activeList) addPaintToList(activeList.id, paint.id);
             }}
             onClose={() => setSearchOpen(false)}
           />

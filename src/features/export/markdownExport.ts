@@ -1,6 +1,14 @@
 import type { Paint } from '../../domain/types';
-import type { PaintList } from '../../app/providers/store';
 import { getShopLinks, type ShopLinkMap } from '../../domain/shopLinkRepository';
+
+/**
+ * Only what the export needs. The store holds paint ids, so the caller
+ * resolves them against the catalogue before handing them over.
+ */
+export interface ExportableList {
+  name: string;
+  paints: Paint[];
+}
 
 function buildVliegeruitSearchLink(paint: Paint): string {
   const query = encodeURIComponent(`${paint.brand} ${paint.name}`);
@@ -14,7 +22,7 @@ export function buildVliegeruitLink(
   return linksMap[paint.id] ?? buildVliegeruitSearchLink(paint);
 }
 
-export function generatePaintListMarkdown(list: PaintList): string {
+export function generatePaintListMarkdown(list: ExportableList): string {
   const header = `## Paint List: ${list.name}`;
 
   if (list.paints.length === 0) {

@@ -35,7 +35,7 @@ function renderSheet() {
   render(
     <SearchSheet
       paintCatalog={catalog}
-      activeList={undefined}
+      listedPaintIds={undefined}
       onAdd={onAdd}
       onClose={onClose}
     />
