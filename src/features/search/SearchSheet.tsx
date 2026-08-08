@@ -3,6 +3,7 @@ import type { Paint } from '../../domain/types';
 import { getTopMatches, getUniqueBrands } from '../../domain/paintQueries';
 import { CLOSE_DELTA_MAX, getDeltaLabel, getDeltaStyle } from '../../shared/lib/color';
 import { useDismissOnEscape } from '../../shared/hooks/useDismissOnEscape';
+import { useFocusTrap } from '../../shared/hooks/useFocusTrap';
 import { searchPaints } from './search';
 import styles from './SearchSheet.module.css';
 
@@ -30,6 +31,7 @@ export function SearchSheet({
   const [browseAll, setBrowseAll] = useState(false);
 
   useDismissOnEscape(onClose);
+  const sheetRef = useFocusTrap<HTMLDivElement>();
 
   // Derived from the catalogue so a new brand in the snapshot needs no code change.
   const brands = useMemo(
@@ -56,11 +58,13 @@ export function SearchSheet({
   return (
     <div className={styles.backdrop} onClick={onClose}>
       <div
+        ref={sheetRef}
         className={styles.sheet}
         onClick={stopPropagation}
         role="dialog"
         aria-modal="true"
         aria-label="Search paints"
+        tabIndex={-1}
       >
         {/* Sheet header */}
         <div className={styles.sheetHeader}>

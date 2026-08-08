@@ -114,3 +114,66 @@ describe('SearchSheet dismissal', () => {
     expect(within(dialog).getByLabelText('Close search')).toBeInTheDocument();
   });
 });
+
+describe('SearchSheet focus management', () => {
+  it('keeps focus inside the sheet when tabbing off the last control', () => {
+    renderSheet();
+    const dialog = screen.getByRole('dialog');
+    const focusable = [
+      ...dialog.querySelectorAll<HTMLElement>('button, input, [tabindex]:not([tabindex="-1"])'),
+    ];
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    last.focus();
+    fireEvent.keyDown(document, { key: 'Tab' });
+    expect(document.activeElement).toBe(first);
+  });
+
+  it('wraps backwards from the first control to the last', () => {
+    renderSheet();
+    const dialog = screen.getByRole('dialog');
+    const focusable = [
+      ...dialog.querySelectorAll<HTMLElement>('button, input, [tabindex]:not([tabindex="-1"])'),
+    ];
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    first.focus();
+    fireEvent.keyDown(document, { key: 'Tab', shiftKey: true });
+    expect(document.activeElement).toBe(last);
+  });
+
+  it('pulls focus back in if it escapes to the page behind', () => {
+    const outside = document.createElement('button');
+    document.body.appendChild(outside);
+    renderSheet();
+
+    outside.focus();
+    fireEvent.keyDown(document, { key: 'Tab' });
+    expect(screen.getByRole('dialog').contains(document.activeElement)).toBe(true);
+
+    outside.remove();
+  });
+
+  it('returns focus to whatever opened it', () => {
+    const trigger = document.createElement('button');
+    document.body.appendChild(trigger);
+    trigger.focus();
+
+    const { unmount } = render(
+      <SearchSheet
+        paintCatalog={catalog}
+        listedPaintIds={undefined}
+        onAdd={vi.fn()}
+        onClose={vi.fn()}
+      />
+    );
+    expect(document.activeElement).not.toBe(trigger);
+
+    unmount();
+    expect(document.activeElement).toBe(trigger);
+
+    trigger.remove();
+  });
+});

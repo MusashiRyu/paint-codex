@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { ListIcon } from '../../app/providers/store';
 import { ListIconSvg } from '../../shared/ui/ListIconSvg';
 import { useDismissOnEscape } from '../../shared/hooks/useDismissOnEscape';
+import { useFocusTrap } from '../../shared/hooks/useFocusTrap';
 import styles from './NewListSheet.module.css';
 
 interface NewListSheetProps {
@@ -27,6 +28,7 @@ export function NewListSheet({ onClose, onCreate }: NewListSheetProps) {
   const canCreate = name.trim().length > 0;
 
   useDismissOnEscape(onClose);
+  const sheetRef = useFocusTrap<HTMLDivElement>();
 
   const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
 
@@ -38,11 +40,13 @@ export function NewListSheet({ onClose, onCreate }: NewListSheetProps) {
   return (
     <div className={styles.backdrop} onClick={onClose}>
       <div
+        ref={sheetRef}
         className={styles.sheet}
         onClick={stopPropagation}
         role="dialog"
         aria-modal="true"
         aria-label="Create a new list"
+        tabIndex={-1}
       >
         {/* Header */}
         <div className={styles.sheetHeader}>
