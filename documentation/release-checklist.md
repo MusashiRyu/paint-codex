@@ -213,13 +213,39 @@ Expect `jar verified.` and `CN=Paco, O=Musashi, C=NL`.
 
 ### 5. Smoke-test the release build on hardware
 
-The bundle cannot be installed directly. Either build a release APK, or install
-the debug APK — accepting that debug differs in signing and debuggability:
+An `.aab` cannot be installed on a device. Build an APK instead — prefer the
+release one, which exercises the same signing config and resource processing
+that ships, rather than the debug build's different key and debuggable flag:
 
 ```bash
-npm run android:build:debug
-adb install -r android/app/build/outputs/apk/debug/app-debug.apk
+npm run android:build:release:apk
+adb install -r android/app/build/outputs/apk/release/app-release.apk
 ```
+
+> **`jarsigner -verify` reports a release APK as `jar is unsigned`. It is not.**
+> That tool only understands v1 JAR signing, and an APK with `minSdkVersion` 24
+> is signed with APK Signature Scheme v2/v3 and needs no v1 signature at all.
+> Use `apksigner`, which is the tool that knows the difference:
+>
+> ```bash
+> "$LOCALAPPDATA/Android/Sdk/build-tools/36.0.0/apksigner.bat" verify --print-certs \
+>   android/app/build/outputs/apk/release/app-release.apk
+> ```
+>
+> Expect `CN=Paco, O=Musashi, C=NL`. `jarsigner` remains the right tool for the
+> `.aab`, which really is JAR-signed — which is exactly why the two disagree.
+
+Confirming what actually got packaged, rather than trusting the task graph:
+
+```bash
+"$LOCALAPPDATA/Android/Sdk/build-tools/36.0.0/aapt2.exe" dump badging \
+  android/app/build/outputs/apk/release/app-release.apk
+```
+
+Note that a release APK's resource paths are shortened by AAPT2, so the icon
+appears as something like `application-icon-640:'res/BW.xml'` rather than
+`ic_launcher`. Grepping the archive for `ic_launcher` finds nothing and means
+nothing.
 
 Worth actually looking at, because these only misbehave in a packaged build:
 
