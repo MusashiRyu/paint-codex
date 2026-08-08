@@ -4,6 +4,10 @@ A dark, gilt, bookish design system — a grimoire, not a dashboard. Paint Codex
 is a paint-collection manager for miniature painters, and everything below
 serves that voice.
 
+Designed by [Lukas Stordeur](https://github.com/LukasStordeur). The tokens and
+components here are an extraction of that design; when a choice below looks
+arbitrary, it is deliberate — follow it rather than improving on it.
+
 ### Setup: there is no provider
 
 Nothing to wrap. No theme provider, no context, no registration step. Every

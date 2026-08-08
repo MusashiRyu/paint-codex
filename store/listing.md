@@ -61,6 +61,8 @@ you with it.
 
 —
 
+The Paint Codex design is by Lukas Stordeur (github.com/LukasStordeur).
+
 Paint data is derived from the open paint-conversion table maintained by
 redgrimm at github.com/redgrimm/paint-conversion.
 

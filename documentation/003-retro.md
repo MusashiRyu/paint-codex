@@ -4,6 +4,8 @@
 
 Abandoned the previous browse-first UI and implemented a full redesign based on a Claude Design HTML mockup — "Paint Codex" / dark fantasy grimoire style.
 
+The design is by [Lukas Stordeur](https://github.com/LukasStordeur). This retro records the implementation; the look it implements is that design's, not this session's.
+
 ### New app structure (lists-first flow):
 - **Viewport**: Full-screen card with two-layer dark background (grungy texture page bg + swirling abstract art card bg)
 - **Header**: "PAINT CODEX" / "Color Manager" with Cinzel font and gold decorative SVG divider

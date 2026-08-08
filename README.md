@@ -37,6 +37,17 @@ Application feature toggles live in [src/app/config.ts](src/app/config.ts).
 
 - `featureFlags.markdownExport` — shows or hides the "Export list" download action in the list header. **Currently `false`.** The export logic itself (`src/features/export/markdownExport.ts`) stays in place and tested; only the UI entry point is gated.
 
+## Credits
+
+The original **Paint Codex** design — the dark-fantasy grimoire look this app is
+built on — is by [Lukas Stordeur](https://github.com/LukasStordeur). The gold
+palette, the Cinzel/EB Garamond pairing and the card-on-texture layout all come
+from that design; the token layer in `src/shared/styles/tokens.css` is an
+extraction of it, not an invention.
+
+Paint data comes from the open conversion table maintained by
+[redgrimm](https://github.com/redgrimm/paint-conversion).
+
 ## Design system
 
 Every colour, radius, type size, tracking and shadow lives in
