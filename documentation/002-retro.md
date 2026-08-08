@@ -16,5 +16,7 @@
 - Release signing material should remain local and not be committed.
 
 ## Deferred items
-- Release signing config in `android/app/build.gradle` is still pending.
-- iOS archive/signing remains a Mac/Xcode workflow.
+
+Tracked in [OPEN-ITEMS.md](OPEN-ITEMS.md), the single living list. This section
+used to restate the open items and drifted out of date as later retros closed
+them; git history has what was outstanding on the day.

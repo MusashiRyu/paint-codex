@@ -27,5 +27,7 @@
 - Markdown exports should continue listing only the user-selected paints, even when match data exists.
 
 ## Deferred items
-- Native iOS signing and App Store archive steps remain Mac/Xcode-only.
-- Android release signing is still separate from the debug/test packaging flow.
+
+Tracked in [OPEN-ITEMS.md](OPEN-ITEMS.md), the single living list. This section
+used to restate the open items and drifted out of date as later retros closed
+them; git history has what was outstanding on the day.

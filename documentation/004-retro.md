@@ -98,16 +98,6 @@ This closes the "Rename list functionality" item deferred in retro 003.
 
 ## Deferred items
 
-- **An empty list cannot be renamed.** The list header (export / rename / delete)
-  only renders when the list has paints, so a newly created empty list has no
-  rename affordance. Pre-existing behaviour, not introduced here.
-- The back-gesture fix is verified by construction and by the plugin registering
-  natively (`capacitor.plugins.json`), but has not been confirmed on a physical
-  device.
-- `JAVA_HOME` is still unset on the dev machine; each build needs it exported to
-  JDK 21 manually. Pinning it in the npm script or a `gradle.properties`
-  `org.gradle.java.home` was not done, as it would hard-code a machine-specific
-  path.
-- The old browse grid (BrandFilter / ResultsGrid / PaintCard / SearchBar /
-  ExportPanel) remains unused dead code, as noted in retro 003. `PaintCard`'s
-  CSS was touched here only because it still carries the Δ badge styling.
+Tracked in [OPEN-ITEMS.md](OPEN-ITEMS.md), the single living list. This section
+used to restate the open items and drifted out of date as later retros closed
+them; git history has what was outstanding on the day.

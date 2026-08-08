@@ -150,14 +150,6 @@ introduced it.
 
 ## Deferred items
 
-- **Blob downloads do not work in the Android WebView.** Capacitor registers
-  no `DownloadListener`, so `a.download` silently no-ops on device. Moot
-  while `markdownExport` is flagged off; when it is turned back on, mobile
-  export needs `@capacitor/filesystem` + `@capacitor/share` rather than an
-  anchor click.
-- **`filterPaintsByColor` is unused.** Kept because it is tested and
-  plausibly wanted for a colour-filter feature; delete it if not.
-- **`android:allowBackup="true"`** (Capacitor default) lets `adb backup`
-  pull app data off a device. Paint lists are not sensitive, so this is
-  noted rather than changed.
-- An empty list still cannot be renamed — carried over from retro 004.
+Tracked in [OPEN-ITEMS.md](OPEN-ITEMS.md), the single living list. This section
+used to restate the open items and drifted out of date as later retros closed
+them; git history has what was outstanding on the day.

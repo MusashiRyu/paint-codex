@@ -110,12 +110,6 @@ renaming upstream's `<strong>` tags drops the parse to 0 and exits non-zero.
 
 ## Deferred items
 
-Unchanged from retro 005, plus one:
-
-- **Dialogs have no focus management.** Both sheets carry `role="dialog"` and
-  `aria-modal`, but nothing traps focus inside them or restores it to the
-  trigger on close, so keyboard focus walks out behind the overlay.
-- Blob downloads still no-op in the Android WebView; moot while `markdownExport`
-  is flagged off.
-- `filterPaintsByColor` is still unused.
-- An empty list still cannot be renamed.
+Tracked in [OPEN-ITEMS.md](OPEN-ITEMS.md), the single living list. This section
+used to restate the open items and drifted out of date as later retros closed
+them; git history has what was outstanding on the day.

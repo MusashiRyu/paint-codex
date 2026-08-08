@@ -59,7 +59,6 @@ Abandoned the previous browse-first UI and implemented a full redesign based on 
 
 ## Deferred items
 
-- Rename list functionality (was in old ListsPanel, removed in new design — not present in the Claude Design mockup)
-- "Unselect list" functionality (removed; new design always shows the active list)
-- Dark mode toggle (removed; design is always dark)
-- The old browse grid (BrandFilter / ResultsGrid / PaintCard / SearchBar / ExportPanel) are unused dead code — can be deleted once their tests are updated or removed
+Tracked in [OPEN-ITEMS.md](OPEN-ITEMS.md), the single living list. This section
+used to restate the open items and drifted out of date as later retros closed
+them; git history has what was outstanding on the day.
