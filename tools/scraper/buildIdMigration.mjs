@@ -13,10 +13,16 @@
  * first: the old catalogue stored one hex per name, and it is that hex which
  * says which range the entry actually came from.
  *
- * Run once against the pre-migration snapshot, which is in git history:
+ * Takes every superseded snapshot at once and unions the result, because the
+ * ids have now moved twice: once when the source changed, and again when rows
+ * that were the same colour under two range names were merged into one entry.
+ * The store applies the same map at each version step, so one file covers a
+ * store that has sat at any of them.
  *
- *   git show <commit>:src/data/paints.snapshot.json > legacy.json
- *   node tools/scraper/buildIdMigration.mjs legacy.json
+ * Run against the snapshots in git history, oldest first:
+ *
+ *   git show <commit>:src/data/paints.snapshot.json > v1.json
+ *   node tools/scraper/buildIdMigration.mjs v1.json v2.json
  *
  * The output is committed, so this does not run again unless the mapping has
  * to be rebuilt.
@@ -30,13 +36,12 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const CURRENT_PATH = join(__dirname, '..', '..', 'src', 'data', 'paints.snapshot.json');
 const OUT_PATH = join(__dirname, '..', '..', 'src', 'data', 'paintIdMigration.json');
 
-const legacyPath = process.argv[2];
-if (!legacyPath) {
-  console.error('Usage: node tools/scraper/buildIdMigration.mjs <legacy-snapshot.json>');
+const priorPaths = process.argv.slice(2);
+if (priorPaths.length === 0) {
+  console.error('Usage: node tools/scraper/buildIdMigration.mjs <old-snapshot.json>...');
   process.exit(1);
 }
 
-const legacy = JSON.parse(readFileSync(legacyPath, 'utf8'));
 const current = JSON.parse(readFileSync(CURRENT_PATH, 'utf8'));
 
 const key = (brand, name) => `${brand.trim().toLowerCase()}::${name.trim().toLowerCase()}`;
@@ -97,29 +102,57 @@ function nearest(hex, group) {
   return best;
 }
 
+const live = new Set(current.map((paint) => paint.id));
 const migration = {};
-const unmapped = [];
-for (const paint of legacy) {
-  const group =
-    candidates.get(key(paint.brand, paint.name)) ??
-    looseCandidates.get(looseKey(paint.brand, paint.name));
-  // Deliberately no colour-based fallback for what is left: those are paints
-  // the new source does not carry, and mapping them to whatever is nearest
-  // would put a different product in someone's list under the old name.
-  if (!group) {
-    unmapped.push(`${paint.brand} — ${paint.name}`);
-    continue;
+
+for (const priorPath of priorPaths) {
+  const prior = JSON.parse(readFileSync(priorPath, 'utf8'));
+  const unmapped = [];
+  let mapped = 0;
+
+  for (const paint of prior) {
+    // An id the current catalogue still has needs no entry, whichever
+    // snapshot it came from.
+    if (live.has(paint.id)) continue;
+
+    const group =
+      candidates.get(key(paint.brand, paint.name)) ??
+      looseCandidates.get(looseKey(paint.brand, paint.name));
+    // Deliberately no colour-based fallback for what is left: those are paints
+    // the new source does not carry, and mapping them to whatever is nearest
+    // would put a different product in someone's list under the old name.
+    if (!group) {
+      unmapped.push(`${paint.brand} — ${paint.name}`);
+      continue;
+    }
+    migration[paint.id] = nearest(paint.hex, group).id;
+    mapped += 1;
   }
-  const target = nearest(paint.hex, group);
-  // An id that survived the change unaltered needs no entry.
-  if (target.id !== paint.id) migration[paint.id] = target.id;
+
+  console.log(`${priorPath}`);
+  console.log(`  paints    : ${prior.length}`);
+  console.log(`  mapped    : ${mapped}`);
+  console.log(`  unchanged : ${prior.length - mapped - unmapped.length}`);
+  console.log(`  no longer in upstream: ${unmapped.length}`);
+  for (const name of unmapped) console.log(`    ${name}`);
+}
+
+/**
+ * The store applies this map at more than one version step, so a value that is
+ * also a key would resolve one hop further on the second pass and land
+ * somewhere nobody chose. Fail loudly rather than ship that.
+ */
+const chained = Object.values(migration).filter((target) => target in migration);
+if (chained.length > 0) {
+  console.error(`\nFAIL: ${chained.length} entries chain through another entry.`);
+  process.exit(1);
+}
+
+const missing = Object.values(migration).filter((target) => !live.has(target));
+if (missing.length > 0) {
+  console.error(`\nFAIL: ${missing.length} entries point at an id the catalogue does not have.`);
+  process.exit(1);
 }
 
 writeFileSync(OUT_PATH, JSON.stringify(migration, null, 2) + '\n');
-
-console.log(`legacy paints : ${legacy.length}`);
-console.log(`mapped        : ${Object.keys(migration).length}`);
-console.log(`unchanged     : ${legacy.length - Object.keys(migration).length - unmapped.length}`);
-console.log(`no longer in upstream: ${unmapped.length}`);
-for (const name of unmapped) console.log(`  ${name}`);
-console.log(`\nWrote ${OUT_PATH}`);
+console.log(`\nWrote ${Object.keys(migration).length} entries to ${OUT_PATH}`);

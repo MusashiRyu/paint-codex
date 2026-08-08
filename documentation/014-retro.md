@@ -1,4 +1,4 @@
-# Retro 014 — The catalogue's real source, and 310 paints became 2,422
+# Retro 014 — The catalogue's real source, and 310 paints became 2,279
 
 The request was to add PaintAtlas as a paint source. Following it to its own
 stated origin turned it into a source *replacement* instead, and along the way
@@ -32,8 +32,8 @@ whose data it is before writing a scraper for the front-end.
 
 ### 2. Replaced redgrimm rather than merging
 
-Old catalogue: 310 paints, of which 206 had no `category` at all. New: 2,422
-across every range each brand sells, all with a range name.
+Old catalogue: 310 paints, of which 206 had no `category` at all. New: 2,279, covering
+every range each brand sells, every one of them carrying its range.
 
 Merging was the other option and was worse in a specific way. `setPaints`
 replaces the whole catalogue, so any paint the merge added would have vanished
@@ -48,7 +48,7 @@ CIELAB and keeps each one's six nearest neighbours from *other* brands.
 
 This is strictly better coverage than what it replaced: redgrimm only had
 matches for the paints in its table, so most of the catalogue had none.
-Every one of the 2,422 has six now.
+Every one of the 2,279 has six now.
 
 The metric is CIE76, and that is a decision rather than a default. The
 thresholds in `shared/lib/color.ts` — 3 for "indistinguishable", 7 for "still
@@ -71,7 +71,7 @@ data would land on whichever of the two was indexed last.
 and resolves in one pass, and drops an id whose paint has left the catalogue —
 which also deleted the old "equivalent we don't carry" disabled-tile state,
 since an unresolvable match is now simply not rendered. Storing two fields
-instead of four also matters at 2,422 × 6: the snapshot ships in the bundle
+instead of four also matters at 2,279 × 6: the snapshot ships in the bundle
 *and* is mirrored into localStorage.
 
 ### 5. The id change had to be migrated, and 20 paints could not be
@@ -107,8 +107,8 @@ list just as silently, and for no reason at all.
 
 The rejection floor was half the bundled paint count in total. With one document
 per brand the realistic failure is one file being renamed while the other two
-answer normally — and Citadel is 452 of 2,422, so losing it whole leaves 1,970,
-comfortably over a floor of 1,211. The refresh would have adopted a catalogue
+answer normally — and Citadel is 378 of 2,279, so losing it whole leaves 1,901,
+comfortably over a floor of 1,139. The refresh would have adopted a catalogue
 with no Citadel paints in it.
 
 `findShortfall` now checks each brand against half of what that brand shipped,
@@ -119,21 +119,67 @@ runtime agree.
 
 `npm run scrape` is hand-run and never runs in CI, so nothing had ever asserted
 against the shipped JSON itself — a scrape from a half-broken upstream, or an
-edit straight to the file, would have reached a release unchallenged. Seven
+edit straight to the file, would have reached a release unchallenged. Eight
 cases now cover unique ids, renderable colours, every match resolving inside the
-same file, no same-brand equivalents, and every migration target existing.
+same file, no same-brand equivalents, no two entries sharing a brand, name and
+colour, no paint being shown two tiles that read identically, and every
+migration target existing.
+
+### 8. Then the duplicates, which were the same bug twice
+
+Keeping every range variant was the right call for paints that differ, and the
+wrong one for paints that do not. Upstream lists a colour once per range it is
+sold in, so Citadel's Abaddon Black arrived as both Air and Base at `#000000`
+and Vallejo's Black three times over. 143 rows were a brand, name and colour
+already present under another range label.
+
+On screen those are indistinguishable: same name, same swatch, same hex, only
+the range chip differs. Two symptoms, one cause:
+
+- Search results listed the same paint several times.
+- **492 paints — 20% of the catalogue — had equivalent tiles that repeated.**
+  Abaddon Black's six tiles were three Vallejo Blacks and three Army Painter
+  Matt Blacks, all `#000000`, all Δ0: six tiles carrying two answers.
+
+The fix is one entry per brand + name + colour, whose `category` lists every
+range it is sold in, primary first — `Base · Air`. Nothing is lost against
+upstream, because the ranges are all still there. A name at a *different*
+colour stays a separate paint, which is what the original decision was actually
+about: Administratum Grey really is a different grey in Layer and in Air.
+
+2,422 → 2,279 paints. Repeating equivalent tiles: 492 → 0. Abaddon Black now
+gets six distinct answers instead of two repeated three times.
+
+"Primary range" is brush before airbrush, then alphabetical — the same
+preference the migration already used, for the same reason: brush is what
+someone browsing a colour usually wants, and it is what the old catalogue held.
+
+### 9. The id scheme changed twice in one session, which the map had to absorb
+
+Merging ranges retired 143 ids that had existed for exactly one commit. Rather
+than a second map file, `buildIdMigration.mjs` now takes every superseded
+snapshot at once and unions the result, and the store applies that one map at
+both v2 → v3 and v3 → v4.
+
+That only works because no entry's target is itself a key — otherwise the
+second pass would resolve one hop further and land somewhere nobody chose. The
+script asserts it rather than assuming it, and refuses to write a map that
+fails, alongside a check that every target exists in the catalogue.
+
+433 entries now: 290 legacy ids, 143 merged-away ones.
 
 ## Numbers
 
 | | Before | After |
 | --- | --- | --- |
-| Paints | 310 | 2,422 |
-| Citadel / Vallejo / Army Painter | 104 / 139 / 67 | 452 / 1,266 / 704 |
+| Paints | 310 | 2,279 |
+| Citadel / Vallejo / Army Painter | 104 / 139 / 67 | 378 / 1,203 / 698 |
 | Paints with no range | 206 | 0 |
 | Paints with equivalents | partial | all |
-| Snapshot on disk | 176 KB indented | 1.20 MB minified |
-| Bundle (gzip) | — | 273 KB |
-| Tests | 101 | 113 |
+| Paints whose equivalent tiles repeat | — | 0 (was 492 pre-merge) |
+| Snapshot on disk | 176 KB indented | 1.14 MB minified |
+| Bundle (gzip) | — | 274 KB |
+| Tests | 101 | 120 |
 
 ## What is worth remembering
 
@@ -149,12 +195,19 @@ named an MIT repo with the same data. Five minutes of reading replaced a
 right for one document and was wrong the moment there were three, and nothing
 about the code changed to make it wrong.
 
+**"Keep every variant" and "remove duplicates" are the same decision seen from
+two sides.** The variants worth keeping are the ones that differ in something
+the user can see. Air and Base Abaddon Black differ in a label; Layer and Air
+Administratum Grey differ in colour. Only the second is a variant to a person
+holding a pot of paint, and the rule that separates them is just "is any
+rendered field different".
+
 ## Not done
 
 - **Screenshots were not regenerated.** The catalogue content and the equivalent
   tiles both changed, so `store/` screenshots are stale. `npm run screenshots`
   fails on this machine — Edge will not launch under puppeteer-core, unrelated
   to this work. Tracked in OPEN-ITEMS.
-- **Shop links were remapped, not re-crawled.** 186 of 191 survived the id
-  change; the other 2,236 paints have no link. Dormant while
-  `featureFlags.markdownExport` is off. Tracked in OPEN-ITEMS.
+- **Shop links were remapped, not re-crawled.** 186 of 191 survived; the other
+  2,093 paints have no link. Dormant while `featureFlags.markdownExport` is
+  off. Tracked in OPEN-ITEMS.

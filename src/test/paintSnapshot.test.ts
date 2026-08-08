@@ -42,6 +42,26 @@ describe('bundled snapshot', () => {
     }
   });
 
+  it('lists no paint twice under the same brand, name and colour', () => {
+    const seen = new Map<string, string>();
+    for (const paint of paints) {
+      const key = `${paint.brand}|${paint.name.toLowerCase()}|${paint.hex}`;
+      expect(seen.has(key)).toBe(false);
+      seen.set(key, paint.id);
+    }
+  });
+
+  it('never shows one paint two equivalents that read identically', () => {
+    // Six tiles resolving to two colours is what the range merge fixed; this
+    // is the assertion that keeps it fixed.
+    const byId = new Map(paints.map((paint) => [paint.id, paint]));
+    for (const paint of paints) {
+      const shown = paint.matches.map((match) => byId.get(match.id)!);
+      const distinct = new Set(shown.map((m) => `${m.brand}|${m.name.toLowerCase()}|${m.hex}`));
+      expect(distinct.size).toBe(shown.length);
+    }
+  });
+
   it('never offers a paint as an alternative to its own brand', () => {
     const brandOf = new Map(paints.map((paint) => [paint.id, paint.brand]));
     for (const paint of paints) {

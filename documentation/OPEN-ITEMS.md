@@ -28,33 +28,33 @@ write the file and `@capacitor/share` to hand it off. Decision taken
 ### 2. Store screenshots are stale after the catalogue change
 **Raised:** 014 · **Blocked on this machine**
 
-The catalogue went from 310 paints to 2,422 and the equivalent tiles now name a
+The catalogue went from 310 paints to 2,279 and the equivalent tiles now name a
 range as well as a brand, so every captured screen has moved. `npm run
 screenshots` cannot run here: puppeteer-core fails to launch Edge (`Failed to
 launch the browser process: Code: 0`) and no Chrome is installed. Unrelated to
 the data change — the seed data in `tools/store/screenshots.mjs` was already
-updated to the new ids and persist version 3.
+updated to the new ids and persist version 4.
 
 Install Chrome or set `CHROME_PATH`, then `npm run build && npm run
 screenshots`. Must happen before the next Play submission.
 
-### 3. Shop links cover 186 paints out of 2,422
+### 3. Shop links cover 186 paints out of 2,279
 **Raised:** 014 · **Dormant while the export flag is off**
 
 `shopLinks.snapshot.json` was remapped through the id migration rather than
 re-crawled, so it still only covers what the 310-paint catalogue had. Re-running
-`npm run scrape:shoplinks` would crawl vliegeruit.com for 2,422 paints with a
+`npm run scrape:shoplinks` would crawl vliegeruit.com for 2,279 paints with a
 per-paint search fallback — a much heavier crawl than the one that produced the
 current file, and worth pacing deliberately.
 
 Only `features/export/markdownExport.ts` reads it, and that is behind
 `appConfig.featureFlags.markdownExport`, which is `false`.
 
-### 4. The cached catalogue is ~2.3 MB of localStorage
+### 4. The cached catalogue is ~2.2 MB of localStorage
 **Raised:** 014 · **Watch, not fix**
 
-The snapshot is 1.20 MB of JSON, which localStorage stores as UTF-16 — about
-2.3 MB against a quota that is typically 5 MB. It fits, and a write failure is
+The snapshot is 1.14 MB of JSON, which localStorage stores as UTF-16 — about
+2.2 MB against a quota that is typically 5 MB. It fits, and a write failure is
 already handled (the refresh applies for the session and simply does not
 persist). Worth remembering before anything else large is persisted, and before
 the catalogue grows by another brand.

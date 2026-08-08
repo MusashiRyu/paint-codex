@@ -49,8 +49,9 @@ Paint data comes from
 [Arcturus5404/miniature-paints](https://github.com/Arcturus5404/miniature-paints)
 (MIT), the colour database scraped and published by the
 [Miniature Painter Pro](https://miniaturepainterpro.app/) team. Paco reads the
-Citadel, Vallejo and Army Painter tables — 2,422 paints across every range each
-brand sells.
+Citadel, Vallejo and Army Painter tables — 2,279 paints across every range each
+brand sells. One colour sold under several range names is one entry listing all
+of them, not one entry per label.
 
 Equivalents are computed here rather than taken from upstream, which ships
 colour only. See [documentation/0.1-architecture.md](documentation/0.1-architecture.md#paint-catalogue)

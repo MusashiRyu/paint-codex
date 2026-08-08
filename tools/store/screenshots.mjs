@@ -93,7 +93,7 @@ const SEED = {
     ],
     selectedListId: 'seed-cobalt',
   },
-  version: 3,
+  version: 4,
 };
 
 function findChrome() {

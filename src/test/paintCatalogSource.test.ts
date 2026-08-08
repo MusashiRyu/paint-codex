@@ -79,6 +79,70 @@ describe('parsePaintCatalog', () => {
     expect(paints[0].id).toBe('vallejo-game-color-black');
   });
 
+  it('merges one colour sold across several ranges into a single paint', () => {
+    const paints = parsePaintCatalog([
+      citadel([
+        { name: 'Abaddon Black', set: 'Air', hex: '#000000' },
+        { name: 'Abaddon Black', set: 'Base', hex: '#000000' },
+      ]),
+    ]);
+
+    // Same name, same swatch, same hex — two rows of it is a listing artifact,
+    // not two paints.
+    expect(paints).toHaveLength(1);
+    expect(paints[0].category).toBe('Base · Air');
+  });
+
+  it('leads a merged paint with its brush range, not whichever came first', () => {
+    const airFirst = parsePaintCatalog([
+      citadel([
+        { name: 'Balor Brown', set: 'Air', hex: '#875408' },
+        { name: 'Balor Brown', set: 'Layer', hex: '#875408' },
+      ]),
+    ]);
+    const layerFirst = parsePaintCatalog([
+      citadel([
+        { name: 'Balor Brown', set: 'Layer', hex: '#875408' },
+        { name: 'Balor Brown', set: 'Air', hex: '#875408' },
+      ]),
+    ]);
+
+    // The id follows the primary range, so it must not depend on file order.
+    expect(airFirst[0].id).toBe('citadel-layer-balor-brown');
+    expect(layerFirst[0].id).toBe(airFirst[0].id);
+    expect(layerFirst[0].category).toBe(airFirst[0].category);
+  });
+
+  it('keeps a name that is a different colour in a different range', () => {
+    const paints = parsePaintCatalog([
+      citadel([
+        { name: 'Administratum Grey', set: 'Layer', hex: '#989C94' },
+        { name: 'Administratum Grey', set: 'Air', hex: '#8F9690' },
+      ]),
+    ]);
+
+    // Genuinely two greys, so genuinely two paints.
+    expect(paints.map((paint) => paint.id)).toEqual([
+      'citadel-layer-administratum-grey',
+      'citadel-air-administratum-grey',
+    ]);
+  });
+
+  it('never offers the same brand, name and colour twice among one paint\'s equivalents', () => {
+    const paints = parsePaintCatalog([
+      citadel([{ name: 'Abaddon Black', set: 'Base', hex: '#000000' }]),
+      buildBrandDocument('Vallejo', [
+        { name: 'Black', code: '72.051', set: 'Game Color', hex: '#000000' },
+        { name: 'Black', code: '76.051', set: 'Game Air', hex: '#000000' },
+        { name: 'Black', code: '70.950', set: 'Hobby Paint', hex: '#000000' },
+      ]),
+    ]);
+
+    // Before the merge this rendered as three tiles saying the same thing.
+    const citadelBlack = paints.find((paint) => paint.brand === 'Citadel');
+    expect(citadelBlack?.matches).toHaveLength(1);
+  });
+
   it('suffixes a genuine clash by code, not by row order', () => {
     const ordered = parsePaintCatalog([
       buildBrandDocument('Vallejo', [

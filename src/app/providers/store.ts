@@ -127,7 +127,7 @@ export const useAppStore = create<AppStore>()(
     }),
     {
       name: 'paco-app-store',
-      version: 3,
+      version: 4,
       migrate: (persisted: unknown, version: number) => {
         const state = persisted as {
           lists: LegacyPaintList[];
@@ -155,14 +155,20 @@ export const useAppStore = create<AppStore>()(
           }));
         }
 
-        // v2 -> v3: the catalogue moved to a source that carries every range,
-        // so a paint id gained the range it belongs to — `citadel-white-scar`
-        // became `citadel-layer-white-scar`. `resolvePaints` drops ids it
-        // cannot find, so an unmigrated list would have emptied itself with no
-        // message. Ids absent from the map are either unchanged or paints the
+        // v2 -> v3 and v3 -> v4: paint ids have moved twice. First the
+        // catalogue changed source and an id gained its range
+        // (`citadel-white-scar` -> `citadel-layer-white-scar`); then rows that
+        // were the same colour under two range names merged into one entry, so
+        // `citadel-air-abaddon-black` folded into `citadel-base-abaddon-black`.
+        //
+        // `resolvePaints` drops ids it cannot find, so an unmigrated list would
+        // have emptied itself with no message. One map covers both steps: it is
+        // built from every superseded snapshot at once and checked to contain
+        // no entry whose target is itself a key, which is what makes applying
+        // it twice safe. Ids absent from it are either unchanged or paints the
         // new source does not carry; both are left alone and the second kind
         // drops out at resolve time, as any retired paint does.
-        if (version < 3) {
+        if (version < 4) {
           const renames: Record<string, string> = paintIdMigration;
           lists = lists.map((l) => ({
             ...l,

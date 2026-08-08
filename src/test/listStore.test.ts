@@ -111,6 +111,37 @@ describe('list store', () => {
     expect(list.color).toBe('#c9a86a');
   });
 
+  it('folds a v3 id whose range was merged away onto the surviving paint', async () => {
+    localStorage.setItem(
+      'paco-app-store',
+      JSON.stringify({
+        version: 3,
+        state: {
+          selectedListId: 'l1',
+          lists: [
+            {
+              id: 'l1',
+              name: 'Blood Angels',
+              icon: 'skull',
+              color: '#7a2430',
+              paintIds: ['citadel-air-abaddon-black', 'citadel-base-mephiston-red'],
+            },
+          ],
+        },
+      })
+    );
+
+    await useAppStore.persist.rehydrate();
+
+    const [list] = useAppStore.getState().lists;
+    // Air and Base Abaddon Black are one colour under two labels and merged;
+    // Mephiston Red was already the surviving id and must not move.
+    expect(list.paintIds).toEqual([
+      'citadel-base-abaddon-black',
+      'citadel-base-mephiston-red',
+    ]);
+  });
+
   it('carries v2 paint ids onto the ranges the new catalogue splits them into', async () => {
     localStorage.setItem(
       'paco-app-store',
