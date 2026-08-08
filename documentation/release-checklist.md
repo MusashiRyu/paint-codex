@@ -34,28 +34,89 @@ contradiction there is a rejection risk.
 
 ## One-time Play Console setup
 
-1. **Create the app.** Name `Paco - Paint Codex`, English (United States) as
-   the default language, App (not Game), Free.
-2. **Enrol in Play App Signing.** Accept the default: Google generates and
-   holds the app signing key, and the keystore on this machine is only the
-   *upload* key. This is why losing the local keystore is recoverable — support
-   can reset an upload key, and could never reset an app signing key.
-3. **Work through App content.** Privacy policy URL, ads declaration, app
-   access, content rating questionnaire, target audience, data safety, and the
-   government/financial/health declarations. Every answer is written out in
-   [`store/listing.md`](../store/listing.md).
-4. **Upload the graphics.** Icon, feature graphic and screenshots, all from
-   `store/graphics/`. Regenerate rather than hand-editing:
+**This part cannot be automated.** The Play Developer API (`androidpublisher`)
+manages apps that already exist — edits, releases, tracks, listings — but there
+is no endpoint that creates an app. Creating the entry is web-UI only, behind a
+verified developer account. Everything *after* the first release can be
+scripted; this cannot.
 
-   ```bash
-   npm run icons             # needs tools/icons/source/icon.svg
-   npm run build
-   npm run screenshots
-   npm run feature-graphic
-   ```
-5. **Set up a closed test track first.** Google requires a period of closed
-   testing on a new personal developer account before production access opens
-   up. Starting that early costs nothing and it is on the critical path.
+Menu labels move around between Console redesigns. Where the wording below has
+drifted, the field is still findable by name.
+
+### 0. Before anything: the developer account
+
+A one-off **$25** registration plus identity verification (ID, address, phone).
+Verification is not instant — it can take days, occasionally longer. Nothing
+below can start until it clears, so do it first.
+
+> **The 12-testers rule.** Personal developer accounts registered from late 2023
+> onward must run a **closed test with at least 12 testers opted in for 14
+> continuous days** before they can even apply for production access. The 14
+> days do not start until the twelfth tester has opted in, and the counter
+> resets if you drop below twelve. This is the single longest pole in the
+> schedule and it is invisible until you go looking for it — start the closed
+> track the day the account clears, not after the listing is polished.
+
+### 1. Create the app
+
+**All apps → Create app.**
+
+| Field | Value |
+| --- | --- |
+| App name | `Paco - Paint Codex` |
+| Default language | English (United States) |
+| App or game | **App** |
+| Free or paid | **Free** — irreversible; a free app can never be made paid |
+| Declarations | Developer Programme Policies, US export laws |
+
+### 2. Enrol in Play App Signing
+
+Accept the default. Google generates and holds the app signing key; the
+keystore on this machine is only the **upload** key. That is exactly why losing
+it locally is recoverable — support can reset an upload key and could never
+reset an app signing key.
+
+### 3. App content
+
+Every answer is in [`store/listing.md`](../store/listing.md). In Console order:
+
+- **Privacy policy** → `https://musashiryu.github.io/paint-codex/privacy.html`
+- **App access** → all functionality available without restrictions
+- **Ads** → contains no ads
+- **Content rating** → questionnaire; every question answers "none"
+- **Target audience** → 13+, and **do not tick any under-13 band**
+- **Data safety** → does not collect or share any user data
+- **News / government / financial / health** → no to all
+
+### 4. Store listing and settings
+
+**Grow → Store presence → Main store listing.** Short description, full
+description and graphics, all from [`store/listing.md`](../store/listing.md)
+and `store/graphics/`:
+
+| Asset | File |
+| --- | --- |
+| App icon | `store/graphics/icon-512.png` |
+| Feature graphic | `store/graphics/feature-graphic.png` |
+| Phone screenshots | `store/graphics/screenshots/*.png` (all four) |
+
+Then **Store settings** for category (Art & Design) and contact details, and
+**Countries / regions** for availability.
+
+### 5. Closed testing, then production
+
+**Testing → Closed testing → Create new release.** Upload
+`app-release.aab`, paste the release notes from `listing.md`, add testers.
+
+Read the 12-testers note in step 0 again before assuming production is close.
+
+### Automating what comes next
+
+Once the app exists and has had one manual release, uploads *can* be scripted
+via the Play Developer API — a Google Cloud service account, granted access
+under **Users and permissions**, driven by `fastlane supply` or
+`r0adkll/upload-google-play` in Actions. Worth doing only once releases are
+frequent enough to be a chore; the first one has to be by hand regardless.
 
 ### The upload key
 
