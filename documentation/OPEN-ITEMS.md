@@ -13,18 +13,27 @@ closed it is the record.
 
 ## Open
 
-### 1. Android release signing is not configured
-**Raised:** 002 · **Blocks shipping**
+### 1. The app icon and splash are still Capacitor's placeholder
+**Raised:** 008 · **Blocks shipping**
 
-`android/app/build.gradle` has a `release` build type with `minifyEnabled` and
-proguard, but no `signingConfig`. Without one there is no uploadable `.aab`.
+`mipmap-*/ic_launcher.png` is the Capacitor logo and every `drawable-*/splash.png`
+is that logo on white. `public/favicon.svg` is still Vite's. Shipping another
+project's mark as the app icon is a listing rejection risk, and the white splash
+flashes into a near-black app.
 
-Needs a keystore, a `signingConfig` wired into `buildTypes.release`, and the
-credentials kept out of the repo (`gradle.properties` in the user home, or CI
-secrets). Decision taken 2026-08-08: tackle this when we are ready to ship, not
-before.
+Everything downstream is ready: drop the mark at `tools/icons/source/icon.svg`
+and `npm run icons` writes all five densities, both legacy shapes, the adaptive
+foreground, the splash canvases, the 512px Play icon and the favicon. Waiting
+only on artwork. See [`tools/icons/README.md`](../tools/icons/README.md).
 
-### 2. Markdown export cannot work in the Android WebView
+### 2. The privacy policy has no public URL
+**Raised:** 008 · **Blocks shipping**
+
+Play requires a policy URL for every app, including one that collects nothing.
+The text is written and accurate — [`store/privacy-policy.md`](../store/privacy-policy.md)
+— but it needs hosting. GitHub Pages on this repo is the least effort.
+
+### 3. Markdown export cannot work in the Android WebView
 **Raised:** 005 · **Dormant while the flag is off**
 
 Capacitor registers no `DownloadListener`, so the anchor-click blob download in
@@ -36,12 +45,16 @@ Before that flag goes back on, mobile export needs `@capacitor/filesystem` to
 write the file and `@capacitor/share` to hand it off. Decision taken
 2026-08-08: leave as is for now.
 
-### 3. iOS signing and archive are Mac-only
+### 4. iOS signing and archive are Mac-only
 **Raised:** 001 · **Environmental**
 
 Nothing to fix in the repo. The flow in the README's iOS section requires Xcode
 on macOS. Plan as of 2026-08-08: reach a Mac over Parsec and follow those steps
 there.
+
+Note that `tools/icons/` writes Android and web assets only, so
+`ios/App/App/Assets.xcassets/AppIcon.appiconset` still holds the Capacitor
+placeholder. Extending the generator is the easy part of an iOS submission.
 
 ---
 
@@ -63,6 +76,7 @@ Prune this section once it stops being useful.
 | `filterPaintsByColor` unused | 005 | 007 — removed |
 | `JAVA_HOME` unset on the dev machine | 004 | 007 — set to JDK 21 |
 | `android:allowBackup="true"` | 005 | Accepted 2026-08-08; paint lists are not sensitive |
+| Android release signing not configured | 002 | 008 — upload key generated, `signingConfig` wired, release build fails loudly without it |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
 removals in the redesign rather than pending work, and are not tracked.

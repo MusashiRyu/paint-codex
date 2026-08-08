@@ -107,12 +107,39 @@ adb install -r android/app/build/outputs/apk/debug/app-debug.apk
 ```
 
 Notes:
-- Configure signing in `android/app/build.gradle` (release signingConfig) before store upload.
+- **Release signing is configured.** The upload key lives outside the repo at
+  `%USERPROFILE%\.android-keystores\paco-upload.jks`, with credentials in
+  `%USERPROFILE%\.gradle\gradle.properties`. A machine without them still builds
+  debug, but a release build fails at configuration time rather than quietly
+  producing an unsigned bundle.
 - Bump `versionCode` / `versionName` in `android/app/build.gradle` for each release.
 - The gradle scripts invoke `.\gradlew.bat` rather than `gradlew.bat`. Windows
   environments that set `NoDefaultCurrentDirectoryInExePath=1` (Git for Windows
   does this) stop `cmd.exe` from resolving executables in the working directory,
   so the bare name fails in both PowerShell and Git Bash.
+
+The full submission path — Play Console setup, the every-release sequence, and
+the settings that are deliberate rather than accidental — is in
+[documentation/release-checklist.md](documentation/release-checklist.md).
+
+## Store assets
+
+Generated from source, never hand-exported, so they cannot drift from the app.
+
+```bash
+npm run icons             # launcher icons, splash, 512px Play icon, favicon
+npm run build             # screenshots serve dist/, they do not build it
+npm run screenshots       # 1080x1920 phone screenshots, driven through the real app
+npm run feature-graphic   # 1024x500 listing banner
+npm run listing:check     # store copy against Play's character limits
+```
+
+`npm run icons` needs a source mark at `tools/icons/source/icon.svg` — see
+[tools/icons/README.md](tools/icons/README.md). Until one exists the app still
+ships Capacitor's placeholder logo.
+
+Listing copy, the Data safety answers and the privacy policy text are in
+[store/](store/).
 
 ### 3) iOS release flow
 
