@@ -108,14 +108,17 @@
   margin-bottom: 8px;
 }
 
+/* Columns stretch to eat the row rather than leaving a ragged gutter on the
+ * right — auto-fill, not auto-fit, so two equivalents stay tile-sized instead
+ * of ballooning across the whole card. */
 .equivGrid {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
   gap: 10px;
-  flex-wrap: wrap;
 }
 
 .equivCard {
-  width: 104px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   background: var(--surface-raised);
