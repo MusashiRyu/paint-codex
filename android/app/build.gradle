@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+// Upload-key credentials live in the *user* gradle.properties
+// (~/.gradle/gradle.properties), never in this repository. A machine without
+// them can still build debug; see the release guard at the bottom of this file.
+def uploadStoreFile = project.findProperty('PACO_UPLOAD_STORE_FILE')
+
 android {
     namespace = "com.musashi.paco"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -8,7 +13,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -16,8 +21,26 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    signingConfigs {
+        if (uploadStoreFile) {
+            release {
+                storeFile file(uploadStoreFile)
+                storePassword project.property('PACO_UPLOAD_STORE_PASSWORD')
+                keyAlias project.property('PACO_UPLOAD_KEY_ALIAS')
+                keyPassword project.property('PACO_UPLOAD_KEY_PASSWORD')
+            }
+        }
+    }
     buildTypes {
         release {
+            if (uploadStoreFile) {
+                signingConfig signingConfigs.release
+            }
+            // R8 stays off. This is a Capacitor shell: the Java it would shrink
+            // is a few hundred KB of AndroidX next to ~2 MB of web assets, and
+            // Capacitor resolves plugins reflectively, so a bad rule breaks the
+            // app only in release builds. Not a trade worth taking for a first
+            // release. Revisit if native code ever grows.
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -51,4 +74,20 @@ try {
     }
 } catch(Exception e) {
     logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}
+
+// Without this, a machine missing the upload key silently produces an *unsigned*
+// bundle -- which builds, looks right, and is rejected on upload. Fail at
+// configuration time instead. Debug builds are deliberately unaffected so a
+// fresh clone still runs assembleDebug with the standard debug key.
+gradle.taskGraph.whenReady { graph ->
+    def wantsRelease = graph.allTasks.any { it.name.toLowerCase().contains('release') }
+    if (wantsRelease && !uploadStoreFile) {
+        throw new GradleException(
+            "Release build requested but no upload key is configured.\n" +
+            "Set PACO_UPLOAD_STORE_FILE, PACO_UPLOAD_STORE_PASSWORD, PACO_UPLOAD_KEY_ALIAS\n" +
+            "and PACO_UPLOAD_KEY_PASSWORD in ~/.gradle/gradle.properties.\n" +
+            "See documentation/release-checklist.md."
+        )
+    }
 }
