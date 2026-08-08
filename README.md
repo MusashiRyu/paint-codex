@@ -35,7 +35,7 @@ See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rule
 
 Application feature toggles live in [src/app/config.ts](src/app/config.ts).
 
-- Set `featureFlags.markdownExport` to `true` or `false` to enable or disable Markdown export UI.
+- `featureFlags.markdownExport` — shows or hides the "Export list" download action in the list header. **Currently `false`.** The export logic itself (`src/features/export/markdownExport.ts`) stays in place and tested; only the UI entry point is gated.
 
 ## Mobile Deployment (iOS + Android)
 
