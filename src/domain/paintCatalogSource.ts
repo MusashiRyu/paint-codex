@@ -18,6 +18,29 @@ function slugify(value: string): string {
 }
 
 /**
+ * Colour literal, with the run of hex digits bounded so a longer value is
+ * rejected rather than silently truncated to its first six.
+ */
+const HEX_PATTERN = /#([0-9a-fA-F]{3,6})(?![0-9a-fA-F])/;
+
+/**
+ * Normalise to `#RRGGBB`, or reject.
+ *
+ * Upstream writes `#rgb` or `#rrggbb`. Anything else is not a colour a browser
+ * will render, and `hexToHSL` slices six digits unconditionally — a four-digit
+ * value would give it NaN. Dropping the entry loses one paint; letting it
+ * through puts an invisible swatch in the UI.
+ */
+function normalizeHex(raw: string): string | null {
+  const digits = raw.replace(/^#/, '').toUpperCase();
+  if (/^[0-9A-F]{6}$/.test(digits)) return `#${digits}`;
+  if (/^[0-9A-F]{3}$/.test(digits)) {
+    return `#${[...digits].map((digit) => digit + digit).join('')}`;
+  }
+  return null;
+}
+
+/**
  * Parse an equivalent-paint cell:
  *   <td class="good-match"><strong>Dead White</strong><br>Vallejo - Game - #ffffff<br>0.00</td>
  *
@@ -35,11 +58,15 @@ function parseMatchCell(cell: string): Match | null {
 
   const deltaMatch = cell.match(/<br>\s*([\d.]+)\s*<\/td>/);
   if (!deltaMatch) return null;
+  // `[\d.]+` also matches things like "..." — parseFloat answers NaN, which
+  // would sort unpredictably and render as "Δ NaN".
   const delta = parseFloat(deltaMatch[1]);
+  if (!Number.isFinite(delta)) return null;
 
-  const hexMatch = brandLine.match(/#([0-9a-fA-F]{3,6})/);
+  const hexMatch = brandLine.match(HEX_PATTERN);
   if (!hexMatch) return null;
-  const hex = '#' + hexMatch[1].toUpperCase();
+  const hex = normalizeHex(hexMatch[1]);
+  if (!hex) return null;
 
   let brand: string;
   if (brandLine.includes('Vallejo - Game') || brandLine.includes('Vallejo - Model')) {
@@ -62,13 +89,18 @@ function parseSourceCell(cell: string): { name: string; category: string; hex: s
   if (!nameMatch) return null;
   const name = nameMatch[1].trim();
 
-  const metaMatch = cell.match(/Citadel\s+-\s+([^-]+?)\s+-\s+(#[0-9a-fA-F]{3,6})/i);
+  const metaMatch = cell.match(
+    /Citadel\s+-\s+([^-]+?)\s+-\s+(#[0-9a-fA-F]{3,6})(?![0-9a-fA-F])/i
+  );
   if (!metaMatch) return null;
+
+  const hex = normalizeHex(metaMatch[2]);
+  if (!hex) return null;
 
   return {
     name,
     category: metaMatch[1].trim(),
-    hex: metaMatch[2].toUpperCase(),
+    hex,
   };
 }
 

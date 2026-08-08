@@ -114,6 +114,60 @@ describe('parsePaintCatalog', () => {
     expect(parsePaintCatalog(html)).toEqual([]);
   });
 
+  it('expands a three-digit hex to the six-digit form', () => {
+    const paints = parsePaintCatalog(
+      buildCatalogHtml([
+        {
+          name: 'Short Hex',
+          category: 'Base',
+          hex: '#FA0',
+          vallejo: { name: 'Short Match', hex: '#0AF', delta: 1 },
+        },
+      ])
+    );
+
+    expect(paints.find((p) => p.id === 'citadel-short-hex')?.hex).toBe('#FFAA00');
+    expect(paints.find((p) => p.id === 'vallejo-short-match')?.hex).toBe('#00AAFF');
+  });
+
+  it.each(['#FFFF', '#FFFFF', '#FFFFFFF'])('rejects the unrenderable hex %s', (hex) => {
+    const paints = parsePaintCatalog(
+      buildCatalogHtml([
+        {
+          name: 'Bad Source',
+          category: 'Base',
+          hex,
+          vallejo: { name: 'Good Match', hex: '#00AAFF', delta: 1 },
+        },
+        {
+          name: 'Good Source',
+          category: 'Base',
+          hex: '#112233',
+          vallejo: { name: 'Bad Match', hex, delta: 1 },
+        },
+      ])
+    );
+
+    // The row with the bad source colour is dropped entirely.
+    expect(paints.find((p) => p.id === 'citadel-bad-source')).toBeUndefined();
+    // A bad equivalent is dropped, and with no equivalents left so is its row.
+    expect(paints.find((p) => p.id === 'vallejo-bad-match')).toBeUndefined();
+    expect(paints.find((p) => p.id === 'citadel-good-source')).toBeUndefined();
+  });
+
+  it('drops an equivalent whose delta is not a number', () => {
+    const html = buildCatalogHtml([
+      {
+        name: 'Mephiston Red',
+        category: 'Base',
+        hex: '#9B0E05',
+        vallejo: { name: 'Gory Red', hex: '#8E1010', delta: 1.23 },
+      },
+    ]).replace('>1.23<', '>...<');
+
+    expect(parsePaintCatalog(html)).toEqual([]);
+  });
+
   it('ignores rows that are not Citadel paints and markup that is not a table', () => {
     expect(parsePaintCatalog('<html><body><p>no table here</p></body></html>')).toEqual([]);
     expect(parsePaintCatalog('')).toEqual([]);
