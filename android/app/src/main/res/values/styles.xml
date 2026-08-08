@@ -13,10 +13,18 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:background">@null</item>
+        <!-- The window behind the WebView. Left at the platform default it is
+             white, which flashes between the splash tearing down and the web
+             layer's first paint on a near-black app. -->
+        <item name="android:windowBackground">@color/splash_background</item>
     </style>
 
 
     <style name="AppTheme.NoActionBarLaunch" parent="Theme.SplashScreen">
+        <!-- Pre-API-31 launch window. -->
         <item name="android:background">@drawable/splash</item>
+        <!-- API 31+ draws its own splash and ignores the drawable above, so the
+             ground has to be declared again here or the system picks white. -->
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
     </style>
 </resources>
