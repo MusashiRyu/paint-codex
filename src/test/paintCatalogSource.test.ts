@@ -1,175 +1,199 @@
 import { describe, expect, it } from 'vitest';
-import { parsePaintCatalog } from '../domain/paintCatalogSource';
-import { buildCatalogHtml } from './helpers/catalogHtml';
+import { MAX_MATCHES, parsePaintCatalog } from '../domain/paintCatalogSource';
+import { buildBrandDocument, buildCatalogDocumentsOfSize } from './helpers/catalogMarkdown';
+
+const citadel = (rows: Parameters<typeof buildBrandDocument>[1]) =>
+  buildBrandDocument('Citadel', rows, { withCode: false });
 
 describe('parsePaintCatalog', () => {
-  it('reads a Citadel row with its equivalents', () => {
-    const paints = parsePaintCatalog(
-      buildCatalogHtml([
-        {
-          name: 'Mephiston Red',
-          category: 'Base',
-          hex: '#9B0E05',
-          vallejo: { name: 'Gory Red', hex: '#8E1010', delta: 1.23 },
-          armyPainter: { name: 'Dragon Red', hex: '#A01414', delta: 4.56 },
-        },
-      ])
-    );
+  it('reads a Citadel row, whose table has no Code column', () => {
+    const [paint] = parsePaintCatalog([
+      citadel([{ name: 'Mephiston Red', set: 'Base', hex: '#9B0E05' }]),
+    ]);
 
-    const citadel = paints.find((paint) => paint.id === 'citadel-mephiston-red');
-    expect(citadel).toEqual({
-      id: 'citadel-mephiston-red',
+    expect(paint).toEqual({
+      id: 'citadel-base-mephiston-red',
       brand: 'Citadel',
       name: 'Mephiston Red',
       hex: '#9B0E05',
       category: 'Base',
-      matches: [
-        { brand: 'Vallejo', name: 'Gory Red', hex: '#8E1010', delta: 1.23 },
-        { brand: 'Army Painter', name: 'Dragon Red', hex: '#A01414', delta: 4.56 },
-      ],
+      matches: [],
     });
   });
 
-  it('promotes each equivalent to a paint of its own', () => {
-    const paints = parsePaintCatalog(
-      buildCatalogHtml([
-        {
-          name: 'Mephiston Red',
-          category: 'Base',
-          hex: '#9B0E05',
-          vallejo: { name: 'Gory Red', hex: '#8E1010', delta: 1.23 },
-          armyPainter: { name: 'Dragon Red', hex: '#A01414', delta: 4.56 },
-        },
-      ])
-    );
+  it('reads the Code column every other brand carries', () => {
+    const [paint] = parsePaintCatalog([
+      buildBrandDocument('Vallejo', [
+        { name: 'Bloody Red', code: '72.010', set: 'Game Color', hex: '#D41C1C' },
+      ]),
+    ]);
+
+    expect(paint).toMatchObject({
+      id: 'vallejo-game-color-bloody-red',
+      brand: 'Vallejo',
+      name: 'Bloody Red',
+      category: 'Game Color',
+      code: '72.010',
+    });
+  });
+
+  it('locates columns by heading rather than position', () => {
+    // Same data, Code and Set the other way round.
+    const document = buildBrandDocument('Vallejo', [
+      { name: 'Bloody Red', code: '72.010', set: 'Game Color', hex: '#D41C1C' },
+    ]);
+    document.markdown = document.markdown
+      .replace('|Name|Code|Set|', '|Name|Set|Code|')
+      .replace('|Bloody Red|72.010|Game Color|', '|Bloody Red|Game Color|72.010|');
+
+    expect(parsePaintCatalog([document])[0]).toMatchObject({
+      id: 'vallejo-game-color-bloody-red',
+      category: 'Game Color',
+      code: '72.010',
+    });
+  });
+
+  it('keeps one paint per range, so a name in two ranges is two paints', () => {
+    const paints = parsePaintCatalog([
+      citadel([
+        { name: 'Abaddon Black', set: 'Air', hex: '#000000' },
+        { name: 'Abaddon Black', set: 'Base', hex: '#010101' },
+      ]),
+    ]);
 
     expect(paints.map((paint) => paint.id)).toEqual([
-      'citadel-mephiston-red',
-      'vallejo-gory-red',
-      'army-painter-dragon-red',
+      'citadel-air-abaddon-black',
+      'citadel-base-abaddon-black',
     ]);
   });
 
-  it('links the two third-party brands to each other through their Citadel row', () => {
-    const paints = parsePaintCatalog(
-      buildCatalogHtml([
-        {
-          name: 'Mephiston Red',
-          category: 'Base',
-          hex: '#9B0E05',
-          vallejo: { name: 'Gory Red', hex: '#8E1010', delta: 1.23 },
-          armyPainter: { name: 'Dragon Red', hex: '#A01414', delta: 4.56 },
-        },
-      ])
-    );
-
-    const vallejo = paints.find((paint) => paint.id === 'vallejo-gory-red');
-    expect(vallejo?.matches).toEqual([
-      { brand: 'Citadel', name: 'Mephiston Red', hex: '#9B0E05', delta: 1.23 },
-      { brand: 'Army Painter', name: 'Dragon Red', hex: '#A01414', delta: 4.56 },
+  it('collapses rows identical in range, name and colour', () => {
+    const paints = parsePaintCatalog([
+      buildBrandDocument('Vallejo', [
+        { name: 'Black', code: '72.051', set: 'Game Color', hex: '#000000' },
+        { name: 'Black', code: '72.094', set: 'Game Color', hex: '#000000' },
+      ]),
     ]);
 
-    const armyPainter = paints.find((paint) => paint.id === 'army-painter-dragon-red');
-    expect(armyPainter?.matches).toEqual([
-      { brand: 'Citadel', name: 'Mephiston Red', hex: '#9B0E05', delta: 4.56 },
-      { brand: 'Vallejo', name: 'Gory Red', hex: '#8E1010', delta: 1.23 },
-    ]);
+    expect(paints).toHaveLength(1);
+    expect(paints[0].id).toBe('vallejo-game-color-black');
   });
 
-  it('lists a shared equivalent once, pointing at every Citadel paint that named it', () => {
-    const paints = parsePaintCatalog(
-      buildCatalogHtml([
-        {
-          name: 'Mephiston Red',
-          category: 'Base',
-          hex: '#9B0E05',
-          vallejo: { name: 'Gory Red', hex: '#8E1010', delta: 1.23 },
-        },
-        {
-          name: 'Khorne Red',
-          category: 'Base',
-          hex: '#6A0002',
-          vallejo: { name: 'Gory Red', hex: '#8E1010', delta: 2.5 },
-        },
-      ])
-    );
-
-    const gory = paints.filter((paint) => paint.id === 'vallejo-gory-red');
-    expect(gory).toHaveLength(1);
-    expect(gory[0].matches).toEqual([
-      { brand: 'Citadel', name: 'Mephiston Red', hex: '#9B0E05', delta: 1.23 },
-      { brand: 'Citadel', name: 'Khorne Red', hex: '#6A0002', delta: 2.5 },
+  it('suffixes a genuine clash by code, not by row order', () => {
+    const ordered = parsePaintCatalog([
+      buildBrandDocument('Vallejo', [
+        { name: 'Alien Purple', code: '72.776', set: 'Game Air', hex: '#6D62A6' },
+        { name: 'Alien Purple', code: '76.076', set: 'Game Air', hex: '#7161A8' },
+      ]),
     ]);
+    const reversed = parsePaintCatalog([
+      buildBrandDocument('Vallejo', [
+        { name: 'Alien Purple', code: '76.076', set: 'Game Air', hex: '#7161A8' },
+        { name: 'Alien Purple', code: '72.776', set: 'Game Air', hex: '#6D62A6' },
+      ]),
+    ]);
+
+    const identify = (paints: typeof ordered) => paints.map((p) => `${p.id} ${p.code}`).sort();
+    expect(identify(ordered)).toEqual([
+      'vallejo-game-air-alien-purple 72.776',
+      'vallejo-game-air-alien-purple-2 76.076',
+    ]);
+    // The whole point of ordering by content: reversing the file must not move
+    // which paint owns the unsuffixed id.
+    expect(identify(reversed)).toEqual(identify(ordered));
   });
 
-  it('drops brands the app does not carry', () => {
-    const html = buildCatalogHtml([
-      { name: 'Mephiston Red', category: 'Base', hex: '#9B0E05' },
-    ]).replace(
-      '</tr>',
-      '<td class="good-match"><strong>Skorne Red</strong><br>P3 Formula - #8E1010<br>1.10</td></tr>'
-    );
+  it('matches across brands, closest first, and never to its own brand', () => {
+    const paints = parsePaintCatalog([
+      citadel([{ name: 'Mephiston Red', set: 'Base', hex: '#9B0E05' }, { name: 'Khorne Red', set: 'Base', hex: '#9B0E06' }]),
+      buildBrandDocument('Vallejo', [
+        { name: 'Gory Red', set: 'Game Color', hex: '#9B0E07' },
+        { name: 'Distant Blue', set: 'Game Color', hex: '#0000FF' },
+      ]),
+    ]);
 
-    // The P3 cell was the row's only equivalent, so the row yields nothing.
-    expect(parsePaintCatalog(html)).toEqual([]);
+    const mephiston = paints.find((p) => p.id === 'citadel-base-mephiston-red');
+    expect(mephiston?.matches.map((m) => m.id)).toEqual([
+      'vallejo-game-color-gory-red',
+      'vallejo-game-color-distant-blue',
+    ]);
+    // Khorne Red is one unit away but is a Citadel paint, so it is not offered
+    // as an alternative to another Citadel paint.
+    expect(mephiston?.matches.every((m) => !m.id.startsWith('citadel-'))).toBe(true);
+    expect(mephiston?.matches[0].delta).toBeLessThan(mephiston?.matches[1].delta ?? 0);
+  });
+
+  it('gives an identical colour a delta of zero', () => {
+    const paints = parsePaintCatalog([
+      citadel([{ name: 'Abaddon Black', set: 'Base', hex: '#000000' }]),
+      buildBrandDocument('Army Painter', [
+        { name: 'Matt Black', set: 'Warpaints', hex: '#000000' },
+      ]),
+    ]);
+
+    expect(paints[0].matches).toEqual([{ id: 'army-painter-warpaints-matt-black', delta: 0 }]);
+  });
+
+  it(`stores at most ${MAX_MATCHES} equivalents`, () => {
+    const documents = buildCatalogDocumentsOfSize(20);
+    const paints = parsePaintCatalog(documents);
+
+    expect(paints).toHaveLength(60);
+    for (const paint of paints) {
+      expect(paint.matches.length).toBe(MAX_MATCHES);
+    }
+  });
+
+  it('resolves every stored match id to a paint in the same catalogue', () => {
+    const paints = parsePaintCatalog(buildCatalogDocumentsOfSize(12));
+    const ids = new Set(paints.map((paint) => paint.id));
+
+    for (const paint of paints) {
+      for (const match of paint.matches) expect(ids.has(match.id)).toBe(true);
+    }
   });
 
   it('expands a three-digit hex to the six-digit form', () => {
-    const paints = parsePaintCatalog(
-      buildCatalogHtml([
-        {
-          name: 'Short Hex',
-          category: 'Base',
-          hex: '#FA0',
-          vallejo: { name: 'Short Match', hex: '#0AF', delta: 1 },
-        },
-      ])
-    );
-
-    expect(paints.find((p) => p.id === 'citadel-short-hex')?.hex).toBe('#FFAA00');
-    expect(paints.find((p) => p.id === 'vallejo-short-match')?.hex).toBe('#00AAFF');
+    const [paint] = parsePaintCatalog([citadel([{ name: 'Short', set: 'Base', hex: '#FA0' }])]);
+    expect(paint.hex).toBe('#FFAA00');
   });
 
   it.each(['#FFFF', '#FFFFF', '#FFFFFFF'])('rejects the unrenderable hex %s', (hex) => {
-    const paints = parsePaintCatalog(
-      buildCatalogHtml([
-        {
-          name: 'Bad Source',
-          category: 'Base',
-          hex,
-          vallejo: { name: 'Good Match', hex: '#00AAFF', delta: 1 },
-        },
-        {
-          name: 'Good Source',
-          category: 'Base',
-          hex: '#112233',
-          vallejo: { name: 'Bad Match', hex, delta: 1 },
-        },
-      ])
-    );
+    const paints = parsePaintCatalog([
+      citadel([
+        { name: 'Bad', set: 'Base', hex },
+        { name: 'Good', set: 'Base', hex: '#112233' },
+      ]),
+    ]);
 
-    // The row with the bad source colour is dropped entirely.
-    expect(paints.find((p) => p.id === 'citadel-bad-source')).toBeUndefined();
-    // A bad equivalent is dropped, and with no equivalents left so is its row.
-    expect(paints.find((p) => p.id === 'vallejo-bad-match')).toBeUndefined();
-    expect(paints.find((p) => p.id === 'citadel-good-source')).toBeUndefined();
+    expect(paints.map((paint) => paint.name)).toEqual(['Good']);
   });
 
-  it('drops an equivalent whose delta is not a number', () => {
-    const html = buildCatalogHtml([
-      {
-        name: 'Mephiston Red',
-        category: 'Base',
-        hex: '#9B0E05',
-        vallejo: { name: 'Gory Red', hex: '#8E1010', delta: 1.23 },
-      },
-    ]).replace('>1.23<', '>...<');
+  it('skips a row whose range upstream left null', () => {
+    const paints = parsePaintCatalog([
+      buildBrandDocument('Army Painter', [
+        { name: 'Nameless', code: 'WP1401', set: 'null', hex: '#A32F26' },
+        { name: 'Abomination Gore', code: 'WP1402', set: 'Warpaints', hex: '#A32F26' },
+      ]),
+    ]);
 
-    expect(parsePaintCatalog(html)).toEqual([]);
+    expect(paints.map((paint) => paint.name)).toEqual(['Abomination Gore']);
   });
 
-  it('ignores rows that are not Citadel paints and markup that is not a table', () => {
-    expect(parsePaintCatalog('<html><body><p>no table here</p></body></html>')).toEqual([]);
-    expect(parsePaintCatalog('')).toEqual([]);
+  it('lets one brand fail without taking the others with it', () => {
+    const paints = parsePaintCatalog([
+      { brand: 'Citadel', markdown: '# Citadel\n\nUpstream moved this file.' },
+      buildBrandDocument('Vallejo', [
+        { name: 'Bloody Red', code: '72.010', set: 'Game Color', hex: '#D41C1C' },
+      ]),
+    ]);
+
+    expect(paints.map((paint) => paint.brand)).toEqual(['Vallejo']);
+  });
+
+  it('reads nothing out of documents that are not tables', () => {
+    expect(parsePaintCatalog([{ brand: 'Citadel', markdown: '# Citadel\n\nno table' }])).toEqual([]);
+    expect(parsePaintCatalog([{ brand: 'Citadel', markdown: '' }])).toEqual([]);
+    expect(parsePaintCatalog([])).toEqual([]);
   });
 });

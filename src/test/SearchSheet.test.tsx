@@ -7,25 +7,57 @@ afterEach(cleanup);
 
 const catalog: Paint[] = [
   {
-    id: 'citadel-mephiston-red',
+    id: 'citadel-base-mephiston-red',
     brand: 'Citadel',
     name: 'Mephiston Red',
     hex: '#9b0e05',
-    category: 'Base Layer',
+    category: 'Base',
     // Deliberately unsorted, and one match beyond the close threshold.
     matches: [
-      { brand: 'Vallejo', name: 'Mid Red', hex: '#8d1109', delta: 5.4 },
-      { brand: 'Army Painter', name: 'Dragon Red', hex: '#9a1b1e', delta: 1.2 },
-      { brand: 'Vallejo', name: 'Incubi Darkness', hex: '#094345', delta: 11.76 },
-      { brand: 'Vallejo', name: 'Gory Red', hex: '#810504', delta: 3.65 },
+      { id: 'vallejo-game-color-mid-red', delta: 5.4 },
+      { id: 'army-painter-warpaints-dragon-red', delta: 1.2 },
+      { id: 'vallejo-game-color-incubi-darkness', delta: 11.76 },
+      { id: 'vallejo-game-color-gory-red', delta: 3.65 },
     ],
   },
   {
-    id: 'scale75-black',
+    id: 'vallejo-game-color-mid-red',
+    brand: 'Vallejo',
+    name: 'Mid Red',
+    hex: '#8d1109',
+    category: 'Game Color',
+    matches: [{ id: 'citadel-base-mephiston-red', delta: 5.4 }],
+  },
+  {
+    id: 'army-painter-warpaints-dragon-red',
+    brand: 'Army Painter',
+    name: 'Dragon Red',
+    hex: '#9a1b1e',
+    category: 'Warpaints',
+    matches: [{ id: 'citadel-base-mephiston-red', delta: 1.2 }],
+  },
+  {
+    id: 'vallejo-game-color-incubi-darkness',
+    brand: 'Vallejo',
+    name: 'Incubi Darkness',
+    hex: '#094345',
+    category: 'Game Color',
+    matches: [{ id: 'vallejo-game-color-gory-red', delta: 4.2 }],
+  },
+  {
+    id: 'vallejo-game-color-gory-red',
+    brand: 'Vallejo',
+    name: 'Gory Red',
+    hex: '#810504',
+    category: 'Game Color',
+    matches: [{ id: 'citadel-base-mephiston-red', delta: 3.65 }],
+  },
+  {
+    id: 'scale75-black-abyssal-black',
     brand: 'Scale75',
     name: 'Abyssal Black',
     hex: '#101010',
-    matches: [{ brand: 'Citadel', name: 'Abaddon Black', hex: '#141414', delta: 20 }],
+    matches: [{ id: 'citadel-base-mephiston-red', delta: 20 }],
   },
 ];
 
@@ -44,74 +76,100 @@ function renderSheet() {
   return { onAdd, onClose };
 }
 
+/**
+ * The result card a paint is rendered in. Every card carries equivalents of
+ * its own, so an assertion about one paint's tiles has to be scoped to it or
+ * it is really an assertion about the whole catalogue.
+ */
+const cardFor = (name: string) =>
+  // Matched on the card's own heading, not on the name anywhere: a paint's
+  // name also appears as an equivalent tile inside every card that lists it.
+  screen
+    .getByText(name, { selector: '[class*="paintName"]' })
+    .closest('[class*="resultCard"]') as HTMLElement;
+
 describe('SearchSheet equivalents', () => {
   it('orders equivalents closest first regardless of snapshot order', () => {
     renderSheet();
 
-    const deltas = screen
+    const deltas = within(cardFor('Mephiston Red'))
       .getAllByText(/^Δ /)
       .map((el) => Number(el.textContent!.replace('Δ ', '')));
 
-    const ascending = [...deltas].sort((a, b) => a - b);
-    expect(deltas).toEqual(ascending);
-    expect(deltas[0]).toBe(1.2);
+    expect(deltas).toEqual([1.2, 3.65, 5.4]);
   });
 
   it('hides matches at or beyond the close threshold', () => {
     renderSheet();
+    const card = within(cardFor('Mephiston Red'));
 
-    expect(screen.queryByText('Δ 11.76')).not.toBeInTheDocument();
-    expect(screen.getByText('Δ 5.40')).toBeInTheDocument();
+    expect(card.queryByText('Δ 11.76')).not.toBeInTheDocument();
+    expect(card.getByText('Δ 5.40')).toBeInTheDocument();
   });
 
   it('reports paints whose only matches are distant as having none', () => {
     renderSheet();
 
-    expect(screen.getByText('No close equivalents catalogued.')).toBeInTheDocument();
+    expect(
+      within(cardFor('Abyssal Black')).getByText('No close equivalents catalogued.')
+    ).toBeInTheDocument();
+  });
+
+  it('names the range an equivalent belongs to, not just its brand', () => {
+    renderSheet();
+
+    // Two paints from one brand can share a name across ranges, so the brand
+    // alone no longer says which paint a tile stands for.
+    const tile = within(cardFor('Mephiston Red')).getByRole('button', {
+      name: 'Go to Gory Red by Vallejo',
+    });
+    expect(within(tile).getByText('Vallejo · Game Color')).toBeInTheDocument();
   });
 
   it('colours each pill from the shared delta thresholds', () => {
     renderSheet();
+    const card = within(cardFor('Mephiston Red'));
 
     // 1.2 is very close, 3.65 and 5.4 are close.
-    expect(screen.getByText('Δ 1.20')).toHaveStyle({ background: 'var(--ok-bg)' });
-    expect(screen.getByText('Δ 3.65')).toHaveStyle({ background: 'var(--warn-bg)' });
-    expect(screen.getByText('Δ 5.40')).toHaveStyle({ background: 'var(--warn-bg)' });
+    expect(card.getByText('Δ 1.20')).toHaveStyle({ background: 'var(--ok-bg)' });
+    expect(card.getByText('Δ 3.65')).toHaveStyle({ background: 'var(--warn-bg)' });
+    expect(card.getByText('Δ 5.40')).toHaveStyle({ background: 'var(--warn-bg)' });
   });
 });
 
 /**
- * A catalogue where the equivalents are themselves paints, which is what the
- * inverted snapshot gives us and what a jump needs. Dragon Red is deliberately
- * left as a match only.
+ * A catalogue where the equivalents are themselves paints, which is what a
+ * jump needs. Dragon Red is deliberately referenced but absent.
  */
 const jumpCatalog: Paint[] = [
   {
-    id: 'citadel-mephiston-red',
+    id: 'citadel-base-mephiston-red',
     brand: 'Citadel',
     name: 'Mephiston Red',
     hex: '#9b0e05',
-    category: 'Base Layer',
+    category: 'Base',
     matches: [
-      { brand: 'Vallejo', name: 'Gory Red', hex: '#810504', delta: 3.65 },
-      { brand: 'Army Painter', name: 'Dragon Red', hex: '#9a1b1e', delta: 1.2 },
+      { id: 'vallejo-game-color-gory-red', delta: 3.65 },
+      { id: 'army-painter-warpaints-dragon-red', delta: 1.2 },
       // One character, so the fuzzy index cannot find it by its own name.
-      { brand: 'Vallejo', name: 'X', hex: '#800000', delta: 2.1 },
+      { id: 'vallejo-game-color-x', delta: 2.1 },
     ],
   },
   {
-    id: 'vallejo-gory-red',
+    id: 'vallejo-game-color-gory-red',
     brand: 'Vallejo',
     name: 'Gory Red',
     hex: '#810504',
-    matches: [{ brand: 'Citadel', name: 'Mephiston Red', hex: '#9b0e05', delta: 3.65 }],
+    category: 'Game Color',
+    matches: [{ id: 'citadel-base-mephiston-red', delta: 3.65 }],
   },
   {
-    id: 'vallejo-x',
+    id: 'vallejo-game-color-x',
     brand: 'Vallejo',
     name: 'X',
     hex: '#800000',
-    matches: [{ brand: 'Citadel', name: 'Mephiston Red', hex: '#9b0e05', delta: 2.1 }],
+    category: 'Game Color',
+    matches: [{ id: 'citadel-base-mephiston-red', delta: 2.1 }],
   },
 ];
 
@@ -139,7 +197,9 @@ describe('SearchSheet equivalent jump', () => {
 
     // The clicked equivalent now has a row of its own, with its own add button.
     fireEvent.click(screen.getByLabelText('Add Gory Red to list'));
-    expect(onAdd).toHaveBeenCalledWith(expect.objectContaining({ id: 'vallejo-gory-red' }));
+    expect(onAdd).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'vallejo-game-color-gory-red' })
+    );
   });
 
   it('moves the brand filter off one that would hide the clicked paint', () => {
@@ -169,13 +229,20 @@ describe('SearchSheet equivalent jump', () => {
     expect(screen.queryByLabelText('Add X to list')).not.toBeInTheDocument();
   });
 
-  it('leaves an equivalent the catalogue does not carry inert', () => {
+  it('omits an equivalent whose paint has left the catalogue', () => {
     renderJumpSheet();
 
-    // Dragon Red is named as a match but never defined as a paint of its own.
+    // Dragon Red is the closest match Mephiston Red stores, but no paint in
+    // this catalogue has that id — a refresh can retire one. Rendering the
+    // tile anyway would offer a jump that goes nowhere.
     expect(
-      screen.getByRole('button', { name: 'Go to Dragon Red by Army Painter' })
-    ).toBeDisabled();
+      screen.queryByRole('button', { name: 'Go to Dragon Red by Army Painter' })
+    ).not.toBeInTheDocument();
+    expect(
+      within(cardFor('Mephiston Red'))
+        .getAllByText(/^Δ /)
+        .map((el) => el.textContent)
+    ).toEqual(['Δ 2.10', 'Δ 3.65']);
   });
 });
 

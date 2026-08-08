@@ -4,7 +4,8 @@ This folder contains development-only tooling and is never shipped in the app bu
 
 ## Purpose
 
-`scrape.mjs` fetches paint conversion data from redgrimm and writes app data to:
+`scrape.mjs` fetches the Citadel, Vallejo and Army Painter colour tables from
+Arcturus5404/miniature-paints and writes app data to:
 
 - `src/data/paints.snapshot.json`
 
@@ -23,11 +24,24 @@ npm run scrape:shoplinks
 
 ## Notes
 
-- `scrape.mjs` is the one exception to "no imports from `src/`": it imports
-  `PAINT_CATALOG_URL` and `parsePaintCatalog` from
+- `scrape.mjs` and `checkUpstream.mjs` are the exception to "no imports from
+  `src/`": they import `PAINT_CATALOG_SOURCES` and `parsePaintCatalog` from
   `src/domain/paintCatalogSource.ts`, because the app refreshes the same
   catalogue at runtime and a second parser would let the two disagree about the
-  same document. The import runs on Node's type stripping, so that module must
-  stay free of non-erasable syntax and of value imports from `src/`.
+  same documents. The import runs on Node's type stripping, so that module must
+  stay free of non-erasable syntax and of value imports from `src/` — which is
+  why the CIELAB conversion lives inside it rather than in `shared/lib/color.ts`.
 - `scrapeShopLinks.mjs` keeps the original rule: no imports from `src/`, and
   its types stay local in `tools/scraper/types.ts`.
+- `buildIdMigration.mjs` is a one-shot, not part of any pipeline. It produced
+  `src/data/paintIdMigration.json` when paint ids gained their range, reading
+  the pre-migration snapshot out of git history. Its output is committed; see
+  the header comment before re-running it.
+
+## Upstream
+
+`Arcturus5404/miniature-paints` is MIT-licensed and its README invites reuse.
+The three tables Paco reads are listed in `PAINT_CATALOG_SOURCES`, alongside the
+brand labels the app shows — upstream's file is `Citadel_Colour.md`, the app
+says "Citadel". Keep that mapping there rather than deriving it from the file
+name, or a rename upstream leaks into every paint id.

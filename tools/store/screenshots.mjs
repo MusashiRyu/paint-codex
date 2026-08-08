@@ -69,12 +69,12 @@ const SEED = {
         icon: 'shield',
         color: '#4a6fa5',
         paintIds: [
-          'citadel-macragge-blue',
-          'citadel-calgar-blue',
-          'citadel-abaddon-black',
-          'citadel-white-scar',
-          'citadel-mephiston-red',
-          'citadel-averland-sunset',
+          'citadel-base-macragge-blue',
+          'citadel-layer-calgar-blue',
+          'citadel-base-abaddon-black',
+          'citadel-layer-white-scar',
+          'citadel-base-mephiston-red',
+          'citadel-base-averland-sunset',
         ],
       },
       {
@@ -83,17 +83,17 @@ const SEED = {
         icon: 'skull',
         color: '#7a8a5a',
         paintIds: [
-          'citadel-caliban-green',
-          'citadel-waaagh-flesh',
-          'citadel-ushabti-bone',
-          'citadel-steel-legion-drab',
-          'citadel-ratskin-flesh',
+          'citadel-base-caliban-green',
+          'citadel-base-waaagh-flesh',
+          'citadel-layer-ushabti-bone',
+          'citadel-base-steel-legion-drab',
+          'citadel-base-ratskin-flesh',
         ],
       },
     ],
     selectedListId: 'seed-cobalt',
   },
-  version: 2,
+  version: 3,
 };
 
 function findChrome() {

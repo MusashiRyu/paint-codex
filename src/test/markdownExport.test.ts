@@ -11,32 +11,22 @@ const sampleList: ExportableList = {
   name: 'Starter Reds',
   paints: [
     {
-      id: 'citadel-mephiston-red',
+      id: 'citadel-base-mephiston-red',
       brand: 'Citadel',
       name: 'Mephiston Red',
       hex: '#9b0e05',
-      category: 'Base Layer',
+      category: 'Base',
       matches: [
-        {
-          brand: 'Vallejo',
-          name: 'Gory Red',
-          hex: '#810504',
-          delta: 3.65,
-        },
-        {
-          brand: 'Citadel',
-          name: 'Incubi Darkness',
-          hex: '#094345',
-          delta: 11.76,
-        },
+        { id: 'vallejo-game-color-gory-red', delta: 3.65 },
+        { id: 'vallejo-game-color-incubi-darkness', delta: 11.76 },
       ],
     },
     {
-      id: 'vallejo-gory-red',
+      id: 'vallejo-game-color-gory-red',
       brand: 'Vallejo',
       name: 'Gory Red',
       hex: '#810504',
-      category: 'Game',
+      category: 'Game Color',
       matches: [],
     },
   ],
@@ -45,7 +35,7 @@ const sampleList: ExportableList = {
 describe('markdownExport', () => {
   it('uses mapped product links when available', () => {
     const linksMap: ShopLinkMap = {
-      'citadel-mephiston-red': 'https://www.vliegeruit.com/product/citadel-base-mephiston-red/',
+      'citadel-base-mephiston-red': 'https://www.vliegeruit.com/product/citadel-base-mephiston-red/',
     };
 
     const link = buildVliegeruitLink(sampleList.paints[0], linksMap);

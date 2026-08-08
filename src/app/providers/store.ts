@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import paintIdMigration from '../../data/paintIdMigration.json';
 import type { Paint } from '../../domain/types';
 import { DEFAULT_LIST_COLOR } from '../../shared/ui/listPalette';
 
@@ -27,8 +28,16 @@ export type PaintList = {
   paintIds: string[];
 };
 
-/** Shape persisted before version 2, kept for the migration. */
-type LegacyPaintList = Omit<PaintList, 'paintIds'> & { paints?: Paint[] };
+/**
+ * Union of every shape ever persisted, kept for the migration: `paints` is the
+ * pre-v2 embedded copies, `paintIds` everything since. Both optional, because
+ * `migrate` walks the versions in order and the list is mid-conversion between
+ * the two while it does.
+ */
+type LegacyPaintList = Omit<PaintList, 'paintIds'> & {
+  paints?: Paint[];
+  paintIds?: string[];
+};
 
 type AppStore = {
   lists: PaintList[];
@@ -118,7 +127,7 @@ export const useAppStore = create<AppStore>()(
     }),
     {
       name: 'paco-app-store',
-      version: 2,
+      version: 3,
       migrate: (persisted: unknown, version: number) => {
         const state = persisted as {
           lists: LegacyPaintList[];
@@ -143,6 +152,21 @@ export const useAppStore = create<AppStore>()(
           lists = lists.map(({ paints, ...rest }) => ({
             ...rest,
             paintIds: (paints ?? []).map((paint) => paint.id),
+          }));
+        }
+
+        // v2 -> v3: the catalogue moved to a source that carries every range,
+        // so a paint id gained the range it belongs to — `citadel-white-scar`
+        // became `citadel-layer-white-scar`. `resolvePaints` drops ids it
+        // cannot find, so an unmigrated list would have emptied itself with no
+        // message. Ids absent from the map are either unchanged or paints the
+        // new source does not carry; both are left alone and the second kind
+        // drops out at resolve time, as any retired paint does.
+        if (version < 3) {
+          const renames: Record<string, string> = paintIdMigration;
+          lists = lists.map((l) => ({
+            ...l,
+            paintIds: (l.paintIds ?? []).map((id) => renames[id] ?? id),
           }));
         }
 

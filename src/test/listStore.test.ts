@@ -80,14 +80,18 @@ describe('list store', () => {
     await useAppStore.persist.rehydrate();
 
     const [list] = useAppStore.getState().lists;
-    expect(list.paintIds).toEqual(['citadel-mephiston-red', 'vallejo-gory-red']);
+    // v3 runs straight after, so the ids arrive range-qualified.
+    expect(list.paintIds).toEqual([
+      'citadel-base-mephiston-red',
+      'vallejo-game-color-gory-red',
+    ]);
     expect(list).not.toHaveProperty('paints');
     // Fields from the earlier migration survive.
     expect(list.icon).toBe('skull');
     expect(list.color).toBe('#7a2430');
   });
 
-  it('migrates a v0 list through both steps at once', async () => {
+  it('migrates a v0 list through every step at once', async () => {
     localStorage.setItem(
       'paco-app-store',
       JSON.stringify({
@@ -102,9 +106,39 @@ describe('list store', () => {
     await useAppStore.persist.rehydrate();
 
     const [list] = useAppStore.getState().lists;
-    expect(list.paintIds).toEqual(['citadel-mephiston-red']);
+    expect(list.paintIds).toEqual(['citadel-base-mephiston-red']);
     expect(list.icon).toBe('star');
     expect(list.color).toBe('#c9a86a');
+  });
+
+  it('carries v2 paint ids onto the ranges the new catalogue splits them into', async () => {
+    localStorage.setItem(
+      'paco-app-store',
+      JSON.stringify({
+        version: 2,
+        state: {
+          selectedListId: 'l1',
+          lists: [
+            {
+              id: 'l1',
+              name: 'Blood Angels',
+              icon: 'skull',
+              color: '#7a2430',
+              // The second is a paint the new source does not carry at all.
+              paintIds: ['citadel-abaddon-black', 'citadel-bugmans-glow'],
+            },
+          ],
+        },
+      })
+    );
+
+    await useAppStore.persist.rehydrate();
+
+    const [list] = useAppStore.getState().lists;
+    // Renamed where there is a mapping; left alone where there is not, so it
+    // drops out at resolve time the way any retired paint does rather than
+    // being silently pointed at a different product.
+    expect(list.paintIds).toEqual(['citadel-base-abaddon-black', 'citadel-bugmans-glow']);
   });
 
   it('deletes a selected list and selects the next one', () => {

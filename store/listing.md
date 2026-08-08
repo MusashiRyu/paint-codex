@@ -55,16 +55,17 @@ NO ACCOUNTS, NO ADS, NO TRACKING
 
 There is no sign-up, because there is nothing to sign up to. Paco has no
 analytics, no advertising and no crash reporting. Your lists live on your
-device and are never uploaded. The app makes exactly one network request, for
-the public paint conversion table it is built on, and it sends nothing about
-you with it.
+device and are never uploaded. The app talks to exactly one host, for the
+public paint colour tables it is built on, and it sends nothing about you with
+it.
 
 —
 
 The Paint Codex design is by Lukas Stordeur (github.com/LukasStordeur).
 
-Paint data is derived from the open paint-conversion table maintained by
-redgrimm at github.com/redgrimm/paint-conversion.
+Paint data is derived from the open colour database at
+github.com/Arcturus5404/miniature-paints (MIT), published by the Miniature
+Painter Pro team.
 
 Paco is an independent app. It is not affiliated with, endorsed by, or
 sponsored by Games Workshop Limited, Acrylicos Vallejo S.L., or The Army

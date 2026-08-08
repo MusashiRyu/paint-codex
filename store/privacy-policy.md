@@ -1,6 +1,6 @@
 # Privacy Policy — Paco (Paint Codex)
 
-**Last updated: 8 August 2026**
+**Last updated: 9 August 2026**
 
 Paco is a paint-conversion and list-keeping app for miniature painters. It has
 no accounts, no analytics, no advertising and no crash reporting.
@@ -20,19 +20,22 @@ offline.
 
 Deleting the app deletes all of it.
 
-## The one network request
+## The only network requests
 
-Paco contacts exactly one address, once per launch:
+Paco contacts exactly one host — `raw.githubusercontent.com` — once per launch,
+for three public files:
 
 ```
-https://raw.githubusercontent.com/redgrimm/paint-conversion/master/index.html
+https://raw.githubusercontent.com/Arcturus5404/miniature-paints/main/paints/Citadel_Colour.md
+https://raw.githubusercontent.com/Arcturus5404/miniature-paints/main/paints/Vallejo.md
+https://raw.githubusercontent.com/Arcturus5404/miniature-paints/main/paints/Army_Painter.md
 ```
 
-This is a public paint-conversion table hosted on GitHub. Paco downloads it to
-keep the catalogue current between app releases. The request sends **no
-identifiers, no account information and nothing about your lists** — it is an
-anonymous request for a public file, the same one your browser would make if
-you opened that link.
+These are public paint colour tables hosted on GitHub. Paco downloads them to
+keep the catalogue current between app releases. The requests send **no
+identifiers, no account information and nothing about your lists** — they are
+anonymous requests for public files, the same ones your browser would make if
+you opened those links.
 
 As with any request to any website, GitHub's servers will see your device's IP
 address and a standard user-agent string. That data is handled by GitHub, not
@@ -40,7 +43,7 @@ by us, under [GitHub's Privacy
 Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement).
 We never see it.
 
-If the request fails — no signal, aeroplane mode, GitHub down — Paco carries on
+If the requests fail — no signal, aeroplane mode, GitHub down — Paco carries on
 with the catalogue it already has. The app is fully usable offline.
 
 ## Device backup
@@ -57,7 +60,7 @@ Paco requests one Android permission:
 
 | Permission | Why |
 | --- | --- |
-| `INTERNET` | The single catalogue request described above. Nothing else. |
+| `INTERNET` | The catalogue requests described above. Nothing else. |
 
 Paco does not request access to your location, camera, microphone, contacts,
 photos, files, or any other device data.
@@ -71,7 +74,7 @@ nothing in the app directed at children and nothing that identifies any user.
 
 There are none. No SDKs, no trackers, no ad networks, no analytics providers.
 The paint catalogue's host (GitHub) is described above and receives nothing but
-an ordinary anonymous request for a public file.
+ordinary anonymous requests for public files.
 
 ## Changes
 

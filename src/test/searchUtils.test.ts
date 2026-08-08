@@ -9,50 +9,53 @@ import { getDeltaLabel, getDeltaQuality, getDeltaStyle } from '../shared/lib/col
 
 const mockPaints: Paint[] = [
   {
-    id: 'citadel-ceramite-white',
+    id: 'citadel-base-ceramite-white',
     brand: 'Citadel',
     name: 'Ceramite White',
     hex: '#ffffff',
-    category: 'Base Layer',
+    category: 'Base',
     matches: [
-      { brand: 'Vallejo', name: 'Dead White', hex: '#ffffff', delta: 0.0 },
-      { brand: 'Army Painter', name: 'Matt White', hex: '#ffffff', delta: 0.0 },
+      { id: 'vallejo-game-color-dead-white', delta: 0.0 },
+      { id: 'army-painter-warpaints-dragon-red', delta: 45.2 },
     ],
   },
   {
-    id: 'citadel-mephiston-red',
+    id: 'citadel-base-mephiston-red',
     brand: 'Citadel',
     name: 'Mephiston Red',
     hex: '#9b0e05',
-    category: 'Base Layer',
+    category: 'Base',
+    // Deliberately not in delta order: getTopMatches is what sorts them.
     matches: [
-      { brand: 'Vallejo', name: 'Gory Red', hex: '#810504', delta: 6.78 },
-      { brand: 'Army Painter', name: 'Dragon Red', hex: '#9a1b1e', delta: 4.47 },
+      { id: 'vallejo-game-color-dead-white', delta: 6.78 },
+      { id: 'army-painter-warpaints-dragon-red', delta: 4.47 },
     ],
   },
   {
-    id: 'vallejo-dead-white',
+    id: 'vallejo-game-color-dead-white',
     brand: 'Vallejo',
     name: 'Dead White',
     hex: '#ffffff',
-    category: 'Game',
+    category: 'Game Color',
     matches: [
-      { brand: 'Citadel', name: 'Ceramite White', hex: '#ffffff', delta: 0.0 },
-      { brand: 'Army Painter', name: 'Matt White', hex: '#ffffff', delta: 0.0 },
+      { id: 'citadel-base-ceramite-white', delta: 0.0 },
+      { id: 'army-painter-warpaints-dragon-red', delta: 45.2 },
     ],
   },
   {
-    id: 'army-painter-dragon-red',
+    id: 'army-painter-warpaints-dragon-red',
     brand: 'Army Painter',
     name: 'Dragon Red',
     hex: '#9a1b1e',
-    category: 'Base',
+    category: 'Warpaints',
     matches: [
-      { brand: 'Citadel', name: 'Mephiston Red', hex: '#9b0e05', delta: 4.47 },
-      { brand: 'Vallejo', name: 'Gory Red', hex: '#810504', delta: 3.65 },
+      { id: 'citadel-base-mephiston-red', delta: 4.47 },
+      { id: 'vallejo-game-color-dead-white', delta: 45.2 },
     ],
   },
 ];
+
+const mockIndex = new Map(mockPaints.map((paint) => [paint.id, paint]));
 
 // ─── searchPaints ────────────────────────────────────────────────────────────
 
@@ -205,20 +208,28 @@ describe('getDeltaStyle', () => {
 
 describe('getTopMatches', () => {
   it('returns matches sorted by delta ascending', () => {
-    const matches = getTopMatches(mockPaints[1]); // Mephiston Red
-    for (let i = 1; i < matches.length; i++) {
-      expect(matches[i].delta).toBeGreaterThanOrEqual(matches[i - 1].delta);
-    }
+    const matches = getTopMatches(mockPaints[1], mockIndex); // Mephiston Red
+    expect(matches.map((match) => match.paint.name)).toEqual(['Dragon Red', 'Dead White']);
   });
 
   it('respects the limit', () => {
-    const matches = getTopMatches(mockPaints[1], 1);
-    expect(matches).toHaveLength(1);
+    expect(getTopMatches(mockPaints[1], mockIndex, 1)).toHaveLength(1);
   });
 
   it('returns all matches when limit >= matches length', () => {
     const paint = mockPaints[0]; // Ceramite White with 2 matches
-    const matches = getTopMatches(paint, 10);
-    expect(matches).toHaveLength(paint.matches.length);
+    expect(getTopMatches(paint, mockIndex, 10)).toHaveLength(paint.matches.length);
+  });
+
+  it('filters out matches at or beyond the maximum delta', () => {
+    const matches = getTopMatches(mockPaints[0], mockIndex, 10, 7);
+    expect(matches.map((match) => match.paint.name)).toEqual(['Dead White']);
+  });
+
+  it('drops a match whose paint has left the catalogue', () => {
+    const retired = new Map(mockIndex);
+    retired.delete('army-painter-warpaints-dragon-red');
+    const matches = getTopMatches(mockPaints[1], retired, 10);
+    expect(matches.map((match) => match.paint.name)).toEqual(['Dead White']);
   });
 });

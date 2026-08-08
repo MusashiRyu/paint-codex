@@ -45,8 +45,19 @@ palette, the Cinzel/EB Garamond pairing and the card-on-texture layout all come
 from that design; the token layer in `src/shared/styles/tokens.css` is an
 extraction of it, not an invention.
 
-Paint data comes from the open conversion table maintained by
-[redgrimm](https://github.com/redgrimm/paint-conversion).
+Paint data comes from
+[Arcturus5404/miniature-paints](https://github.com/Arcturus5404/miniature-paints)
+(MIT), the colour database scraped and published by the
+[Miniature Painter Pro](https://miniaturepainterpro.app/) team. Paco reads the
+Citadel, Vallejo and Army Painter tables — 2,422 paints across every range each
+brand sells.
+
+Equivalents are computed here rather than taken from upstream, which ships
+colour only. See [documentation/0.1-architecture.md](documentation/0.1-architecture.md#paint-catalogue)
+for how, and why the ΔE metric is the one it is.
+
+Earlier releases used [redgrimm](https://github.com/redgrimm/paint-conversion)'s
+conversion table, which carried 310 paints.
 
 ## Design system
 

@@ -1,4 +1,4 @@
-import type { Match, Paint } from './types';
+import type { Paint } from './types';
 
 /**
  * Pure queries over the paint catalogue. Kept out of the feature folders so
@@ -11,36 +11,29 @@ export function getUniqueBrands(paints: Paint[]): string[] {
   return Array.from(brands).sort();
 }
 
-/**
- * Key for `indexPaintsByName`. Brand and name are folded so a case or spacing
- * drift between the row that names an equivalent and the row that defines it
- * cannot hide a paint from the lookup, and joined on a separator no brand
- * carries so no two pairs can collide.
- */
-export function paintNameKey(brand: string, name: string): string {
-  return `${brand.trim().toLowerCase()}::${name.trim().toLowerCase()}`;
+/** An equivalent, resolved to the paint it stands for. */
+export interface ResolvedMatch {
+  paint: Paint;
+  delta: number;
 }
 
 /**
- * Brand+name index over the catalogue. A `Match` carries no id, so resolving an
- * equivalent back to the paint it stands for needs a lookup; the map keeps that
- * off the render path when the full catalogue is on screen.
- */
-export function indexPaintsByName(paints: Paint[]): Map<string, Paint> {
-  return new Map(paints.map((paint) => [paintNameKey(paint.brand, paint.name), paint]));
-}
-
-/**
- * A paint's equivalents, best first and capped. The snapshot stores matches in
- * arbitrary order, so callers must not render `paint.matches` directly.
+ * A paint's equivalents, best first and capped, resolved against the
+ * catalogue. Callers must not render `paint.matches` directly: it stores ids
+ * and deltas, and an id whose paint has since left the catalogue is dropped
+ * here rather than rendered as a hole.
  */
 export function getTopMatches(
   paint: Paint,
+  index: Map<string, Paint>,
   limit = 3,
   maxDelta = Number.POSITIVE_INFINITY
-): Match[] {
-  return paint.matches
-    .filter((match) => match.delta < maxDelta)
-    .sort((a, b) => a.delta - b.delta)
-    .slice(0, limit);
+): ResolvedMatch[] {
+  const resolved: ResolvedMatch[] = [];
+  for (const match of paint.matches) {
+    if (match.delta >= maxDelta) continue;
+    const target = index.get(match.id);
+    if (target) resolved.push({ paint: target, delta: match.delta });
+  }
+  return resolved.sort((a, b) => a.delta - b.delta).slice(0, limit);
 }

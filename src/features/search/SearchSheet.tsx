@@ -1,11 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { Paint } from '../../domain/types';
-import {
-  getTopMatches,
-  getUniqueBrands,
-  indexPaintsByName,
-  paintNameKey,
-} from '../../domain/paintQueries';
+import { getTopMatches, getUniqueBrands } from '../../domain/paintQueries';
+import { getPaintIndex } from '../../domain/paintRepository';
 import { CLOSE_DELTA_MAX, getDeltaLabel, getDeltaStyle } from '../../shared/lib/color';
 import { Badge } from '../../shared/ui/Badge';
 import { GhostButton } from '../../shared/ui/GhostButton';
@@ -27,7 +23,11 @@ interface SearchSheetProps {
 
 const ALL_BRANDS = 'All';
 
-/** Equivalents shown per paint; the snapshot carries up to 10, most of them distant. */
+/**
+ * Equivalents shown per paint. The snapshot stores exactly this many, so the
+ * cap is really the delta filter below — a paint with no near neighbour in
+ * another brand shows fewer tiles, or none.
+ */
 const MAX_EQUIVALENTS = 6;
 
 export function SearchSheet({
@@ -52,8 +52,9 @@ export function SearchSheet({
 
   const activeIds = useMemo(() => new Set(listedPaintIds ?? []), [listedPaintIds]);
 
-  // An equivalent names a paint but carries no id, so jumping to it needs a lookup.
-  const paintsByName = useMemo(() => indexPaintsByName(paintCatalog), [paintCatalog]);
+  // An equivalent stores the id of the paint it stands for; this turns it back
+  // into the paint. Memoised against the catalogue array by the repository.
+  const paintsById = useMemo(() => getPaintIndex(paintCatalog), [paintCatalog]);
 
   const results = useMemo(() => {
     const q = query.trim();
@@ -87,9 +88,7 @@ export function SearchSheet({
   }, [jumpTargetId, results]);
 
   /** Show the paint an equivalent stands for, ready to be added on its own row. */
-  const jumpToMatch = (brand: string, name: string) => {
-    const target = paintsByName.get(paintNameKey(brand, name));
-    if (!target) return;
+  const jumpToMatch = (target: Paint) => {
     setQuery(target.name);
     setBrandFilter(target.brand);
     setJumpTargetId(target.id);
@@ -148,7 +147,12 @@ export function SearchSheet({
             <div className={styles.resultCount}>Found {results.length} paint(s)</div>
             {results.map((paint) => {
               const inList = activeIds.has(paint.id);
-              const equivalents = getTopMatches(paint, MAX_EQUIVALENTS, CLOSE_DELTA_MAX);
+              const equivalents = getTopMatches(
+                paint,
+                paintsById,
+                MAX_EQUIVALENTS,
+                CLOSE_DELTA_MAX
+              );
               const jumpedTo = paint.id === jumpTargetId;
               return (
                 <div
@@ -189,37 +193,35 @@ export function SearchSheet({
                     <div className={styles.equivLabel}>Equivalent Paints:</div>
                     {equivalents.length > 0 ? (
                       <div className={styles.equivGrid}>
-                        {equivalents.map((match) => {
-                          const style = getDeltaStyle(match.delta);
-                          // Only paints the catalogue actually carries can be
-                          // jumped to; anything else stays a plain tile.
-                          const known = paintsByName.has(
-                            paintNameKey(match.brand, match.name)
-                          );
+                        {equivalents.map(({ paint: equivalent, delta }) => {
+                          const style = getDeltaStyle(delta);
                           return (
                             <button
-                              key={`${match.brand}-${match.name}`}
+                              key={equivalent.id}
                               type="button"
                               className={styles.equivCard}
-                              disabled={!known}
-                              onClick={() => jumpToMatch(match.brand, match.name)}
-                              aria-label={`Go to ${match.name} by ${match.brand}`}
+                              onClick={() => jumpToMatch(equivalent)}
+                              aria-label={`Go to ${equivalent.name} by ${equivalent.brand}`}
                             >
                               {/* Spans, since a button may only hold phrasing content. */}
-                              <Swatch color={match.hex} size="block" as="span" />
-                              <span className={styles.equivName}>{match.name}</span>
-                              <span className={styles.equivBrand}>{match.brand}</span>
+                              <Swatch color={equivalent.hex} size="block" as="span" />
+                              <span className={styles.equivName}>{equivalent.name}</span>
+                              <span className={styles.equivBrand}>
+                                {equivalent.category
+                                  ? `${equivalent.brand} · ${equivalent.category}`
+                                  : equivalent.brand}
+                              </span>
                               <Badge
                                 as="span"
                                 block
-                                title={getDeltaLabel(match.delta)}
+                                title={getDeltaLabel(delta)}
                                 style={{
                                   background: style.background,
                                   border: `1px solid ${style.border}`,
                                   color: style.color,
                                 }}
                               >
-                                Δ {match.delta.toFixed(2)}
+                                Δ {delta.toFixed(2)}
                               </Badge>
                             </button>
                           );
