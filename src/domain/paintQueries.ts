@@ -1,5 +1,4 @@
 import type { Match, Paint } from './types';
-import { hexToHSL } from '../shared/lib/color';
 
 /**
  * Pure queries over the paint catalogue. Kept out of the feature folders so
@@ -25,25 +24,4 @@ export function getTopMatches(
     .filter((match) => match.delta < maxDelta)
     .sort((a, b) => a.delta - b.delta)
     .slice(0, limit);
-}
-
-/**
- * Filter paints to a hue range, with optional saturation/lightness floors.
- * Handles ranges that wrap past 360°.
- */
-export function filterPaintsByColor(
-  paints: Paint[],
-  minHue: number,
-  maxHue: number,
-  minSaturation: number = 0,
-  minBrightness: number = 0
-): Paint[] {
-  return paints.filter((paint) => {
-    const [h, s, l] = hexToHSL(paint.hex);
-    const hueInRange =
-      (minHue <= maxHue && h >= minHue && h <= maxHue) ||
-      (minHue > maxHue && (h >= minHue || h <= maxHue));
-
-    return hueInRange && s >= minSaturation && l >= minBrightness;
-  });
 }

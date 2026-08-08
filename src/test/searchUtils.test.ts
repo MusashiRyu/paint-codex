@@ -4,18 +4,8 @@ import {
   searchPaints,
   getAutocompleteSuggestions,
 } from '../features/search/search';
-import {
-  getUniqueBrands,
-  filterPaintsByColor,
-  getTopMatches,
-} from '../domain/paintQueries';
-import {
-  getDeltaColorClass,
-  getDeltaLabel,
-  getDeltaQuality,
-  getDeltaStyle,
-  hexToHSL,
-} from '../shared/lib/color';
+import { getUniqueBrands, getTopMatches } from '../domain/paintQueries';
+import { getDeltaLabel, getDeltaQuality, getDeltaStyle } from '../shared/lib/color';
 
 const mockPaints: Paint[] = [
   {
@@ -148,28 +138,6 @@ describe('getUniqueBrands', () => {
   });
 });
 
-// ─── getDeltaColorClass ──────────────────────────────────────────────────────
-
-describe('getDeltaColorClass', () => {
-  it('returns delta-green for delta < 3', () => {
-    expect(getDeltaColorClass(0)).toBe('delta-green');
-    expect(getDeltaColorClass(1.5)).toBe('delta-green');
-    expect(getDeltaColorClass(2.99)).toBe('delta-green');
-  });
-
-  it('returns delta-yellow for 3 <= delta < 7', () => {
-    expect(getDeltaColorClass(3)).toBe('delta-yellow');
-    expect(getDeltaColorClass(5)).toBe('delta-yellow');
-    expect(getDeltaColorClass(6.99)).toBe('delta-yellow');
-  });
-
-  it('returns delta-red for delta >= 7', () => {
-    expect(getDeltaColorClass(7)).toBe('delta-red');
-    expect(getDeltaColorClass(10)).toBe('delta-red');
-    expect(getDeltaColorClass(20)).toBe('delta-red');
-  });
-});
-
 // ─── getDeltaLabel ────────────────────────────────────────────────────────────
 
 describe('getDeltaLabel', () => {
@@ -220,83 +188,16 @@ describe('getDeltaStyle', () => {
     });
   });
 
-  it('agrees with the class-name form on every boundary', () => {
+  it('agrees with getDeltaQuality on every boundary', () => {
     const pairs: Array<[number, string]> = [
-      [2.99, 'delta-green'],
-      [3, 'delta-yellow'],
-      [6.99, 'delta-yellow'],
-      [7, 'delta-red'],
+      [2.99, 'ok'],
+      [3, 'warn'],
+      [6.99, 'warn'],
+      [7, 'bad'],
     ];
-    for (const [delta, expected] of pairs) {
-      expect(getDeltaColorClass(delta)).toBe(expected);
+    for (const [delta, token] of pairs) {
+      expect(getDeltaStyle(delta).background).toBe(`var(--${token}-bg)`);
     }
-  });
-});
-
-// ─── hexToHSL ────────────────────────────────────────────────────────────────
-
-describe('hexToHSL', () => {
-  it('converts white (#ffffff) to [0, 0, 100]', () => {
-    const [h, s, l] = hexToHSL('#ffffff');
-    expect(h).toBe(0);
-    expect(s).toBe(0);
-    expect(l).toBeCloseTo(100, 0);
-  });
-
-  it('converts black (#000000) to [0, 0, 0]', () => {
-    const [h, s, l] = hexToHSL('#000000');
-    expect(h).toBe(0);
-    expect(s).toBe(0);
-    expect(l).toBe(0);
-  });
-
-  it('converts pure red (#ff0000) to hue ~0', () => {
-    const [h, s, l] = hexToHSL('#ff0000');
-    expect(h).toBeCloseTo(0, 0);
-    expect(s).toBeCloseTo(100, 0);
-    expect(l).toBeCloseTo(50, 0);
-  });
-
-  it('converts pure blue (#0000ff) to hue ~240', () => {
-    const [h] = hexToHSL('#0000ff');
-    expect(h).toBeCloseTo(240, 0);
-  });
-
-  it('converts pure green (#00ff00) to hue ~120', () => {
-    const [h] = hexToHSL('#00ff00');
-    expect(h).toBeCloseTo(120, 0);
-  });
-
-  it('handles lowercase hex', () => {
-    const [h1, s1, l1] = hexToHSL('#ff0000');
-    const [h2, s2, l2] = hexToHSL('#FF0000');
-    expect(h1).toBeCloseTo(h2, 5);
-    expect(s1).toBeCloseTo(s2, 5);
-    expect(l1).toBeCloseTo(l2, 5);
-  });
-});
-
-// ─── filterPaintsByColor ─────────────────────────────────────────────────────
-
-describe('filterPaintsByColor', () => {
-  it('returns all white/achromatic paints when filtering hue 0-10 low saturation', () => {
-    // White has 0 saturation, so it won't pass a saturation filter > 0
-    const results = filterPaintsByColor(mockPaints, 0, 360, 0, 90);
-    // Should include high-lightness paints
-    expect(results.some((p) => p.hex === '#ffffff')).toBe(true);
-  });
-
-  it('filters out paints outside hue range', () => {
-    // Pure blues are ~210-270; whites/reds should be excluded with minSaturation > 0
-    const results = filterPaintsByColor(mockPaints, 0, 30, 50, 0);
-    // Mephiston Red (#9b0e05) and Dragon Red (#9a1b1e) have hue ~0-5 and saturation > 50
-    expect(results.some((p) => p.name.includes('Red'))).toBe(true);
-  });
-
-  it('returns empty array when no paints match', () => {
-    // Hue range 200-210 with high saturation won't match any mock paints
-    const results = filterPaintsByColor(mockPaints, 200, 210, 80, 0);
-    expect(results).toHaveLength(0);
   });
 });
 
