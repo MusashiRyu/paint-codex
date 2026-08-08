@@ -81,6 +81,8 @@ Deferred to a macrotask.
 - `src/shared/hooks/useDismissOnEscape.ts`
 - `src/test/SearchSheet.test.tsx` — 8 cases covering ordering, threshold, brand derivation, dismissal
 - `tsconfig.test.json`
+- `src/shared/styles/fonts.css`, `public/fonts/*.woff2`, `tools/fonts/vendor-fonts.mjs`
+- `.github/workflows/ci.yml`
 
 ### Deleted
 - `src/features/browse/` in full (BrandFilter, PaintCard, ResultsGrid, browse.ts + CSS)
@@ -95,8 +97,8 @@ Deferred to a macrotask.
 - `tsconfig.app.json`, `tsconfig.json`
 - `src/test/searchUtils.test.ts`, `src/test/markdownExport.test.ts`
 
-Test count moved 75 → 63: 25 dead component tests removed, 13 added for
-behaviour that had none.
+Test count moved 75 → 66: 25 dead component tests removed, 16 added for
+behaviour that had none — including both persist migration paths.
 
 ## Measured, and found not to be a problem
 
@@ -106,31 +108,53 @@ Recorded so they are not re-raised:
   is 0.28 ms against 310 paints — cheaper than the 0.97 ms search it
   enables. Not worth memoising.
 - **Denormalised paint copies in localStorage.** A 50-paint list is 16.7 KB
-  versus 1.3 KB stored as ids. Irrelevant against the quota; the actual
-  concern is staleness, listed below.
+  versus 1.3 KB stored as ids. Irrelevant against the quota — the id
+  refactor below was done for staleness, not for size.
 - **Injection surface.** No `dangerouslySetInnerHTML`, `innerHTML`, `eval`
   or `new Function` anywhere in `src/` or `tools/`. All 191 bundled shop
   links are `https://` and single-host. No paint name or brand contains
   characters that would break the generated markdown links.
 
+## Resolved after review
+
+Three findings were raised as needing a product decision and then approved,
+so they were fixed in the same pass.
+
+### 8. Fonts self-hosted
+
+Cinzel and EB Garamond were pulled from `fonts.googleapis.com`. In a packaged
+app that means typography silently degrades to a system serif offline, and
+every launch discloses the device IP to a third party — for an app that
+otherwise contacts nobody.
+
+Both are SIL OFL 1.1, so they are vendored into `public/fonts` and declared
+in `src/shared/styles/fonts.css`. Only latin and latin-ext ship, and the
+weights that share a variable font share a file, so the whole set is **six
+files, 276 KB**. `tools/fonts/vendor-fonts.mjs` regenerates them. The app now
+makes no network request of its own.
+
+### 9. Lists store ids, not paint copies
+
+`PaintList.paints: Paint[]` became `paintIds: string[]`, resolved through
+`resolvePaints` against a memoised catalogue index. Persist moved to version
+2 with a cumulative `migrate`, so a store still on version 0 picks up the
+icon/colour defaults and the id conversion in one pass; both paths are
+tested. `markdownExport` now takes an `ExportableList` rather than a
+`PaintList`, which also removes its dependency on the store.
+
+### 10. CI added
+
+`.github/workflows/ci.yml` runs lint, `tsc -b`, vitest and a build on push
+and pull request. Every step was verified locally against the commit that
+introduced it.
+
 ## Deferred items
 
-- **Google Fonts are loaded from a CDN** (`index.html`). In a packaged
-  Capacitor app this means the typography silently falls back offline, and
-  every launch discloses the device IP to a third party. Fonts should be
-  vendored into `public/` and `@font-face`'d locally. Not done here because
-  it adds binary assets and has licensing implications worth a decision.
 - **Blob downloads do not work in the Android WebView.** Capacitor registers
   no `DownloadListener`, so `a.download` silently no-ops on device. Moot
   while `markdownExport` is flagged off; when it is turned back on, mobile
   export needs `@capacitor/filesystem` + `@capacitor/share` rather than an
   anchor click.
-- **Lists store full copies of each paint**, including its `matches` array.
-  A catalogue refresh (corrected hex, new equivalents) will not reach paints
-  already in a list. Storing ids and resolving against the catalogue at read
-  time would fix it, but needs a persist migration.
-- **No CI.** `.github/` holds only modernize hooks; nothing runs `lint`,
-  `tsc -b` or `vitest` on push.
 - **`filterPaintsByColor` is unused.** Kept because it is tested and
   plausibly wanted for a colour-filter feature; delete it if not.
 - **`android:allowBackup="true"`** (Capacitor default) lets `adb backup`

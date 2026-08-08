@@ -37,6 +37,28 @@ Application feature toggles live in [src/app/config.ts](src/app/config.ts).
 
 - `featureFlags.markdownExport` — shows or hides the "Export list" download action in the list header. **Currently `false`.** The export logic itself (`src/features/export/markdownExport.ts`) stays in place and tested; only the UI entry point is gated.
 
+## Fonts
+
+Cinzel and EB Garamond are **self-hosted**, not loaded from Google Fonts. The
+packaged Capacitor app has no network guarantee, so a CDN link would mean the
+typography silently falls back to a system serif offline — and would disclose
+the device IP to a third party on every launch, for an app that otherwise
+contacts nobody.
+
+The files live in `public/fonts/` and are declared in
+`src/shared/styles/fonts.css`. To change the family list, edit the Google Fonts
+URL in `tools/fonts/vendor-fonts.mjs` and re-run it; it downloads the woff2
+files and regenerates the `@font-face` rules.
+
+## Continuous Integration
+
+`.github/workflows/ci.yml` runs lint, typecheck, tests and a production build
+on every push and pull request. To reproduce it locally:
+
+```bash
+npm run lint && npx tsc -b --noEmit && npm test && npx vite build
+```
+
 ## Mobile Deployment (iOS + Android)
 
 This project is wrapped with Capacitor and includes native projects in `ios/` and `android/`.
