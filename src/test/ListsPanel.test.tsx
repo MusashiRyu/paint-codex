@@ -55,6 +55,48 @@ describe('ListsPanel export action', () => {
   });
 });
 
+describe('ListsPanel header on an empty list', () => {
+  const emptyList: PaintList = { ...mockList, paintIds: [] };
+
+  it('still offers rename and delete when the list has no paints', () => {
+    renderPanel({ lists: [emptyList], activePaints: [] });
+
+    expect(screen.getByLabelText('Rename list')).toBeInTheDocument();
+    expect(screen.getByLabelText('Delete list')).toBeInTheDocument();
+    expect(screen.getByText('Your grimoire is empty')).toBeInTheDocument();
+  });
+
+  it('renames an empty list', () => {
+    const props = renderPanel({ lists: [emptyList], activePaints: [] });
+
+    fireEvent.click(screen.getByLabelText('Rename list'));
+    const input = screen.getByLabelText('List name');
+    fireEvent.change(input, { target: { value: 'Renamed Empty' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(props.onRenameList).toHaveBeenCalledWith('list-1', 'Renamed Empty');
+  });
+
+  it('hides the header entirely when there is no list at all', () => {
+    renderPanel({ lists: [], activeListId: undefined, activePaints: [] });
+
+    expect(screen.queryByLabelText('Rename list')).not.toBeInTheDocument();
+    expect(screen.getByText('No lists yet')).toBeInTheDocument();
+  });
+});
+
+describe('ListsPanel delete', () => {
+  it('deletes the only list, rather than disabling the action', () => {
+    const props = renderPanel();
+
+    const deleteBtn = screen.getByLabelText('Delete list');
+    expect(deleteBtn).toBeEnabled();
+    fireEvent.click(deleteBtn);
+
+    expect(props.onDeleteList).toHaveBeenCalledWith('list-1');
+  });
+});
+
 describe('ListsPanel rename', () => {
   it('swaps the list name for an input when the edit button is clicked', () => {
     renderPanel();

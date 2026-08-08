@@ -94,7 +94,6 @@ export function ListsPanel({
   }, [activeList, activePaints]);
 
   const hasPaints = sections.length > 0;
-  const canDelete = lists.length > 1;
 
   return (
     <>
@@ -129,7 +128,9 @@ export function ListsPanel({
 
       {/* Scrollable content */}
       <div className={styles.content}>
-        {hasPaints && (
+        {/* Gated on the list, not on its paints: an empty list still needs
+            renaming and deleting. */}
+        {activeList && (
           <div className={styles.listHeader}>
             {renaming ? (
               <input
@@ -151,7 +152,7 @@ export function ListsPanel({
                 aria-label="List name"
               />
             ) : (
-              <div className={styles.listName}>{activeList!.name}</div>
+              <div className={styles.listName}>{activeList.name}</div>
             )}
             <div className={styles.listActions}>
               {exportFlash && <span className={styles.exportFlash}>Exported ✓</span>}
@@ -178,9 +179,9 @@ export function ListsPanel({
               </button>
               <button
                 className={styles.iconBtnDanger}
-                onClick={() => canDelete && onDeleteList(activeList!.id)}
+                onClick={() => onDeleteList(activeList.id)}
                 title="Delete list"
-                style={{ opacity: canDelete ? 1 : 0.3, pointerEvents: canDelete ? 'auto' : 'none' }}
+                aria-label="Delete list"
               >
                 <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M5 7 H19 M9 7 V5 C9 4.4 9.4 4 10 4 H14 C14.6 4 15 4.4 15 5 V7 M7 7 L7.7 19 C7.8 19.6 8.3 20 8.9 20 H15.1 C15.7 20 16.2 19.6 16.3 19 L17 7" />
