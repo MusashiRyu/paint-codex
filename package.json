@@ -9,6 +9,7 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "scrape": "node tools/scraper/scrape.mjs",
+    "check:upstream": "node tools/scraper/checkUpstream.mjs",
     "scrape:shoplinks": "node tools/scraper/scrapeShopLinks.mjs",
     "test": "vitest run",
     "test:watch": "vitest",

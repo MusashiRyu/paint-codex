@@ -1,0 +1,33 @@
+name: Upstream catalogue check
+
+# The runtime refresh fails silently by design, so a markup change upstream
+# would otherwise go unnoticed until a user reported missing paints. This is
+# the alarm.
+on:
+  schedule:
+    # Mondays, 06:00 UTC.
+    - cron: '0 6 * * 1'
+  # Also whenever the parser or the snapshot changes, so an edit is checked
+  # against the real document rather than only against synthetic fixtures.
+  push:
+    paths:
+      - 'src/domain/paintCatalogSource.ts'
+      - 'src/data/paints.snapshot.json'
+      - 'tools/scraper/**'
+      - '.github/workflows/upstream-check.yml'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Node 24: the check imports the parser as TypeScript directly, which
+      # relies on type stripping being on by default.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Check upstream against the shared parser
+        run: node tools/scraper/checkUpstream.mjs
