@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { Paint } from '../../domain/types';
+import { DEFAULT_LIST_COLOR } from '../../shared/ui/listPalette';
 
 export type ListIcon =
   | 'skull'
@@ -52,7 +53,7 @@ export const useAppStore = create<AppStore>()(
     (set, get) => ({
       lists: [],
       selectedListId: undefined,
-      createList: (name, icon = 'star', color = '#c9a86a') => {
+      createList: (name, icon = 'star', color = DEFAULT_LIST_COLOR) => {
         const trimmed = name.trim();
         if (!trimmed) {
           return '';
@@ -126,6 +127,9 @@ export const useAppStore = create<AppStore>()(
         let lists = state.lists ?? [];
 
         // v0 -> v1: lists gained an icon and a banner colour.
+        // The colour is deliberately the literal v1 shipped with, not
+        // DEFAULT_LIST_COLOR: a migration has to keep writing what it wrote
+        // then, or changing the palette silently rewrites old lists.
         if (version < 1) {
           lists = lists.map((l) => ({
             ...l,

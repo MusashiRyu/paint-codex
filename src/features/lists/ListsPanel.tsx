@@ -110,9 +110,12 @@ export function ListsPanel({
                 cancelRename();
               }}
               style={{
-                border: `1px solid ${isActive ? list.color : 'rgba(255,255,255,0.1)'}`,
+                // The list's own banner colour is user data, so only the
+                // resting state comes from tokens; `26` is the 0.15 alpha the
+                // gold hairline uses, applied to whichever colour was picked.
+                border: `1px solid ${isActive ? list.color : 'var(--border-subtle)'}`,
                 background: isActive ? `${list.color}26` : 'none',
-                color: isActive ? '#e4c98a' : '#9a8f79',
+                color: isActive ? 'var(--gold-bright)' : 'var(--text-muted)',
               }}
             >
               <ListIconSvg icon={list.icon} size={13} />
@@ -210,7 +213,16 @@ export function ListsPanel({
 
         {!hasPaints && (
           <div className={styles.emptyState}>
-            <svg viewBox="0 0 24 24" width="52" height="52" fill="none" stroke="#c9a86a" strokeOpacity="0.4" strokeWidth="1">
+            <svg
+              viewBox="0 0 24 24"
+              width="52"
+              height="52"
+              fill="none"
+              stroke="currentColor"
+              strokeOpacity="0.4"
+              strokeWidth="1"
+              className={styles.emptyMark}
+            >
               <path d="M12 3 L14.2 9.2 L21 9.6 L15.6 13.8 L17.4 20.4 L12 16.5 L6.6 20.4 L8.4 13.8 L3 9.6 L9.8 9.2 Z" />
             </svg>
             {activeList ? (

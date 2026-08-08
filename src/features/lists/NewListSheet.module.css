@@ -1,7 +1,7 @@
 .backdrop {
   position: absolute;
   inset: 0;
-  background: rgba(4, 3, 7, 0.7);
+  background: var(--bg-backdrop);
   z-index: 10;
 }
 
@@ -11,9 +11,9 @@
   right: 0;
   bottom: 0;
   background: var(--bg-sheet);
-  border-radius: 22px 22px 0 0;
-  box-shadow: 0 -1px 0 rgba(201, 168, 106, 0.18);
-  padding: 20px 20px 26px;
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+  box-shadow: var(--shadow-sheet-lip);
+  padding: var(--pad-sheet) var(--pad-sheet) 26px;
 }
 
 .sheetHeader {
@@ -23,17 +23,17 @@
 }
 
 .sheetTitle {
-  font-family: 'Cinzel', serif;
-  font-size: 16px;
-  letter-spacing: 1px;
-  color: #dcb877;
+  font-family: var(--font-display);
+  font-size: var(--size-2xl);
+  letter-spacing: var(--track-md);
+  color: var(--gold-title);
 }
 
 .closeBtn {
   background: none;
   border: none;
   color: var(--text-secondary);
-  font-size: 22px;
+  font-size: var(--glyph-md);
   line-height: 1;
   padding: 0;
 }
@@ -42,17 +42,17 @@
   margin-top: 16px;
   width: 100%;
   padding: 11px 16px;
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
   border: 1px solid var(--gold-border);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--surface-raised);
   color: var(--text-primary);
-  font-size: 15px;
+  font-size: var(--size-xl);
   outline: none;
 }
 
 .sectionLabel {
-  font-size: 11px;
-  letter-spacing: 1.5px;
+  font-size: var(--size-xs);
+  letter-spacing: var(--track-lg);
   text-transform: uppercase;
   color: var(--text-muted);
   margin-top: 20px;
@@ -69,28 +69,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 56px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  height: var(--control-xl);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  border: 1.5px solid var(--border-faint);
   color: var(--text-muted);
 }
 
 .iconBtnSelected {
-  background: rgba(201, 168, 106, 0.14);
+  background: var(--gold-fill-strong);
   border-color: var(--gold);
   color: var(--gold-bright);
 }
 
 .colorRow {
   display: flex;
-  gap: 12px;
+  gap: var(--gap-row);
 }
 
 .colorSwatch {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
+  width: var(--control-lg);
+  height: var(--control-lg);
+  border-radius: var(--radius-round);
   cursor: pointer;
 }
 
@@ -98,11 +98,11 @@
   margin-top: 24px;
   width: 100%;
   padding: 13px;
-  border-radius: 20px;
+  border-radius: var(--radius-pill);
   border: 1px solid var(--gold);
-  background: rgba(201, 168, 106, 0.12);
+  background: var(--gold-fill);
   color: var(--gold-bright);
-  font-family: 'Cinzel', serif;
-  font-size: 13px;
-  letter-spacing: 1.5px;
+  font-family: var(--font-display);
+  font-size: var(--size-md);
+  letter-spacing: var(--track-lg);
 }

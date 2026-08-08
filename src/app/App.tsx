@@ -80,9 +80,9 @@ function App() {
           className={styles.divider}
           aria-hidden="true"
         >
-          <line x1="0" y1="5" x2="145" y2="5" stroke="#c9a86a" strokeOpacity="0.3" strokeWidth="1" />
-          <path d="M167 1 L171 5 L167 9 L163 5 Z" fill="#c9a86a" fillOpacity="0.55" />
-          <line x1="193" y1="5" x2="346" y2="5" stroke="#c9a86a" strokeOpacity="0.3" strokeWidth="1" />
+          <line x1="0" y1="5" x2="145" y2="5" stroke="currentColor" strokeOpacity="0.3" strokeWidth="1" />
+          <path d="M167 1 L171 5 L167 9 L163 5 Z" fill="currentColor" fillOpacity="0.55" />
+          <line x1="193" y1="5" x2="346" y2="5" stroke="currentColor" strokeOpacity="0.3" strokeWidth="1" />
         </svg>
 
         {/* Lists panel (tabs + content) */}

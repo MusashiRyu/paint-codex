@@ -45,7 +45,20 @@ Before that flag goes back on, mobile export needs `@capacitor/filesystem` to
 write the file and `@capacitor/share` to hand it off. Decision taken
 2026-08-08: leave as is for now.
 
-### 4. iOS signing and archive are Mac-only
+### 4. Sheet chrome is duplicated across the two overlays
+**Raised:** 009 · **Cosmetic, not blocking**
+
+`SearchSheet.module.css` and `NewListSheet.module.css` are byte-identical for
+`backdrop`, `sheet`, `sheetHeader`, `sheetTitle` and `closeBtn`. The pill, the
+round icon button, the gold gradient button and the rounded input each appear
+in two to four places as well.
+
+The token extraction made these duplicates *consistent* — they now resolve to
+the same values by construction — but only shared primitives would make them
+singular. That is a structural change touching five components, deliberately
+left out of the token work so the two could be reviewed apart.
+
+### 5. iOS signing and archive are Mac-only
 **Raised:** 001 · **Environmental**
 
 Nothing to fix in the repo. The flow in the README's iOS section requires Xcode

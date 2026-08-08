@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   background:
-    linear-gradient(rgba(5, 4, 9, 0.55), rgba(5, 4, 9, 0.8)),
+    linear-gradient(var(--scrim-page-top), var(--scrim-page-bottom)),
     url('/imagery/bg-page.png') center / cover no-repeat;
 }
 
@@ -15,9 +15,9 @@
   background:
     linear-gradient(
       180deg,
-      rgba(20, 16, 28, 0.86) 0%,
-      rgba(10, 8, 14, 0.93) 55%,
-      rgba(10, 8, 13, 0.96) 100%
+      var(--scrim-card-top) 0%,
+      var(--scrim-card-mid) 55%,
+      var(--scrim-card-bottom) 100%
     ),
     url('/imagery/bg-card.png') center / cover no-repeat;
   overflow: hidden;
@@ -31,54 +31,57 @@
   .card {
     width: 390px;
     height: min(844px, calc(100vh - 96px));
-    border-radius: 30px;
+    border-radius: var(--radius-card);
     box-shadow:
-      0 40px 90px rgba(0, 0, 0, 0.65),
-      inset 0 0 0 1px rgba(201, 168, 106, 0.14);
+      var(--shadow-card),
+      var(--shadow-card-ring);
   }
 }
 
 .headerWrap {
   flex-shrink: 0;
-  padding: 22px 22px 0;
+  padding: var(--gutter) var(--gutter) 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 .title {
-  font-family: 'Cinzel', serif;
-  font-size: 20px;
+  font-family: var(--font-display);
+  font-size: var(--size-3xl);
   font-weight: 600;
-  letter-spacing: 2px;
-  color: #dcb877;
+  letter-spacing: var(--track-xl);
+  color: var(--gold-title);
 }
 
 .subtitle {
-  font-size: 11px;
-  letter-spacing: 3px;
+  font-size: var(--size-xs);
+  letter-spacing: var(--track-3xl);
   text-transform: uppercase;
   color: var(--text-muted);
   margin-top: 3px;
 }
 
+/* The rule's ink comes from `color` so the SVG can draw with currentColor
+ * rather than repeating the gold hex in markup. */
 .divider {
   display: block;
   flex-shrink: 0;
-  margin: 14px 22px 0;
-  width: calc(100% - 44px);
+  margin: 14px var(--gutter) 0;
+  width: calc(100% - var(--gutter) * 2);
+  color: var(--gold);
 }
 
 .fab {
   position: absolute;
   right: 20px;
   bottom: 26px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(150deg, #e4c98a, #b3903f);
+  width: var(--control-xl);
+  height: var(--control-xl);
+  border-radius: var(--radius-round);
+  background: var(--gradient-gold);
   border: none;
-  box-shadow: 0 10px 26px rgba(180, 140, 60, 0.4);
+  box-shadow: var(--shadow-fab);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,8 +89,8 @@
 }
 
 .fabIcon {
-  font-size: 26px;
+  font-size: var(--glyph-lg);
   line-height: 1;
-  color: #1c1610;
-  font-family: 'EB Garamond', serif;
+  color: var(--on-gold);
+  font-family: var(--font-body);
 }

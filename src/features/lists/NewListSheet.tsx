@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { ListIcon } from '../../app/providers/store';
 import { ListIconSvg } from '../../shared/ui/ListIconSvg';
+import { DEFAULT_LIST_COLOR, LIST_COLORS } from '../../shared/ui/listPalette';
 import { useDismissOnEscape } from '../../shared/hooks/useDismissOnEscape';
 import { useFocusTrap } from '../../shared/hooks/useFocusTrap';
 import styles from './NewListSheet.module.css';
@@ -12,18 +13,12 @@ interface NewListSheetProps {
 
 const ALL_ICONS: ListIcon[] = ['skull', 'star', 'shield', 'wing', 'crown', 'flame', 'moon', 'drop'];
 
-const COLOR_OPTIONS = [
-  { hex: '#c9a86a', label: 'Gold' },
-  { hex: '#7a2430', label: 'Crimson' },
-  { hex: '#1c3a44', label: 'Teal' },
-  { hex: '#5a3d6e', label: 'Purple' },
-  { hex: '#cbb686', label: 'Bone' },
-];
+const COLOR_OPTIONS = LIST_COLORS;
 
 export function NewListSheet({ onClose, onCreate }: NewListSheetProps) {
   const [name, setName] = useState('');
   const [icon, setIcon] = useState<ListIcon>('star');
-  const [color, setColor] = useState('#c9a86a');
+  const [color, setColor] = useState(DEFAULT_LIST_COLOR);
 
   const canCreate = name.trim().length > 0;
 
@@ -90,7 +85,7 @@ export function NewListSheet({ onClose, onCreate }: NewListSheetProps) {
               style={{
                 background: opt.hex,
                 border: `2px solid ${color === opt.hex ? '#ffffff' : 'transparent'}`,
-                boxShadow: `0 0 0 1px rgba(0,0,0,0.4)${color === opt.hex ? ', 0 0 0 3px rgba(201,168,106,0.35)' : ''}`,
+                boxShadow: `var(--shadow-swatch-ring)${color === opt.hex ? ', var(--shadow-selected-ring)' : ''}`,
               }}
               onClick={() => setColor(opt.hex)}
               aria-label={opt.label}

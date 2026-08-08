@@ -1,50 +1,9 @@
 /* Self-hosted Cinzel + EB Garamond; see fonts.css for why they are not on a CDN. */
 @import './fonts.css';
 
-:root {
-  /* Core backgrounds */
-  --bg-page: #050409;
-  --bg-sheet: #14111b;
-  --bg-item: rgba(255, 255, 255, 0.035);
-
-  /* Gold palette */
-  --gold: #c9a86a;
-  --gold-bright: #e4c98a;
-  --gold-title: #dcb877;
-  --gold-deep: #b3903f;
-  --gold-subtle: rgba(201, 168, 106, 0.12);
-  --gold-border: rgba(201, 168, 106, 0.25);
-  --gold-line: rgba(201, 168, 106, 0.15);
-
-  /* Text */
-  --text-primary: #ece4d2;
-  --text-secondary: #ab9f8c;
-  --text-muted: #9c9080;
-  --text-dim: #8a8172;
-  --text-brand: #b99a5b;
-
-  /* Delta / state colors */
-  --ok-bg: rgba(76, 140, 86, 0.18);
-  --ok-border: #4c8c56;
-  --ok-text: #8fd39a;
-  --warn-bg: rgba(196, 157, 90, 0.18);
-  --warn-border: #c49d5a;
-  --warn-text: #e0c184;
-  --bad-bg: rgba(178, 70, 70, 0.18);
-  --bad-border: #b24646;
-  --bad-text: #e5a0a0;
-
-  /* Danger */
-  --danger: #c17a7a;
-  --danger-border: rgba(178, 70, 70, 0.35);
-
-  /* Borders */
-  --border-subtle: rgba(255, 255, 255, 0.1);
-  --border-item: rgba(201, 168, 106, 0.12);
-
-  /* Legacy aliases (kept for tests / components not yet migrated) */
-  --bg-void: #07080b;
-}
+/* Every colour, radius, type size and elevation in the app. Component
+ * stylesheets pull from here; see documentation/0.2-design-system.md. */
+@import './tokens.css';
 
 *,
 *::before,
@@ -64,8 +23,8 @@ body,
 
 body {
   background: var(--bg-page);
-  font-family: 'EB Garamond', Georgia, serif;
-  font-size: 15px;
+  font-family: var(--font-body);
+  font-size: var(--size-xl);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-primary);

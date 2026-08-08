@@ -1,0 +1,192 @@
+/*
+ * Design tokens — the single source of truth for every colour, radius, type
+ * size, tracking, elevation and structural spacing in the app.
+ *
+ * The rule that keeps this file honest: a raw value may appear in a component
+ * stylesheet only if it is used exactly once. The moment the same number or
+ * colour turns up in a second file it belongs here, under a name. Every token
+ * below was extracted from values that had already been written out two to
+ * seven times by hand — four near-identical greys, a gold that existed as
+ * `--gold-title` and was pasted as `#dcb877` anyway, and a sheet header
+ * duplicated byte-for-byte across two overlays.
+ *
+ * Spacing is deliberately NOT a numeric scale. This UI is hand-tuned on a
+ * 390px card and uses every value from 2px to 26px; snapping it to a 4px grid
+ * would be a redesign, not an extraction. Only spacing that repeats and means
+ * something structurally is named here — the rest stays component-local.
+ */
+
+:root {
+  /* ---------------------------------------------------------------------
+   * Type — families
+   * ------------------------------------------------------------------ */
+
+  /* Cinzel carries every title, label and control. Always with tracking. */
+  --font-display: 'Cinzel', serif;
+  /* EB Garamond is the reading face: body copy, inputs, prose empty states. */
+  --font-body: 'EB Garamond', Georgia, serif;
+  --font-mono: monospace;
+
+  /* ---------------------------------------------------------------------
+   * Type — size ladder
+   * Steps are 1px apart at the small end on purpose: at 15px body on a phone
+   * card, 11px and 12px are genuinely different roles, not rounding noise.
+   * ------------------------------------------------------------------ */
+  --size-xxs: 10px; /* IN LIST badge */
+  --size-xs: 11px; /* the workhorse label size — section heads, meta, chips */
+  --size-sm: 12px; /* secondary meta, hex codes */
+  --size-md: 13px; /* list names, tab pills, primary controls */
+  --size-lg: 14px; /* paint names, prose empty states */
+  --size-xl: 15px; /* body default, set on <body> */
+  --size-2xl: 16px; /* sheet titles, search result names */
+  --size-3xl: 20px; /* the app title */
+
+  /* Glyph sizes — bare "+" and "×" characters sized as icons, not as text. */
+  --glyph-sm: 18px;
+  --glyph-md: 22px;
+  --glyph-lg: 26px;
+
+  /* ---------------------------------------------------------------------
+   * Type — tracking
+   * Cinzel is a display face; letter-spacing is what makes it read as an
+   * inscription rather than as cramped body copy. The step is the meaning:
+   * the wider the tracking, the smaller and more label-like the text.
+   * ------------------------------------------------------------------ */
+  --track-sm: 0.5px;
+  --track-md: 1px;
+  --track-lg: 1.5px;
+  --track-xl: 2px;
+  --track-2xl: 2.5px;
+  --track-3xl: 3px;
+
+  /* ---------------------------------------------------------------------
+   * Colour — grounds
+   * ------------------------------------------------------------------ */
+  --bg-page: #050409;
+  --bg-sheet: #14111b;
+  --bg-item: rgba(255, 255, 255, 0.035);
+  --bg-backdrop: rgba(4, 3, 7, 0.7);
+
+  /* Page and card grounds are image + gradient composites; the stops are
+   * tokens because both files need the same near-black to sit on. */
+  --scrim-page-top: rgba(5, 4, 9, 0.55);
+  --scrim-page-bottom: rgba(5, 4, 9, 0.8);
+  --scrim-card-top: rgba(20, 16, 28, 0.86);
+  --scrim-card-mid: rgba(10, 8, 14, 0.93);
+  --scrim-card-bottom: rgba(10, 8, 13, 0.96);
+
+  /* ---------------------------------------------------------------------
+   * Colour — gold
+   * The brand axis. Every gold in the app is one of these five; the alpha
+   * ladder below covers fills, hairlines and borders drawn from --gold.
+   * ------------------------------------------------------------------ */
+  --gold: #c9a86a; /* the base mark: links, rules, active borders */
+  --gold-bright: #e4c98a; /* selected/active foreground, gradient highlight */
+  --gold-title: #dcb877; /* titles only */
+  --gold-deep: #b3903f; /* gradient shadow end */
+  --gold-pale: #c9b898; /* desaturated heading, empty states */
+  --on-gold: #1c1610; /* the only foreground allowed on a gold fill */
+
+  /* Gold alphas. Three fills, one hairline, two borders — collapsed from the
+   * nine hand-written alphas (0.10–0.40) that preceded them. */
+  --gold-fill: rgba(201, 168, 106, 0.12); /* resting tinted surface */
+  --gold-fill-strong: rgba(201, 168, 106, 0.16); /* selected tinted surface */
+  --gold-line: rgba(201, 168, 106, 0.15); /* section rules, sheet lip */
+  --gold-border: rgba(201, 168, 106, 0.25); /* input and ghost-button edges */
+  --gold-border-strong: rgba(201, 168, 106, 0.4); /* the dashed "+ New" tab */
+  --gold-inset: rgba(201, 168, 106, 0.14); /* the card's 1px inner ring */
+
+  /* ---------------------------------------------------------------------
+   * Colour — text
+   * Five steps from parchment to dim. Four more greys existed as literals
+   * (#9a8f79, #8f8574, #a89d8a, #c9b898) within 7 per channel of these; they
+   * were near-duplicates, and are folded in here.
+   * ------------------------------------------------------------------ */
+  --text-primary: #ece4d2;
+  --text-secondary: #ab9f8c;
+  --text-muted: #9c9080;
+  --text-dim: #8a8172;
+  --text-brand: #b99a5b; /* brand names, section heads — gold-leaning text */
+
+  /* ---------------------------------------------------------------------
+   * Colour — state
+   * Consumed only through shared/lib/color.ts, which maps ΔE quality onto
+   * these three groups. Nothing renders a delta colour any other way.
+   * ------------------------------------------------------------------ */
+  --ok-bg: rgba(76, 140, 86, 0.18);
+  --ok-border: #4c8c56;
+  --ok-text: #8fd39a;
+  --warn-bg: rgba(196, 157, 90, 0.18);
+  --warn-border: #c49d5a;
+  --warn-text: #e0c184;
+  --bad-bg: rgba(178, 70, 70, 0.18);
+  --bad-border: #b24646;
+  --bad-text: #e5a0a0;
+
+  /* Muted success — the "IN LIST" badge. Quieter than --ok-text on purpose:
+   * it reports a fact about the list, it is not a match-quality verdict. */
+  --ok-muted: #7fa887;
+  --ok-muted-border: rgba(127, 168, 135, 0.4);
+
+  /* Destructive. Never a fill — outline and glyph only, so a delete never
+   * out-weighs the gold primary action next to it. */
+  --danger: #c17a7a;
+  --danger-border: rgba(178, 70, 70, 0.35);
+
+  /* ---------------------------------------------------------------------
+   * Colour — neutral borders
+   * ------------------------------------------------------------------ */
+  --border-subtle: rgba(255, 255, 255, 0.1); /* resting control edge */
+  --border-faint: rgba(255, 255, 255, 0.08); /* unselected tile, equiv card */
+  --surface-raised: rgba(255, 255, 255, 0.03); /* inputs, unselected tiles */
+
+  /* ---------------------------------------------------------------------
+   * Radius
+   * ------------------------------------------------------------------ */
+  --radius-xs: 8px; /* inline input, equivalent swatch */
+  --radius-sm: 10px; /* list swatch, delta pill */
+  --radius-md: 12px; /* result swatch, equivalent card */
+  --radius-lg: 14px; /* paint row, icon tile, badge */
+  --radius-xl: 16px; /* result card, filter chip */
+  --radius-pill: 20px; /* every pill: tabs, inputs, primary buttons */
+  --radius-sheet: 22px; /* bottom-sheet top corners */
+  --radius-card: 30px; /* the desktop phone card */
+  --radius-round: 50%; /* FAB, icon buttons, colour swatches */
+
+  /* ---------------------------------------------------------------------
+   * Elevation
+   * Four shadows, each with one job. Nothing else casts one.
+   * ------------------------------------------------------------------ */
+  --shadow-card: 0 40px 90px rgba(0, 0, 0, 0.65);
+  --shadow-card-ring: inset 0 0 0 1px var(--gold-inset);
+  --shadow-fab: 0 10px 26px rgba(180, 140, 60, 0.4);
+  --shadow-sheet-lip: 0 -1px 0 rgba(201, 168, 106, 0.18);
+  /* Two swatch rings, and they are not interchangeable: square swatches carry
+   * the ring inside their radius, the round colour chips carry it outside. */
+  --shadow-swatch: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
+  --shadow-swatch-ring: 0 0 0 1px rgba(0, 0, 0, 0.4);
+  --shadow-selected-ring: 0 0 0 3px rgba(201, 168, 106, 0.35);
+
+  /* ---------------------------------------------------------------------
+   * Gradients
+   * One gradient in the app: the gold primary action (FAB, add button).
+   * ------------------------------------------------------------------ */
+  --gradient-gold: linear-gradient(150deg, var(--gold-bright), var(--gold-deep));
+
+  /* ---------------------------------------------------------------------
+   * Structural spacing
+   * Only values that repeat across files and carry a structural meaning.
+   * Everything else is component-local hand-tuning and stays in its module.
+   * ------------------------------------------------------------------ */
+  --gutter: 22px; /* card side padding — header, divider, tabs, content */
+  --pad-sheet: 20px; /* bottom-sheet side padding */
+  --pad-card: 14px; /* padded surface inside the card (result card) */
+  --gap-chip: 8px; /* between pills, chips and header actions */
+  --gap-row: 12px; /* between a swatch and the text beside it */
+
+  /* Control sizing — the two round icon buttons and the primary action. */
+  --control-sm: 22px; /* inline remove */
+  --control-md: 30px; /* header icon buttons */
+  --control-lg: 34px; /* add button, colour swatch */
+  --control-xl: 56px; /* FAB, icon picker tile */
+}

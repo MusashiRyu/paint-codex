@@ -37,6 +37,16 @@ Application feature toggles live in [src/app/config.ts](src/app/config.ts).
 
 - `featureFlags.markdownExport` — shows or hides the "Export list" download action in the list header. **Currently `false`.** The export logic itself (`src/features/export/markdownExport.ts`) stays in place and tested; only the UI entry point is gated.
 
+## Design system
+
+Every colour, radius, type size, tracking and shadow lives in
+[src/shared/styles/tokens.css](src/shared/styles/tokens.css). The rule: a raw
+value may appear in a component stylesheet only if it is used exactly once —
+the moment it turns up in a second file it becomes a token.
+
+The full system, including what is deliberately *not* tokenised, is in
+[documentation/0.2-design-system.md](documentation/0.2-design-system.md).
+
 ## Fonts
 
 Cinzel and EB Garamond are **self-hosted**, not loaded from Google Fonts. The
