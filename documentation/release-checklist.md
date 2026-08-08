@@ -49,6 +49,22 @@ A one-off **$25** registration plus identity verification (ID, address, phone).
 Verification is not instant — it can take days, occasionally longer. Nothing
 below can start until it clears, so do it first.
 
+> **You must verify access to a real Android device.** This is a separate check
+> from the ID and phone steps — Console calls it *Android developer
+> verification* — and it is the one requirement no amount of tooling gets you
+> past. It wants the **Google Play Console app** installed on Android hardware,
+> signed in with the account that owns the developer account.
+>
+> An emulator will not satisfy it. The check exists to prove real hardware and
+> Play Integrity fails device-integrity on emulator images, which is the whole
+> point of it.
+>
+> You do not have to *own* the device, only have access to one. Borrowing a
+> phone or tablet works: install the app, sign in as yourself, verify, then sign
+> out and remove the account. On a borrowed device, adding a second user profile
+> (Settings → System → Multiple users) and deleting it afterwards keeps the two
+> accounts from ever mixing.
+
 > **The 12-testers rule.** Personal developer accounts registered from late 2023
 > onward must run a **closed test with at least 12 testers opted in for 14
 > continuous days** before they can even apply for production access. The 14
