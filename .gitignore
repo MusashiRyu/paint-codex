@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Written by `npm run test:coverage`. CI reads the lcov report from the run
+# itself, so there is never a reason to commit one.
+coverage
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
