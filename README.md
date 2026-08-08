@@ -149,9 +149,13 @@ npm run feature-graphic   # 1024x500 listing banner
 npm run listing:check     # store copy against Play's character limits
 ```
 
-`npm run icons` needs a source mark at `tools/icons/source/icon.svg` — see
-[tools/icons/README.md](tools/icons/README.md). Until one exists the app still
-ships Capacitor's placeholder logo.
+`npm run icons` regenerates everything from the mark at
+`tools/icons/source/icon.svg` — see [tools/icons/README.md](tools/icons/README.md).
+Edit that one file rather than any generated PNG.
+
+Screenshots go stale silently: they are captured from the built app, so a UI
+change invalidates them and nothing complains. Re-run `npm run screenshots`
+after any visual change that reaches a captured screen.
 
 Listing copy, the Data safety answers and the privacy policy text are in
 [store/](store/).

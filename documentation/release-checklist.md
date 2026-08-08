@@ -8,23 +8,7 @@ the mechanics.
 
 ## Blocking before the first submission
 
-Neither of these will fail a build. Both will embarrass a listing.
-
-### 1. The launcher icon and splash are still Capacitor's placeholder
-
-`android/.../mipmap-*/ic_launcher.png` is the Capacitor logo, and every
-`drawable-*/splash.png` is that logo on a white field — which also means the
-app flashes white on launch before a near-black UI.
-
-Shipping another project's mark as your app icon is a rejection risk on its
-own, and it is the single most visible thing in the listing.
-
-Fix: drop the mark at `tools/icons/source/icon.svg` and run `npm run icons`.
-See [`tools/icons/README.md`](../tools/icons/README.md) for what the artwork
-needs to be. The same command regenerates the splash, the 512px Play icon and
-`public/favicon.svg`, which is currently still Vite's logo.
-
-### 2. The privacy policy needs a public URL
+### 1. The privacy policy needs a public URL
 
 Play requires one for every app, including apps that collect nothing. The text
 is written and accurate — [`store/privacy-policy.md`](../store/privacy-policy.md)
