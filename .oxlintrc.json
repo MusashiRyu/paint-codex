@@ -8,7 +8,20 @@
         "no-restricted-imports": [
           "error",
           {
-            "patterns": ["src/*", "src/**", "@/*"]
+            "patterns": [
+              {
+                "group": [
+                  "src/*",
+                  "src/**",
+                  "@/*",
+                  "@/**",
+                  "**/src/*",
+                  "**/src/**",
+                  "!**/src/domain/paintCatalogSource*"
+                ],
+                "message": "tools/ must not import app code. The one exception is src/domain/paintCatalogSource, deliberately shared so the build-time scraper and the runtime refresh cannot disagree about the same markup."
+              }
+            ]
           }
         ]
       }
@@ -19,7 +32,12 @@
         "no-restricted-imports": [
           "error",
           {
-            "patterns": ["tools/*", "tools/**"]
+            "patterns": [
+              {
+                "group": ["tools/*", "tools/**", "**/tools/*", "**/tools/**"],
+                "message": "src/ must not import build tooling — it would end up in the app bundle."
+              }
+            ]
           }
         ]
       }
