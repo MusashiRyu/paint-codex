@@ -71,6 +71,33 @@ respective owners, used here only to identify the paint ranges the app
 converts between.
 ```
 
+**Release notes** (500 char limit) — the "What's new" text for version 1.0.0
+
+```
+First release.
+
+Paint conversion across Citadel, Vallejo and The Army Painter, with a measured
+colour distance for every match rather than a guess. Build a list per army or
+project, search the whole catalogue by name or brand, and see the closest
+equivalents side by side.
+
+Works entirely offline. No account, no ads, no tracking.
+```
+
+Play keeps release notes per language and per release. Reuse this wording for a
+first release on any track; write a real changelog from 1.0.1 onward.
+
+---
+
+## Store settings
+
+| Field | Value | Notes |
+| --- | --- | --- |
+| Contact email | `redacted@example.invalid` | **Required**, and shown publicly on the listing. |
+| Contact website | — | Optional. Point it at the privacy policy host once that exists. |
+| Contact phone | — | Optional. Leave blank; it is also shown publicly. |
+| External marketing | Leave unticked | The app does not advertise outside Play. |
+
 ---
 
 ## Categorisation
@@ -146,10 +173,28 @@ privacy policy.
 
 ## Privacy policy URL
 
-Required for every app, whether or not it collects anything. The text is in
-[`store/privacy-policy.md`](./privacy-policy.md) and needs to be **published at
-a public URL** before submitting — GitHub Pages on this repo is the least
-effort. Paste that URL into Play Console → App content → Privacy policy.
+Required for every app, whether or not it collects anything.
+
+`npm run privacy` renders [`privacy-policy.md`](./privacy-policy.md) into
+[`privacy.html`](./privacy.html) — a single self-contained file with no
+external stylesheet, font or script. Host that file anywhere public and paste
+the URL into Play Console → App content → Privacy policy.
+
+The markdown stays the source; edit it and re-run, never edit the HTML.
+
+Play's requirements for the URL, all of which the generated page satisfies:
+
+- Publicly reachable with **no login** and no geo-restriction.
+- **Not publicly editable** — so not a wiki page.
+- A live page, **not a PDF** download and not text shown only inside the app.
+- Must stay up for as long as the app is listed.
+
+One thing to get right: Play cross-checks the policy against the Data safety
+answers above. This policy says the app collects nothing, and that is true —
+which is exactly why a generated boilerplate policy from a
+privacy-policy-generator site would be a liability rather than a shortcut.
+Those templates assert analytics, cookies and third-party sharing that Paco
+does not do, and the contradiction is what gets flagged.
 
 ---
 

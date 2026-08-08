@@ -10,10 +10,37 @@ the mechanics.
 
 ### 1. The privacy policy needs a public URL
 
-Play requires one for every app, including apps that collect nothing. The text
-is written and accurate — [`store/privacy-policy.md`](../store/privacy-policy.md)
-— but Play wants a URL, not a file. GitHub Pages on this repo is the least
-effort. Then: Play Console → App content → Privacy policy.
+Play requires one for every app, including apps that collect nothing. The page
+is written, accurate and built: `npm run privacy` renders
+[`store/privacy-policy.md`](../store/privacy-policy.md) into
+`store/privacy.html`, a single self-contained file with no external stylesheet,
+font or script. It will work on any host.
+
+What is missing is a host. Three options, in the order they make sense here:
+
+1. **GitHub Pages.** Free and permanent, and it solves two other things at the
+   same time — see the note below.
+2. **An owned domain.** Most durable, depends on nobody.
+3. **Google Sites.** No repo, no code, accepted by Play. The fallback.
+
+Then: Play Console → App content → Privacy policy.
+
+> **This repo has no git remote, and two GitHub Actions workflows that have
+> therefore never run.** `ci.yml` has never verified a commit, and
+> `upstream-check.yml` — described in the architecture doc as *the alarm for
+> the silent refresh* — has never armed. That alarm matters considerably more
+> once real users are on the catalogue refresh, because the refresh is silent
+> by design: a markup change upstream would otherwise strand every install on
+> its bundled snapshot with no signal at all. Pushing to GitHub fixes the
+> policy hosting, CI and the alarm in one move.
+
+**Do not use a privacy-policy generator site to host it.** They produce
+boilerplate asserting analytics, cookies and third-party sharing this app does
+not do, and Play cross-checks the policy against the Data safety answers. A
+contradiction there is a rejection risk. The accurate text already exists; only
+hosting is missing. Also avoid Gists, Notion pages, expiring drag-and-drop
+hosts, and PDFs — Play wants a live page, publicly reachable without a login
+and not publicly editable.
 
 ---
 
