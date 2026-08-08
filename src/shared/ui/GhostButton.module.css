@@ -1,0 +1,41 @@
+.btn {
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--gold);
+  background: var(--gold-fill);
+  color: var(--gold-bright);
+  font-family: var(--font-display);
+  letter-spacing: var(--track-md);
+}
+
+/* No fill and a dimmer edge: an offer, not the action being urged. */
+.quiet {
+  border-color: var(--gold-border);
+  background: none;
+  color: var(--text-brand);
+}
+
+.sm {
+  padding: 9px 20px;
+  font-size: var(--size-xs);
+}
+
+.md {
+  padding: 11px 24px;
+  font-size: var(--size-sm);
+}
+
+.lg {
+  padding: 13px;
+  font-size: var(--size-md);
+  letter-spacing: var(--track-lg);
+}
+
+.block {
+  display: block;
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}

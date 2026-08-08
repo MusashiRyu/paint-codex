@@ -1,0 +1,40 @@
+.pill {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-subtle);
+  background: none;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+  letter-spacing: var(--track-sm);
+  white-space: nowrap;
+}
+
+.sm {
+  padding: 8px 13px;
+  border-radius: var(--radius-xl);
+  font-size: var(--size-xs);
+}
+
+.md {
+  padding: 8px 14px;
+  font-size: var(--size-md);
+}
+
+.selected {
+  border-color: var(--gold);
+  background: var(--gold-fill-strong);
+  color: var(--gold-bright);
+}
+
+/* The "add a list" affordance: an outline that reads as a slot, not a value. */
+.dashed {
+  border-style: dashed;
+  border-color: var(--gold-border-strong);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: var(--size-lg);
+  letter-spacing: normal;
+}

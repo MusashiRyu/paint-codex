@@ -44,6 +44,11 @@ Every colour, radius, type size, tracking and shadow lives in
 value may appear in a component stylesheet only if it is used exactly once —
 the moment it turns up in a second file it becomes a token.
 
+The shared UI primitives — `Sheet`, `Pill`, `Badge`, `IconButton`,
+`GoldButton`, `GhostButton`, `TextField`, `Swatch` — live in
+[src/shared/ui/](src/shared/ui/). Chrome belongs there, never in a feature
+stylesheet.
+
 The full system, including what is deliberately *not* tokenised, is in
 [documentation/0.2-design-system.md](documentation/0.2-design-system.md).
 

@@ -1,0 +1,35 @@
+.btn {
+  flex-shrink: 0;
+  border-radius: var(--radius-round);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  line-height: 1;
+}
+
+.sm {
+  width: var(--control-sm);
+  height: var(--control-sm);
+  font-size: var(--size-md);
+}
+
+.md {
+  width: var(--control-md);
+  height: var(--control-md);
+}
+
+.active {
+  background: var(--gold-fill-strong);
+  border-color: var(--gold);
+  color: var(--gold-bright);
+}
+
+/* Outline only, and a muted red: a delete must not out-weigh the gold
+ * primary action sitting next to it. */
+.danger {
+  border-color: var(--danger-border);
+  color: var(--danger);
+}

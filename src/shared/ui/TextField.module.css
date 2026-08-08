@@ -1,0 +1,26 @@
+.input {
+  width: 100%;
+  outline: none;
+}
+
+/* The standing input: a full-width gold-edged pill. */
+.pill {
+  padding: 11px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--gold-border);
+  background: var(--surface-raised);
+  color: var(--text-primary);
+  font-size: var(--size-xl);
+}
+
+/* Edit-in-place: replaces a display-face label, so it wears that face itself. */
+.inline {
+  padding: 5px 8px;
+  border-radius: var(--radius-xs);
+  border: 1px solid var(--gold);
+  background: var(--gold-fill);
+  color: var(--gold-bright);
+  font-family: var(--font-display);
+  font-size: var(--size-md);
+  letter-spacing: var(--track-md);
+}

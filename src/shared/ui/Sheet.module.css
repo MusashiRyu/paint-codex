@@ -1,0 +1,53 @@
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--bg-backdrop);
+  z-index: 10;
+}
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--bg-sheet);
+  border-radius: var(--radius-sheet) var(--radius-sheet) 0 0;
+  box-shadow: var(--shadow-sheet-lip);
+}
+
+/* Sizes to its content — the sheet a short form lives in. */
+.auto {
+  padding: var(--pad-sheet) var(--pad-sheet) 26px;
+}
+
+/* Fixed tall sheet whose body scrolls — the sheet a long list lives in. */
+.tall {
+  height: 88%;
+  display: flex;
+  flex-direction: column;
+  padding: 18px var(--pad-sheet) var(--pad-sheet);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--size-2xl);
+  letter-spacing: var(--track-md);
+  color: var(--gold-title);
+}
+
+/* Bare on purpose: sheet chrome, not an action competing with the content. */
+.closeBtn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: var(--glyph-md);
+  line-height: 1;
+  padding: 0;
+}

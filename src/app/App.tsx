@@ -6,6 +6,7 @@ import { generatePaintListMarkdown, getExportFilename } from '../features/export
 import { ListsPanel } from '../features/lists/ListsPanel';
 import { SearchSheet } from '../features/search/SearchSheet';
 import { NewListSheet } from '../features/lists/NewListSheet';
+import { GoldButton } from '../shared/ui/GoldButton';
 import { useBackDismiss } from '../shared/hooks/useBackDismiss';
 import { appConfig } from './config';
 import type { ListIcon } from './providers/store';
@@ -103,13 +104,14 @@ function App() {
         />
 
         {/* Floating action button */}
-        <button
+        <GoldButton
+          size="lg"
           className={styles.fab}
+          label="Add paint"
           onClick={() => setSearchOpen(true)}
-          aria-label="Add paint"
         >
-          <span className={styles.fabIcon}>+</span>
-        </button>
+          +
+        </GoldButton>
 
         {/* Search sheet overlay */}
         {searchOpen && (

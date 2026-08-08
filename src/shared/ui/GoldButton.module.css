@@ -1,0 +1,27 @@
+/* The app's only solid fill. Two instances by design — a third would stop it
+ * reading as "the" action. */
+.btn {
+  flex-shrink: 0;
+  border-radius: var(--radius-round);
+  background: var(--gradient-gold);
+  border: none;
+  color: var(--on-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.md {
+  width: var(--control-lg);
+  height: var(--control-lg);
+  font-size: var(--glyph-sm);
+}
+
+.lg {
+  width: var(--control-xl);
+  height: var(--control-xl);
+  font-size: var(--glyph-lg);
+  box-shadow: var(--shadow-fab);
+  font-family: var(--font-body);
+}

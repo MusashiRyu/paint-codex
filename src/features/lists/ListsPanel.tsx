@@ -2,11 +2,27 @@ import { useMemo, useRef, useState } from 'react';
 import type { PaintList } from '../../app/providers/store';
 import type { Paint } from '../../domain/types';
 import { ListIconSvg } from '../../shared/ui/ListIconSvg';
+import { GhostButton } from '../../shared/ui/GhostButton';
+import { IconButton } from '../../shared/ui/IconButton';
+import { Pill } from '../../shared/ui/Pill';
+import { TextField } from '../../shared/ui/TextField';
 import { useBackDismiss } from '../../shared/hooks/useBackDismiss';
 import { PaintItem } from './PaintItem';
 import styles from './ListsPanel.module.css';
 
 const CATEGORY_ORDER = ['Base Layer', 'Layer', 'Edge', 'Shade', 'Technical', 'Contrast'];
+
+/** Shared geometry for the three header action glyphs. */
+const ACTION_ICON = {
+  viewBox: '0 0 24 24',
+  width: 15,
+  height: 15,
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: 1.5,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
+} as const;
 
 interface ListsPanelProps {
   lists: PaintList[];
@@ -102,31 +118,34 @@ export function ListsPanel({
         {lists.map((list) => {
           const isActive = list.id === activeListId;
           return (
-            <button
+            <Pill
               key={list.id}
-              className={styles.tabPill}
               onClick={() => {
                 onSelectList(list.id);
                 cancelRename();
               }}
-              style={{
-                // The list's own banner colour is user data, so only the
-                // resting state comes from tokens; `26` is the 0.15 alpha the
-                // gold hairline uses, applied to whichever colour was picked.
-                border: `1px solid ${isActive ? list.color : 'var(--border-subtle)'}`,
-                background: isActive ? `${list.color}26` : 'none',
-                color: isActive ? 'var(--gold-bright)' : 'var(--text-muted)',
-              }}
+              style={
+                isActive
+                  ? {
+                      // The list's own banner colour is user data, so it cannot
+                      // come from a token; `26` is the 0.15 alpha the gold
+                      // hairline uses, applied to whichever colour was picked.
+                      border: `1px solid ${list.color}`,
+                      background: `${list.color}26`,
+                      color: 'var(--gold-bright)',
+                    }
+                  : undefined
+              }
             >
               <ListIconSvg icon={list.icon} size={13} />
               <span>{list.name}</span>
-            </button>
+            </Pill>
           );
         })}
-        <button className={styles.newTabBtn} onClick={onOpenNewList}>
+        <Pill dashed onClick={onOpenNewList}>
           <span className={styles.newTabPlus}>+</span>
           <span>New</span>
-        </button>
+        </Pill>
       </div>
 
       {/* Scrollable content */}
@@ -136,60 +155,60 @@ export function ListsPanel({
         {activeList && (
           <div className={styles.listHeader}>
             {renaming ? (
-              <input
-                className={styles.listNameInput}
-                value={draftName}
-                autoFocus
-                onFocus={(e) => e.currentTarget.select()}
-                onChange={(e) => setDraftName(e.target.value)}
-                onBlur={commitRename}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    commitRename();
-                  } else if (e.key === 'Escape') {
-                    e.preventDefault();
-                    cancelRename();
-                  }
-                }}
-                aria-label="List name"
-              />
+              <div className={styles.listNameField}>
+                <TextField
+                  variant="inline"
+                  value={draftName}
+                  autoFocus
+                  onFocus={(e) => e.currentTarget.select()}
+                  onChange={(e) => setDraftName(e.target.value)}
+                  onBlur={commitRename}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      commitRename();
+                    } else if (e.key === 'Escape') {
+                      e.preventDefault();
+                      cancelRename();
+                    }
+                  }}
+                  aria-label="List name"
+                />
+              </div>
             ) : (
               <div className={styles.listName}>{activeList.name}</div>
             )}
             <div className={styles.listActions}>
               {exportFlash && <span className={styles.exportFlash}>Exported ✓</span>}
               {onExportList && (
-                <button className={styles.iconBtn} onClick={onExportList} title="Export list">
-                  <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <IconButton label="Export list" onClick={onExportList}>
+                  <svg {...ACTION_ICON}>
                     <path d="M12 4 V15 M8 11 L12 15 L16 11 M5 19 H19" />
                   </svg>
-                </button>
+                </IconButton>
               )}
-              <button
-                className={`${styles.iconBtn} ${renaming ? styles.iconBtnActive : ''}`}
+              <IconButton
+                label="Rename list"
+                tone={renaming ? 'active' : 'neutral'}
                 // Keep focus in the input, so the click commits instead of
                 // blur-committing and then reopening a fresh rename.
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => (renaming ? commitRename() : startRename())}
-                title="Rename list"
-                aria-label="Rename list"
               >
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg {...ACTION_ICON}>
                   <path d="M4 20 L4.8 16.2 L15.5 5.5 C16.3 4.7 17.6 4.7 18.4 5.5 C19.2 6.3 19.2 7.6 18.4 8.4 L7.7 19.1 Z" />
                   <path d="M14 7 L17 10" />
                 </svg>
-              </button>
-              <button
-                className={styles.iconBtnDanger}
+              </IconButton>
+              <IconButton
+                label="Delete list"
+                tone="danger"
                 onClick={() => onDeleteList(activeList.id)}
-                title="Delete list"
-                aria-label="Delete list"
               >
-                <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <svg {...ACTION_ICON}>
                   <path d="M5 7 H19 M9 7 V5 C9 4.4 9.4 4 10 4 H14 C14.6 4 15 4.4 15 5 V7 M7 7 L7.7 19 C7.8 19.6 8.3 20 8.9 20 H15.1 C15.7 20 16.2 19.6 16.3 19 L17 7" />
                 </svg>
-              </button>
+              </IconButton>
             </div>
           </div>
         )}
@@ -229,17 +248,13 @@ export function ListsPanel({
               <>
                 <div className={styles.emptyTitle}>Your grimoire is empty</div>
                 <div className={styles.emptyMsg}>No paints have been recorded for this list yet.</div>
-                <button className={styles.addFirstBtn} onClick={onOpenSearch}>
-                  + ADD FIRST PAINT
-                </button>
+                <GhostButton onClick={onOpenSearch}>+ ADD FIRST PAINT</GhostButton>
               </>
             ) : (
               <>
                 <div className={styles.emptyTitle}>No lists yet</div>
                 <div className={styles.emptyMsg}>Create your first list to start tracking paints.</div>
-                <button className={styles.addFirstBtn} onClick={onOpenNewList}>
-                  + CREATE FIRST LIST
-                </button>
+                <GhostButton onClick={onOpenNewList}>+ CREATE FIRST LIST</GhostButton>
               </>
             )}
           </div>

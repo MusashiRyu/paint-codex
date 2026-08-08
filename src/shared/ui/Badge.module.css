@@ -1,0 +1,28 @@
+.badge {
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size: var(--size-xxs);
+  letter-spacing: var(--track-md);
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+/* Quieter than the ΔE success tone: it reports membership, not match quality. */
+.success {
+  color: var(--ok-muted);
+  border-color: var(--ok-muted-border);
+}
+
+/* Fills its column and centres — the delta pill under an equivalent tile. */
+.block {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  text-align: center;
+  font-size: var(--size-xs);
+  letter-spacing: normal;
+  padding: 3px 0;
+  border-radius: var(--radius-sm);
+}

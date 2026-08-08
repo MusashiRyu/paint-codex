@@ -1,3 +1,5 @@
+import { IconButton } from '../../shared/ui/IconButton';
+import { Swatch } from '../../shared/ui/Swatch';
 import styles from './PaintItem.module.css';
 
 interface PaintItemProps {
@@ -11,7 +13,7 @@ interface PaintItemProps {
 export function PaintItem({ name, brand, type, hex, onRemove }: PaintItemProps) {
   return (
     <div className={styles.item}>
-      <div className={styles.swatch} style={{ background: hex }} />
+      <Swatch color={hex} />
       <div className={styles.info}>
         <div className={styles.name}>{name}</div>
         <div className={styles.meta}>
@@ -25,9 +27,9 @@ export function PaintItem({ name, brand, type, hex, onRemove }: PaintItemProps) 
         </div>
       </div>
       <div className={styles.hex}>{hex}</div>
-      <button className={styles.removeRight} onClick={onRemove} aria-label="Remove paint" title="Remove paint">
+      <IconButton size="sm" tone="danger" label="Remove paint" onClick={onRemove}>
         ×
-      </button>
+      </IconButton>
     </div>
   );
 }
