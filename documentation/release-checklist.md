@@ -222,13 +222,21 @@ everything you just did.
 
 Artifact: `android/app/build/outputs/bundle/release/app-release.aab`
 
-**JDK 21 only.** Gradle 8.14.3 rejects Android Studio's bundled JBR (Java 25)
-with `Unsupported class file major version 69`. `JAVA_HOME` is set persistently
-at User and Machine scope on this machine, but a shell opened before that was
-set carries the old environment block and will need it exported by hand:
+**The JDK is no longer the shell's problem.** `npm run android:build:*` goes
+through `tools/android/gradle.mjs`, which probes each candidate JDK for its
+version and runs the Gradle wrapper on one this Gradle accepts (17–24,
+preferring 21) — so an unset or stale `JAVA_HOME` no longer stops a build, and
+Android Studio's bundled JBR (Java 25, rejected by Gradle 8.14.3 with
+`Unsupported class file major version 69`) is skipped rather than picked. The
+run prints the JDK it chose; if it is not 21 it also says so. Override with
+`PACO_JDK_HOME`.
+
+Only the npm scripts get this. Calling `gradlew` directly, or the
+`"$JAVA_HOME/bin/…"` invocations of `keytool` and `jarsigner` below, still read
+the variable — in a shell that does not have it, export it by hand:
 
 ```powershell
-$env:JAVA_HOME = 'C:\Program Files\Eclipse Adoptium\jdk-21.0.12.8-hotspot'
+$env:JAVA_HOME = [Environment]::GetEnvironmentVariable('JAVA_HOME', 'User')
 ```
 
 ### 4. Confirm it is actually signed

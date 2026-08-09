@@ -22,9 +22,9 @@
     "cap:build": "npm run build && npx cap sync",
     "cap:ios": "npm run cap:build && npx cap open ios",
     "cap:android": "npm run cap:build && npx cap open android",
-    "android:build:debug": "cd android && .\\gradlew.bat assembleDebug",
-    "android:build:release": "cd android && .\\gradlew.bat bundleRelease",
-    "android:build:release:apk": "cd android && .\\gradlew.bat assembleRelease",
+    "android:build:debug": "node tools/android/gradle.mjs assembleDebug",
+    "android:build:release": "node tools/android/gradle.mjs bundleRelease",
+    "android:build:release:apk": "node tools/android/gradle.mjs assembleRelease",
     "privacy": "node tools/store/privacy-page.mjs"
   },
   "dependencies": {

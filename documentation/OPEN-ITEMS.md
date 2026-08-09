@@ -132,6 +132,7 @@ Prune this section once it stops being useful.
 | Repo had no remote, so CI and the upstream alarm had never run | 012 | 013 — pushed to github.com/MusashiRyu/paint-codex |
 | Sheet chrome duplicated across the two overlays | 009 | 009 — extracted into `shared/ui/` primitives |
 | Store screenshots stale after the catalogue change | 014 | 018 — regenerated; the browser was never the problem |
+| A build still fell over on `JAVA_HOME` — set persistently in 007, absent from any shell older than that change | 004, 022 | 022 — `tools/android/gradle.mjs` resolves the JDK per build, so no shell has to be right |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
 removals in the redesign rather than pending work, and are not tracked.

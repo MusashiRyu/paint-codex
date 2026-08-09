@@ -138,15 +138,23 @@ This runs a production Vite build and syncs `dist/` into both native projects.
 ### 2) Android release flow
 
 Prerequisites:
-- **JDK 21** installed and `JAVA_HOME` pointing at it
+- **JDK 21** installed — `JAVA_HOME` does not have to point at it
 - Android Studio SDK + build tools installed
 
-> **Do not use Android Studio's bundled JBR.** It ships Java 25, and the Gradle
-> wrapper pinned here (8.14.3) rejects it with
-> `Unsupported class file major version 69`. A build can appear to succeed on
-> Java 25 while Gradle is reusing cached compiled build scripts, then fail as
-> soon as a dependency change forces a recompile. Use JDK 21, e.g.
-> `JAVA_HOME=C:\Program Files\Eclipse Adoptium\jdk-21.x.x-hotspot`.
+> **The JDK is resolved per build, not read off the shell.** The
+> `android:build:*` scripts go through `tools/android/gradle.mjs`, which asks
+> each candidate JDK what version it is and launches the Gradle wrapper on the
+> first one this Gradle accepts (17–24, preferring 21). It looks at
+> `PACO_JDK_HOME`, then `JAVA_HOME`, then the persisted machine value, then the
+> usual install roots — so a shell whose environment block predates `JAVA_HOME`
+> being set still builds, and Android Studio's bundled JBR is skipped rather
+> than picked.
+>
+> That JBR is why any of this exists: it ships Java 25, and the Gradle wrapper
+> pinned here (8.14.3) rejects it with `Unsupported class file major version
+> 69`. A build can appear to succeed on Java 25 while Gradle reuses cached
+> compiled build scripts, then fail as soon as a dependency change forces a
+> recompile. Set `PACO_JDK_HOME` to override the search.
 
 Build commands:
 
@@ -177,10 +185,11 @@ Notes:
   debug, but a release build fails at configuration time rather than quietly
   producing an unsigned bundle.
 - Bump `versionCode` / `versionName` in `android/app/build.gradle` for each release.
-- The gradle scripts invoke `.\gradlew.bat` rather than `gradlew.bat`. Windows
-  environments that set `NoDefaultCurrentDirectoryInExePath=1` (Git for Windows
-  does this) stop `cmd.exe` from resolving executables in the working directory,
-  so the bare name fails in both PowerShell and Git Bash.
+- The gradle scripts no longer invoke `gradlew.bat` at all: `tools/android/gradle.mjs`
+  launches `gradle-wrapper.jar` with the JDK it resolved. That also sidesteps
+  `NoDefaultCurrentDirectoryInExePath=1` (Git for Windows sets it), which stops
+  `cmd.exe` resolving executables in the working directory and used to make the
+  bare `gradlew.bat` name fail in both PowerShell and Git Bash.
 
 The full submission path — Play Console setup, the every-release sequence, and
 the settings that are deliberate rather than accidental — is in
