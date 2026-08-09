@@ -1,6 +1,10 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
+  // `jsx-a11y` is on because this app has no other accessibility net: there is
+  // no design review, no screen-reader pass and no second pair of eyes. The
+  // three rules switched off below are switched off deliberately, with the
+  // reason next to each — nothing else in the plugin is.
+  "plugins": ["react", "typescript", "oxc", "jsx-a11y"],
   "overrides": [
     {
       "files": ["tools/**/*.ts", "tools/**/*.tsx", "tools/**/*.js", "tools/**/*.mjs"],
@@ -45,6 +49,29 @@
   ],
   "rules": {
     "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+
+    // A sheet opens because someone asked for it, and the first thing they want
+    // is the field it exists to fill — the search box, the list name. Focusing
+    // it is the point, not a surprise, and `useFocusTrap` then keeps focus
+    // inside and returns it to the trigger on close. The rule is written for
+    // autofocus on page load, which this is not.
+    "jsx-a11y/no-autofocus": "off",
+
+    // The backdrop's click handler is a convenience on top of a dismissal that
+    // already works without a pointer: `Sheet` wires Escape through
+    // `useDismissOnEscape` and the caller wires the Android back gesture. Adding
+    // a key handler to a decorative div would announce the backdrop as a
+    // control, which is the opposite of what these rules are protecting.
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+
+    // `<dialog>` brings its own top-layer, its own ::backdrop and its own focus
+    // and Escape behaviour, all of which would have to be fought rather than
+    // used — the sheet animates from the bottom lip, traps focus itself, and
+    // must not close on Escape without telling the caller. `role="dialog"` on a
+    // div announces identically and behaves the way this app needs.
+    "jsx-a11y/prefer-tag-over-role": "off"
   }
 }

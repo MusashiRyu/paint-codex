@@ -1,22 +1,20 @@
 import Fuse, { type IFuseOptions } from 'fuse.js';
 import type { Paint } from '../../domain/types';
 
-/**
- * Initialize Fuse.js search instance for fuzzy matching
- */
-export function initializeSearchIndex(paints: Paint[]): Fuse<Paint> {
-  const options: IFuseOptions<Paint> = {
-    keys: ['name', 'brand', 'category'],
-    threshold: 0.3,
-    minMatchCharLength: 2,
-    ignoreLocation: true,
-  };
-
-  return new Fuse(paints, options);
-}
+const FUSE_OPTIONS: IFuseOptions<Paint> = {
+  keys: ['name', 'brand', 'category'],
+  threshold: 0.3,
+  minMatchCharLength: 2,
+  ignoreLocation: true,
+};
 
 /**
- * Search paints by query and optional brand filter
+ * Fuzzy search over the catalogue, optionally narrowed to one brand.
+ *
+ * The index is rebuilt per call rather than memoised: the catalogue can be
+ * replaced underneath by the background refresh, and a stale index would keep
+ * answering with paints that are no longer in it. Building over 2,279 entries
+ * is cheap enough that caching it would buy less than the invalidation costs.
  */
 export function searchPaints(
   paints: Paint[],
@@ -29,7 +27,7 @@ export function searchPaints(
       : paints;
   }
 
-  const fuse = initializeSearchIndex(paints);
+  const fuse = new Fuse(paints, FUSE_OPTIONS);
   let results = fuse.search(query).map((result) => result.item);
 
   if (brandFilter) {
@@ -37,20 +35,4 @@ export function searchPaints(
   }
 
   return results;
-}
-
-/**
- * Get autocomplete suggestions based on query
- */
-export function getAutocompleteSuggestions(
-  paints: Paint[],
-  query: string,
-  limit = 10
-): Paint[] {
-  if (!query.trim()) {
-    return [];
-  }
-
-  const fuse = initializeSearchIndex(paints);
-  return fuse.search(query).slice(0, limit).map((result) => result.item);
 }

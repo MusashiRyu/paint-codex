@@ -1,35 +1,54 @@
-# React + TypeScript + Vite
+# Paco — Paint Codex
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A paint conversion table and list keeper for miniature painters. Look up a
+paint and Paco shows the closest equivalents in the other brands, ranked by a
+measured colour distance rather than by a guess; keep the results in named
+lists you build yourself.
 
-Currently, two official plugins are available:
+2,279 paints across every range Citadel, Vallejo and The Army Painter sell. The
+whole catalogue ships in the app, so it works with the radio off — the only
+network request it ever makes is a silent check for a newer catalogue at
+launch, and failing that check changes nothing a user can see.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+React 19 + TypeScript + Vite, wrapped for Android and iOS with Capacitor.
+State is Zustand persisted to localStorage; styling is CSS Modules over a token
+layer; search is Fuse.js. There is no backend, no account and no analytics.
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+npm install
+npm run dev          # Vite dev server
+npm test             # Vitest
+npm run lint         # oxlint
+npm run build        # tsc -b && vite build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Documentation lives in [documentation/](documentation/):
+[0.1-architecture.md](documentation/0.1-architecture.md) is the component table
+and the conventions, [0.2-design-system.md](documentation/0.2-design-system.md)
+is the token and primitive layer, `NNN-retro.md` is one file per work session,
+and [OPEN-ITEMS.md](documentation/OPEN-ITEMS.md) is the single list of known
+outstanding work.
+
+## Linting
+
+`.oxlintrc.json` runs oxlint's default `correctness` set plus the `react`,
+`typescript`, `oxc` and `jsx-a11y` plugins. Four `jsx-a11y` rules are switched
+off, each with its reason written next to it in that file — autofocus into a
+sheet's own input, the backdrop's click-to-dismiss, and `role="dialog"` over a
+native `<dialog>`. Nothing else is disabled, and the run must be clean.
+
+The wider categories (`pedantic`, `restriction`, `perf`) are deliberately not
+enabled: on this codebase they report the automatic JSX transform as a missing
+`React` import, the scraper's deliberately paced sequential fetches as a
+performance bug, and every explanatory inline comment as a style violation.
+A linter that has to be ignored is not a linter.
+
+Two `no-restricted-imports` rules in the same file enforce the one structural
+boundary that matters: `tools/` may not import app code and `src/` may not
+import build tooling, with a single sanctioned exception for the shared
+catalogue parser.
 
 ## Feature Flags
 

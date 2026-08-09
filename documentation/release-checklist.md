@@ -6,10 +6,24 @@ the mechanics.
 
 ---
 
-## Nothing is blocking the first submission
+## One thing is blocking the first submission
 
-The privacy policy is live. Paste this into Play Console → App content →
-Privacy policy:
+**The four store screenshots are stale**, and they are a listing field rather
+than a nice-to-have. They were captured before the catalogue went from 310
+paints to 2,279 and before the equivalent tiles started naming a range, so
+every one of them shows a UI that no longer exists. `npm run screenshots`
+cannot run on this machine — puppeteer-core will not launch the installed Edge
+(`Failed to launch the browser process: Code: 0`), confirmed again at 017.
+Install Chrome or point `CHROME_PATH` at a working binary, then:
+
+```bash
+npm run build && npm run screenshots
+```
+
+Tracked as OPEN-ITEMS 2. Nothing else is outstanding — in particular, the
+privacy policy is live.
+
+Paste this into Play Console → App content → Privacy policy:
 
 ```
 https://musashiryu.github.io/paint-codex/privacy.html

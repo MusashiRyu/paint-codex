@@ -26,7 +26,7 @@ write the file and `@capacitor/share` to hand it off. Decision taken
 2026-08-08: leave as is for now.
 
 ### 2. Store screenshots are stale after the catalogue change
-**Raised:** 014 · **Blocked on this machine**
+**Raised:** 014 · **Blocked on this machine** · **The one launch blocker**
 
 The catalogue went from 310 paints to 2,279 and the equivalent tiles now name a
 range as well as a brand, so every captured screen has moved. `npm run
@@ -37,6 +37,13 @@ updated to the new ids and persist version 4.
 
 Install Chrome or set `CHROME_PATH`, then `npm run build && npm run
 screenshots`. Must happen before the next Play submission.
+
+Retried at 017 against the installed Edge
+(`C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe`) via
+`CHROME_PATH`: same `Code: 0` failure, so the binary is found and refuses to
+start rather than being missing. Installing Chrome is the shorter path than
+debugging it. `documentation/release-checklist.md` now names this at the top as
+the only thing outstanding.
 
 ### 3. Shop links cover 186 paints out of 2,279
 **Raised:** 014 · **Dormant while the export flag is off**
@@ -103,6 +110,21 @@ Four things gate it, in order:
 
 Not started. Decision as of 2026-08-09: revisit after launch when
 there are install numbers to reason about.
+
+### 7. `npm audit` reports three moderate advisories, all dev-only
+**Raised:** 017 · **Watch, not fix**
+
+`npm audit` says three moderate. `npm audit --omit=dev` says zero: the chain is
+`@capacitor/cli` → `xcode` → `uuid`, and the advisory is a missing buffer bounds
+check in `uuid` v3/v5/v6 when a caller supplies its own `buf`. None of that code
+is in the app — `@capacitor/cli` is the tool that runs `cap sync`, and nothing
+it depends on is bundled.
+
+Written down because the fix is a trap: `npm audit fix --force` downgrades
+`@capacitor/cli` to 8.4.2, a breaking change to the toolchain that builds the
+release, in exchange for nothing that reaches a user. Wait for Capacitor to
+bump its own dependency. Re-check with `npm audit --omit=dev` before each
+release — that is the number that matters.
 
 ---
 

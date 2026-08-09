@@ -35,6 +35,8 @@ export { TextField } from './shared/ui/TextField';
 export type { TextFieldProps } from './shared/ui/TextField';
 export { Swatch } from './shared/ui/Swatch';
 export type { SwatchProps } from './shared/ui/Swatch';
+export { ExternalLink } from './shared/ui/ExternalLink';
+export type { ExternalLinkProps } from './shared/ui/ExternalLink';
 export { ListIconSvg } from './shared/ui/ListIconSvg';
 
 /* The list banner palette — persisted values, so hex rather than tokens. */

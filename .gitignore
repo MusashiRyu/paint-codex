@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# `tsc -b` incremental state. Machine-local and rewritten by every build; one
+# was committed once and then showed up as a diff on every checkout.
+*.tsbuildinfo
+
 # Written by `npm run test:coverage`. CI reads the lcov report from the run
 # itself, so there is never a reason to commit one.
 coverage

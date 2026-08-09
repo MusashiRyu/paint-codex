@@ -1,3 +1,16 @@
+> **Superseded — kept as the record of what was intended, not of what exists.**
+>
+> This is the pre-build plan, written before there was an app. It sat at the
+> repo root until retro 017, where a reader landing on it would have taken it
+> for current documentation, and several of its statements now read as false:
+> the runtime catalogue refresh it defers has shipped, the
+> `features/browse/*` components it lists were deleted in retro 005,
+> `useDarkMode.ts` and `hexToHSL` were never built, and CI exists.
+>
+> For what the app actually is, read [0.1-architecture.md](0.1-architecture.md).
+> This file is worth keeping only because it explains *why* the folders are
+> shaped the way they are, and what was deliberately excluded at the start.
+
 # Plan: Paint Conversion Web App
 
 **TL;DR**: Build a React web app that lets users search miniature paint colors across three brands (Citadel, Vallejo, Army Painter) and see color-matched alternatives with quality metrics. MVP focuses on search + display with client-side data; **Phase 1.5 refactors the codebase for a clean shipped-app / dev-tools separation before feature work continues**; Phase 2 adds paint lists + Markdown exports with shop links; Phase 3 adds iOS/Android via Capacitor.

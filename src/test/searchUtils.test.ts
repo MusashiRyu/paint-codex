@@ -1,9 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import type { Paint } from '../domain/types';
-import {
-  searchPaints,
-  getAutocompleteSuggestions,
-} from '../features/search/search';
+import { searchPaints } from '../features/search/search';
 import { getUniqueBrands, getTopMatches } from '../domain/paintQueries';
 import { getDeltaLabel, getDeltaQuality, getDeltaStyle } from '../shared/lib/color';
 
@@ -96,29 +93,6 @@ describe('searchPaints', () => {
   it('returns empty array when no match found', () => {
     const results = searchPaints(mockPaints, 'xyznonexistentpaint');
     expect(results).toHaveLength(0);
-  });
-});
-
-// ─── getAutocompleteSuggestions ──────────────────────────────────────────────
-
-describe('getAutocompleteSuggestions', () => {
-  it('returns empty array for empty query', () => {
-    expect(getAutocompleteSuggestions(mockPaints, '')).toHaveLength(0);
-  });
-
-  it('returns suggestions matching the query', () => {
-    const suggestions = getAutocompleteSuggestions(mockPaints, 'white');
-    expect(suggestions.length).toBeGreaterThan(0);
-  });
-
-  it('respects the limit parameter', () => {
-    const suggestions = getAutocompleteSuggestions(mockPaints, 'white', 1);
-    expect(suggestions).toHaveLength(1);
-  });
-
-  it('returns at most 10 by default', () => {
-    const suggestions = getAutocompleteSuggestions(mockPaints, 'a');
-    expect(suggestions.length).toBeLessThanOrEqual(10);
   });
 });
 

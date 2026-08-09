@@ -80,7 +80,14 @@ export function setPaints(next: Paint[], htmlHash?: string): void {
   for (const listener of listeners) listener();
 }
 
-/** Restore the bundled snapshot. Test seam; also used if a cache is rejected. */
+/**
+ * Restore the bundled snapshot.
+ *
+ * A test seam, and only that: a rejected cache never reaches here, because
+ * `readCachedCatalog` answers undefined and the seeding above falls through to
+ * the bundled array on its own. Kept because the catalogue is module state
+ * seeded at import, so a test that replaces it has no other way back.
+ */
 export function resetPaints(): void {
   setPaints(bundledPaints, undefined);
 }
