@@ -160,11 +160,31 @@ To read the upload certificate fingerprint, if the Console asks for it:
 
 ### 1. Bump the version
 
-`android/app/build.gradle`:
+Edit `android/app/build.gradle` and nothing else. It is the only place a
+release version is decided:
 
 - `versionCode` — an integer, **must increase on every upload**. Play rejects a
   reused one, and there is no way to reclaim a number.
 - `versionName` — the human string, e.g. `1.0.0` → `1.0.1`.
+
+Three other files restate those two values, and `src/test/appVersion.test.ts`
+asserts all three against the gradle file, so a half-done bump fails step 2
+rather than shipping:
+
+| Restates | Where | Shown when |
+| --- | --- | --- |
+| `versionName` | `APP_VERSION` in `src/app/config.ts` | Web build only — on a device `App.getInfo()` answers instead |
+| `versionName` | `MARKETING_VERSION`, both iOS build configurations | `CFBundleShortVersionString` on an iOS build |
+| `versionCode` | `CURRENT_PROJECT_VERSION`, both iOS build configurations | `CFBundleVersion` on an iOS build |
+
+The iOS values are the easy ones to forget: they cannot be built on this
+machine (OPEN-ITEMS 4), so nothing here ever renders them. `Info.plist` reads
+both through `$(…)` and needs no edit.
+
+Note that iOS and Play count uploads separately. `CURRENT_PROJECT_VERSION` is
+pinned to `versionCode` to keep one number to bump; if App Store Connect ever
+rejects a build number, that pin is the thing to reconsider — and the test with
+it.
 
 ### 2. Verify
 
