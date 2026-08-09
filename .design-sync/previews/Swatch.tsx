@@ -1,4 +1,4 @@
-import { Swatch } from 'paco';
+import { Badge, Swatch } from 'paco';
 
 const Panel = ({ children }: { children: React.ReactNode }) => (
   <div style={{ background: 'var(--bg-sheet)', padding: 22, borderRadius: 'var(--radius-sheet)', display: 'flex', alignItems: 'flex-start', gap: 14, flexWrap: 'wrap' }}>
@@ -23,10 +23,14 @@ export const DarkAndPale = () => (
   </Panel>
 );
 
-export const BlockInATile = () => (
+/** Square, so the rest of the tile's first row is free for a status badge. */
+export const TileHead = () => (
   <Panel>
-    <div style={{ width: 104, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 'var(--radius-md)', padding: 9 }}>
-      <Swatch color="#8d1109" size="block" />
+    <div style={{ width: 156, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 'var(--radius-md)', padding: 9 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-chip)' }}>
+        <Swatch color="#8d1109" size="tile" />
+        <Badge tone="success">IN LIST</Badge>
+      </div>
       <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--size-sm)', color: 'var(--text-primary)', marginTop: 7 }}>Mid Red</div>
       <div style={{ fontSize: 'var(--size-xs)', color: 'var(--text-secondary)', marginTop: 2 }}>Vallejo</div>
     </div>

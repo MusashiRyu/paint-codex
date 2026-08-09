@@ -195,16 +195,31 @@ export function SearchSheet({
                       <div className={styles.equivGrid}>
                         {equivalents.map(({ paint: equivalent, delta }) => {
                           const style = getDeltaStyle(delta);
+                          // The same membership fact the card above reports, on
+                          // the paint the tile stands for.
+                          const equivInList = activeIds.has(equivalent.id);
                           return (
                             <button
                               key={equivalent.id}
                               type="button"
                               className={styles.equivCard}
                               onClick={() => jumpToMatch(equivalent)}
-                              aria-label={`Go to ${equivalent.name} by ${equivalent.brand}`}
+                              aria-label={
+                                `Go to ${equivalent.name} by ${equivalent.brand}` +
+                                // The badge is inside the button, so its text is
+                                // swallowed by this label unless it is repeated.
+                                (equivInList ? ', already in list' : '')
+                              }
                             >
                               {/* Spans, since a button may only hold phrasing content. */}
-                              <Swatch color={equivalent.hex} size="block" as="span" />
+                              <span className={styles.equivHead}>
+                                <Swatch color={equivalent.hex} size="tile" as="span" />
+                                {equivInList && (
+                                  <Badge as="span" tone="success">
+                                    IN LIST
+                                  </Badge>
+                                )}
+                              </span>
                               <span className={styles.equivName}>{equivalent.name}</span>
                               <span className={styles.equivBrand}>
                                 {equivalent.category

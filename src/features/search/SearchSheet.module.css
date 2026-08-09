@@ -143,6 +143,16 @@
   outline: none;
 }
 
+/* The square swatch, and the IN LIST badge in the room it left beside it. The
+ * badge never shrinks, so on a card too narrow to seat both it wraps under the
+ * swatch rather than being clipped. */
+.equivHead {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-chip);
+  flex-wrap: wrap;
+}
+
 .equivName {
   font-family: var(--font-display);
   font-size: var(--size-sm);

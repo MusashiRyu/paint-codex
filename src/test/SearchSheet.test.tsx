@@ -126,6 +126,29 @@ describe('SearchSheet equivalents', () => {
     expect(within(tile).getByText('Vallejo · Game Color')).toBeInTheDocument();
   });
 
+  it('marks an equivalent that is already in the list', () => {
+    render(
+      <SearchSheet
+        paintCatalog={catalog}
+        listedPaintIds={['vallejo-game-color-gory-red']}
+        onAdd={vi.fn()}
+        onClose={vi.fn()}
+      />
+    );
+    fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
+    const card = within(cardFor('Mephiston Red'));
+
+    // The tile reports membership exactly as the result card above it does...
+    const listed = card.getByRole('button', {
+      name: 'Go to Gory Red by Vallejo, already in list',
+    });
+    expect(within(listed).getByText('IN LIST')).toBeInTheDocument();
+
+    // ...and a paint that is not in the list carries no badge.
+    const unlisted = card.getByRole('button', { name: 'Go to Mid Red by Vallejo' });
+    expect(within(unlisted).queryByText('IN LIST')).not.toBeInTheDocument();
+  });
+
   it('colours each pill from the shared delta thresholds', () => {
     renderSheet();
     const card = within(cardFor('Mephiston Red'));
