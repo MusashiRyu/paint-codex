@@ -22,7 +22,13 @@ npm run dev          # Vite dev server
 npm test             # Vitest
 npm run lint         # oxlint
 npm run build        # tsc -b && vite build
+npm run check:layout # layout invariants at 7 phone widths, in a real browser
 ```
+
+`check:layout` needs `npm run build` first — it drives `dist/`. It exists
+because jsdom has no layout engine: the IN LIST badge wrapping onto its own
+line on a 412px phone, but not a 390px one, passed all 128 unit tests. See
+[tools/layout/check-layout.mjs](tools/layout/check-layout.mjs).
 
 Documentation lives in [documentation/](documentation/):
 [0.1-architecture.md](documentation/0.1-architecture.md) is the component table
@@ -116,11 +122,11 @@ files and regenerates the `@font-face` rules.
 
 ## Continuous Integration
 
-`.github/workflows/ci.yml` runs lint, typecheck, tests and a production build
-on every push and pull request. To reproduce it locally:
+`.github/workflows/ci.yml` runs lint, typecheck, tests, a production build and
+the layout check on every push and pull request. To reproduce it locally:
 
 ```bash
-npm run lint && npx tsc -b --noEmit && npm test && npx vite build
+npm run lint && npx tsc -b --noEmit && npm test && npx vite build && npm run check:layout
 ```
 
 ## Mobile Deployment (iOS + Android)
@@ -217,11 +223,11 @@ after any visual change that reaches a captured screen — and *look at them*, a
 two of the capture steps use `?.click()` and would no-op silently if a selector
 stopped matching. A run that exits zero is not proof.
 
-`npm run screenshots` tries each browser it knows about until one launches:
-`CHROME_PATH` if set, then Chrome, then a Chromium in Playwright's shared cache,
-then Edge. If none start it prints each candidate with why — `absent` reads very
-differently from `exists, but did not start`, and only one of them means you
-need to install something.
+Every browser-driven tool shares one launcher, `tools/lib/browser.mjs`, which
+tries each candidate until one launches: `CHROME_PATH` if set, then Chrome, then
+a Chromium in Playwright's shared cache, then Edge. If none start it prints each
+candidate with why — `absent` reads very differently from `exists, but did not
+start`, and only one of them means you need to install something.
 
 Listing copy, the Data safety answers and the privacy policy text are in
 [store/](store/).
