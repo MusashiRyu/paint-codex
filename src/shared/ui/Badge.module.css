@@ -15,6 +15,16 @@
   border-color: var(--ok-muted-border);
 }
 
+/* The same 11px on the same 3px lead as .block below, so the IN LIST badge at
+ * the head of an equivalent tile stands exactly as tall as the delta pill at
+ * its foot. Keeps the tracking .block drops: that one sets numbers, this one
+ * sets a Cinzel label. */
+.compact {
+  font-size: var(--size-xs);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
 /* Fills its column and centres — the delta pill under an equivalent tile. */
 .block {
   display: block;

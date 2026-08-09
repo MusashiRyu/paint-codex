@@ -215,7 +215,7 @@ export function SearchSheet({
                               <span className={styles.equivHead}>
                                 <Swatch color={equivalent.hex} size="tile" as="span" />
                                 {equivInList && (
-                                  <Badge as="span" tone="success">
+                                  <Badge as="span" tone="success" compact>
                                     IN LIST
                                   </Badge>
                                 )}

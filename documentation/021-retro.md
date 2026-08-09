@@ -37,6 +37,16 @@ swatch and the tile grows a line, rather than the badge being clipped to
 "IN LI". Verified in Chromium at 360px (side by side, as designed) and at 320px
 (wrapped, legible).
 
+The badge sits at the tile's right edge, by `justify-content: space-between`
+rather than an auto margin on the badge — the head row also renders with only
+a swatch in it, and an auto margin there would strand that lone swatch on the
+right.
+
+It is also `Badge compact`, a variant added for this: 11px on a 3px lead, the
+delta pill's own metrics, so the badge at the head of a tile and the pill at
+its foot are the same height. It keeps the Cinzel tracking `block` drops —
+`block` sets a number, `compact` sets a label.
+
 ### The label swallows what it names
 
 The badge is inside the button, and a button with `aria-label` exposes that
@@ -51,10 +61,12 @@ which is the reason it is spelled out here: a future assertion on
 
 **Modified**
 - `src/shared/ui/Swatch.tsx` / `Swatch.module.css` — `block` → `tile`, square
+- `src/shared/ui/Badge.tsx` / `Badge.module.css` — the `compact` variant
 - `src/features/search/SearchSheet.tsx` — per-tile membership, badge, label
 - `src/features/search/SearchSheet.module.css` — `.equivHead`
 - `src/test/SearchSheet.test.tsx` — a listed and an unlisted tile in one card
 - `.design-sync/previews/Swatch.tsx` — `BlockInATile` → `TileHead`
+- `.design-sync/previews/Badge.tsx` — `CompactBesideDelta`
 - `documentation/0.1-architecture.md` — Badge, Swatch and Search sheet rows
 
 ## Assumptions made
@@ -62,10 +74,12 @@ which is the reason it is spelled out here: a future assertion on
 - **`block` had one caller, so it was renamed rather than kept.** A square
   named `block` would be a lie in the one place it is used, and the bundle is
   generated from this source — nothing outside the repo pins the old name.
-- **The wrap at 320px is better than a second, smaller badge.** A compact
-  variant would fit that width, at the cost of two IN LIST badges in the design
-  system that mean the same thing and differ only in padding. The screen it
-  affects is a 320px phone, and what it does there is add one line to a tile.
+- **`compact` earns its place by pairing, not by fitting.** The first pass
+  refused a second badge size on the grounds that two IN LIST badges differing
+  only in padding is not a design system. It went in anyway, for a reason the
+  first pass did not have: the tile now holds two badges, and two badges in one
+  tile at two heights is the worse duplication. It buys nothing at 320px — the
+  head row still wraps there, since 34px + gap + badge does not fit either way.
 - **A listed equivalent still jumps.** The alternative — disabling the tile, as
   `.equivCard:disabled` anticipates — would remove the only route to a paint's
   own row and its equivalents, which is a reason to visit it whether or not it

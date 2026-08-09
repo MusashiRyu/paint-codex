@@ -27,9 +27,9 @@ export const DarkAndPale = () => (
 export const TileHead = () => (
   <Panel>
     <div style={{ width: 156, background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 'var(--radius-md)', padding: 9 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--gap-chip)' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--gap-chip)' }}>
         <Swatch color="#8d1109" size="tile" />
-        <Badge tone="success">IN LIST</Badge>
+        <Badge tone="success" compact>IN LIST</Badge>
       </div>
       <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--size-sm)', color: 'var(--text-primary)', marginTop: 7 }}>Mid Red</div>
       <div style={{ fontSize: 'var(--size-xs)', color: 'var(--text-secondary)', marginTop: 2 }}>Vallejo</div>
