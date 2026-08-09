@@ -110,10 +110,19 @@
 
 /* Columns stretch to eat the row rather than leaving a ragged gutter on the
  * right — auto-fill, not auto-fit, so two equivalents stay tile-sized instead
- * of ballooning across the whole card. */
+ * of ballooning across the whole card.
+ *
+ * The 136px minimum is the head row's own width, measured rather than guessed:
+ * a 34px swatch, an 8px gap and a 64px IN LIST badge need 106px of content,
+ * plus 18px of tile padding and 2px of border. It was 104px, which let a 412px
+ * phone fit three columns of 87px — too narrow for the pair, so the badge
+ * wrapped under the swatch on exactly the devices with the most room. Widening
+ * the floor means such a phone shows two roomier tiles instead of three cramped
+ * ones, and three only once they genuinely fit. Any change to the badge or the
+ * swatch has to be re-measured here; `npm run check:layout` is what checks it. */
 .equivGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(104px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
   gap: 10px;
 }
 
