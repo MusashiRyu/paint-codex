@@ -1,78 +1,122 @@
-# Retro 019 — One version number, four places, no enforcement on three
+# Retro 019 — Removing an email address, including from history
 
-Prompted by a question about the `1.0.0` at the bottom of the About sheet: how
-is that determined? Tracing it turned up a system that was half-built. The
-Android half was solid and enforced. The iOS half was Capacitor's default, said
-`1.0` where everything else said `1.0.0`, and nothing would ever have noticed.
-
-## Where the version actually comes from
-
-`android/app/build.gradle` decides it — `versionCode 1`, `versionName "1.0.0"`,
-both hand-edited per release. Everything user-visible descends from those two
-lines.
-
-The About sheet does not read a constant. `AboutSheet` calls
-`CapacitorApp.getInfo()` and shows the *installed package's* version, so on a
-device the number is whatever was actually shipped and cannot be stale. The
-`1.0.0` in `src/app/config.ts` is only the fallback for the web build, where
-there is no native package to ask.
-
-That fallback was already pinned to `build.gradle` by `appVersion.test.ts`, and
-the reasoning in that test is the right one: the value shows only on the path
-nobody tests on, so nothing but an assertion will catch it going stale.
-
-## What was wrong
-
-The same argument applies twice more, harder, and had not been made:
-
-- `MARKETING_VERSION` was `1.0` in both iOS build configurations, against a
-  `versionName` of `1.0.0`. Already drifted, at rest, in the repo.
-- `CURRENT_PROJECT_VERSION` was `1`, which happens to match `versionCode 1` —
-  by coincidence, not by anything.
-
-Neither can be rendered on this machine, because an iOS build needs a Mac
-(OPEN-ITEMS 4). A value nobody can see locally and no test asserts is not a
-value, it is a guess that will be discovered by the App Store.
+The contact email address is gone from the repo and from every commit in it.
+Three occurrences in the working tree, two commits' worth in history, and one
+stale branch nobody had noticed was still holding it.
 
 ## What was done
 
-`MARKETING_VERSION` is now `1.0.0` in both configurations. `Info.plist` already
-reads both settings through `$(MARKETING_VERSION)` and
-`$(CURRENT_PROJECT_VERSION)`, so there was nothing to change there.
+### The three live occurrences
 
-`appVersion.test.ts` grew from one assertion to four: `versionName` and
-`versionCode` are extracted from `build.gradle`, then `APP_VERSION`,
-`MARKETING_VERSION` and `CURRENT_PROJECT_VERSION` are each asserted against
-them. The pbxproj is matched with `matchAll` rather than `exec` deliberately —
-it carries a Debug and a Release configuration today and Xcode adds more when a
-scheme is added, so asserting on the first match would let a second
-configuration drift silently.
+Not, as it happened, in `AboutSheet.tsx`. The About sheet links out to the
+privacy policy, and the address was on *that* page — which is what "the about
+page has an email address" turned out to mean.
 
-The test was checked by breaking it, not by watching it pass: setting
-`MARKETING_VERSION` back to `1.0` and `versionCode` to `2` produced
-`expected '1.0' to be '1.0.0'` and `expected '1' to be '2'`, then both edits
-were reverted. A pin that has never been seen to fail is not known to be a pin.
+| Where | Was | Now |
+| --- | --- | --- |
+| `store/privacy-policy.md` | Contact section | Points at the public issue tracker |
+| `docs/privacy.html` | Generated from the above | Regenerated with `npm run privacy` |
+| `store/listing.md` | Play's contact-email field | Recorded as chosen in Console, not written down |
 
-## What was deliberately left
+**No address replaces it.** The privacy policy now sends people to
+`github.com/MusashiRyu/paint-codex/issues`, with the two caveats that honestly
+follow: an issue is public, so nothing private belongs in one; and there is
+nothing to request access to or erasure of in the first place, because the app
+holds no personal data. That second point matters more than it looks — a
+Contact section on a privacy policy implies a data-subject request channel, and
+this one has no records to act on. Saying so is more useful than implying
+otherwise.
 
-`package.json` still says `"version": "0.0.0"`. It is the Vite template's
-default and nothing reads it — not the build, not Capacitor, not the store
-listing. Adding it to the pinned set would mean one more thing to bump for a
-number that appears nowhere. Left alone, and written down here so the next
-person who greps `version` does not think it is a bug.
+`store/listing.md` keeps the row and drops the value. That is a deliberate
+exception to the entire reason that file exists — every other field is reviewed
+in the repo *so that it is not improvised into a web form at midnight* — so the
+Notes cell says why, and `release-checklist.md` step 4 now carries a callout,
+because a required field that cannot be copied out of the repo is precisely the
+one that gets forgotten at submission time.
 
-Also unchanged: the two *internal* version counters, which are correctly
-unrelated to the release version. `store.ts` has `version: 4` on the persisted
-list state with a cumulative `migrate`; `paintCatalogCache.ts` has
-`CACHE_VERSION = 1`, which invalidates rather than migrates. Tying either to
-the release number would mean a patch release implying a migration.
+### The history rewrite
 
-## Verified
+`git filter-repo` was unavailable — it is a Python script and Python is not
+installed on this machine — so this was `git filter-branch` with a content
+filter, across all 75 commits of `master`.
 
-- `npm run lint` — clean.
-- `npx tsc -b --noEmit` — clean.
-- `npm test` — 12 files, 127 tests (was 124), all passing.
-- Both failure modes of the new assertions observed, then reverted.
+**Anyone holding a clone of this repo must re-clone.** Every commit hash from
+the first one onward has changed; `origin/master` moved from `f9e7373` to
+`0263168` by force-push. There are no other branches, no tags and no open PRs,
+which is the only reason this was cheap.
+
+#### The first pass missed a file, and the reason generalises
+
+The obvious filter is a list of the paths you know are affected:
+
+```sh
+for f in store/privacy-policy.md store/listing.md docs/privacy.html; do …
+```
+
+That pass ran clean and the pickaxe still found two commits. The privacy page
+was originally generated at **`store/privacy.html`** and only moved to `docs/`
+later, so in the commits where it was introduced the path in the filter did not
+exist yet.
+
+A path-based history filter is only as good as your memory of every path a file
+has ever had — and a rename is exactly the thing you forget. The second pass
+matched on content instead:
+
+```sh
+grep -rlI "$DOMAIN" . | while read -r f; do sed -i "s/…/…/g" "$f"; done
+```
+
+`$DOMAIN` held the address; this document deliberately does not restate it,
+for the reason retro 020 records.
+
+Slower per commit, correct regardless of where the file lived. Redacted to
+`redacted@example.invalid` rather than to a marker, because `.invalid` is a
+reserved TLD that can never route and it keeps the surrounding HTML valid.
+
+#### The branch nobody was looking at
+
+`backup/pre-email-rewrite` — 59 commits, local-only, never pushed, tip
+`412c833`. It was the safety net for an *earlier* rewrite that changed the
+commit author from a personal Gmail address to the GitHub noreply, and it had
+outlived its purpose by a couple of days.
+
+It was still holding both the address and the old author email — the second
+being the very thing that earlier rewrite existed to remove. Deleting it, then
+`gc --prune=now`, purged both. The author email across all of history is now
+the noreply address alone.
+
+### How it was verified
+
+Pickaxe (`git log --all -S`) is the usual check and it is not sufficient on its
+own: `-S` matches a commit where the *count* of a string changed, so a commit
+that only ever removed the address still shows up, which reads as a failure when
+it is not. The check that actually settles it is a scan of every blob in the
+object store — `--batch-all-objects`, so unreachable objects are included too:
+
+```sh
+git cat-file --batch-all-objects --batch-check='%(objecttype) %(objectname)' \
+  | awk '$1=="blob"{print $2}' \
+  | while read b; do git cat-file blob "$b" | grep -qI "$DOMAIN" && echo "HIT $b"; done
+```
+
+Zero hits after the gc. Before it, that same scan is what confirmed the two
+remaining sources were the stale remote-tracking ref and the backup branch,
+rather than something the filter had missed.
+
+The tip tree was diffed against the pre-rewrite commit and is byte-identical, so
+the rewrite touched history and nothing else. `git fsck` is clean. Lint,
+typecheck, 127 tests, build and `listing:check` all pass.
+
+## Measured, and found not to be a problem
+
+- **Removing the address does not un-publish it.** The repo is public and the
+  privacy policy has been live on GitHub Pages, so the address has already been
+  served, crawled and very likely cached. GitHub also keeps unreachable objects
+  reachable by API for a while after a force-push. The rewrite stops it being
+  *distributed* going forward; it is not a recall, and it was not treated as one.
+- **A pre-scrub bundle existed for the duration.** `git bundle create --all`
+  into the session scratchpad, kept until the push was verified, then deleted —
+  keeping it would have preserved on disk exactly what the scrub removed.
 
 ## Files changed
 
@@ -80,23 +124,24 @@ the release number would mean a patch release implying a migration.
 - `documentation/019-retro.md`
 
 **Modified**
-- `ios/App/App.xcodeproj/project.pbxproj` — `MARKETING_VERSION` `1.0` → `1.0.0`
-  in the Debug and Release configurations
-- `src/test/appVersion.test.ts` — rewritten; four assertions, pbxproj coverage
-- `documentation/release-checklist.md` — step 1 now says to edit `build.gradle`
-  and nothing else, with a table of what restates it and when each is shown
-- `documentation/0.1-architecture.md` — the `config.ts` and tests rows
+- `store/privacy-policy.md` — Contact section
+- `store/listing.md` — contact-email row
+- `docs/privacy.html` — regenerated
+- `documentation/release-checklist.md` — callout at step 4
+
+**History**
+- All 75 commits of `master` rewritten; force-pushed
+- `backup/pre-email-rewrite` deleted
 
 ## Assumptions made
 
-- **One number for both stores.** `CURRENT_PROJECT_VERSION` is pinned to
-  `versionCode` so there is a single integer to bump. iOS and Play count
-  uploads independently, so if App Store Connect ever rejects a build number
-  that pin is what to reconsider — noted in the checklist rather than solved in
-  advance for a store the app has never submitted to.
-- **`MARKETING_VERSION` is unquoted in the pbxproj.** `1.0.0` needs no quotes
-  there and Xcode writes it bare; if Xcode ever rewrites the file with quotes,
-  the test's `([^;]+)` capture will include them and fail loudly rather than
-  pass wrongly.
+- **GitHub Issues is an adequate privacy contact for this app.** It is public,
+  which is a real drawback for a privacy question, and it is defensible only
+  because there is no personal data and therefore no request anyone could need
+  to make privately. If the app ever collects anything, this needs a private
+  channel and the policy needs rewriting.
+- **The Play contact email is set in Console and never returns to the repo.**
+  The checklist callout is the only thing preventing that from being discovered
+  at submission time.
 
 Open work: [OPEN-ITEMS.md](OPEN-ITEMS.md).

@@ -120,6 +120,18 @@ and `store/graphics/`:
 Then **Store settings** for category (Art & Design) and contact details, and
 **Countries / regions** for availability.
 
+> **The contact email is the one field you have to supply from memory.** It is
+> required and shown publicly, and since 019 it is deliberately not recorded in
+> `store/listing.md` — this repo is public and a listing address gets scraped.
+> Every other field on this checklist can be copied out of the repo; this one
+> cannot, which is exactly why it is called out here rather than left to the
+> generic "contact details" above.
+>
+> Pick an address you are willing to publish, and prefer an alias you can retire
+> over a personal mailbox. The privacy policy does *not* carry it — that points
+> at the issue tracker instead — so this Console field is the only place it
+> exists.
+
 ### 5. Closed testing, then production
 
 **Testing → Closed testing → Create new release.** Upload
