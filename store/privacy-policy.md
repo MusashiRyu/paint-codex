@@ -105,4 +105,10 @@ being added — and a new request would be described here before it shipped.
 
 ## Contact
 
-Questions about this policy: **redacted@example.invalid**
+Questions about this policy: open an issue at
+[github.com/MusashiRyu/paint-codex/issues](https://github.com/MusashiRyu/paint-codex/issues).
+
+That tracker is public, so do not put anything private in an issue. There is
+also nothing here to request access to or erasure of: the app collects no
+personal data and sends none anywhere, so the only questions this section can
+answer are about the policy itself.

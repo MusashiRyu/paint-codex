@@ -100,7 +100,7 @@ first release on any track; write a real changelog from 1.0.1 onward.
 
 | Field | Value | Notes |
 | --- | --- | --- |
-| Contact email | `redacted@example.invalid` | **Required**, and shown publicly on the listing. |
+| Contact email | *Chosen in Console — deliberately not recorded here* | **Required**, and shown publicly on the listing. The one field in this document that is not written down in it: this repo is public, and a listing address is scraped hard enough that it should not also sit in a git history. Everything else here is reviewed in the repo precisely so it is not improvised into a web form; this one is improvised on purpose. |
 | Contact website | `https://musashiryu.github.io/paint-codex/` | Optional but worth filling; it is the app's landing page and links to the policy. |
 | Contact phone | — | Optional. Leave blank; it is also shown publicly. |
 | External marketing | Leave unticked | The app does not advertise outside Play. |
