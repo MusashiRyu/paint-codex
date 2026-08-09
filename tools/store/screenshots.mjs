@@ -13,21 +13,14 @@
  * Output: store/graphics/screenshots/*.png at 1080x1920.
  *
  * Uses puppeteer-core against a Chromium already on the machine, so no browser
- * download. Override with CHROME_PATH if it picks the wrong one.
+ * download. Override with CHROME_PATH if it picks the wrong one — the browser
+ * and the preview server both come from tools/lib/browser.mjs.
  */
-import { spawn } from 'node:child_process';
-import { existsSync, readdirSync } from 'node:fs';
 import { mkdir } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import puppeteer from 'puppeteer-core';
+import { join } from 'node:path';
+import { launchBrowser, repoRoot, startPreview } from '../lib/browser.mjs';
 
-const here = dirname(fileURLToPath(import.meta.url));
-const repoRoot = join(here, '..', '..');
 const outDir = join(repoRoot, 'store', 'graphics', 'screenshots');
-
-const PORT = 4173;
-const ORIGIN = `http://localhost:${PORT}`;
 
 /**
  * 1080x1920 is the safest phone screenshot Play takes: 9:16, comfortably inside
@@ -35,46 +28,6 @@ const ORIGIN = `http://localhost:${PORT}`;
  * viewport, so the app lays out as a phone instead of a very large tablet.
  */
 const VIEWPORT = { width: 360, height: 640, deviceScaleFactor: 3, isMobile: true, hasTouch: true };
-
-/**
- * Chromium downloaded by Playwright into its shared cache, newest build first.
- *
- * This binary belongs to another tool. Nothing here installs it, nothing here
- * updates it, and a `playwright uninstall` would take it away — it is a
- * convenience, not a dependency, and everything still works without it. It is
- * on the list because it is a real Chromium that was already sitting on the
- * machine while this script was declaring no browser available.
- */
-function playwrightChromiums() {
-  const root = process.env.LOCALAPPDATA && join(process.env.LOCALAPPDATA, 'ms-playwright');
-  if (!root || !existsSync(root)) return [];
-  try {
-    return readdirSync(root)
-      .filter((name) => name.startsWith('chromium-'))
-      // Build numbers, so compare numerically — 'chromium-9' sorts after
-      // 'chromium-1234' as a string.
-      .sort((a, b) => Number(b.slice(9)) - Number(a.slice(9)))
-      .map((name) => join(root, name, 'chrome-win64', 'chrome.exe'));
-  } catch {
-    return [];
-  }
-}
-
-/**
- * Ordered by preference, not by likelihood. CHROME_PATH first because an
- * explicit override must always win; Edge last because it is the one with a
- * demonstrated failure on the maintainer's machine — see 018.
- */
-const CHROME_CANDIDATES = [
-  process.env.CHROME_PATH,
-  'C:/Program Files/Google/Chrome/Application/chrome.exe',
-  'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-  ...playwrightChromiums(),
-  '/usr/bin/google-chrome',
-  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
-].filter(Boolean);
 
 /**
  * Seed state, written straight into the persist key rather than clicked in.
@@ -127,78 +80,6 @@ const SEED = {
 };
 
 /**
- * The first candidate that actually starts, not the first one that exists.
- *
- * Those are different things, and the difference cost two retros. Edge is
- * installed on the maintainer's machine and refuses to launch under
- * puppeteer-core (`Failed to launch the browser process: Code: 0`, empty
- * stderr). Picking by `existsSync` meant Edge was chosen, the run died, and the
- * error said "no Chromium found" while a working Chromium sat on the same disk.
- * Trying each in turn means installing a browser later, or losing one, needs no
- * edit here.
- *
- * The rejection list is the whole point of the failure message: "absent" sends
- * you to install something, a launch error sends you to a different browser.
- */
-async function launchBrowser() {
-  const rejected = [];
-
-  for (const path of CHROME_CANDIDATES) {
-    if (!existsSync(path)) {
-      rejected.push(`${path}\n      absent`);
-      continue;
-    }
-    try {
-      const browser = await puppeteer.launch({
-        executablePath: path,
-        headless: true,
-        args: ['--hide-scrollbars', '--force-color-profile=srgb'],
-      });
-      console.log(`chromium: ${path}`);
-      return browser;
-    } catch (error) {
-      const reason = error instanceof Error ? error.message.split('\n')[0] : String(error);
-      rejected.push(`${path}\n      exists, but did not start: ${reason}`);
-    }
-  }
-
-  throw new Error(
-    `No Chromium could be launched. Tried:\n    ${rejected.join('\n    ')}\n\n` +
-      `Set CHROME_PATH to a Chrome or Edge binary that starts.`
-  );
-}
-
-/** Serve dist/ with vite preview and resolve once it is actually answering. */
-async function startPreview() {
-  if (!existsSync(join(repoRoot, 'dist', 'index.html'))) {
-    throw new Error('dist/index.html not found. Run `npm run build` first.');
-  }
-  // Vite's JS entry point rather than `npx vite`: on Windows npx resolves to a
-  // .cmd, which Node refuses to spawn without a shell, and a shell then wants
-  // the arguments concatenated into one escaped string. Running the script with
-  // the current node binary sidesteps both.
-  const viteBin = join(repoRoot, 'node_modules', 'vite', 'bin', 'vite.js');
-  const child = spawn(
-    process.execPath,
-    [viteBin, 'preview', '--port', String(PORT), '--strictPort'],
-    { cwd: repoRoot, stdio: 'ignore' }
-  );
-
-  const deadline = Date.now() + 30_000;
-  while (Date.now() < deadline) {
-    try {
-      const res = await fetch(ORIGIN);
-      if (res.ok) return child;
-    } catch {
-      // Not listening yet.
-    }
-    await new Promise((r) => setTimeout(r, 250));
-  }
-  child.kill();
-  throw new Error(`vite preview did not come up on ${ORIGIN} within 30s.`);
-}
-
-/**
  * The catalogue refresh fires once per launch against raw.githubusercontent.com.
  * Left alone it can swap the paints mid-capture, so a screenshot run would
  * depend on upstream and on the network. Block it and let the app fall back to
@@ -212,17 +93,17 @@ async function blockUpstream(page) {
   });
 }
 
-async function openApp(browser) {
+async function openApp(browser, origin) {
   const page = await browser.newPage();
   await page.setViewport(VIEWPORT);
   await blockUpstream(page);
 
   // localStorage is origin-scoped, so the page has to exist before seeding it.
-  await page.goto(ORIGIN, { waitUntil: 'domcontentloaded' });
+  await page.goto(origin, { waitUntil: 'domcontentloaded' });
   await page.evaluate((seed) => {
     localStorage.setItem('paco-app-store', JSON.stringify(seed));
   }, SEED);
-  await page.goto(ORIGIN, { waitUntil: 'networkidle0' });
+  await page.goto(origin, { waitUntil: 'networkidle0' });
   await page.waitForSelector('button[aria-label="Add paint"]');
   return page;
 }
@@ -250,7 +131,7 @@ async function main() {
   let preview;
   try {
     preview = await startPreview();
-    const page = await openApp(browser);
+    const page = await openApp(browser, preview.origin);
 
     await shoot(page, '01-list');
 
@@ -280,7 +161,7 @@ async function main() {
     console.log('screenshots showing placeholder or debug content.');
   } finally {
     await browser.close();
-    preview?.kill();
+    preview?.child.kill();
   }
 }
 

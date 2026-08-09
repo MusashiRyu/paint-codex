@@ -12,29 +12,15 @@
  *
  * Output: store/graphics/feature-graphic.png
  */
-import { existsSync } from 'node:fs';
 import { mkdir, readFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import puppeteer from 'puppeteer-core';
+import { join } from 'node:path';
+import { launchBrowser, repoRoot } from '../lib/browser.mjs';
 
-const here = dirname(fileURLToPath(import.meta.url));
-const repoRoot = join(here, '..', '..');
 const outDir = join(repoRoot, 'store', 'graphics');
 
 /** Fixed by Google. Not a suggestion -- Play rejects any other size. */
 const WIDTH = 1024;
 const HEIGHT = 500;
-
-const CHROME_CANDIDATES = [
-  process.env.CHROME_PATH,
-  'C:/Program Files/Google/Chrome/Application/chrome.exe',
-  'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
-  '/usr/bin/google-chrome',
-  '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-].filter(Boolean);
 
 /** Swatches lifted from the bundled catalogue, so the colours are real paints. */
 const SWATCHES = [
@@ -45,17 +31,6 @@ const SWATCHES = [
   '#003B1D', // Caliban Green
   '#C6C180', // Ushabti Bone
 ];
-
-function findChrome() {
-  const found = CHROME_CANDIDATES.find((p) => existsSync(p));
-  if (!found) {
-    throw new Error(
-      `No Chromium found. Tried:\n  ${CHROME_CANDIDATES.join('\n  ')}\n` +
-        `Set CHROME_PATH to a Chrome or Edge binary.`
-    );
-  }
-  return found;
-}
 
 /**
  * Everything is inlined as data URIs. The page is loaded via setContent, which
@@ -144,13 +119,7 @@ async function buildHtml() {
 }
 
 async function main() {
-  const chrome = findChrome();
-  console.log(`chromium: ${chrome}`);
-  const browser = await puppeteer.launch({
-    executablePath: chrome,
-    headless: true,
-    args: ['--hide-scrollbars', '--force-color-profile=srgb'],
-  });
+  const browser = await launchBrowser();
 
   try {
     const page = await browser.newPage();
