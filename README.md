@@ -204,7 +204,15 @@ Edit that one file rather than any generated PNG.
 
 Screenshots go stale silently: they are captured from the built app, so a UI
 change invalidates them and nothing complains. Re-run `npm run screenshots`
-after any visual change that reaches a captured screen.
+after any visual change that reaches a captured screen — and *look at them*, as
+two of the capture steps use `?.click()` and would no-op silently if a selector
+stopped matching. A run that exits zero is not proof.
+
+`npm run screenshots` tries each browser it knows about until one launches:
+`CHROME_PATH` if set, then Chrome, then a Chromium in Playwright's shared cache,
+then Edge. If none start it prints each candidate with why — `absent` reads very
+differently from `exists, but did not start`, and only one of them means you
+need to install something.
 
 Listing copy, the Data safety answers and the privacy policy text are in
 [store/](store/).

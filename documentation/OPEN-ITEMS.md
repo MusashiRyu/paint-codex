@@ -25,27 +25,7 @@ Before that flag goes back on, mobile export needs `@capacitor/filesystem` to
 write the file and `@capacitor/share` to hand it off. Decision taken
 2026-08-08: leave as is for now.
 
-### 2. Store screenshots are stale after the catalogue change
-**Raised:** 014 · **Blocked on this machine** · **The one launch blocker**
-
-The catalogue went from 310 paints to 2,279 and the equivalent tiles now name a
-range as well as a brand, so every captured screen has moved. `npm run
-screenshots` cannot run here: puppeteer-core fails to launch Edge (`Failed to
-launch the browser process: Code: 0`) and no Chrome is installed. Unrelated to
-the data change — the seed data in `tools/store/screenshots.mjs` was already
-updated to the new ids and persist version 4.
-
-Install Chrome or set `CHROME_PATH`, then `npm run build && npm run
-screenshots`. Must happen before the next Play submission.
-
-Retried at 017 against the installed Edge
-(`C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe`) via
-`CHROME_PATH`: same `Code: 0` failure, so the binary is found and refuses to
-start rather than being missing. Installing Chrome is the shorter path than
-debugging it. `documentation/release-checklist.md` now names this at the top as
-the only thing outstanding.
-
-### 3. Shop links cover 186 paints out of 2,279
+### 2. Shop links cover 186 paints out of 2,279
 **Raised:** 014 · **Dormant while the export flag is off**
 
 `shopLinks.snapshot.json` was remapped through the id migration rather than
@@ -57,7 +37,7 @@ current file, and worth pacing deliberately.
 Only `features/export/markdownExport.ts` reads it, and that is behind
 `appConfig.featureFlags.markdownExport`, which is `false`.
 
-### 4. The cached catalogue is ~2.2 MB of localStorage
+### 3. The cached catalogue is ~2.2 MB of localStorage
 **Raised:** 014 · **Watch, not fix**
 
 The snapshot is 1.14 MB of JSON, which localStorage stores as UTF-16 — about
@@ -66,7 +46,7 @@ already handled (the refresh applies for the session and simply does not
 persist). Worth remembering before anything else large is persisted, and before
 the catalogue grows by another brand.
 
-### 5. iOS signing and archive are Mac-only
+### 4. iOS signing and archive are Mac-only
 **Raised:** 001 · **Environmental**
 
 Nothing to fix in the repo. The flow in the README's iOS section requires Xcode
@@ -77,10 +57,10 @@ Note that `tools/icons/` writes Android and web assets only, so
 `ios/App/App/Assets.xcassets/AppIcon.appiconset` still holds the Capacitor
 placeholder. Extending the generator is the easy part of an iOS submission.
 
-### 6. The shop links earn nothing, and could
+### 5. The shop links earn nothing, and could
 **Raised:** 015 · **Blocked on a commercial decision, not on code**
 
-Item 3 is about the *coverage* of `shopLinks.snapshot.json`. This is about the
+Item 2 is about the *coverage* of `shopLinks.snapshot.json`. This is about the
 fact that even at full coverage it pays nothing: the URLs are plain product
 links to vliegeruit.com with no referral parameter, so every purchase the app
 sends over earns the app zero.
@@ -96,14 +76,14 @@ Four things gate it, in order:
    so the current snapshot points somewhere that pays nothing no matter how
    complete it gets. Element Games, Wayland Games and Amazon all run programmes.
    Choosing one is the decision everything else waits on — and it interacts with
-   item 3, since switching retailer means re-crawling anyway.
+   item 2, since switching retailer means re-crawling anyway.
 2. **Retargeting the snapshot and the scraper** at that retailer's URL scheme,
    including the referral parameter.
 3. **A per-paint buy affordance.** A real design decision inside `SearchSheet`
    and `ListsPanel`, not a link drop. The app has no commercial surface anywhere
    today; adding one changes what it feels like to use.
 4. **Disclosure.** Affiliate links need saying so in `store/listing.md` and
-   `store/privacy-policy.md` — and they would give the
+   `store/privacy-policy.md` — they would give the
    destination a reason to know the visit came from Paco, which the privacy
    policy currently promises does not happen. That paragraph would have to
    change. The cost here is not only compliance; it is tone.
@@ -111,7 +91,7 @@ Four things gate it, in order:
 Not started. Decision as of 2026-08-09: revisit after launch when
 there are install numbers to reason about.
 
-### 7. `npm audit` reports three moderate advisories, all dev-only
+### 6. `npm audit` reports three moderate advisories, all dev-only
 **Raised:** 017 · **Watch, not fix**
 
 `npm audit` says three moderate. `npm audit --omit=dev` says zero: the chain is
@@ -151,6 +131,7 @@ Prune this section once it stops being useful.
 | Privacy policy had no public URL | 008 | 013 — published to GitHub Pages |
 | Repo had no remote, so CI and the upstream alarm had never run | 012 | 013 — pushed to github.com/MusashiRyu/paint-codex |
 | Sheet chrome duplicated across the two overlays | 009 | 009 — extracted into `shared/ui/` primitives |
+| Store screenshots stale after the catalogue change | 014 | 018 — regenerated; the browser was never the problem |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
 removals in the redesign rather than pending work, and are not tracked.

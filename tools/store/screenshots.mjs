@@ -16,7 +16,7 @@
  * download. Override with CHROME_PATH if it picks the wrong one.
  */
 import { spawn } from 'node:child_process';
-import { existsSync } from 'node:fs';
+import { existsSync, readdirSync } from 'node:fs';
 import { mkdir } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -36,14 +36,44 @@ const ORIGIN = `http://localhost:${PORT}`;
  */
 const VIEWPORT = { width: 360, height: 640, deviceScaleFactor: 3, isMobile: true, hasTouch: true };
 
+/**
+ * Chromium downloaded by Playwright into its shared cache, newest build first.
+ *
+ * This binary belongs to another tool. Nothing here installs it, nothing here
+ * updates it, and a `playwright uninstall` would take it away — it is a
+ * convenience, not a dependency, and everything still works without it. It is
+ * on the list because it is a real Chromium that was already sitting on the
+ * machine while this script was declaring no browser available.
+ */
+function playwrightChromiums() {
+  const root = process.env.LOCALAPPDATA && join(process.env.LOCALAPPDATA, 'ms-playwright');
+  if (!root || !existsSync(root)) return [];
+  try {
+    return readdirSync(root)
+      .filter((name) => name.startsWith('chromium-'))
+      // Build numbers, so compare numerically — 'chromium-9' sorts after
+      // 'chromium-1234' as a string.
+      .sort((a, b) => Number(b.slice(9)) - Number(a.slice(9)))
+      .map((name) => join(root, name, 'chrome-win64', 'chrome.exe'));
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Ordered by preference, not by likelihood. CHROME_PATH first because an
+ * explicit override must always win; Edge last because it is the one with a
+ * demonstrated failure on the maintainer's machine — see 018.
+ */
 const CHROME_CANDIDATES = [
   process.env.CHROME_PATH,
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
   'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
-  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
-  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
+  ...playwrightChromiums(),
   '/usr/bin/google-chrome',
   '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+  'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+  'C:/Program Files/Microsoft/Edge/Application/msedge.exe',
 ].filter(Boolean);
 
 /**
@@ -96,15 +126,46 @@ const SEED = {
   version: 4,
 };
 
-function findChrome() {
-  const found = CHROME_CANDIDATES.find((p) => existsSync(p));
-  if (!found) {
-    throw new Error(
-      `No Chromium found. Tried:\n  ${CHROME_CANDIDATES.join('\n  ')}\n` +
-        `Set CHROME_PATH to a Chrome or Edge binary.`
-    );
+/**
+ * The first candidate that actually starts, not the first one that exists.
+ *
+ * Those are different things, and the difference cost two retros. Edge is
+ * installed on the maintainer's machine and refuses to launch under
+ * puppeteer-core (`Failed to launch the browser process: Code: 0`, empty
+ * stderr). Picking by `existsSync` meant Edge was chosen, the run died, and the
+ * error said "no Chromium found" while a working Chromium sat on the same disk.
+ * Trying each in turn means installing a browser later, or losing one, needs no
+ * edit here.
+ *
+ * The rejection list is the whole point of the failure message: "absent" sends
+ * you to install something, a launch error sends you to a different browser.
+ */
+async function launchBrowser() {
+  const rejected = [];
+
+  for (const path of CHROME_CANDIDATES) {
+    if (!existsSync(path)) {
+      rejected.push(`${path}\n      absent`);
+      continue;
+    }
+    try {
+      const browser = await puppeteer.launch({
+        executablePath: path,
+        headless: true,
+        args: ['--hide-scrollbars', '--force-color-profile=srgb'],
+      });
+      console.log(`chromium: ${path}`);
+      return browser;
+    } catch (error) {
+      const reason = error instanceof Error ? error.message.split('\n')[0] : String(error);
+      rejected.push(`${path}\n      exists, but did not start: ${reason}`);
+    }
   }
-  return found;
+
+  throw new Error(
+    `No Chromium could be launched. Tried:\n    ${rejected.join('\n    ')}\n\n` +
+      `Set CHROME_PATH to a Chrome or Edge binary that starts.`
+  );
 }
 
 /** Serve dist/ with vite preview and resolve once it is actually answering. */
@@ -178,16 +239,17 @@ async function shoot(page, name) {
 }
 
 async function main() {
-  const chrome = findChrome();
-  console.log(`chromium: ${chrome}`);
-  const preview = await startPreview();
-  const browser = await puppeteer.launch({
-    executablePath: chrome,
-    headless: true,
-    args: ['--hide-scrollbars', '--force-color-profile=srgb'],
-  });
+  // Browser before preview: a browser that will not start is the failure worth
+  // reporting, and there is no reason to have a server running while finding
+  // that out.
+  const browser = await launchBrowser();
 
+  // `preview` is declared out here and started inside the try so that a preview
+  // that fails to come up still closes the browser. Starting it before the try
+  // would leak a headless Chromium on that path.
+  let preview;
   try {
+    preview = await startPreview();
     const page = await openApp(browser);
 
     await shoot(page, '01-list');
@@ -218,7 +280,7 @@ async function main() {
     console.log('screenshots showing placeholder or debug content.');
   } finally {
     await browser.close();
-    preview.kill();
+    preview?.kill();
   }
 }
 
