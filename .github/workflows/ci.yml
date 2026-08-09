@@ -37,3 +37,10 @@ jobs:
       # Catches anything that typechecks but fails to bundle.
       - name: Build
         run: npx vite build
+
+      # Layout invariants at seven phone widths, in a real engine. jsdom has no
+      # layout, so `npm test` cannot see a wrapped flex line or a column that
+      # ended up narrower than its contents. Chrome ships on the runner image;
+      # the launcher finds it at /usr/bin/google-chrome.
+      - name: Layout check
+        run: npm run check:layout
