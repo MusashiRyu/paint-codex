@@ -14,13 +14,15 @@ content answers are all filled in, so the one-time setup below is history
 rather than instructions — it is kept because a second app, or a Console
 redesign, makes it worth having.
 
-Two things are outstanding, and only one of them is work:
+The package name registration is **done** — confirmed 2026-08-10, with the app
+signing key's fingerprint already attached to `com.musashi.paco`. Earlier
+revisions of this file listed it as an outstanding Draft; it was not, because
+Google now registers package names itself. See step 1.
 
-- **The package name registration is still in Draft**, waiting on the app
-  signing key's SHA-256 from the App signing page — see step 1 for where that
-  page currently lives. Minutes.
+One thing is outstanding, and it is not work:
+
 - **Production needs twelve testers opted in for fourteen continuous days.**
-  Not work — waiting, plus recruitment. See the 12-testers note in step 0.
+  Waiting, plus recruitment. See the 12-testers note in step 0.
 
 Paste this into Play Console → App content → Privacy policy:
 
@@ -88,6 +90,28 @@ below can start until it clears, so do it first.
 
 ### 1. Register the package name
 
+> **This step is now mostly automatic, and hunting for it wastes an hour.**
+> Package name registration has been folded into **Android developer
+> verification**, and Google auto-registers package names under its eligibility
+> rules — for a name with fewer than 50 installs, the first developer to claim
+> it gets it, which for a new app is you. `com.musashi.paco` was already
+> registered with the app signing key's fingerprint attached when it was checked
+> on 2026-08-10, without anyone doing the manual flow below.
+>
+> **Check before acting.** The page is at account level, not under the app:
+> **← All apps** at the top of the sidebar, then the package-name notification
+> above the app list, which leads to **Android developer verification** and its
+> **Package names** tab. There is no Console-wide search box to shortcut this.
+> Google's [walkthrough PDF][pdc-guide] has current screenshots, which is worth
+> more than a menu path that will have moved again by the next time anyone reads
+> this.
+>
+> The rest of this step describes the manual dialog, kept for a package name
+> that does *not* auto-register — Google's deadline for registering anything
+> left over is **30 September 2026**.
+
+[pdc-guide]: https://developer.android.com/static/developer-verification/guides/pdf-guides/pdc-guide.pdf
+
 Console asks for this **before** the app entry exists, in a *First, enter your
 package name* dialog behind **Register package name**. Two fields:
 
@@ -131,6 +155,10 @@ signing key's fingerprint from the App signing page and register it here. If
 Console instead blocks app creation until the package name is fully registered,
 add the upload key now and add the app signing key afterwards; more than one key
 can be registered per package, which is what makes that order recoverable.
+
+To add a key to a package name manually: select it on the **Package names** tab,
+paste the SHA-256 fingerprint, then **Add key**. Status moves to *In review* and
+takes a few minutes to reach the Android developer registry.
 
 > **Finding the App signing page is the hard part, and menu paths do not
 > survive.** In under a year it went from **Release → Setup → App signing**, to
