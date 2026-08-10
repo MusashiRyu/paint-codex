@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+	Privacy manifest for the App target.
+
+	Every binary in the bundle declares its own; Xcode aggregates them into the
+	privacy report attached to an upload. Capacitor's frameworks ship theirs
+	(node_modules/@capacitor/ios/**/PrivacyInfo.xcprivacy) and cover the
+	UserDefaults access the bridge makes. This file covers the App target only,
+	whose Swift is Capacitor's unmodified AppDelegate/SceneDelegate boilerplate.
+
+	All four values are deliberately empty rather than absent, so the file reads
+	as an answer rather than as a stub somebody never filled in:
+
+	- NSPrivacyTracking / NSPrivacyTrackingDomains. There is no analytics SDK,
+	  no advertising identifier and no third-party network call. The single
+	  request the app makes is an HTTPS GET of a public catalogue file.
+	- NSPrivacyCollectedDataTypes. Nothing leaves the device. Paint lists live
+	  in localStorage and are never transmitted. This must stay consistent with
+	  the App Privacy answers in store/listing-appstore.md.
+	- NSPrivacyAccessedAPITypes. The App target itself calls no required-reason
+	  API. Add an entry here only if code in this target starts touching one;
+	  APIs reached through Capacitor belong in Capacitor's manifest, not ours.
+
+	Note for anyone editing this file: an XML comment cannot contain a double
+	hyphen, which is why the notes above are punctuated the way they are.
+-->
+<plist version="1.0">
+<dict>
+	<key>NSPrivacyTracking</key>
+	<false/>
+	<key>NSPrivacyTrackingDomains</key>
+	<array/>
+	<key>NSPrivacyCollectedDataTypes</key>
+	<array/>
+	<key>NSPrivacyAccessedAPITypes</key>
+	<array/>
+</dict>
+</plist>

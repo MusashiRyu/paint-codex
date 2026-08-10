@@ -22,6 +22,12 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<!-- Answers the export-compliance question at build time instead of
+	     stopping every single upload to ask it in App Store Connect. The one
+	     network call the app makes is an HTTPS GET of a public catalogue file;
+	     HTTPS alone is exempt, and the app ships no cryptography of its own. -->
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSceneManifest</key>
@@ -47,20 +53,20 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<!-- Capacitor's template ships `armv7` here, which is a 32-bit capability no
+	     device that can install this app has had since the iPhone 5. The
+	     deployment target is iOS 15, which is arm64-only, so the template value
+	     describes a device set that cannot exist. -->
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>armv7</string>
+		<string>arm64</string>
 	</array>
+	<!-- No `~ipad` variant: TARGETED_DEVICE_FAMILY is 1, so an iPad only ever
+	     runs this in iPhone compatibility mode and the key is never read. It
+	     comes back if and when a real tablet layout does. -->
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
