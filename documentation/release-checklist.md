@@ -17,7 +17,8 @@ redesign, makes it worth having.
 Two things are outstanding, and only one of them is work:
 
 - **The package name registration is still in Draft**, waiting on the app
-  signing key's SHA-256 from **Release → Setup → App signing**. Minutes.
+  signing key's SHA-256 from the App signing page — see step 1 for where that
+  page currently lives. Minutes.
 - **Production needs twelve testers opted in for fourteen continuous days.**
   Not work — waiting, plus recruitment. See the 12-testers note in step 0.
 
@@ -126,11 +127,26 @@ only the upload key's signature is refused. The app signing key does not exist
 until enrolment at step 3.
 
 Prefer to leave the package in Draft, finish steps 2–6, then read the app
-signing key's fingerprint from **Release → Setup → App signing** — that page
-lists both keys — and register it here. If Console instead blocks app creation
-until the package name is fully registered, add the upload key now and add the
-app signing key afterwards; more than one key can be registered per package,
-which is what makes that order recoverable.
+signing key's fingerprint from the App signing page and register it here. If
+Console instead blocks app creation until the package name is fully registered,
+add the upload key now and add the app signing key afterwards; more than one key
+can be registered per package, which is what makes that order recoverable.
+
+> **Finding the App signing page is the hard part, and menu paths do not
+> survive.** In under a year it went from **Release → Setup → App signing**, to
+> a tab on **App integrity**, to **Protected with Play → Play Store
+> protection → App signing**, which is where it sat on 2026-08-10. The
+> intermediate pages leave forwarding notices, so following the old path still
+> arrives eventually, but the reliable route is the URL: the page is
+> `…/app/<appId>/keymanagement`, so take any Console URL for the app and
+> replace the last path segment. That has outlived all three menu layouts.
+>
+> The page shows the **app signing key** with an *In use* badge, and below it
+> **Previous app signing keys**. It offers the fingerprint in four flavours:
+> SHA-256 and SHA-1, each for a **Classical key** and a **Post-quantum
+> cryptography key**. Package name registration wants the **classical SHA-256**
+> of the key currently in use. The post-quantum column is a beta and is not what
+> the form is asking for.
 
 To read the upload key's fingerprint without needing the keystore password,
 take it from a signed artefact:
