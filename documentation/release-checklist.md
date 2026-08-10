@@ -74,7 +74,35 @@ below can start until it clears, so do it first.
 > schedule and it is invisible until you go looking for it — start the closed
 > track the day the account clears, not after the listing is polished.
 
-### 1. Create the app
+### 1. Register the package name
+
+Console asks for this **before** the app entry exists, in a *First, enter your
+package name* dialog behind **Register package name**. Two fields:
+
+| Field | Value |
+| --- | --- |
+| Package name | `com.musashi.paco` |
+| Friendly name | `Paco - Paint Codex` |
+
+The package name has to match the `applicationId` in
+`android/app/build.gradle` exactly — that file is the only place it is decided,
+and a mismatch is not discovered until an upload is rejected much later. Copy
+it rather than retyping it.
+
+The Friendly name is an internal label for finding the package in Console
+lists. It is not the store listing name and no user ever sees it.
+
+> **This dialog is the point of no return.** Registering the string burns it
+> globally across Play, permanently. Deleting the app entry afterwards does not
+> release it — a second attempt needs a different name. Anything that wants to
+> change the `applicationId` has to happen before this dialog is submitted, and
+> at that point it is a one-line edit and a rebuild.
+>
+> `com.musashi.paco` is not the reverse-DNS of a domain anyone owns, which is
+> the convention but not a rule and never checked. Recorded here so nobody
+> later reads it as an oversight and "fixes" it — by then it cannot be fixed.
+
+### 2. Create the app
 
 **All apps → Create app.**
 
@@ -86,14 +114,14 @@ below can start until it clears, so do it first.
 | Free or paid | **Free** — irreversible; a free app can never be made paid |
 | Declarations | Developer Programme Policies, US export laws |
 
-### 2. Enrol in Play App Signing
+### 3. Enrol in Play App Signing
 
 Accept the default. Google generates and holds the app signing key; the
 keystore on this machine is only the **upload** key. That is exactly why losing
 it locally is recoverable — support can reset an upload key and could never
 reset an app signing key.
 
-### 3. App content
+### 4. App content
 
 Every answer is in [`store/listing.md`](../store/listing.md). In Console order:
 
@@ -105,7 +133,7 @@ Every answer is in [`store/listing.md`](../store/listing.md). In Console order:
 - **Data safety** → does not collect or share any user data
 - **News / government / financial / health** → no to all
 
-### 4. Store listing and settings
+### 5. Store listing and settings
 
 **Grow → Store presence → Main store listing.** Short description, full
 description and graphics, all from [`store/listing.md`](../store/listing.md)
@@ -132,7 +160,7 @@ Then **Store settings** for category (Art & Design) and contact details, and
 > at the issue tracker instead — so this Console field is the only place it
 > exists.
 
-### 5. Closed testing, then production
+### 6. Closed testing, then production
 
 **Testing → Closed testing → Create new release.** Upload
 `app-release.aab`, paste the release notes from `listing.md`, add testers.
