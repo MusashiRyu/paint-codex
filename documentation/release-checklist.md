@@ -265,7 +265,9 @@ The track page has three tabs, and the first release only fills in one of them:
   tester in a country that is not listed simply cannot install. They will report
   a link that does not work and there is nothing on their end to fix. Recruiting
   from an international community and leaving this at the default is a way to
-  lose a week to a setting.
+  lose a week to a setting. **Widened to worldwide on 2026-08-10**, which is the
+  right default for an app that is free, collects nothing and ships its whole
+  catalogue offline.
 - **Testers** — the email list, and the opt-in URL that goes to testers. The
   link only appears once a list is attached to the track.
 
