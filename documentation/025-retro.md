@@ -114,6 +114,17 @@ own fix and taking it would trade release-only breakage for a few hundred KB.
 - **`npm run listing:check` passes all ten fields** across both stores.
 - **The full verify ran before the rebuild** — lint, `tsc -b --noEmit`, and 134
   tests across 13 files.
+- **All five hardware checks in release-checklist step 5 passed** on the 1.0.0
+  release APK: launcher icon, splash with no white flash, back gesture closing
+  each sheet including the About layer, the catalogue refresh failing quietly
+  with the radio off, and the About sheet's outbound links.
+
+  The last of those had never been proven on a device since the About sheet
+  shipped at 015 — nothing in the app opened an external URL before it, and
+  `npm run dev` cannot test the WebView's `target="_blank"` handoff. It works.
+  Had it not, the fix would have added `@capacitor/browser` as a fifth runtime
+  dependency and forced a rewrite of the Data safety reasoning in
+  `store/listing.md`, with the build already in testers' hands.
 
 ## Assumptions made
 
@@ -126,9 +137,11 @@ own fix and taking it would trade release-only breakage for a few hundred KB.
   domain anyone owns, which is convention rather than rule and never checked.
   Flagged before registering and accepted deliberately; it is now permanent
   across all of Play.
-- **The hardware smoke test still has not happened.** Step 5's list — the About
-  sheet's external links above all — remains unproven on a device. The build is
-  in testers' hands regardless, which is the sequencing this session chose in
-  order to start the clock.
+- **The build went to testers before the hardware check, not after.** Deliberate
+  — the fourteen-day clock only runs on the closed track, so starting it was
+  worth more than the ordering. The check then passed on all five points, but
+  that was luck confirming a judgement call rather than the judgement being
+  safe. A failure on the links would have meant a new dependency and a corrected
+  Data safety answer with the build already distributed.
 
 Open work: [OPEN-ITEMS.md](OPEN-ITEMS.md).

@@ -373,13 +373,17 @@ Worth actually looking at, because these only misbehave in a packaged build:
   About sheet, which is the third layer registered with `useBackDismiss`.
 - The app working with the radio off — the catalogue refresh must fail quietly.
 - **Every link in the About sheet opening the system browser**, and each one
-  landing on its real destination. This is the one that has never been proven on
-  hardware. Nothing in the app opened an external URL before; the handoff relies
-  on Capacitor's WebView intercepting a `target="_blank"` navigation, and the
-  failure mode is either nothing happening at all or the page loading *inside*
-  the app with no way back. The repo already has one web API that silently does
-  nothing in the WebView — the blob download in OPEN-ITEMS item 1 — so `npm run
-  dev` proves nothing here. If it fails, the fix is `@capacitor/browser`, which
+  landing on its real destination. The handoff relies on Capacitor's WebView
+  intercepting a `target="_blank"` navigation, and the two failure modes are
+  nothing happening at all, or the page loading *inside* the app with no way
+  back. `npm run dev` proves nothing here — the repo already has one web API
+  that silently does nothing in the WebView, the blob download in OPEN-ITEMS
+  item 1.
+
+  **Confirmed working on hardware, 2026-08-10, on the 1.0.0 release APK.** Kept
+  on this list because it is a WebView behaviour rather than app code: a
+  Capacitor or System WebView upgrade can take it away without anything in this
+  repo changing. If it ever regresses, the fix is `@capacitor/browser`, which
   makes it the app's fifth runtime dependency and invalidates the "four runtime
   dependencies" sentence in the Data safety reasoning in `store/listing.md`.
 - Returning to Paco from the browser, with the selected list still selected.

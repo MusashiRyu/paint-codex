@@ -108,15 +108,15 @@ the twelfth opts in, and it resets if the count drops below twelve — so this i
 recruitment and retention, not a wait that passes on its own.
 
 This is the longest pole to a public release and nothing in the repo shortens
-it. Two smaller things trail it:
+it. One smaller thing trails it:
 
 - The package name registration is still in **Draft** pending the app signing
   key's SHA-256 from **Release → Setup → App signing**. Minutes of work, but the
   registration is not complete without it.
-- The hardware smoke test in release-checklist step 5 has still not been run.
-  The About sheet's outbound links are the unproven part; if they fail the fix
-  adds `@capacitor/browser` and invalidates the "four runtime dependencies"
-  sentence in the Data safety reasoning in `store/listing.md`.
+
+The hardware smoke test is done — all five checks in release-checklist step 5
+passed on the 1.0.0 release APK on 2026-08-10, including the About sheet's
+outbound links, which had never been proven on a device before.
 
 ### 6. `npm audit` reports three moderate advisories, all dev-only
 **Raised:** 017 · **Watch, not fix**
@@ -148,6 +148,7 @@ Prune this section once it stops being useful.
 | Saved lists went stale against the catalogue | 005 | 005 |
 | No CI | 005 | 005 |
 | Back gesture unverified on hardware | 004 | Confirmed working on device, 2026-08-08 |
+| About sheet's outbound links unproven on hardware — the WebView `target="_blank"` handoff | 015 | 025 — confirmed on the 1.0.0 release APK, 2026-08-10 |
 | Empty list could not be renamed | 004 | 007 |
 | Dialogs had no focus management | 006 | 007 |
 | `filterPaintsByColor` unused | 005 | 007 — removed |
