@@ -257,7 +257,21 @@ Then **Store settings** for category (Art & Design) and contact details, and
 **Testing → Closed testing → Create new release.** Upload
 `app-release.aab`, paste the release notes from `listing.md`, add testers.
 
+The track page has three tabs, and the first release only fills in one of them:
+
+- **Releases** — the build. Done by the upload.
+- **Countries / regions** — **check this before recruiting anyone.** The track
+  defaults to a narrow set (three, when it was looked at on 2026-08-10), and a
+  tester in a country that is not listed simply cannot install. They will report
+  a link that does not work and there is nothing on their end to fix. Recruiting
+  from an international community and leaving this at the default is a way to
+  lose a week to a setting.
+- **Testers** — the email list, and the opt-in URL that goes to testers. The
+  link only appears once a list is attached to the track.
+
 Read the 12-testers note in step 0 again before assuming production is close.
+Click the opt-in link on a real phone before sending it to anyone: a broken
+first impression costs more than the two minutes of checking.
 
 ### Automating what comes next
 
