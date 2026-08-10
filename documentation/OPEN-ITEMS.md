@@ -90,13 +90,33 @@ Four things gate it, in order:
    and `ListsPanel`, not a link drop. The app has no commercial surface anywhere
    today; adding one changes what it feels like to use.
 4. **Disclosure.** Affiliate links need saying so in `store/listing.md` and
-   `store/privacy-policy.md` — they would give the
+   `store/privacy-policy.md` — and they would give the
    destination a reason to know the visit came from Paco, which the privacy
    policy currently promises does not happen. That paragraph would have to
    change. The cost here is not only compliance; it is tone.
 
 Not started. Decision as of 2026-08-09: revisit after launch when
 there are install numbers to reason about.
+
+### 8. Production access needs twelve testers for fourteen continuous days
+**Raised:** 025 · **Waiting, not work**
+
+1.0.0 went to internal and closed testing on 2026-08-10. Production access
+cannot even be *applied* for until a closed test has held **at least twelve
+testers opted in for fourteen continuous days**. The clock does not start until
+the twelfth opts in, and it resets if the count drops below twelve — so this is
+recruitment and retention, not a wait that passes on its own.
+
+This is the longest pole to a public release and nothing in the repo shortens
+it. Two smaller things trail it:
+
+- The package name registration is still in **Draft** pending the app signing
+  key's SHA-256 from **Release → Setup → App signing**. Minutes of work, but the
+  registration is not complete without it.
+- The hardware smoke test in release-checklist step 5 has still not been run.
+  The About sheet's outbound links are the unproven part; if they fail the fix
+  adds `@capacitor/browser` and invalidates the "four runtime dependencies"
+  sentence in the Data safety reasoning in `store/listing.md`.
 
 ### 6. `npm audit` reports three moderate advisories, all dev-only
 **Raised:** 017 · **Watch, not fix**

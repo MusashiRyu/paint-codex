@@ -6,9 +6,20 @@ the mechanics.
 
 ---
 
-## Nothing is blocking the first submission
+## Where this actually stands
 
-The screenshots were regenerated at 018 and the privacy policy is live.
+**1.0.0 (`versionCode` 1) was uploaded to internal *and* closed testing on
+2026-08-10.** The store listing, categorisation, target audience and App
+content answers are all filled in, so the one-time setup below is history
+rather than instructions — it is kept because a second app, or a Console
+redesign, makes it worth having.
+
+Two things are outstanding, and only one of them is work:
+
+- **The package name registration is still in Draft**, waiting on the app
+  signing key's SHA-256 from **Release → Setup → App signing**. Minutes.
+- **Production needs twelve testers opted in for fourteen continuous days.**
+  Not work — waiting, plus recruitment. See the 12-testers note in step 0.
 
 Paste this into Play Console → App content → Privacy policy:
 
