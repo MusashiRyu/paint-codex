@@ -33,6 +33,8 @@ tools/icons/source/icon.png     1024x1024 or larger
 | Adaptive foreground, 108dp canvas | `android/.../mipmap-*/ic_launcher_foreground.png` |
 | Adaptive background colour | `android/.../values/ic_launcher_background.xml` |
 | Splash, both orientations | `android/.../drawable-{port,land}-*/splash.png` |
+| iOS app icon, 1024px | `ios/.../Assets.xcassets/AppIcon.appiconset/` |
+| iOS launch image, 2732px square | `ios/.../Assets.xcassets/Splash.imageset/` |
 | Play listing icon, 512px | `store/graphics/icon-512.png` |
 | Browser tab icon | `public/favicon.svg` |
 
@@ -42,6 +44,18 @@ colour there, not in the XML — the XML is regenerated.
 
 ## iOS
 
-Not covered. `ios/App/App/Assets.xcassets/AppIcon.appiconset` still holds the
-Capacitor placeholder and needs the same treatment before an App Store
-submission; nobody has needed it yet because the iOS build is Mac-only.
+Covered, from the same source mark. Two things about it differ from Android and
+are worth knowing before changing the code that writes them:
+
+- **The app icon is flattened to remove the alpha channel.** App Store Connect
+  rejects an upload whose icon carries one, and it does so *after* the archive
+  and upload rather than during the build — a long way to travel on a borrowed
+  Mac to find out. It is one 1024px master; iOS renders every smaller size.
+- **The launch image is square, and its mark is much smaller than Android's.**
+  `LaunchScreen.storyboard` displays it with `scaleAspectFill`, which crops a
+  square source hard on a tall phone — only about 46% of its width survives on
+  a 6.9" iPhone. `IOS_SPLASH_MARK_RATIO` is Android's 0.32 divided through by
+  that, so the mark lands at the same apparent size on both platforms.
+
+The `Contents.json` files in each imageset are Capacitor's and already name the
+paths the generator writes, so they are read rather than written.

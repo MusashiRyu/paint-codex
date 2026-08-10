@@ -3,9 +3,10 @@
  *
  * Android wants the same artwork at a dozen sizes across three shapes (legacy
  * square, legacy round, adaptive foreground), Play wants a 512px listing icon,
- * and the splash wants a full-bleed canvas per density and orientation. Hand
- * exporting that is how a project ends up shipping a stale icon in one bucket.
- * This regenerates all of it, so the source mark is the only thing to edit.
+ * iOS wants a 1024px master and a square launch image, and the splash wants a
+ * full-bleed canvas per density and orientation. Hand exporting that is how a
+ * project ends up shipping a stale icon in one bucket. This regenerates all of
+ * it, so the source mark is the only thing to edit.
  *
  * Usage:
  *   npm run icons
@@ -24,6 +25,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(here, '..', '..');
 const sourceDir = join(here, 'source');
 const androidRes = join(repoRoot, 'android', 'app', 'src', 'main', 'res');
+const iosAssets = join(repoRoot, 'ios', 'App', 'App', 'Assets.xcassets');
 const storeDir = join(repoRoot, 'store', 'graphics');
 
 /**
@@ -68,6 +70,39 @@ const SPLASH_MARK_RATIO = 0.32;
 
 /** Play Store listing icon. Fixed by Google, not by us. */
 const STORE_ICON_PX = 512;
+
+/**
+ * iOS ships one 1024px master and lets the system render every smaller size,
+ * so there is no density loop here -- `AppIcon.appiconset/Contents.json`
+ * declares a single universal entry.
+ */
+const IOS_ICON_PX = 1024;
+
+/**
+ * The iOS splash canvas is square because `LaunchScreen.storyboard` displays it
+ * with `scaleAspectFill`, which crops rather than letterboxes.
+ *
+ * That crop is why the mark ratio is not Android's. Filling a WxH screen from a
+ * square source scales the square until its *shorter* dimension covers the
+ * *longer* screen dimension, so only W/H of the source's width stays on screen
+ * -- about 46% on a 1290x2796 iPhone. A mark sized to Android's 0.32 would be
+ * cropped up to two thirds of the screen's width. Dividing through
+ * (0.32 x 0.46) lands the mark at the same apparent size on both platforms.
+ */
+const IOS_SPLASH_PX = 2732;
+const IOS_SPLASH_MARK_RATIO = 0.148;
+
+/**
+ * The three files `Splash.imageset` names, one per scale factor. They are
+ * byte-identical -- the imageset asks for 1x/2x/3x and the source is already
+ * larger than any device needs, so there is nothing to gain by rendering the
+ * smaller two at a smaller size and something to lose if they drift.
+ */
+const IOS_SPLASH_FILES = [
+  'splash-2732x2732.png',
+  'splash-2732x2732-1.png',
+  'splash-2732x2732-2.png',
+];
 
 async function findSource() {
   let entries;
@@ -202,6 +237,41 @@ async function generateSplashes(sourcePath) {
 }
 
 /**
+ * The iOS app icon and launch image.
+ *
+ * Both are flattened to remove the alpha channel. This is not tidiness: App
+ * Store Connect rejects an upload whose icon carries one, with `Invalid Image -
+ * The app icon can't be transparent nor contain an alpha channel`, and it does
+ * so after the archive and upload rather than during the build. That is a long
+ * way to travel on a Mac to find out.
+ *
+ * The `Contents.json` files next to these are Capacitor's and already name
+ * exactly these paths, so they are read, not written -- there is nothing here
+ * for a generator to keep in sync.
+ */
+async function generateIosAssets(sourcePath) {
+  const written = [];
+
+  const icon = await onBackground(sourcePath, IOS_ICON_PX, Math.round(IOS_ICON_PX * 0.72));
+  const flatIcon = await sharp(icon).flatten({ background: BACKGROUND }).png().toBuffer();
+  written.push(
+    await write(join(iosAssets, 'AppIcon.appiconset', 'AppIcon-512@2x.png'), flatIcon)
+  );
+
+  const splash = await onBackground(
+    sourcePath,
+    IOS_SPLASH_PX,
+    Math.round(IOS_SPLASH_PX * IOS_SPLASH_MARK_RATIO)
+  );
+  const flatSplash = await sharp(splash).flatten({ background: BACKGROUND }).png().toBuffer();
+  for (const name of IOS_SPLASH_FILES) {
+    written.push(await write(join(iosAssets, 'Splash.imageset', name), flatSplash));
+  }
+
+  return written;
+}
+
+/**
  * The browser tab icon, from the same mark. Kept in this script rather than
  * left as a hand-copied file because a favicon that disagrees with the launcher
  * icon is exactly the kind of drift nobody notices for a year.
@@ -248,6 +318,7 @@ async function main() {
   const written = [
     ...(await generateLauncherIcons(sourcePath)),
     ...(await generateSplashes(sourcePath)),
+    ...(await generateIosAssets(sourcePath)),
     ...(await generateStoreIcon(sourcePath)),
     ...(await generateFavicon(sourcePath)),
     ...(await writeBackgroundColor()),
