@@ -1,16 +1,25 @@
 # Store submission material
 
-Everything Google Play asks for that is text or artwork rather than code.
+Everything Google Play and the App Store ask for that is text or artwork rather
+than code.
 
 | File | What it is |
 | --- | --- |
-| [`listing.md`](./listing.md) | App name, descriptions, release notes, contact details, categorisation, target audience, App access, and every Data safety answer with its reasoning. |
-| [`privacy-policy.md`](./privacy-policy.md) | The privacy policy. **The source** — edit this one. |
+| [`listing.md`](./listing.md) | **Play.** App name, descriptions, release notes, contact details, categorisation, target audience, App access, and every Data safety answer with its reasoning. |
+| [`listing-appstore.md`](./listing-appstore.md) | **App Store.** Name, subtitle, keywords, promotional text, description, App Privacy answers, age rating, and the reviewer notes. |
+| [`privacy-policy.md`](./privacy-policy.md) | The privacy policy, shared by both. **The source** — edit this one. |
 | `docs/privacy.html` | Generated from the markdown. Self-contained: no external stylesheet, font or script, so it can be dropped on any host. Live at `https://musashiryu.github.io/paint-codex/privacy.html`. |
 | `graphics/` | Generated. Do not hand-edit; regenerate. |
 
-The mechanics of building and uploading a release are in
-[`documentation/release-checklist.md`](../documentation/release-checklist.md).
+**Two listing files rather than one.** The stores do not ask for the same
+things: Play wants a short description and a long one, Apple wants a subtitle,
+a 100-character keyword list and promotional text that can be changed without
+shipping a build. `npm run listing:check` checks both against their own limits.
+
+The mechanics of building and uploading are one file per store:
+[`release-checklist.md`](../documentation/release-checklist.md) for Play,
+[`ios-release-checklist.md`](../documentation/ios-release-checklist.md) for the
+App Store.
 
 ## Regenerating the graphics
 
@@ -20,8 +29,11 @@ npm run build             # screenshots serve dist/, they do not build it
 npm run screenshots
 npm run feature-graphic
 npm run privacy           # privacy-policy.md -> docs/privacy.html + docs/index.html
-npm run listing:check     # copy against Play's character limits
+npm run listing:check     # both listings against their own character limits
 ```
+
+`npm run screenshots` writes both stores' sets in one run: `screenshots/` at
+1080×1920 for Play and `screenshots-ios/` at 1290×2796 for the App Store.
 
 Screenshots are the one asset that goes stale invisibly — they are captured
 from the built app, so any visual change invalidates them and nothing

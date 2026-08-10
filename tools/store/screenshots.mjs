@@ -1,5 +1,5 @@
 /**
- * Capture Play Store screenshots by driving the real production build.
+ * Capture store screenshots by driving the real production build.
  *
  * Store screenshots are the one asset that goes stale invisibly: the app gets
  * restyled, the listing keeps showing last year's UI, and nobody notices
@@ -10,7 +10,7 @@
  *   npm run build          # the script serves dist/, it does not build it
  *   npm run screenshots
  *
- * Output: store/graphics/screenshots/*.png at 1080x1920.
+ * Output: one directory per store, see DEVICES below.
  *
  * Uses puppeteer-core against a Chromium already on the machine, so no browser
  * download. Override with CHROME_PATH if it picks the wrong one — the browser
@@ -20,14 +20,38 @@ import { mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { launchBrowser, repoRoot, startPreview } from '../lib/browser.mjs';
 
-const outDir = join(repoRoot, 'store', 'graphics', 'screenshots');
+const graphicsDir = join(repoRoot, 'store', 'graphics');
 
 /**
- * 1080x1920 is the safest phone screenshot Play takes: 9:16, comfortably inside
- * the 320-3840px bounds. Rendered as 360 CSS pixels at 3x rather than a 1080px
- * viewport, so the app lays out as a phone instead of a very large tablet.
+ * One entry per store, because the two will not take each other's sizes.
+ *
+ * Both are given as CSS pixels at 3x rather than as a raw pixel viewport, so
+ * the app lays out as a phone rather than as a very large tablet — a 1080px
+ * viewport would render the desktop breakpoints and shrink them.
+ *
+ * - Play: 1080x1920 is the safest phone screenshot it takes. 9:16, comfortably
+ *   inside the 320-3840px bounds.
+ * - App Store: 1290x2796 is the 6.9" iPhone size, and it is the only iPhone set
+ *   worth uploading — Apple scales it down for every smaller display, and a
+ *   second set only earns its place if the layout genuinely differs. Sizes here
+ *   are exact: App Store Connect rejects anything off by a pixel.
+ *
+ * 430 CSS px is not a number picked for this file. It is one of the seven
+ * widths tools/layout/check-layout.mjs asserts against, so the layout in the
+ * iOS screenshots is a layout that is already under test.
  */
-const VIEWPORT = { width: 360, height: 640, deviceScaleFactor: 3, isMobile: true, hasTouch: true };
+const DEVICES = [
+  {
+    label: 'Play phone, 1080x1920',
+    dir: 'screenshots',
+    viewport: { width: 360, height: 640, deviceScaleFactor: 3, isMobile: true, hasTouch: true },
+  },
+  {
+    label: 'App Store iPhone 6.9", 1290x2796',
+    dir: 'screenshots-ios',
+    viewport: { width: 430, height: 932, deviceScaleFactor: 3, isMobile: true, hasTouch: true },
+  },
+];
 
 /**
  * Seed state, written straight into the persist key rather than clicked in.
@@ -93,9 +117,9 @@ async function blockUpstream(page) {
   });
 }
 
-async function openApp(browser, origin) {
+async function openApp(browser, origin, viewport) {
   const page = await browser.newPage();
-  await page.setViewport(VIEWPORT);
+  await page.setViewport(viewport);
   await blockUpstream(page);
 
   // localStorage is origin-scoped, so the page has to exist before seeding it.
@@ -108,7 +132,7 @@ async function openApp(browser, origin) {
   return page;
 }
 
-async function shoot(page, name) {
+async function shoot(page, outDir, name) {
   await mkdir(outDir, { recursive: true });
   // Fonts are self-hosted, so this resolves immediately -- but a screenshot
   // taken mid-swap shows the fallback serif, which looks like a different app.
@@ -117,6 +141,42 @@ async function shoot(page, name) {
   const path = join(outDir, `${name}.png`);
   await page.screenshot({ path });
   console.log(`  wrote ${path.replace(repoRoot, '.')}`);
+}
+
+/**
+ * The four shots, in order, against an already-seeded page.
+ *
+ * One sequence for every device rather than one per store: the point of a
+ * screenshot set is that both listings show the same app, and two sequences
+ * would drift the moment one of them was updated for a UI change.
+ *
+ * Two of these steps use `?.click()` and would no-op silently if a selector
+ * stopped matching, which is why the closing message says to look at the files.
+ */
+async function captureSequence(page, outDir) {
+  await shoot(page, outDir, '01-list');
+
+  await page.click('button[aria-label="Add paint"]');
+  await page.waitForSelector('input[placeholder="Search by name or brand..."]');
+  await page.type('input[placeholder="Search by name or brand..."]', 'blue', { delay: 40 });
+  await shoot(page, outDir, '02-search');
+  await page.click('button[aria-label="Close search"]');
+
+  // Second list: a different palette, so the two list screenshots do not read
+  // as the same picture twice.
+  await page.evaluate(() => {
+    const tabs = [...document.querySelectorAll('button')];
+    tabs.find((b) => b.textContent?.includes('Rust & Bone'))?.click();
+  });
+  await shoot(page, outDir, '03-second-list');
+
+  await page.evaluate(() => {
+    const tabs = [...document.querySelectorAll('button')];
+    tabs.find((b) => b.textContent?.trim().startsWith('+'))?.click();
+  });
+  await page.waitForSelector('input[placeholder="List name..."]');
+  await page.type('input[placeholder="List name..."]', 'Crimson Order', { delay: 40 });
+  await shoot(page, outDir, '04-new-list');
 }
 
 async function main() {
@@ -131,34 +191,19 @@ async function main() {
   let preview;
   try {
     preview = await startPreview();
-    const page = await openApp(browser, preview.origin);
 
-    await shoot(page, '01-list');
+    for (const { label, dir, viewport } of DEVICES) {
+      console.log(`\n${label}`);
+      // A fresh page per device rather than a resize: the app reads its layout
+      // on mount, and a mid-session viewport change leaves the previous
+      // device's measurements in place for anything that does not re-render.
+      const page = await openApp(browser, preview.origin, viewport);
+      await captureSequence(page, join(graphicsDir, dir));
+      await page.close();
+    }
 
-    await page.click('button[aria-label="Add paint"]');
-    await page.waitForSelector('input[placeholder="Search by name or brand..."]');
-    await page.type('input[placeholder="Search by name or brand..."]', 'blue', { delay: 40 });
-    await shoot(page, '02-search');
-    await page.click('button[aria-label="Close search"]');
-
-    // Second list: a different palette, so the two list screenshots do not read
-    // as the same picture twice.
-    await page.evaluate(() => {
-      const tabs = [...document.querySelectorAll('button')];
-      tabs.find((b) => b.textContent?.includes('Rust & Bone'))?.click();
-    });
-    await shoot(page, '03-second-list');
-
-    await page.evaluate(() => {
-      const tabs = [...document.querySelectorAll('button')];
-      tabs.find((b) => b.textContent?.trim().startsWith('+'))?.click();
-    });
-    await page.waitForSelector('input[placeholder="List name..."]');
-    await page.type('input[placeholder="List name..."]', 'Crimson Order', { delay: 40 });
-    await shoot(page, '04-new-list');
-
-    console.log('\nDone. Review every shot before uploading -- Play rejects');
-    console.log('screenshots showing placeholder or debug content.');
+    console.log('\nDone. Review every shot before uploading -- both stores');
+    console.log('reject screenshots showing placeholder or debug content.');
   } finally {
     await browser.close();
     preview?.child.kill();
