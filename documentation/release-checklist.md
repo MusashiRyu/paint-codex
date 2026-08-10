@@ -329,6 +329,12 @@ notes → review → roll out. Start at a staged percentage on production.
 
 ## Not covered here
 
-**iOS.** The archive flow is macOS-only and the iOS launcher icons are still
-Capacitor's placeholder — `tools/icons/` writes Android and web assets only.
-See [`OPEN-ITEMS.md`](./OPEN-ITEMS.md).
+**iOS.** Its own document:
+[`ios-release-checklist.md`](./ios-release-checklist.md). Almost nothing
+transfers between the two — different account, fee, artefact and review
+culture — so keeping one file per store beats one file with "and for iOS…"
+footnotes.
+
+The one thing that genuinely spans both is the version bump in
+[section 1 above](#1-bump-the-version), which is why that table names the iOS
+build settings and stays here rather than being duplicated.

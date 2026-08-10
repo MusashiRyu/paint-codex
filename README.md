@@ -214,8 +214,15 @@ npm run listing:check     # store copy against Play's character limits
 ```
 
 `npm run icons` regenerates everything from the mark at
-`tools/icons/source/icon.svg` — see [tools/icons/README.md](tools/icons/README.md).
-Edit that one file rather than any generated PNG.
+`tools/icons/source/icon.svg` — Android launcher icons and splashes, the iOS
+app icon and launch image, the Play listing icon and the favicon. See
+[tools/icons/README.md](tools/icons/README.md). Edit that one file rather than
+any generated PNG.
+
+`npm run screenshots` writes two sets from one capture sequence: 1080×1920 into
+`store/graphics/screenshots/` for Play and 1290×2796 into
+`store/graphics/screenshots-ios/` for the App Store. Both stores show the same
+app, so there is one sequence rather than one per store.
 
 Screenshots go stale silently: they are captured from the built app, so a UI
 change invalidates them and nothing complains. Re-run `npm run screenshots`
@@ -229,26 +236,40 @@ a Chromium in Playwright's shared cache, then Edge. If none start it prints each
 candidate with why — `absent` reads very differently from `exists, but did not
 start`, and only one of them means you need to install something.
 
-Listing copy, the Data safety answers and the privacy policy text are in
-[store/](store/).
+Listing copy for both stores, the Data safety and App Privacy answers and the
+privacy policy text are in [store/](store/).
 
 ### 3) iOS release flow
 
 Prerequisites (macOS only):
 - Xcode installed
-- Apple Developer account and signing certificates/profiles
-
-Open project:
+- Apple Developer Program membership (US$99/yr) and a Team selected in Xcode
 
 ```bash
-npm run cap:ios
+npm ci
+npm run cap:ios      # vite build + cap sync + open Xcode
 ```
 
-Then in Xcode:
-- Select target `App`
-- Set Team and Signing
-- Set bundle version/build numbers
-- Product > Archive, then distribute via App Store Connect
+Then in Xcode: target `App` → Signing & Capabilities → tick **Automatically
+manage signing** and pick the Team → set the run destination to **Any iOS
+Device (arm64)** → Product → Archive → Validate, then Distribute.
+
+`npm run cap:ios` is not optional on a fresh clone. `ios/App/App/public` is
+gitignored, so a clone has an Xcode project with no web app inside it until a
+build and sync have run. There is **no `pod install`** — this project uses Swift
+Package Manager (`ios/App/CapApp-SPM/`), not CocoaPods.
+
+Everything that does not need a Mac is already committed: the app icon and
+splash come from the same source mark as Android's, `Info.plist` answers the
+export-compliance question and asks for `arm64`, the privacy manifest is wired
+into the target, and the listing copy and 1290×2796 screenshots are in
+[store/](store/). `src/test/iosProject.test.ts` asserts the ones that would
+otherwise regress unnoticed, since nothing on Windows compiles Swift.
+
+The full submission path — Apple Developer enrolment, the bundle ID, App Store
+Connect, TestFlight, and the settings that are deliberate rather than
+accidental — is in
+[documentation/ios-release-checklist.md](documentation/ios-release-checklist.md).
 
 ### 4) Useful Capacitor commands
 

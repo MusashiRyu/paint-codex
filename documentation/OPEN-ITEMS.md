@@ -49,13 +49,20 @@ the catalogue grows by another brand.
 ### 4. iOS signing and archive are Mac-only
 **Raised:** 001 · **Environmental**
 
-Nothing to fix in the repo. The flow in the README's iOS section requires Xcode
-on macOS. Plan as of 2026-08-08: reach a Mac over Parsec and follow those steps
-there.
+Nothing left to fix in the repo. Everything an iOS submission needs that can be
+prepared on Windows was prepared at 024 — icon, splash, privacy manifest,
+`Info.plist`, device family, listing copy, screenshots — and
+[`ios-release-checklist.md`](./ios-release-checklist.md) is the whole path from
+enrolment onward.
 
-Note that `tools/icons/` writes Android and web assets only, so
-`ios/App/App/Assets.xcassets/AppIcon.appiconset` still holds the Capacitor
-placeholder. Extending the generator is the easy part of an iOS submission.
+What genuinely requires macOS is signing, archiving and uploading. Plan as of
+2026-08-08: reach a Mac over Parsec. The checklist also sketches the macOS CI
+runner alternative, which is the one that stops releases depending on somebody
+being available — worth setting up for the second release, not the first.
+
+**Nothing here compiles Swift**, so the iOS target's correctness is asserted by
+string checks in `src/test/iosProject.test.ts` rather than by a build. A broken
+`AppDelegate` would still reach the Mac undetected.
 
 ### 5. The shop links earn nothing, and could
 **Raised:** 015 · **Blocked on a commercial decision, not on code**
@@ -133,6 +140,8 @@ Prune this section once it stops being useful.
 | Sheet chrome duplicated across the two overlays | 009 | 009 — extracted into `shared/ui/` primitives |
 | Store screenshots stale after the catalogue change | 014 | 018 — regenerated; the browser was never the problem |
 | A build still fell over on `JAVA_HOME` — set persistently in 007, absent from any shell older than that change | 004, 022 | 022 — `tools/android/gradle.mjs` resolves the JDK per build, so no shell has to be right |
+| iOS app icon and splash were Capacitor's placeholder | 001 | 024 — `npm run icons` writes both from the same source mark |
+| `CapApp-SPM/Package.swift` was committed with Windows path separators, which are invalid Swift escape sequences | 024 | 024 — `tools/ios/fix-spm-paths.mjs` runs after every `cap:sync`, asserted by `iosProject.test.ts` |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
 removals in the redesign rather than pending work, and are not tracked.
