@@ -92,6 +92,43 @@ it rather than retyping it.
 The Friendly name is an internal label for finding the package in Console
 lists. It is not the store listing name and no user ever sees it.
 
+Submitting that leaves the package in **Draft**, with *To finish registering
+this package name, add your public key* and an **Add key** button. The field
+wants a **SHA-256 certificate fingerprint typed in**, not a certificate file —
+so exporting a `.pem` or `.der` is wasted effort.
+
+That **Add key** button is the *new package name* path, which is the one this
+app takes. A package name that already has installs gets **Select key**
+instead, which lists fingerprints Google already associates with it and asks
+you to prove ownership rather than assert a key.
+
+**It wants the app signing key, not the upload key**, and the distinction is
+easy to get backwards because at this point in the flow the upload key is the
+only key that exists. Google's own wording is what settles it — the certificate
+asked for is the one whose
+
+> signing key is what Android uses to verify that app updates are from you.
+
+A device verifies an update against the key that signed the *installed* app.
+Under Play App Signing that is Google's app signing key, so an update carrying
+only the upload key's signature is refused. The app signing key does not exist
+until enrolment at step 3.
+
+Prefer to leave the package in Draft, finish steps 2–6, then read the app
+signing key's fingerprint from **Release → Setup → App signing** — that page
+lists both keys — and register it here. If Console instead blocks app creation
+until the package name is fully registered, add the upload key now and add the
+app signing key afterwards; more than one key can be registered per package,
+which is what makes that order recoverable.
+
+To read the upload key's fingerprint without needing the keystore password,
+take it from a signed artefact:
+
+```bash
+"$JAVA_HOME/bin/keytool" -printcert -jarfile \
+  android/app/build/outputs/bundle/release/app-release.aab
+```
+
 > **This dialog is the point of no return.** Registering the string burns it
 > globally across Play, permanently. Deleting the app entry afterwards does not
 > release it — a second attempt needs a different name. Anything that wants to
