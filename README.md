@@ -22,12 +22,14 @@ npm run dev          # Vite dev server
 npm test             # Vitest
 npm run lint         # oxlint
 npm run build        # tsc -b && vite build
-npm run check:layout # layout invariants at 7 phone widths, in a real browser
+npm run check:layout # layout invariants at 7 phone widths × 5 surfaces
 ```
 
-`check:layout` needs `npm run build` first — it drives `dist/`. It exists
-because jsdom has no layout engine: the IN LIST badge wrapping onto its own
-line on a 412px phone, but not a 390px one, passed all 128 unit tests. See
+`check:layout` needs `npm run build` first — it drives `dist/` in a real
+browser. It exists because jsdom has no layout engine, and it has now caught two
+bugs no unit test could: the IN LIST badge wrapping onto its own line at 412px
+but not at 390px, and the windowed catalogue anchoring 92,000px away from the
+card it had scrolled to. See
 [tools/layout/check-layout.mjs](tools/layout/check-layout.mjs).
 
 Documentation lives in [documentation/](documentation/):
