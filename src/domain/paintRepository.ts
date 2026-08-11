@@ -1,6 +1,7 @@
 import paintsSnapshot from '../data/paints.snapshot.json';
 import type { Paint } from './types';
 import { readCachedCatalog, signCatalog } from './paintCatalogCache';
+import { sortPaintsPerceptually } from './paintQueries';
 
 /**
  * The live paint catalogue.
@@ -24,6 +25,9 @@ let paints: Paint[] = cached?.paints ?? bundledPaints;
 let sourceHtmlHash: string | undefined = cached?.htmlHash;
 let indexCache: Map<string, Paint> | undefined;
 let indexedCatalog: Paint[] | undefined;
+let browseOrderCache: Paint[] | undefined;
+let browsePositionCache: Map<string, number> | undefined;
+let browseOrderedCatalog: Paint[] | undefined;
 let signatureCache: string | undefined;
 
 const listeners = new Set<() => void>();
@@ -103,6 +107,35 @@ export function getPaintIndex(catalog: Paint[] = getPaints()): Map<string, Paint
     indexedCatalog = catalog;
   }
   return indexCache;
+}
+
+/**
+ * The catalogue in perceptual order — what the search sheet browses.
+ *
+ * Memoised against the array it was built from, on the same contract as
+ * `getPaintIndex` and for the same reason: the background refresh replaces the
+ * catalogue, and an order held against the old array would put the browse view
+ * at paints that have left it. The sort is ~2ms, so this is not about the cost
+ * of sorting; it is about paying it once per catalogue rather than once per
+ * sheet, and the sheet unmounts on every close.
+ */
+export function getBrowseOrder(catalog: Paint[] = getPaints()): Paint[] {
+  if (!browseOrderCache || browseOrderedCatalog !== catalog) {
+    browseOrderCache = sortPaintsPerceptually(catalog);
+    browsePositionCache = new Map(browseOrderCache.map((paint, at) => [paint.id, at]));
+    browseOrderedCatalog = catalog;
+  }
+  return browseOrderCache;
+}
+
+/**
+ * Each paint's position in `getBrowseOrder`, for opening the list on one of
+ * them. Built with the order rather than by the caller, so the two can never
+ * disagree about where a paint is.
+ */
+export function getBrowsePosition(catalog: Paint[] = getPaints()): Map<string, number> {
+  getBrowseOrder(catalog);
+  return browsePositionCache as Map<string, number>;
 }
 
 /**

@@ -248,8 +248,15 @@ function labComponent(t: number): number {
   return t > 216 / 24389 ? Math.cbrt(t) : (841 / 108) * t + 4 / 29;
 }
 
-/** `#RRGGBB` to CIELAB under D65, the white point sRGB is defined against. */
-function hexToLab(hex: string): [number, number, number] {
+/**
+ * `#RRGGBB` to CIELAB under D65, the white point sRGB is defined against.
+ *
+ * Exported, and deliberately still here rather than in `shared/lib/color.ts`:
+ * this module is loaded by the scraper through type stripping and must stay
+ * free of value imports from `src/`. Browse order and match deltas are computed
+ * from this one function, so the two cannot be measured in different Labs.
+ */
+export function hexToLab(hex: string): [number, number, number] {
   const r = linearize(parseInt(hex.slice(1, 3), 16));
   const g = linearize(parseInt(hex.slice(3, 5), 16));
   const b = linearize(parseInt(hex.slice(5, 7), 16));
