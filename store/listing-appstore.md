@@ -103,7 +103,7 @@ converts between.
 This is the Play full description with **one paragraph removed** — its
 closing paragraph, which is Play-specific copy with no App Store equivalent.
 
-**What's New** (4000 char limit) — not shown for a first release; Apple displays the description instead. Written now so 1.0.1 has a house style to follow
+**What's New 1.0.0** (4000 char limit) — not shown for a first release; Apple displays the description instead. Written now so the next release has a house style to follow
 
 ```
 First release.
@@ -115,6 +115,25 @@ equivalents side by side.
 
 Works entirely offline. No account, no ads, no tracking.
 ```
+
+**What's New 1.1.0** (4000 char limit) — the same copy as Play's release notes; the two stores ship the same app and there is nothing iOS-specific to say
+
+```
+Tap a paint in one of your lists to open it in the full catalogue, now ordered
+by colour: the paints above and below it are the nearest colours across all
+three brands. When nothing is an exact equivalent, scroll a little either way
+and take the closest thing.
+
+Paints you already own are marked IN LIST wherever they appear, including as
+equivalents of something else.
+
+Still entirely offline. No account, no ads, no tracking.
+```
+
+iOS has not shipped 1.0.0 yet, so this text is what the first App Store release
+will carry only if it goes out at 1.1.0 or later — otherwise it is the second
+release's notes. Nothing here needs deciding until the archive can be built; see
+OPEN-ITEMS 4.
 
 ### On the brand names in the keyword field
 

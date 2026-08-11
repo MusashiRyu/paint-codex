@@ -14,18 +14,12 @@ content answers are all filled in, so the one-time setup below is history
 rather than instructions — it is kept because a second app, or a Console
 redesign, makes it worth having.
 
-**1.1.0 (`versionCode` 3) was built on 2026-08-11 and is waiting to be
-uploaded.** It carries the equivalents work from retros 021–026 — the IN LIST
-badge on equivalent tiles, and a paint's row opening its own equivalents — plus
-028: that row now opens the whole catalogue in colour order, anchored on the
-paint, windowed so only the cards on screen are rendered. The `.aab` is signed
-and verified; the matching release APK is built for the hardware smoke test.
-Nothing else about the listing changed, so this is step 6 onward only.
-
-`versionCode` 2 was built earlier the same day and never uploaded. It was not
-reused: an artifact with that code exists on disk with different contents, and
-two builds sharing a code is the kind of confusion that outlives the day it was
-saved. Codes must increase; nothing requires them to be contiguous.
+**1.1.0 (`versionCode` 2) was built on 2026-08-11 and is waiting to be
+uploaded.** It carries the equivalents work from retros 021–026: the IN LIST
+badge on equivalent tiles, and a paint's row opening its own equivalents. The
+`.aab` is signed and verified; the matching release APK is built for the
+hardware smoke test. Nothing else about the listing changed, so this is step 6
+onward only.
 
 The package name registration is **done** — confirmed 2026-08-10, with the app
 signing key's fingerprint already attached to `com.musashi.paco`. Earlier
@@ -465,6 +459,11 @@ Worth actually looking at, because these only misbehave in a packaged build:
 
 Play Console → the track → Create new release → upload the `.aab` → release
 notes → review → roll out. Start at a staged percentage on production.
+
+The release notes live in `store/listing.md`, one block per version — Play keeps
+them per release, so each version's text stays alongside the last rather than
+replacing it. `npm run listing:check` measures every block against the 500-char
+limit. For this upload, paste **Release notes 1.1.0**.
 
 ---
 

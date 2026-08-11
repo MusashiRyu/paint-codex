@@ -78,7 +78,7 @@ respective owners, used here only to identify the paint ranges the app
 converts between.
 ```
 
-**Release notes** (500 char limit) — the "What's new" text for version 1.0.0
+**Release notes 1.0.0** (500 char limit) — the "What's new" text for version 1.0.0
 
 ```
 First release.
@@ -91,8 +91,23 @@ equivalents side by side.
 Works entirely offline. No account, no ads, no tracking.
 ```
 
-Play keeps release notes per language and per release. Reuse this wording for a
-first release on any track; write a real changelog from 1.0.1 onward.
+**Release notes 1.1.0** (500 char limit) — the "What's new" text for version 1.1.0
+
+```
+Tap a paint in one of your lists to open it in the full catalogue, now ordered
+by colour: the paints above and below it are the nearest colours across all
+three brands. When nothing is an exact equivalent, scroll a little either way
+and take the closest thing.
+
+Paints you already own are marked IN LIST wherever they appear, including as
+equivalents of something else.
+
+Still entirely offline. No account, no ads, no tracking.
+```
+
+Play keeps release notes per language and per release, so each version keeps its
+own block here rather than overwriting the last. Reuse the 1.0.0 wording for a
+first release on any track.
 
 ---
 
