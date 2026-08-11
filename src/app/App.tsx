@@ -19,6 +19,8 @@ const markdownExportEnabled = appConfig.featureFlags.markdownExport;
 
 function App() {
   const [searchOpen, setSearchOpen] = useState(false);
+  /** The paint the search sheet opens on; null is the FAB's blank search. */
+  const [focusPaintId, setFocusPaintId] = useState<string | null>(null);
   const [newListOpen, setNewListOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
   const [exportFlash, setExportFlash] = useState(false);
@@ -37,8 +39,27 @@ function App() {
   // Re-renders if the background refresh swaps the catalogue mid-session.
   const paintCatalog = usePaintCatalog();
 
+  /*
+   * The paint argument is required rather than defaulted, and every blank open
+   * passes `null` explicitly. `onOpenSearch` and the FAB's `onClick` are wired
+   * straight onto DOM handlers, so React calls them *with the SyntheticEvent* —
+   * a defaulted parameter would type-check and then take an event object as the
+   * paint id.
+   */
+  const openSearch = (paintId: string | null) => {
+    setFocusPaintId(paintId);
+    setSearchOpen(true);
+  };
+
+  // Clearing the focus is what stops the next FAB press re-opening on the last
+  // paint a row was tapped for.
+  const closeSearch = () => {
+    setSearchOpen(false);
+    setFocusPaintId(null);
+  };
+
   // Back gesture closes an open sheet instead of the app.
-  useBackDismiss(searchOpen, () => setSearchOpen(false));
+  useBackDismiss(searchOpen, closeSearch);
   useBackDismiss(newListOpen, () => setNewListOpen(false));
   useBackDismiss(aboutOpen, () => setAboutOpen(false));
 
@@ -105,7 +126,8 @@ function App() {
           activePaints={activePaints}
           onSelectList={selectList}
           onOpenNewList={() => setNewListOpen(true)}
-          onOpenSearch={() => setSearchOpen(true)}
+          onOpenSearch={() => openSearch(null)}
+          onShowEquivalents={(paintId) => openSearch(paintId)}
           onRemovePaint={(paintId) => {
             if (activeList) removePaintFromList(activeList.id, paintId);
           }}
@@ -120,7 +142,7 @@ function App() {
           size="lg"
           className={styles.fab}
           label="Add paint"
-          onClick={() => setSearchOpen(true)}
+          onClick={() => openSearch(null)}
         >
           +
         </GoldButton>
@@ -128,12 +150,17 @@ function App() {
         {/* Search sheet overlay */}
         {searchOpen && (
           <SearchSheet
+            /* The seed is read once, at mount. The sheet already unmounts on
+             * close, so this only matters if it ever stops doing that — then
+             * the key is what makes a new paint a new sheet. */
+            key={focusPaintId ?? 'blank'}
             paintCatalog={paintCatalog}
             listedPaintIds={activeList?.paintIds}
+            focusPaintId={focusPaintId}
             onAdd={(paint) => {
               if (activeList) addPaintToList(activeList.id, paint.id);
             }}
-            onClose={() => setSearchOpen(false)}
+            onClose={closeSearch}
           />
         )}
 

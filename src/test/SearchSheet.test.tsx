@@ -269,6 +269,114 @@ describe('SearchSheet equivalent jump', () => {
   });
 });
 
+/**
+ * Opened from a paint's row in the list rather than from the FAB. Deliberately
+ * no BROWSE FULL CATALOG click: results being on screen at mount is itself the
+ * assertion.
+ */
+function renderFocusedSheet(focusPaintId: string, listedPaintIds: string[] = [focusPaintId]) {
+  const onAdd = vi.fn();
+  const view = render(
+    <SearchSheet
+      paintCatalog={jumpCatalog}
+      listedPaintIds={listedPaintIds}
+      focusPaintId={focusPaintId}
+      onAdd={onAdd}
+      onClose={vi.fn()}
+    />
+  );
+  return { onAdd, ...view };
+}
+
+describe('SearchSheet opened on a paint', () => {
+  it('lands on that paint with its equivalents, no searching required', () => {
+    renderFocusedSheet('citadel-base-mephiston-red');
+
+    expect(searchBox()).toHaveValue('Mephiston Red');
+    expect(
+      within(cardFor('Mephiston Red')).getByRole('button', {
+        name: 'Go to Gory Red by Vallejo',
+      })
+    ).toBeInTheDocument();
+  });
+
+  it('focuses the card it opened on, so the next Tab reaches an equivalent', () => {
+    renderFocusedSheet('citadel-base-mephiston-red');
+
+    expect(document.activeElement).toBe(cardFor('Mephiston Red'));
+  });
+
+  it('reports the paint as already listed rather than offering to add it', () => {
+    renderFocusedSheet('citadel-base-mephiston-red');
+
+    // It came from the list, so membership is true by construction.
+    expect(screen.queryByLabelText('Add Mephiston Red to list')).not.toBeInTheDocument();
+    expect(within(cardFor('Mephiston Red')).getByText('IN LIST')).toBeInTheDocument();
+  });
+
+  it('narrows the brand filter to the paint, as a jump does', () => {
+    renderFocusedSheet('citadel-base-mephiston-red');
+
+    expect(screen.getByText('Found 1 paint(s)')).toBeInTheDocument();
+    // Gory Red is Vallejo: present as a tile, not as a result card of its own.
+    expect(
+      screen.queryByText('Gory Red', { selector: '[class*="paintName"]' })
+    ).not.toBeInTheDocument();
+  });
+
+  it('hands the search back to the user on the first keystroke', () => {
+    renderFocusedSheet('citadel-base-mephiston-red');
+
+    fireEvent.click(screen.getByRole('button', { name: 'All' }));
+    fireEvent.change(searchBox(), { target: { value: 'Gory' } });
+
+    expect(
+      screen.queryByText('Mephiston Red', { selector: '[class*="paintName"]' })
+    ).not.toBeInTheDocument();
+  });
+
+  it('opens the blank search when the paint has left the catalogue', () => {
+    // A refresh can retire a paint between the row rendering and the tap.
+    renderFocusedSheet('citadel-base-retired', []);
+
+    expect(screen.getByText('Search the grimoire for a paint...')).toBeInTheDocument();
+  });
+
+  it('does not re-seed when the background refresh swaps the catalogue', () => {
+    const { rerender } = renderFocusedSheet('citadel-base-mephiston-red');
+    fireEvent.change(searchBox(), { target: { value: 'Gory' } });
+
+    // Same paints, new array identity — what usePaintCatalog hands down after
+    // a refresh. Re-seeding here would wipe what the user just typed.
+    rerender(
+      <SearchSheet
+        paintCatalog={[...jumpCatalog]}
+        listedPaintIds={['citadel-base-mephiston-red']}
+        focusPaintId="citadel-base-mephiston-red"
+        onAdd={vi.fn()}
+        onClose={vi.fn()}
+      />
+    );
+
+    expect(searchBox()).toHaveValue('Gory');
+  });
+
+  it('still opens on the empty prompt when no paint is named', () => {
+    render(
+      <SearchSheet
+        paintCatalog={catalog}
+        listedPaintIds={undefined}
+        onAdd={vi.fn()}
+        onClose={vi.fn()}
+      />
+    );
+
+    expect(screen.getByText('Search the grimoire for a paint...')).toBeInTheDocument();
+    expect(searchBox()).toHaveValue('');
+    expect(screen.queryByText(/^Found /)).not.toBeInTheDocument();
+  });
+});
+
 describe('SearchSheet brand filter', () => {
   it('derives its chips from the catalogue rather than a hardcoded list', () => {
     renderSheet();

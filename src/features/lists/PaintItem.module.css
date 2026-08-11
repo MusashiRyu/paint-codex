@@ -9,12 +9,40 @@
   margin-bottom: 9px;
 }
 
+/* The row, minus the remove action, is one button — reset only. The framing
+ * stays on `.item`, so remove keeps sitting inside the same bordered box and
+ * the row looks exactly as it did before it became clickable. */
+.rowMain {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-row);
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rowMain:focus-visible {
+  outline: 1px solid var(--gold-border);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* `display: block` on the three below: they are spans inside a button now, and
+ * an inline box has no ellipsis and no top margin. */
 .info {
+  display: block;
   flex: 1;
   min-width: 0;
 }
 
 .name {
+  display: block;
   font-family: var(--font-display);
   font-size: var(--size-lg);
   color: var(--text-primary);
@@ -24,6 +52,7 @@
 }
 
 .meta {
+  display: block;
   font-size: var(--size-sm);
   letter-spacing: var(--track-sm);
   text-transform: uppercase;

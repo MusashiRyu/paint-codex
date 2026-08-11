@@ -32,6 +32,7 @@ function renderPanel(overrides: Partial<React.ComponentProps<typeof ListsPanel>>
     onSelectList: vi.fn(),
     onOpenNewList: vi.fn(),
     onOpenSearch: vi.fn(),
+    onShowEquivalents: vi.fn(),
     onRemovePaint: vi.fn(),
     onDeleteList: vi.fn(),
     onRenameList: vi.fn(),
@@ -163,5 +164,26 @@ describe('ListsPanel rename', () => {
     const props = renderPanel();
     fireEvent.click(screen.getByLabelText('Remove paint'));
     expect(props.onRemovePaint).toHaveBeenCalledWith('citadel-macragge-blue');
+    expect(props.onShowEquivalents).not.toHaveBeenCalled();
+  });
+});
+
+describe('ListsPanel equivalents entry', () => {
+  it('opens a paint from its own row', () => {
+    const props = renderPanel();
+
+    fireEvent.click(screen.getByLabelText('Show equivalents for Macragge Blue by Citadel'));
+
+    expect(props.onShowEquivalents).toHaveBeenCalledWith('citadel-macragge-blue');
+  });
+
+  it('keeps the row and the remove action apart', () => {
+    const props = renderPanel();
+
+    // The two sit inside one bordered box; tapping the row must never be the
+    // action with no undo.
+    fireEvent.click(screen.getByLabelText('Show equivalents for Macragge Blue by Citadel'));
+
+    expect(props.onRemovePaint).not.toHaveBeenCalled();
   });
 });

@@ -21,6 +21,8 @@ interface ListsPanelProps {
   onSelectList: (id: string) => void;
   onOpenNewList: () => void;
   onOpenSearch: () => void;
+  /** Opens the search sheet on one paint, from that paint's own row. */
+  onShowEquivalents: (paintId: string) => void;
   onRemovePaint: (paintId: string) => void;
   onDeleteList: (listId: string) => void;
   onRenameList: (listId: string, name: string) => void;
@@ -36,6 +38,7 @@ export function ListsPanel({
   onSelectList,
   onOpenNewList,
   onOpenSearch,
+  onShowEquivalents,
   onRemovePaint,
   onDeleteList,
   onRenameList,
@@ -213,6 +216,7 @@ export function ListsPanel({
                   brand={paint.brand}
                   type={paint.category}
                   hex={paint.hex}
+                  onShowEquivalents={() => onShowEquivalents(paint.id)}
                   onRemove={() => onRemovePaint(paint.id)}
                 />
               ))}

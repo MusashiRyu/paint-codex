@@ -17,6 +17,14 @@ interface SearchSheetProps {
   paintCatalog: Paint[];
   /** Ids already in the active list, used for the IN LIST badge. */
   listedPaintIds: string[] | undefined;
+  /**
+   * Open on one paint: its own card, scrolled to and focused, with its
+   * equivalents under it — the state an equivalent tile jumps to, reached from
+   * a paint's row in the list instead. Omitted or null is the blank search the
+   * FAB opens. Read once, at mount; after that the query, the brand filter and
+   * the pin belong to the user.
+   */
+  focusPaintId?: string | null;
   onAdd: (paint: Paint) => void;
   onClose: () => void;
 }
@@ -33,14 +41,28 @@ const MAX_EQUIVALENTS = 6;
 export function SearchSheet({
   paintCatalog,
   listedPaintIds,
+  focusPaintId,
   onAdd,
   onClose,
 }: SearchSheetProps) {
-  const [query, setQuery] = useState('');
-  const [brandFilter, setBrandFilter] = useState<string>(ALL_BRANDS);
+  /*
+   * Resolved once, at mount, and deliberately not in an effect: `paintCatalog`
+   * changes identity when the background refresh lands, and an effect keyed on
+   * it would wipe whatever the user had typed and re-pin the paint they had
+   * searched away from. A lazy initialiser, because this scans the catalogue.
+   */
+  const [focusPaint] = useState(() =>
+    focusPaintId ? paintCatalog.find((p) => p.id === focusPaintId) : undefined
+  );
+
+  // The three seeds below are exactly what `jumpToMatch` writes, so opening on
+  // a paint *is* a jump — one behaviour, reached two ways.
+  const [query, setQuery] = useState(focusPaint?.name ?? '');
+  const [brandFilter, setBrandFilter] = useState<string>(focusPaint?.brand ?? ALL_BRANDS);
   const [browseAll, setBrowseAll] = useState(false);
-  // The paint an equivalent was clicked through to, until the user searches again.
-  const [jumpTargetId, setJumpTargetId] = useState<string | null>(null);
+  // The paint an equivalent was clicked through to — or the one the sheet was
+  // opened on — until the user searches again.
+  const [jumpTargetId, setJumpTargetId] = useState<string | null>(focusPaint?.id ?? null);
 
   const cardRefs = useRef(new Map<string, HTMLDivElement>());
 
@@ -110,7 +132,10 @@ export function SearchSheet({
             setJumpTargetId(null);
           }}
           placeholder="Search by name or brand..."
-          autoFocus
+          /* Not when the sheet opened on a paint: the soft keyboard would cover
+           * the card the user came to read, and the effect above then moves
+           * focus to that card, leaving the keyboard up over nothing. */
+          autoFocus={!focusPaint}
         />
       </div>
 
