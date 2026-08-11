@@ -1,0 +1,156 @@
+/*
+ * One result card: the paint, and the equivalents under it.
+ *
+ * Split out of SearchSheet.module.css when the card became its own memoised
+ * component -- the sheet owns the chrome around the list, the card owns itself.
+ * Every class keeps its name, which is what the tests and the layout check
+ * select on.
+ */
+
+.resultCard {
+  background: var(--bg-item);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-xl);
+  padding: var(--pad-card);
+  margin-bottom: var(--pad-card);
+}
+
+/* The card an equivalent was clicked through to, so the jump is visible. */
+.resultCardJumped {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-selected-ring);
+  outline: none;
+}
+
+.paintRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-row);
+}
+
+.paintInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.paintName {
+  font-family: var(--font-display);
+  font-size: var(--size-2xl);
+  color: var(--text-primary);
+}
+
+.paintBrand {
+  font-size: var(--size-xs);
+  letter-spacing: var(--track-md);
+  text-transform: uppercase;
+  color: var(--text-brand);
+  margin-top: 3px;
+}
+
+.paintMeta {
+  font-size: var(--size-sm);
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.metaDot {
+  color: var(--text-dim);
+  margin: 0 4px;
+}
+
+.metaHex {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+.equivalents {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--gold-line);
+}
+
+.equivLabel {
+  font-size: var(--size-xs);
+  letter-spacing: var(--track-lg);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+/* Columns stretch to eat the row rather than leaving a ragged gutter on the
+ * right — auto-fill, not auto-fit, so two equivalents stay tile-sized instead
+ * of ballooning across the whole card.
+ *
+ * The 136px minimum is the head row's own width, measured rather than guessed:
+ * a 34px swatch, an 8px gap and a 64px IN LIST badge need 106px of content,
+ * plus 18px of tile padding and 2px of border. It was 104px, which let a 412px
+ * phone fit three columns of 87px — too narrow for the pair, so the badge
+ * wrapped under the swatch on exactly the devices with the most room. Widening
+ * the floor means such a phone shows two roomier tiles instead of three cramped
+ * ones, and three only once they genuinely fit. Any change to the badge or the
+ * swatch has to be re-measured here; `npm run check:layout` is what checks it. */
+.equivGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
+  gap: 10px;
+}
+
+.equivCard {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+  padding: 9px;
+  /* A button, so the tile can be clicked through to the paint it names. */
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.equivCard:disabled {
+  cursor: default;
+}
+
+.equivCard:not(:disabled):hover,
+.equivCard:focus-visible {
+  border-color: var(--gold-border);
+  background: var(--gold-fill);
+  outline: none;
+}
+
+/* The square swatch, and the IN LIST badge in the room it left beside it —
+ * pushed to the tile's right edge, which `space-between` does without an auto
+ * margin that would strand a lone swatch on the wrong side. The badge never
+ * shrinks, so on a card too narrow to seat both it wraps under the swatch
+ * rather than being clipped. */
+.equivHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-chip);
+  flex-wrap: wrap;
+}
+
+.equivName {
+  font-family: var(--font-display);
+  font-size: var(--size-sm);
+  color: var(--text-primary);
+  margin-top: 7px;
+  line-height: 1.2;
+}
+
+.equivBrand {
+  font-size: var(--size-xs);
+  color: var(--text-secondary);
+  margin-top: 2px;
+  margin-bottom: 7px;
+}
+
+.noEquiv {
+  font-size: var(--size-md);
+  color: var(--text-dim);
+  font-style: italic;
+}
