@@ -111,6 +111,36 @@ not where the scroll is), and that no test written against jsdom could ever have
 caught. The rule that caught it was written the same hour, from the plan's list
 of "things jsdom cannot see".
 
+### And then it shipped anyway, in development only
+
+The same bug came back through a door the check could not see through: it drives
+the **production build**, and development renders under `StrictMode`, which
+invokes every layout effect twice per commit.
+
+The second invocation runs *before* the re-render the first one asked for. So it
+saw measurements that had stopped changing and a DOM whose spacers had not been
+rebuilt yet, decided everything was settled, and scrolled to where the card was
+before the spacers grew — leaving a blank sheet 92,000px from anything. The
+production build, checked at all seven widths, was clean the whole time.
+
+Two fixes, and the second matters more than the first:
+
+1. **The anchor now waits on the DOM, not on the measurements.** A counter of
+   requested version bumps against rendered ones says whether a re-render is
+   outstanding; the anchor holds until they agree. "Nothing changed this pass"
+   and "the DOM is up to date" are different questions, and only the second one
+   is the one being asked.
+2. **`PACO_LAYOUT_ORIGIN` points the layout check at any running server.**
+   `PACO_LAYOUT_ORIGIN=http://localhost:5173 npm run check:layout` runs all 35
+   combinations against `npm run dev`, StrictMode and all. Confirmed both ways:
+   with the guard removed it fails `anchor-drifted` at every width against the
+   dev server and passes against the production build — which is precisely the
+   asymmetry that let this through.
+
+The lesson is not "StrictMode is awkward". It is that **the tool was only ever
+pointed at one of the two ways this app runs**, and the one it was not pointed
+at is the one the maintainer tests in.
+
 ## Files changed
 
 **New**

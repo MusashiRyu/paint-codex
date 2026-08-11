@@ -32,6 +32,16 @@ but not at 390px, and the windowed catalogue anchoring 92,000px away from the
 card it had scrolled to. See
 [tools/layout/check-layout.mjs](tools/layout/check-layout.mjs).
 
+```bash
+PACO_LAYOUT_ORIGIN=http://localhost:5173 npm run check:layout   # against npm run dev
+```
+
+Worth doing after any change that measures or scrolls: development renders under
+`StrictMode`, which invokes every layout effect twice per commit, and the second
+invocation runs before the re-render the first one asked for. That difference
+once put the browse view 92,000px from its anchor **in dev only**, with the
+production build passing this same check clean at all seven widths.
+
 Documentation lives in [documentation/](documentation/):
 [0.1-architecture.md](documentation/0.1-architecture.md) is the component table
 and the conventions, [0.2-design-system.md](documentation/0.2-design-system.md)

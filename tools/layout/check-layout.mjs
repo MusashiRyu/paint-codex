@@ -3,6 +3,18 @@
  *
  * Usage:
  *   npm run build && npm run check:layout
+ *   PACO_LAYOUT_ORIGIN=http://localhost:5173 npm run check:layout   # against `npm run dev`
+ *
+ * ## Why the dev server is worth checking too
+ *
+ * The production build is what ships, so that is the default. But development
+ * renders under `StrictMode`, which invokes every layout effect twice per
+ * commit — and the windowed list anchors itself from a layout effect. The
+ * second invocation runs before the re-render the first one asked for, so it
+ * sees stable measurements and a stale DOM. That put the browse view 92,000px
+ * from the card it had scrolled to, in dev only, after this check had passed
+ * clean against the production build. Point it at the dev server when touching
+ * anything that measures or scrolls.
  *
  * ## Why a browser, and not a unit test
  *
@@ -266,12 +278,17 @@ async function main() {
   const browser = await launchBrowser();
   let preview;
   try {
-    preview = await startPreview();
+    // An origin given by hand is a server someone else is running -- usually
+    // `npm run dev`, to check the StrictMode double-invoke path.
+    const external = process.env.PACO_LAYOUT_ORIGIN;
+    if (!external) preview = await startPreview();
+    const origin = external ?? preview.origin;
+    console.log(`origin: ${origin}${external ? ' (given)' : ' (vite preview of dist/)'}`);
     let failures = 0;
 
     for (const width of WIDTHS) {
       for (const surface of SURFACES) {
-        const page = await openApp(browser, preview.origin, width);
+        const page = await openApp(browser, origin, width);
         await surface.open(page);
         // Cinzel is self-hosted so this resolves immediately, but a measurement
         // taken mid-swap is a measurement of the fallback serif.

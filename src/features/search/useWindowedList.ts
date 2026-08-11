@@ -68,6 +68,21 @@ export function useWindowedList(
   const headerOffset = useRef(0);
   /** Bumped when a measurement moves, to rebuild offsets and re-render spacers. */
   const [version, setVersion] = useState(0);
+  /**
+   * Bumps asked for, against `version` bumps that have rendered.
+   *
+   * The two differ for exactly as long as a re-render is outstanding, and that
+   * window is where anchoring goes wrong: the spacers in the DOM still have the
+   * old heights, so the anchor card's measured position is the old one. React
+   * may run a layout effect more than once before that re-render lands — it
+   * does so on every commit under StrictMode — so "did this pass change
+   * anything" is not the same question as "is the DOM up to date".
+   */
+  const requestedVersion = useRef(0);
+  const bumpVersion = useCallback(() => {
+    requestedVersion.current += 1;
+    setVersion((v) => v + 1);
+  }, []);
   /** Set while this hook is writing scrollTop, so its own scroll event is ignored. */
   const programmatic = useRef(false);
   /**
@@ -171,7 +186,7 @@ export function useWindowedList(
       measuredWidth.current = width;
       heights.current.clear();
       resized = true;
-      setVersion((v) => v + 1);
+      bumpVersion();
     }
 
     if (windowEl.current) {
@@ -199,7 +214,7 @@ export function useWindowedList(
     }
 
     if (changed) {
-      setVersion((v) => v + 1);
+      bumpVersion();
       // The offsets rebuild on the next render; correct against what this
       // measurement pass implies for the card the user is looking at.
       const after = offsets.current[topIndex] + into + headerOffset.current;
@@ -210,16 +225,23 @@ export function useWindowedList(
     }
 
     /*
-     * Bring the anchor to the top — but only once the offsets have stopped
-     * moving. The first pass discovers the scroller's width, which changes the
-     * column count and so every estimate; anchoring against those would put the
-     * card a third of the catalogue away from the viewport, which is exactly
-     * what `anchor-drifted` in the layout check caught. So the id stays pending
-     * until a pass measures nothing new, which is at most two frames later and
-     * before either has painted.
+     * Bring the anchor to the top — but only once the spacers in the DOM are
+     * the ones the current measurements imply.
+     *
+     * Two separate things have to be true, and the difference cost a debugging
+     * session. "This pass measured nothing new" is not enough: React can run
+     * this effect again before the re-render that a previous pass asked for,
+     * and does exactly that on every commit in development. That second pass
+     * sees stable measurements and a stale DOM, scrolls to where the card was
+     * before the spacers grew, and leaves the user looking at blank space
+     * 92,000px from anything — which is what happened, in dev only, after the
+     * production build had been verified clean.
+     *
+     * So the id also stays pending while a version bump is outstanding.
      */
+    const settled = requestedVersion.current === version;
     const pending = pendingScrollId.current;
-    if (pending && !changed && !resized) {
+    if (pending && settled && !changed && !resized) {
       const card = cards.current.get(pending);
       if (card) {
         pendingScrollId.current = null;
@@ -233,7 +255,7 @@ export function useWindowedList(
     // Every commit that can change a card's height is in this list: a new list,
     // cards entering or leaving the window, and a re-measure. It converges,
     // because a pass that moves nothing does not bump the version.
-  }, [indexAt, items, range.start, range.end, version]);
+  }, [bumpVersion, indexAt, items, range.start, range.end, version]);
 
   // Rotation changes the column count and so every card's height, and React has
   // no reason to re-render for it. Width only: the Android soft keyboard
@@ -241,11 +263,11 @@ export function useWindowedList(
   useLayoutEffect(() => {
     const onResize = () => {
       const width = scroller.current?.clientWidth ?? 0;
-      if (width && width !== measuredWidth.current) setVersion((v) => v + 1);
+      if (width && width !== measuredWidth.current) bumpVersion();
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
-  }, []);
+  }, [bumpVersion]);
 
   // Plain listener rather than React's onScroll, so `passive` is explicit and a
   // test's fireEvent.scroll hits the same path a finger does.
