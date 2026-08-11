@@ -14,6 +14,13 @@ content answers are all filled in, so the one-time setup below is history
 rather than instructions — it is kept because a second app, or a Console
 redesign, makes it worth having.
 
+**1.1.0 (`versionCode` 2) was built on 2026-08-11 and is waiting to be
+uploaded.** It carries the equivalents work from retros 021–026: the IN LIST
+badge on equivalent tiles, and a paint's row opening its own equivalents. The
+`.aab` is signed and verified; the matching release APK is built for the
+hardware smoke test. Nothing else about the listing changed, so this is step 6
+onward only.
+
 The package name registration is **done** — confirmed 2026-08-10, with the app
 signing key's fingerprint already attached to `com.musashi.paco`. Earlier
 revisions of this file listed it as an outstanding Draft; it was not, because
