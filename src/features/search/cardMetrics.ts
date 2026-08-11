@@ -47,6 +47,16 @@ export const CARD_METRICS = {
   margin: 14,
 } as const;
 
+/**
+ * Air left above the card the sheet opens on.
+ *
+ * `--shadow-selected-ring` draws 3px *outside* the anchored card's border box,
+ * so scrolling its border flush with the top of the list clips the ring — the
+ * card looks like it is sliding under the brand chips. 8px clears the ring and
+ * reads as deliberate rather than as a card that stopped short.
+ */
+export const ANCHOR_GAP = 8;
+
 /** Columns `repeat(auto-fill, minmax(136px, 1fr))` fits into `width`. */
 export function equivalentColumns(width: number): number {
   const { tileMin, tileGap } = CARD_METRICS;

@@ -1,6 +1,6 @@
 import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import type { Paint } from '../../domain/types';
-import { CARD_METRICS, estimateCardHeight, visibleTileCount } from './cardMetrics';
+import { ANCHOR_GAP, CARD_METRICS, estimateCardHeight, visibleTileCount } from './cardMetrics';
 
 /**
  * Mount only the cards on screen, and keep the scroll honest about the rest.
@@ -247,8 +247,10 @@ export function useWindowedList(
         pendingScrollId.current = null;
         programmatic.current = true;
         // Geometric, so it holds whatever the offsetParent chain looks like and
-        // wherever the list is already scrolled to.
-        el.scrollTop += card.getBoundingClientRect().top - scrollerBox.top;
+        // wherever the list is already scrolled to. Short of the top by the
+        // width of the ring the anchored card wears, which is drawn outside its
+        // border box and would otherwise be cut off.
+        el.scrollTop += card.getBoundingClientRect().top - scrollerBox.top - ANCHOR_GAP;
         card.focus?.({ preventScroll: true });
       }
     }

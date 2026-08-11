@@ -251,6 +251,15 @@ function collectBrowseViolations() {
         rule: 'anchor-drifted',
         detail: `anchor spans ${round(a.top)}-${round(a.bottom)}, scroller ${round(s.top)}-${round(s.bottom)}`,
       });
+    } else if (a.top < s.top + 3) {
+      // `--shadow-selected-ring` is 3px outside the border box. Landing the
+      // border flush with the top of the list cuts the ring off, and the card
+      // reads as sliding under the brand chips rather than as the thing the
+      // sheet opened on.
+      out.push({
+        rule: 'anchor-ring-clipped',
+        detail: `anchor top ${round(a.top)} leaves no room for its ring above ${round(s.top)}`,
+      });
     }
   }
 

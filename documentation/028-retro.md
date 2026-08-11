@@ -141,6 +141,15 @@ The lesson is not "StrictMode is awkward". It is that **the tool was only ever
 pointed at one of the two ways this app runs**, and the one it was not pointed
 at is the one the maintainer tests in.
 
+### One more, from looking at it
+
+Landing the anchored card's border flush with the top of the list clips its ring:
+`--shadow-selected-ring` draws 3px *outside* the border box, so the card read as
+sliding under the brand chips. The anchor now stops 8px short — enough for the
+ring and enough to look deliberate — and `anchor-ring-clipped` is the fourth
+browse rule, verified by setting the gap back to 0 and watching it fail at every
+width.
+
 ## Files changed
 
 **New**
