@@ -36,14 +36,22 @@ afterEach(() => {
 const searchBox = () => screen.getByPlaceholderText('Search by name or brand...');
 
 describe('App search sheet entry points', () => {
-  it('opens on the paint whose row was tapped', () => {
+  it('opens the catalogue at the paint whose row was tapped', () => {
     render(<App />);
 
     fireEvent.click(
       screen.getByLabelText(`Show equivalents for ${paint.name} by ${paint.brand}`)
     );
 
-    expect(searchBox()).toHaveValue(paint.name);
+    // The only test that puts the real 2,279-paint catalogue through the sheet,
+    // so it is also the end-to-end net for the windowed list: the tapped paint
+    // is mounted, its card is anchored, and nothing was searched for.
+    expect(searchBox()).toHaveValue('');
+    const card = screen
+      .getByText(paint.name, { selector: '[class*="paintName"]' })
+      .closest('[class*="resultCard"]');
+    expect(card?.className).toMatch(/resultCardJumped/);
+    expect(screen.getByText(`Found ${getPaints().length} paint(s)`)).toBeInTheDocument();
   });
 
   it('opens blank from the add button afterwards', () => {

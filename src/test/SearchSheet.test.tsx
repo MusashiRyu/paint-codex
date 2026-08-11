@@ -218,14 +218,30 @@ describe('SearchSheet equivalent jump', () => {
 
     fireEvent.click(screen.getByRole('button', { name: 'Go to Gory Red by Vallejo' }));
 
-    // The clicked equivalent now has a row of its own, with its own add button.
+    // The clicked equivalent now has a card of its own, with its own add button.
     fireEvent.click(screen.getByLabelText('Add Gory Red to list'));
     expect(onAdd).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'vallejo-game-color-gory-red' })
     );
   });
 
-  it('moves the brand filter off one that would hide the clicked paint', () => {
+  it('moves rather than searches, so the colours around it stay on screen', () => {
+    renderJumpSheet();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Go to Gory Red by Vallejo' }));
+
+    // A tile tap used to fill the search box with the target's name and narrow
+    // to its brand — the two things that hide what sits next to it.
+    expect(searchBox()).toHaveValue('');
+    expect(screen.getByText('Found 3 paint(s)')).toBeInTheDocument();
+    expect(
+      screen
+        .getByText('Gory Red', { selector: '[class*="paintName"]' })
+        .closest('[class*="resultCard"]')?.className
+    ).toMatch(/resultCardJumped/);
+  });
+
+  it('drops a brand filter that would hide the clicked paint', () => {
     renderJumpSheet();
     fireEvent.click(screen.getByRole('button', { name: 'Citadel' }));
 
@@ -235,15 +251,18 @@ describe('SearchSheet equivalent jump', () => {
     expect(screen.getByLabelText('Add Gory Red to list')).toBeInTheDocument();
   });
 
-  it('lands on the clicked paint even when the fuzzy search misses it', () => {
+  it('reaches a paint the fuzzy index could never find by name', () => {
     renderJumpSheet();
 
+    // "X" is one character, under Fuse's minMatchCharLength. Browsing does not
+    // care: the whole catalogue is the list, so the paint is simply in it.
     fireEvent.click(screen.getByRole('button', { name: 'Go to X by Vallejo' }));
 
     expect(screen.getByLabelText('Add X to list')).toBeInTheDocument();
+    expect(searchBox()).toHaveValue('');
   });
 
-  it('stops pinning the jumped-to paint once the user searches again', () => {
+  it('lets go of the anchor once the user searches again', () => {
     renderJumpSheet();
     fireEvent.click(screen.getByRole('button', { name: 'Go to X by Vallejo' }));
 
@@ -292,7 +311,8 @@ describe('SearchSheet opened on a paint', () => {
   it('lands on that paint with its equivalents, no searching required', () => {
     renderFocusedSheet('citadel-base-mephiston-red');
 
-    expect(searchBox()).toHaveValue('Mephiston Red');
+    // Not a search for its name — a browse, parked at that paint.
+    expect(searchBox()).toHaveValue('');
     expect(
       within(cardFor('Mephiston Red')).getByRole('button', {
         name: 'Go to Gory Red by Vallejo',
@@ -314,20 +334,21 @@ describe('SearchSheet opened on a paint', () => {
     expect(within(cardFor('Mephiston Red')).getByText('IN LIST')).toBeInTheDocument();
   });
 
-  it('narrows the brand filter to the paint, as a jump does', () => {
+  it('shows the whole catalogue around it, not just the paint', () => {
     renderFocusedSheet('citadel-base-mephiston-red');
 
-    expect(screen.getByText('Found 1 paint(s)')).toBeInTheDocument();
-    // Gory Red is Vallejo: present as a tile, not as a result card of its own.
+    // The point of the change: a paint with no close equivalent is answered by
+    // what sits next to it in colour order, which a one-result view cannot show.
+    expect(screen.getByText('Found 3 paint(s)')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'All' })).toBeInTheDocument();
     expect(
-      screen.queryByText('Gory Red', { selector: '[class*="paintName"]' })
-    ).not.toBeInTheDocument();
+      screen.getByText('Gory Red', { selector: '[class*="paintName"]' })
+    ).toBeInTheDocument();
   });
 
   it('hands the search back to the user on the first keystroke', () => {
     renderFocusedSheet('citadel-base-mephiston-red');
 
-    fireEvent.click(screen.getByRole('button', { name: 'All' }));
     fireEvent.change(searchBox(), { target: { value: 'Gory' } });
 
     expect(

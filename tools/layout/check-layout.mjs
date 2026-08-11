@@ -57,9 +57,13 @@ const SEED = {
 };
 
 /**
- * The four surfaces the app has. Each says how to reach itself from a freshly
+ * The five surfaces the app has. Each says how to reach itself from a freshly
  * loaded page; the rules below are then run against whatever is on screen, so
  * a new sheet is one entry here rather than a new set of assertions.
+ *
+ * `browse` also runs the three extra rules in `collectBrowseViolations` — the
+ * windowed list is the one thing here that jsdom cannot check at all, because
+ * every measurement it takes is zero.
  */
 const SURFACES = [
   { name: 'lists', open: async () => {} },
@@ -87,6 +91,17 @@ const SURFACES = [
     open: async (page) => {
       await page.click('button[aria-label="About Paco"]');
       await page.waitForSelector('[aria-label="About Paco"][role="dialog"]');
+    },
+  },
+  {
+    name: 'browse',
+    browse: true,
+    open: async (page) => {
+      // The paint row's label deliberately does not start with "Go to", which
+      // is how rule 2 picks equivalent tiles — so these two never collide.
+      await page.click('button[aria-label^="Show equivalents for Mephiston Red"]');
+      await page.waitForSelector('[class*="resultCardJumped"]');
+      await page.waitForSelector('button[aria-label^="Go to"]');
     },
   },
 ];
@@ -180,6 +195,56 @@ function collectViolations() {
   return out;
 }
 
+/**
+ * Ran in the page, on the browse surface only: the three things about a
+ * windowed list that no unit test can see, because jsdom measures everything
+ * as zero.
+ */
+function collectBrowseViolations() {
+  const out = [];
+  const round = (n) => Math.round(n * 10) / 10;
+  const scroller = document.querySelector('[class*="results"]');
+  const cards = document.querySelectorAll('[class*="resultCard"]');
+  const count = document.querySelector('[class*="resultCount"]')?.textContent ?? '';
+  const total = Number(count.replace(/\D+/g, '')) || 0;
+
+  // 1. The window is a window. Mounting the catalogue is what this replaced,
+  //    and it would still "work" — just at 84,000 elements and a locked scroll.
+  if (total > 100 && cards.length > 16) {
+    out.push({
+      rule: 'window-not-mounted',
+      detail: `${cards.length} cards mounted for ${total} results; the list is not windowed`,
+    });
+  }
+
+  // 2. The spacers carry what is not mounted, so the scroll is as long as the
+  //    catalogue rather than as long as the window.
+  if (scroller && total > 100 && scroller.scrollHeight < scroller.clientHeight * 50) {
+    out.push({
+      rule: 'extent-short',
+      detail: `scrollHeight ${scroller.scrollHeight} for ${total} results in a ${scroller.clientHeight}px viewport`,
+    });
+  }
+
+  // 3. The card the sheet opened on is on screen — and still on screen after
+  //    measurement has replaced the estimates that positioned it.
+  const anchor = document.querySelector('[class*="resultCardJumped"]');
+  if (!anchor) {
+    out.push({ rule: 'anchor-missing', detail: 'nothing carries the anchored ring' });
+  } else if (scroller) {
+    const a = anchor.getBoundingClientRect();
+    const s = scroller.getBoundingClientRect();
+    if (a.bottom < s.top + 1 || a.top > s.bottom - 1) {
+      out.push({
+        rule: 'anchor-drifted',
+        detail: `anchor spans ${round(a.top)}-${round(a.bottom)}, scroller ${round(s.top)}-${round(s.bottom)}`,
+      });
+    }
+  }
+
+  return out;
+}
+
 async function openApp(browser, origin, width) {
   const page = await browser.newPage();
   await page.setViewport({ width, height: 780, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
@@ -212,7 +277,12 @@ async function main() {
         // taken mid-swap is a measurement of the fallback serif.
         await page.evaluate(() => document.fonts.ready);
 
+        // The windowed list corrects its own scroll once cards are measured;
+        // measuring it mid-correction measures the wrong frame.
+        if (surface.browse) await new Promise((r) => setTimeout(r, 400));
+
         const violations = await page.evaluate(collectViolations);
+        if (surface.browse) violations.push(...(await page.evaluate(collectBrowseViolations)));
         const columns = await page.evaluate(() => {
           const grid = document.querySelector('[class*="equivGrid"]');
           return grid ? getComputedStyle(grid).gridTemplateColumns.split(' ').length : 0;

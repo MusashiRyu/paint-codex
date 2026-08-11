@@ -1,16 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import type { Paint } from '../../domain/types';
-import { getTopMatches, getUniqueBrands } from '../../domain/paintQueries';
-import { getPaintIndex } from '../../domain/paintRepository';
-import { CLOSE_DELTA_MAX, getDeltaLabel, getDeltaStyle } from '../../shared/lib/color';
-import { Badge } from '../../shared/ui/Badge';
+import { getUniqueBrands } from '../../domain/paintQueries';
+import { getBrowseOrder, getPaintIndex } from '../../domain/paintRepository';
 import { GhostButton } from '../../shared/ui/GhostButton';
-import { GoldButton } from '../../shared/ui/GoldButton';
 import { Pill } from '../../shared/ui/Pill';
 import { Sheet } from '../../shared/ui/Sheet';
-import { Swatch } from '../../shared/ui/Swatch';
 import { TextField } from '../../shared/ui/TextField';
+import { ResultCard } from './ResultCard';
 import { searchPaints } from './search';
+import { useWindowedList } from './useWindowedList';
 import styles from './SearchSheet.module.css';
 
 interface SearchSheetProps {
@@ -18,11 +16,11 @@ interface SearchSheetProps {
   /** Ids already in the active list, used for the IN LIST badge. */
   listedPaintIds: string[] | undefined;
   /**
-   * Open on one paint: its own card, scrolled to and focused, with its
-   * equivalents under it — the state an equivalent tile jumps to, reached from
-   * a paint's row in the list instead. Omitted or null is the blank search the
-   * FAB opens. Read once, at mount; after that the query, the brand filter and
-   * the pin belong to the user.
+   * Open the catalogue at one paint: the whole thing in colour order, scrolled
+   * to that paint and nothing filtered out, so the colours either side of it
+   * are there to scroll through when it has no close equivalent. Omitted or
+   * null is the blank search the FAB opens. Read once, at mount; after that the
+   * query, the brand filter and the anchor belong to the user.
    */
   focusPaintId?: string | null;
   onAdd: (paint: Paint) => void;
@@ -30,13 +28,6 @@ interface SearchSheetProps {
 }
 
 const ALL_BRANDS = 'All';
-
-/**
- * Equivalents shown per paint. The snapshot stores exactly this many, so the
- * cap is really the delta filter below — a paint with no near neighbour in
- * another brand shows fewer tiles, or none.
- */
-const MAX_EQUIVALENTS = 6;
 
 export function SearchSheet({
   paintCatalog,
@@ -48,29 +39,27 @@ export function SearchSheet({
   /*
    * Resolved once, at mount, and deliberately not in an effect: `paintCatalog`
    * changes identity when the background refresh lands, and an effect keyed on
-   * it would wipe whatever the user had typed and re-pin the paint they had
-   * searched away from. A lazy initialiser, because this scans the catalogue.
+   * it would wipe whatever the user had typed and re-anchor the list away from
+   * wherever they had scrolled to. A lazy initialiser, because this scans the
+   * catalogue.
    */
   const [focusPaint] = useState(() =>
     focusPaintId ? paintCatalog.find((p) => p.id === focusPaintId) : undefined
   );
 
-  // The three seeds below are exactly what `jumpToMatch` writes, so opening on
-  // a paint *is* a jump — one behaviour, reached two ways.
-  const [query, setQuery] = useState(focusPaint?.name ?? '');
-  const [brandFilter, setBrandFilter] = useState<string>(focusPaint?.brand ?? ALL_BRANDS);
-  const [browseAll, setBrowseAll] = useState(false);
-  // The paint an equivalent was clicked through to — or the one the sheet was
-  // opened on — until the user searches again.
-  const [jumpTargetId, setJumpTargetId] = useState<string | null>(focusPaint?.id ?? null);
-
-  const cardRefs = useRef(new Map<string, HTMLDivElement>());
+  /*
+   * Opening on a paint is a browse, not a search. The query stays empty and the
+   * brand filter stays on All on purpose: narrowing to the paint's own brand
+   * hides exactly the cross-brand neighbours the user opened this to see.
+   */
+  const [query, setQuery] = useState('');
+  const [brandFilter, setBrandFilter] = useState<string>(ALL_BRANDS);
+  const [browseAll, setBrowseAll] = useState(Boolean(focusPaint));
+  /** Where the list is anchored: the ringed card, and where it opens. */
+  const [anchorId, setAnchorId] = useState<string | null>(focusPaint?.id ?? null);
 
   // Derived from the catalogue so a new brand in the snapshot needs no code change.
-  const brands = useMemo(
-    () => [ALL_BRANDS, ...getUniqueBrands(paintCatalog)],
-    [paintCatalog]
-  );
+  const brands = useMemo(() => [ALL_BRANDS, ...getUniqueBrands(paintCatalog)], [paintCatalog]);
 
   const activeIds = useMemo(() => new Set(listedPaintIds ?? []), [listedPaintIds]);
 
@@ -80,41 +69,40 @@ export function SearchSheet({
 
   const results = useMemo(() => {
     const q = query.trim();
-    const pool =
-      brandFilter === ALL_BRANDS
-        ? paintCatalog
-        : paintCatalog.filter((p) => p.brand === brandFilter);
-
     if (!q && !browseAll) return null; // show empty prompt
-    if (!q && browseAll) return pool;
 
-    const found = searchPaints(pool, q);
-    // The jump seeds the query with the target's own name, but fuzzy scoring is
-    // not a promise: pin the target rather than land the user on a list without
-    // the paint they clicked.
-    if (jumpTargetId && !found.some((p) => p.id === jumpTargetId)) {
-      const target = paintCatalog.find((p) => p.id === jumpTargetId);
-      if (target) return [target, ...found];
-    }
-    return found;
-  }, [query, brandFilter, browseAll, paintCatalog, jumpTargetId]);
+    // Colour order, not catalogue order: browsing is for finding what sits near
+    // a paint, so the list has to be arranged by what "near" means.
+    const ordered = getBrowseOrder(paintCatalog);
+    const pool =
+      brandFilter === ALL_BRANDS ? ordered : ordered.filter((p) => p.brand === brandFilter);
 
-  // Scroll the jumped-to card into view and hand it focus, so the next Tab
-  // reaches its add button.
-  useEffect(() => {
-    if (!jumpTargetId) return;
-    const card = cardRefs.current.get(jumpTargetId);
-    if (!card) return;
-    card.focus?.({ preventScroll: true });
-    card.scrollIntoView?.({ block: 'start' });
-  }, [jumpTargetId, results]);
+    // Fuse ranks by relevance, so the pool's colour order survives only as the
+    // tiebreak between equal scores — which is an improvement on brand order.
+    return q ? searchPaints(pool, q) : pool;
+  }, [query, brandFilter, browseAll, paintCatalog]);
 
-  /** Show the paint an equivalent stands for, ready to be added on its own row. */
-  const jumpToMatch = (target: Paint) => {
-    setQuery(target.name);
-    setBrandFilter(target.brand);
-    setJumpTargetId(target.id);
-  };
+  const list = useWindowedList(results, paintsById, anchorId);
+  const { growAround } = list;
+
+  /*
+   * Show what sits around the paint an equivalent stands for.
+   *
+   * A move, not a search. The old jump wrote the target's name into the search
+   * box and its brand into the filter, which answered "show me this paint" —
+   * the question here is "show me what is near it", and a query and a brand
+   * filter are the two things that can hide the answer.
+   *
+   * No dependencies, so `ResultCard` stays memoised across a scroll.
+   */
+  const jumpToMatch = useCallback((target: Paint) => {
+    setQuery('');
+    setBrandFilter(ALL_BRANDS);
+    setBrowseAll(true);
+    setAnchorId(target.id);
+  }, []);
+
+  const handleAdd = useCallback((paint: Paint) => onAdd(paint), [onAdd]);
 
   return (
     <Sheet
@@ -129,12 +117,12 @@ export function SearchSheet({
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
-            setJumpTargetId(null);
+            setAnchorId(null);
           }}
           placeholder="Search by name or brand..."
           /* Not when the sheet opened on a paint: the soft keyboard would cover
-           * the card the user came to read, and the effect above then moves
-           * focus to that card, leaving the keyboard up over nothing. */
+           * the colours the user came to compare, and the anchor then moves
+           * focus to the card anyway, leaving the keyboard up over nothing. */
           autoFocus={!focusPaint}
         />
       </div>
@@ -142,22 +130,26 @@ export function SearchSheet({
       {/* Brand filters */}
       <div className={styles.filterRow}>
         {brands.map((b) => (
-          <Pill
-            key={b}
-            size="sm"
-            selected={brandFilter === b}
-            onClick={() => {
-              setBrandFilter(b);
-              setJumpTargetId(null);
-            }}
-          >
+          <Pill key={b} size="sm" selected={brandFilter === b} onClick={() => setBrandFilter(b)}>
             {b}
           </Pill>
         ))}
       </div>
 
       {/* Results */}
-      <div className={styles.results}>
+      <div
+        className={styles.results}
+        ref={list.scrollerRef}
+        onKeyDown={(event) => {
+          if (event.key !== 'Tab') return;
+          // Tab off the edge of the window would wrap to the search box, since
+          // the focus trap only sees what is mounted. Widen first — the default
+          // action runs in this same task.
+          const card = (event.target as HTMLElement).closest<HTMLElement>('[data-index]');
+          if (!card) return;
+          growAround(Number(card.dataset.index) + (event.shiftKey ? -2 : 2));
+        }}
+      >
         {results === null && (
           <div className={styles.emptyPrompt}>
             <div className={styles.emptyPromptText}>Search the grimoire for a paint...</div>
@@ -170,113 +162,35 @@ export function SearchSheet({
         {results !== null && (
           <>
             <div className={styles.resultCount}>Found {results.length} paint(s)</div>
-            {results.map((paint) => {
-              const inList = activeIds.has(paint.id);
-              const equivalents = getTopMatches(
-                paint,
-                paintsById,
-                MAX_EQUIVALENTS,
-                CLOSE_DELTA_MAX
-              );
-              const jumpedTo = paint.id === jumpTargetId;
-              return (
-                <div
+            {/* The window: two spacers standing in for the cards outside it, and
+             * a list role, so a screen reader is told 2,279 rather than the nine
+             * that happen to be mounted. */}
+            <div className={styles.window} ref={list.windowRef} role="list">
+              <div className={styles.spacer} style={{ height: list.topPad }} aria-hidden="true" />
+              {results.slice(list.start, list.end).map((paint, at) => (
+                <ResultCard
                   key={paint.id}
-                  ref={(el) => {
-                    if (el) cardRefs.current.set(paint.id, el);
-                    else cardRefs.current.delete(paint.id);
-                  }}
-                  className={`${styles.resultCard} ${jumpedTo ? styles.resultCardJumped : ''}`}
-                  tabIndex={jumpedTo ? -1 : undefined}
-                >
-                  {/* Paint summary row */}
-                  <div className={styles.paintRow}>
-                    <Swatch color={paint.hex} size="md" />
-                    <div className={styles.paintInfo}>
-                      <div className={styles.paintName}>{paint.name}</div>
-                      <div className={styles.paintBrand}>{paint.brand}</div>
-                      <div className={styles.paintMeta}>
-                        {paint.category && <span>{paint.category}</span>}
-                        {paint.category && <span className={styles.metaDot}>·</span>}
-                        <span className={styles.metaHex}>{paint.hex}</span>
-                      </div>
-                    </div>
-                    {inList ? (
-                      <Badge tone="success">IN LIST</Badge>
-                    ) : (
-                      <GoldButton
-                        label={`Add ${paint.name} to list`}
-                        onClick={() => onAdd(paint)}
-                      >
-                        +
-                      </GoldButton>
-                    )}
-                  </div>
-
-                  {/* Equivalents, closest first */}
-                  <div className={styles.equivalents}>
-                    <div className={styles.equivLabel}>Equivalent Paints:</div>
-                    {equivalents.length > 0 ? (
-                      <div className={styles.equivGrid}>
-                        {equivalents.map(({ paint: equivalent, delta }) => {
-                          const style = getDeltaStyle(delta);
-                          // The same membership fact the card above reports, on
-                          // the paint the tile stands for.
-                          const equivInList = activeIds.has(equivalent.id);
-                          return (
-                            <button
-                              key={equivalent.id}
-                              type="button"
-                              className={styles.equivCard}
-                              onClick={() => jumpToMatch(equivalent)}
-                              aria-label={
-                                `Go to ${equivalent.name} by ${equivalent.brand}` +
-                                // The badge is inside the button, so its text is
-                                // swallowed by this label unless it is repeated.
-                                (equivInList ? ', already in list' : '')
-                              }
-                            >
-                              {/* Spans, since a button may only hold phrasing content. */}
-                              <span className={styles.equivHead}>
-                                <Swatch color={equivalent.hex} size="tile" as="span" />
-                                {equivInList && (
-                                  <Badge as="span" tone="success" compact>
-                                    IN LIST
-                                  </Badge>
-                                )}
-                              </span>
-                              <span className={styles.equivName}>{equivalent.name}</span>
-                              <span className={styles.equivBrand}>
-                                {equivalent.category
-                                  ? `${equivalent.brand} · ${equivalent.category}`
-                                  : equivalent.brand}
-                              </span>
-                              <Badge
-                                as="span"
-                                block
-                                title={getDeltaLabel(delta)}
-                                style={{
-                                  background: style.background,
-                                  border: `1px solid ${style.border}`,
-                                  color: style.color,
-                                }}
-                              >
-                                Δ {delta.toFixed(2)}
-                              </Badge>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      <div className={styles.noEquiv}>No close equivalents catalogued.</div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
+                  paint={paint}
+                  paintsById={paintsById}
+                  activeIds={activeIds}
+                  anchored={paint.id === anchorId}
+                  position={list.start + at + 1}
+                  total={results.length}
+                  onAdd={handleAdd}
+                  onJump={jumpToMatch}
+                  registerCard={list.registerCard}
+                />
+              ))}
+              <div
+                className={styles.spacer}
+                style={{ height: list.bottomPad }}
+                aria-hidden="true"
+              />
+            </div>
           </>
         )}
       </div>
     </Sheet>
   );
 }
+
