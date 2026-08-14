@@ -1,6 +1,8 @@
 import paintsSnapshot from '../data/paints.snapshot.json';
 import type { Paint } from './types';
 import { readCachedCatalog, signCatalog } from './paintCatalogCache';
+import { hexToLab } from './paintCatalogSource';
+import type { ResolvedMatch } from './paintQueries';
 import { sortPaintsPerceptually } from './paintQueries';
 
 /**
@@ -28,6 +30,8 @@ let indexedCatalog: Paint[] | undefined;
 let browseOrderCache: Paint[] | undefined;
 let browsePositionCache: Map<string, number> | undefined;
 let browseOrderedCatalog: Paint[] | undefined;
+let labIndexCache: Float64Array | undefined;
+let labIndexedCatalog: Paint[] | undefined;
 let signatureCache: string | undefined;
 
 const listeners = new Set<() => void>();
@@ -136,6 +140,74 @@ export function getBrowseOrder(catalog: Paint[] = getPaints()): Paint[] {
 export function getBrowsePosition(catalog: Paint[] = getPaints()): Map<string, number> {
   getBrowseOrder(catalog);
   return browsePositionCache as Map<string, number>;
+}
+
+/**
+ * Every paint's colour in CIELAB, flat as `[L, a, b, L, a, b, …]`.
+ *
+ * Memoised against the array it was built from, on the same contract as
+ * `getPaintIndex`. A typed array rather than objects because the only thing
+ * that reads it is a scan over all 2,279 entries, several times per screen.
+ */
+export function getLabIndex(catalog: Paint[] = getPaints()): Float64Array {
+  if (!labIndexCache || labIndexedCatalog !== catalog) {
+    const lab = new Float64Array(catalog.length * 3);
+    for (let i = 0; i < catalog.length; i++) {
+      const [l, a, b] = hexToLab(catalog[i].hex);
+      lab[i * 3] = l;
+      lab[i * 3 + 1] = a;
+      lab[i * 3 + 2] = b;
+    }
+    labIndexCache = lab;
+    labIndexedCatalog = catalog;
+  }
+  return labIndexCache;
+}
+
+/**
+ * The catalogue paint closest to an arbitrary colour, with its ΔE.
+ *
+ * This is the Color Lab's bridge back to reality: a mixed or derived colour is
+ * not a paint, so it has no precomputed `matches` to read and needs a live
+ * scan. CIE76 in the Lab of `hexToLab`, which is the Lab the snapshot's own
+ * deltas were measured in — the two numbers have to mean the same thing.
+ *
+ * Unlike `getTopMatches` this does **not** exclude any brand. Equivalents
+ * answer "what do I buy instead of this Citadel paint", where the same brand is
+ * an answer to a different question; this answers "what is closest to this
+ * colour", where every paint is a candidate.
+ *
+ * Null on an empty catalogue or an unparseable colour. The delta is often past
+ * `CLOSE_DELTA_MAX` — a computed colour has no reason to have a near neighbour
+ * — and that is signal, not failure, which is why nothing is filtered here.
+ */
+export function findNearestPaint(hex: string, catalog: Paint[] = getPaints()): ResolvedMatch | null {
+  if (catalog.length === 0) return null;
+  const [l, a, b] = hexToLab(hex);
+  if (!Number.isFinite(l)) return null;
+
+  const lab = getLabIndex(catalog);
+  let bestAt = -1;
+  let bestSquared = Number.POSITIVE_INFINITY;
+
+  for (let i = 0; i < catalog.length; i++) {
+    const dl = l - lab[i * 3];
+    const da = a - lab[i * 3 + 1];
+    const db = b - lab[i * 3 + 2];
+    const squared = dl * dl + da * da + db * db;
+    if (squared < bestSquared) {
+      bestSquared = squared;
+      bestAt = i;
+    }
+  }
+
+  if (bestAt === -1) return null;
+  // Two decimals, the same precision the snapshot stores its own deltas at, so
+  // a Lab number and an equivalent's number read alike.
+  return {
+    paint: catalog[bestAt],
+    delta: Math.round(Math.sqrt(bestSquared) * 100) / 100,
+  };
 }
 
 /**

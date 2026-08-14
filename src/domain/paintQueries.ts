@@ -23,6 +23,11 @@ export interface ResolvedMatch {
  * catalogue. Callers must not render `paint.matches` directly: it stores ids
  * and deltas, and an id whose paint has since left the catalogue is dropped
  * here rather than rendered as a hole.
+ *
+ * These are cross-brand only, because they were built that way by the parser.
+ * For "what is nearest to this colour" — where the answer may be any brand, and
+ * where there is no paint to have precomputed matches for — see
+ * `paintRepository.findNearestPaint`.
  */
 export function getTopMatches(
   paint: Paint,
