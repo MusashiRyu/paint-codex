@@ -46,31 +46,6 @@ already handled (the refresh applies for the session and simply does not
 persist). Worth remembering before anything else large is persisted, and before
 the catalogue grows by another brand.
 
-### 4. iOS signing and archive are Mac-only
-**Raised:** 001 · **Resolved 2026-08-14**
-
-Resolved, in the sense that it no longer requires a Mac *anyone here owns*.
-[`.github/workflows/ios-release.yml`](../.github/workflows/ios-release.yml)
-archives and uploads to App Store Connect from a hosted macOS runner, signing
-with an App Store Connect API key and `-allowProvisioningUpdates`, so no
-certificate is exported from anywhere. **It has completed a real run and
-uploaded a build.** Setup is one API key and four repository secrets; a release
-is one button from Windows.
-
-The manual Xcode path in the checklist is kept as a fallback, not as the plan.
-
-Two things remain true and are worth not forgetting:
-
-- **Nothing compiles Swift until a release runs.** The per-push CI does not
-  build the iOS target, so `src/test/iosProject.test.ts` asserts the project
-  settings as strings and a broken `AppDelegate` surfaces only when the release
-  workflow reaches it.
-- **The runner images are not stable ground.** Device platform support is a
-  separate downloadable component and hosted images carry it inconsistently;
-  the workflow installs it when missing, which is the difference between a
-  15-minute run and a 45-minute one. See the checklist for the failure modes
-  it presents as, none of which name the platform.
-
 ### 5. The shop links earn nothing, and could
 **Raised:** 015 · **Blocked on a commercial decision, not on code**
 
@@ -97,7 +72,7 @@ Four things gate it, in order:
    and `ListsPanel`, not a link drop. The app has no commercial surface anywhere
    today; adding one changes what it feels like to use.
 4. **Disclosure.** Affiliate links need saying so in `store/listing.md` and
-   `store/privacy-policy.md` — they would give the
+   `store/privacy-policy.md` — and they would give the
    destination a reason to know the visit came from Paco, which the privacy
    policy currently promises does not happen. That paragraph would have to
    change. The cost here is not only compliance; it is tone.
@@ -140,6 +115,25 @@ release, in exchange for nothing that reaches a user. Wait for Capacitor to
 bump its own dependency. Re-check with `npm audit --omit=dev` before each
 release — that is the number that matters.
 
+### 9. Nothing compiles Swift until a release runs
+**Raised:** 029 · **Deferred on cost, not difficulty**
+
+`ci.yml` runs lint, typecheck, tests, a web build and the layout check on every
+push, none of which build the iOS target. `src/test/iosProject.test.ts` asserts
+the project settings as strings, which catches a regressed `Info.plist` or a
+device family someone widened by clicking a dialog — but not code. A broken
+`AppDelegate` therefore reaches the release workflow undetected and fails there,
+minutes into a run that was meant to ship something.
+
+The fix is known and is why this is deferred rather than open-ended: add a
+compile-only iOS job to `ci.yml`. The cost is macOS runner minutes on every
+push, at ten times the Linux rate on a private repo and against a shared free
+allowance on a public one, to guard a target whose own Swift is two untouched
+template files — `AppDelegate.swift` and `SceneDelegate.swift`.
+
+Worth revisiting if any of those files ever gains real code, which today it has
+not.
+
 ---
 
 ## Recently closed
@@ -170,6 +164,7 @@ Prune this section once it stops being useful.
 | A build still fell over on `JAVA_HOME` — set persistently in 007, absent from any shell older than that change | 004, 022 | 022 — `tools/android/gradle.mjs` resolves the JDK per build, so no shell has to be right |
 | iOS app icon and splash were Capacitor's placeholder | 001 | 024 — `npm run icons` writes both from the same source mark |
 | `CapApp-SPM/Package.swift` was committed with Windows path separators, which are invalid Swift escape sequences | 024 | 024 — `tools/ios/fix-spm-paths.mjs` runs after every `cap:sync`, asserted by `iosProject.test.ts` |
+| iOS signing and archive needed a Mac nobody here has — the only one is a 2015 model, permanently below the Xcode 26 floor | 001 | 029 — `ios-release.yml` archives and uploads from a hosted runner; a release is one button from Windows |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
 removals in the redesign rather than pending work, and are not tracked.
