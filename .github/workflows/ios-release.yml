@@ -79,6 +79,15 @@ jobs:
           # an uncaught NSFileHandleOperationException rather than exiting --
           # so the step aborts with code 134 and a Objective-C stack trace,
           # having already printed the correct version.
+          # Installs and registers the toolchain components Xcode would set up
+          # on first launch. Hosted images are inconsistent about whether the
+          # iOS *platform* is registered -- the SDK is always in the bundle,
+          # but without the registration xcodebuild reports either "iOS 26.0
+          # is not installed" or "Found no destinations for the scheme", on
+          # otherwise identical runs of the same command. Idempotent and quick
+          # when there is nothing to do.
+          sudo xcodebuild -runFirstLaunch
+
           version=$(xcodebuild -version)
           printf '%s\n' "$version"
           major=$(printf '%s\n' "$version" | sed -n '1s/^Xcode \([0-9][0-9]*\).*/\1/p')
@@ -91,9 +100,15 @@ jobs:
 
       # Not piped, for the SIGPIPE reason above. Printed because when signing
       # or destination resolution goes wrong, the first question is always
-      # which SDKs this image actually has.
-      - name: Show available SDKs
-        run: xcodebuild -showsdks
+      # what this image actually has -- and the answer has differed between
+      # runs of the same workflow. Destinations are the half that varies;
+      # `|| true` so an empty list is reported by the build rather than here.
+      - name: Show available SDKs and destinations
+        run: |
+          xcodebuild -showsdks
+          xcodebuild -showdestinations \
+            -project ios/App/App.xcodeproj \
+            -scheme App || true
 
       # Written to a file because xcodebuild takes a path, not the key itself.
       # RUNNER_TEMP is wiped with the runner; the cleanup step below is belt
