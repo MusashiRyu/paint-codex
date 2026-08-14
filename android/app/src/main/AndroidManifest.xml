@@ -9,8 +9,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- Portrait only, matching UISupportedInterfaceOrientations in
+             ios/App/App/Info.plist. The layout is a single phone-width card
+             tuned at portrait widths, and the tall sheet's 88% height leaves
+             no room above it in landscape.
+
+             `configChanges` still lists `orientation`, and stays: it stops the
+             activity being recreated on the config changes it does see, which
+             would otherwise reload the WebView and lose the open sheet.
+
+             Caveat for large screens: this app targets SDK 36, and Android 16
+             ignores orientation restrictions on displays 600dp and wider. A
+             foldable opened flat will rotate regardless. That is the platform's
+             call to make, and this app is phones-only for now. -->
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation|density"
+            android:screenOrientation="portrait"
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBarLaunch"

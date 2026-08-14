@@ -61,14 +61,19 @@
 	<array>
 		<string>arm64</string>
 	</array>
-	<!-- No `~ipad` variant: TARGETED_DEVICE_FAMILY is 1, so an iPad only ever
+	<!-- Portrait only. The app is one 390px-wide card, hand-tuned at phone
+	     widths; rotated, the header and the sheets get a ~390pt-tall window to
+	     live in and the tall sheet's 88% leaves nothing above it. The layout
+	     check in tools/layout/check-layout.mjs only asserts portrait widths for
+	     the same reason. Dropping the landscape entries is the whole lock on
+	     iPhone — no AppDelegate override is needed.
+
+	     No `~ipad` variant: TARGETED_DEVICE_FAMILY is 1, so an iPad only ever
 	     runs this in iPhone compatibility mode and the key is never read. It
 	     comes back if and when a real tablet layout does. -->
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>

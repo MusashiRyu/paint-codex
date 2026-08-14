@@ -65,6 +65,27 @@ describe('Info.plist', () => {
     expect(plist).toContain('<string>arm64</string>');
     expect(plist).not.toContain('<string>armv7</string>');
   });
+
+  /**
+   * Portrait only. The layout is one 390px card hand-tuned at phone widths and
+   * `tools/layout/check-layout.mjs` only ever asserts portrait; rotated, the
+   * tall sheet's 88% height has nothing above it. Capacitor's template ships
+   * both landscape entries, so this is a value to hold rather than one to set
+   * once -- a `cap add ios` on a fresh clone would put them straight back.
+   *
+   * Paired with the `android:screenOrientation` assertion in
+   * `androidShell.test.ts`; the lock has to hold on both or the app rotates on
+   * one platform only.
+   */
+  it('locks to portrait', () => {
+    const orientations = plist.match(
+      /<key>UISupportedInterfaceOrientations<\/key>\s*<array>(.*?)<\/array>/s
+    )?.[1];
+
+    expect(orientations, 'UISupportedInterfaceOrientations not found').toBeDefined();
+    expect(orientations).toContain('UIInterfaceOrientationPortrait');
+    expect(orientations).not.toContain('Landscape');
+  });
 });
 
 describe('project.pbxproj', () => {
