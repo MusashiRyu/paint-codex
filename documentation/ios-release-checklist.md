@@ -207,6 +207,11 @@ role and outlives whoever set it up.
 App Manager rather than Developer: both can upload a build, but only App Manager
 can manage TestFlight and app metadata, which is where this grows next.
 
+Name it **`github-actions-paco-ios-release`**. The name cannot be edited later,
+and its only job is to let someone reading the key list work out what breaks if
+they revoke it — so it names the system holding it, the project, and the
+workflow file, rather than a person or a date.
+
 > **The team has to have API access switched on first, and only the Account
 > Holder can do it.** Until then the page offers a greyed-out *Request Access*
 > button and nothing else, to Admins included — so this is not something a
