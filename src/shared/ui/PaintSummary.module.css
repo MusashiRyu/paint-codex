@@ -13,18 +13,50 @@
   gap: var(--gap-row);
 }
 
+/* The whole row as one button, on a surface where tapping a paint chooses it.
+ * It takes the row's own layout so the swatch and the text sit exactly where
+ * they do when the row is inert — the affordance is the hover and the cursor,
+ * not a different arrangement. Negative margin and matching padding give it a
+ * press target that reaches the card's edges without moving anything. */
+.selectable {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-row);
+  margin: calc(var(--pad-card) * -1);
+  padding: var(--pad-card);
+  border: none;
+  border-radius: var(--radius-md);
+  background: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.selectable:hover,
+.selectable:focus-visible {
+  background: var(--gold-fill);
+  outline: none;
+}
+
+/* Spans, so these need telling they are blocks. */
 .paintInfo {
   flex: 1;
   min-width: 0;
+  display: block;
 }
 
 .paintName {
+  display: block;
   font-family: var(--font-display);
   font-size: var(--size-2xl);
   color: var(--text-primary);
 }
 
 .paintBrand {
+  display: block;
   font-size: var(--size-xs);
   letter-spacing: var(--track-md);
   text-transform: uppercase;
@@ -33,6 +65,7 @@
 }
 
 .paintMeta {
+  display: block;
   font-size: var(--size-sm);
   color: var(--text-secondary);
   margin-top: 2px;

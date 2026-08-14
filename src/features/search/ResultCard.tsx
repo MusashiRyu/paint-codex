@@ -68,6 +68,23 @@ function ResultCardImpl({
   const inList = activeIds.has(paint.id);
   const equivalents = getTopMatches(paint, paintsById, MAX_EQUIVALENTS, CLOSE_DELTA_MAX);
 
+  /*
+   * Picking, on a surface that picks.
+   *
+   * On the List screen a card is a thing you read and a small button is what
+   * acts on it — the card itself has nowhere to go. In a picker every colour on
+   * screen is a candidate, so tapping one has an obvious meaning and not
+   * honouring it reads as a card that does not work. The whole summary row
+   * becomes the button, and the gold `+` goes: two adjacent tab stops calling
+   * the same handler is noise, and the row now carries the affordance.
+   *
+   * The equivalent tiles move with it. Jumping the list to a tile is browsing,
+   * which is the right verb when you are filling a list and the wrong one when
+   * you are filling a slot — the perceptual browse order is still there to
+   * scroll if what you want is the colours nearby.
+   */
+  const picking = action === 'select';
+
   return (
     <div
       ref={(node) => registerCard(paint.id, node)}
@@ -82,14 +99,15 @@ function ResultCardImpl({
       data-index={position - 1}
     >
       {/* Paint summary row */}
-      <PaintSummary paint={paint}>
-        {inList ? (
+      <PaintSummary
+        paint={paint}
+        onSelect={picking ? () => onAdd(paint) : undefined}
+        selectLabel={`Select ${paint.name} by ${paint.brand}`}
+      >
+        {picking ? null : inList ? (
           <Badge tone="success">IN LIST</Badge>
         ) : (
-          <GoldButton
-            label={action === 'add' ? `Add ${paint.name} to list` : `Select ${paint.name}`}
-            onClick={() => onAdd(paint)}
-          >
+          <GoldButton label={`Add ${paint.name} to list`} onClick={() => onAdd(paint)}>
             +
           </GoldButton>
         )}
@@ -110,9 +128,15 @@ function ResultCardImpl({
                   key={equivalent.id}
                   type="button"
                   className={styles.equivCard}
-                  onClick={() => onJump(equivalent)}
+                  onClick={() => (picking ? onAdd(equivalent) : onJump(equivalent))}
                   aria-label={
-                    `Go to ${equivalent.name} by ${equivalent.brand}` +
+                    /* `Go to` is load-bearing on the add path: it is how
+                     * `check-layout.mjs` finds these tiles for the badge-wrap
+                     * rule. A picker's tiles carry no badge to wrap, so the
+                     * rule has nothing to check there anyway. */
+                    (picking
+                      ? `Select ${equivalent.name} by ${equivalent.brand}`
+                      : `Go to ${equivalent.name} by ${equivalent.brand}`) +
                     // The badge is inside the button, so its text is swallowed
                     // by this label unless it is repeated.
                     (equivInList ? ', already in list' : '')

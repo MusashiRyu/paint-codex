@@ -68,11 +68,45 @@ The one prop that had to be added is `action: 'add' | 'select'`, and it changes
 exactly one thing: the gold button's accessible name. A screen reader cannot be
 told "add Mephiston Red to list" on a surface that puts it in a slot.
 
-The picker mounts that search with **no** `listedPaintIds`, so every card offers
-its button instead of an IN LIST badge. That was a deliberate call rather than
-an oversight: membership is the wrong fact when the question is which paint goes
-in the slot, and a badge where the button belongs reads as a control that has
-been taken away.
+The picker mounts that search with **no** `listedPaintIds`, so every card is
+pickable rather than badged IN LIST. That was a deliberate call: membership is
+the wrong fact when the question is which paint goes in the slot, and a badge
+where the control belongs reads as one that has been taken away.
+
+#### The half of that which was wrong
+
+Reusing the card kept its *interaction* too, and that turned out to be the one
+thing that should not have been reused. On the List screen a card is something
+you read, with a small gold `+` as the thing that acts on it — the card itself
+has nowhere to go. In a picker every colour on screen is a candidate, so tapping
+one has an obvious meaning, and the first thing anyone does is tap the swatch.
+
+Reported straight off the running app: *"I didn't think of being able to select
+it."* The `+` was there, and it was the only way in.
+
+So in `select` mode the whole summary row is the button, and the `+` goes with
+it — two adjacent tab stops calling one handler is noise a screen reader has to
+walk through, and the row now carries the affordance. The equivalent tiles moved
+with it: they select the paint they name rather than jumping the list to it.
+Jumping is browsing, which is the right verb when you are filling a list and the
+wrong one when you are filling a slot. The perceptual browse order is still
+there to scroll if what you want is the colours nearby.
+
+`PaintSummary` grew an `onSelect` for it, and the slot's children move *beside*
+that button rather than inside — `PaintItem` had already solved the same problem
+by keeping its remove action a sibling. Everything is spans now whether or not
+it is a button, so there is one render path instead of two kept looking alike.
+
+A ninth layout surface came with it. `collab-pick` only ever covered My Lists,
+and a picking card is not the same box as an adding one: its row is pulled out
+to the card's edges with a negative margin, which is precisely what the
+surface-overflow rule exists to catch. `collab-search` covers it, and 63 of 63
+combinations are clean.
+
+The lesson is not "test the picker harder". It is that reuse copies decisions
+along with code, and *this card is something you act on rather than something
+you tap* was a decision the List screen had made for reasons the picker did not
+share. Nothing in a test would have said so. Somebody opening the app did.
 
 ### 3. It drew the theory cards as three summaries
 
@@ -145,7 +179,7 @@ is gone and the badge is there.
 ## Layout check
 
 Three new surfaces — `collab-mix`, `collab-match`, `collab-pick` — taking the
-sweep from 35 combinations to 56. All clean, including 320px, and the safe-area
+sweep from 35 combinations to 56, and a fourth below took it to 63. All clean at the time, and the safe-area
 pass still reports every inset consumer moving with its inset.
 
 One naming hazard, and it is the second of its kind. The file already documents
@@ -181,8 +215,10 @@ and the cards under the strip are what make the preview actionable regardless.
 
 ## Where it stands
 
-219 tests, 20 files. Lint and typecheck clean. 56 of 56 layout combinations
-clean.
+221 tests, 20 files. Lint and typecheck clean. 63 of 63 layout combinations
+clean, against both the production build and the dev server — the StrictMode
+path is worth the second run in a session that moved the windowed list into a
+new file.
 
 Both store descriptions now mention Collab. The screenshots do not — all eight
 are List screens — and there are no release notes, because `APP_VERSION` is

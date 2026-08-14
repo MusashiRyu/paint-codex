@@ -91,7 +91,7 @@ describe('PaintPickerSheet picking', () => {
     const { onPick } = renderPicker();
     fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
-    fireEvent.click(screen.getByLabelText('Select Deep Plum'));
+    fireEvent.click(screen.getByLabelText('Select Deep Plum by Vallejo'));
     expect(onPick).toHaveBeenCalledWith(catalog[2]);
   });
 
@@ -105,8 +105,8 @@ describe('PaintPickerSheet picking', () => {
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
 
     expect(screen.queryByText('IN LIST')).not.toBeInTheDocument();
-    // Mephiston Red is in Cobalt Knights and still offers its button.
-    expect(screen.getByLabelText('Select Mephiston Red')).toBeInTheDocument();
+    // Mephiston Red is in Cobalt Knights and is still pickable.
+    expect(screen.getByLabelText('Select Mephiston Red by Citadel')).toBeInTheDocument();
   });
 
   it('says select, not add to list', () => {
@@ -116,5 +116,48 @@ describe('PaintPickerSheet picking', () => {
     fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
     expect(screen.queryByLabelText(/to list$/)).toBeNull();
+  });
+
+  it('picks from the card itself, not from a button on it', () => {
+    // The whole point of the row being the button. A card full of colour that
+    // does nothing when tapped reads as broken on a surface whose entire job
+    // is choosing a colour — this was reported from the app, not caught here.
+    const { onPick } = renderPicker();
+    fireEvent.click(screen.getByText('Search Catalog'));
+    fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
+
+    const row = screen.getByLabelText('Select Deep Plum by Vallejo');
+    expect(row.tagName).toBe('BUTTON');
+    // And the gold + is gone with it: two adjacent tab stops calling the same
+    // handler is noise a screen reader has to walk through.
+    expect(screen.queryByText('+')).toBeNull();
+
+    fireEvent.click(row);
+    expect(onPick).toHaveBeenCalledWith(catalog[2]);
+  });
+
+  it('picks an equivalent tile rather than browsing to it', () => {
+    // Jumping the list to a tile is browsing, which is the right verb when
+    // filling a list and the wrong one when filling a slot.
+    const withEquivalents: Paint[] = [
+      { ...catalog[0], matches: [{ id: 'vallejo-plum', delta: 2.4 }] },
+      catalog[1],
+      catalog[2],
+    ];
+    const onPick = vi.fn();
+    render(
+      <PaintPickerSheet
+        paintCatalog={withEquivalents}
+        lists={[]}
+        onPick={onPick}
+        onClose={vi.fn()}
+      />
+    );
+    fireEvent.click(screen.getByText('Search Catalog'));
+    fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
+
+    expect(screen.queryByLabelText(/^Go to /)).toBeNull();
+    fireEvent.click(screen.getAllByLabelText('Select Deep Plum by Vallejo')[0]);
+    expect(onPick).toHaveBeenCalledWith(withEquivalents[2]);
   });
 });

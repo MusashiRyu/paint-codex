@@ -191,7 +191,7 @@ describe('ColorLab adding to a list', () => {
     fireEvent.click(screen.getByLabelText('Select a Base Paint'));
     fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
-    fireEvent.click(screen.getByLabelText('Select Macragge Blue'));
+    fireEvent.click(screen.getByLabelText('Select Macragge Blue by Citadel'));
 
     expect(screen.getByText('Color Theory')).toBeInTheDocument();
     expect(screen.queryByLabelText(/^Add /)).toBeNull();

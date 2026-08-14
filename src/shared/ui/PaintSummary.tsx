@@ -6,6 +6,15 @@ import styles from './PaintSummary.module.css';
 export interface PaintSummaryProps {
   paint: Paint;
   /**
+   * Makes the swatch and the text one button. Given, `children` are rendered
+   * *beside* that button rather than inside it — a button may not nest another,
+   * and two tab stops for one paint is what `PaintItem` already avoids by
+   * keeping its remove action a sibling.
+   */
+  onSelect?: () => void;
+  /** Accessible name for that button. Required when `onSelect` is given. */
+  selectLabel?: string;
+  /**
    * The trailing action area — an IN LIST badge, an add button, a ΔE badge, or
    * a stack of them. A slot rather than props because "what you can do with
    * this paint" is the only thing that differs between the surfaces showing
@@ -21,20 +30,36 @@ export interface PaintSummaryProps {
  * Lifted out of `ResultCard` when the Color Lab needed the same row without
  * the equivalents grid under it. Every class name is unchanged by that move —
  * `SearchSheet.test.tsx` and `check-layout.mjs` both select on `paintName`.
+ *
+ * Spans throughout, whether or not it is a button, so there is one render path
+ * rather than two that have to be kept looking alike: a button may only hold
+ * phrasing content, and the layout comes from `display` in the stylesheet.
  */
-export function PaintSummary({ paint, children }: PaintSummaryProps) {
-  return (
-    <div className={styles.paintRow}>
-      <Swatch color={paint.hex} size="md" />
-      <div className={styles.paintInfo}>
-        <div className={styles.paintName}>{paint.name}</div>
-        <div className={styles.paintBrand}>{paint.brand}</div>
-        <div className={styles.paintMeta}>
+export function PaintSummary({ paint, onSelect, selectLabel, children }: PaintSummaryProps) {
+  const body = (
+    <>
+      <Swatch color={paint.hex} size="md" as="span" />
+      <span className={styles.paintInfo}>
+        <span className={styles.paintName}>{paint.name}</span>
+        <span className={styles.paintBrand}>{paint.brand}</span>
+        <span className={styles.paintMeta}>
           {paint.category && <span>{paint.category}</span>}
           {paint.category && <span className={styles.metaDot}>·</span>}
           <span className={styles.metaHex}>{paint.hex}</span>
-        </div>
-      </div>
+        </span>
+      </span>
+    </>
+  );
+
+  return (
+    <div className={styles.paintRow}>
+      {onSelect ? (
+        <button type="button" className={styles.selectable} onClick={onSelect} aria-label={selectLabel}>
+          {body}
+        </button>
+      ) : (
+        body
+      )}
       {children}
     </div>
   );

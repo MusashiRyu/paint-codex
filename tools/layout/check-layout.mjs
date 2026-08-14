@@ -179,6 +179,26 @@ const SURFACES = [
       await page.waitForSelector('button[aria-label^="Select Mephiston Red by "]');
     },
   },
+  {
+    // The picker's catalogue search, which is *not* the same box as the List
+    // screen's: a picking card has no add button and its whole summary row is
+    // one button, pulled out to the card's edges with a negative margin. That
+    // margin is exactly what rule 3 exists to catch.
+    name: 'collab-search',
+    open: async (page) => {
+      await openCollab(page);
+      await page.click('button[aria-label="Select Paint A"]');
+      await page.waitForSelector('[aria-label="Select a paint"][role="dialog"]');
+      await page.evaluate(() => {
+        const tab = [...document.querySelectorAll('button')].find(
+          (b) => b.textContent?.trim() === 'Search Catalog'
+        );
+        tab?.click();
+      });
+      await page.type('input[placeholder="Search by name or brand..."]', 'blue');
+      await page.waitForSelector('[class*="selectable"]');
+    },
+  },
 ];
 
 /** Ran in the page: every rule, so one pass reports all of them. */

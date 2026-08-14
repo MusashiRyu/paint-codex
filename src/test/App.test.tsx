@@ -162,7 +162,10 @@ describe('App adding from the Color Lab', () => {
     fireEvent.click(screen.getByLabelText('Select a Base Paint'));
     fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.change(searchBox(), { target: { value: paint.name } });
-    fireEvent.click(screen.getByLabelText(`Select ${paint.name}`));
+    // Tapping the card is what picks it. `getAll` because an equivalent tile on
+    // some other result may stand for this same paint, and carries the same
+    // label — both select it, so either will do.
+    fireEvent.click(screen.getAllByLabelText(`Select ${paint.name} by ${paint.brand}`)[0]);
 
     expect(screen.getByText('Color Theory')).toBeInTheDocument();
     expect(screen.queryByLabelText(/ to list$/)).toBeNull();
