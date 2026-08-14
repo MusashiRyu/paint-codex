@@ -266,6 +266,13 @@ In App Store Connect, on the version:
    the drop target is. Apple scales 6.9" down for every smaller iPhone, so
    filling the other iPhone slots is optional and pointless.
 
+   The same box takes **app previews**, which are videos rather than stills —
+   15 to 30 seconds, three per size, and optional in a way screenshots are
+   not. Skip them. Apple wants footage of the app genuinely running on a
+   device, and per "What this repo cannot check" it has never run on one; a
+   preview cannot be honestly made before step 6 has happened. They can be
+   added later without resubmitting a binary.
+
    Leave **iPad** empty, and not merely because there is no build for it:
    supplying iPad screenshots claims a tablet layout that
    `TARGETED_DEVICE_FAMILY = 1` does not provide, which is the Guideline 4.0
