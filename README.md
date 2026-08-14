@@ -5,6 +5,13 @@ paint and Paco shows the closest equivalents in the other brands, ranked by a
 measured colour distance rather than by a guess; keep the results in named
 lists you build yourself.
 
+Two screens. **List** is the lists and the catalogue. **Collab** — the colour
+laboratory — answers the question you have at the table rather than at the
+shop: blend two paints and see the ramp between them in 20% steps, or take one
+paint and get its complementary, its highlight and its shade. Every colour it
+computes is resolved back to the nearest real paint in the catalogue, with the
+ΔE it costs you, so the answer is always something you can buy or already own.
+
 2,279 paints across every range Citadel, Vallejo and The Army Painter sell. The
 whole catalogue ships in the app, so it works with the radio off — the only
 network request it ever makes is a silent check for a newer catalogue at
@@ -22,7 +29,7 @@ npm run dev          # Vite dev server
 npm test             # Vitest
 npm run lint         # oxlint
 npm run build        # tsc -b && vite build
-npm run check:layout # layout invariants at 7 phone widths × 5 surfaces
+npm run check:layout # layout invariants at 7 phone widths × 8 surfaces
 ```
 
 `check:layout` needs `npm run build` first — it drives `dist/` in a real

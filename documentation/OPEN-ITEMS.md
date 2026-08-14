@@ -100,6 +100,26 @@ The hardware smoke test is done — all five checks in release-checklist step 5
 passed on the 1.0.0 release APK on 2026-08-10, including the About sheet's
 outbound links, which had never been proven on a device before.
 
+### 11. Both stores show one screen out of two
+**Raised:** 031 · **Release-time work, not branch-time**
+
+Collab shipped in 031 and the descriptions in `store/listing.md` and
+`store/listing-appstore.md` now mention it. Two things trail that and are
+deliberately not done yet, because both belong to whatever release carries the
+feature rather than to the branch that built it:
+
+1. **The screenshots are stale.** `npm run screenshots` captures four per store
+   and every one of them is a List screen. A second screen that the listing
+   describes and the images never show is a worse listing than one that does
+   not mention it. Re-run the generator and decide which four — the mix strip
+   is the most legible single image the app has.
+2. **No release notes.** `APP_VERSION` is still 1.1.0. Whichever version ships
+   this needs a "What's new" block in both files, and `check-listing.mjs`
+   checks the field against its limit once it exists.
+
+Neither is blocked on anything. They are just the wrong side of the line
+between building a feature and shipping one.
+
 ### 6. `npm audit` reports three moderate advisories, all dev-only
 **Raised:** 017 · **Watch, not fix**
 

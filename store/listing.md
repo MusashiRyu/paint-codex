@@ -44,6 +44,14 @@ shows its swatch, its hex value, and the equivalents in the other two ranges
 with a delta score for each — so you can tell a near-perfect substitute from a
 rough one at a glance.
 
+MIX AND MATCH IN THE COLOR LAB
+
+Pick two paints and see the blend between them in twenty per cent steps, or
+pick one and get its complementary, its highlight and its shade. Every colour
+Paco works out is matched back to the nearest real paint in the catalogue, with
+the same delta score the equivalents use — so a mix you cannot buy still ends
+at one you can, and it goes straight into a list.
+
 WORKS WITH THE RADIO OFF
 
 Paco ships the whole catalogue inside the app. There is no loading screen, no
