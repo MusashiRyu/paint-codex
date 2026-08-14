@@ -158,13 +158,31 @@ jobs:
             CODE_SIGNING_REQUIRED=NO
             CODE_SIGN_IDENTITY=""
             CODE_SIGN_STYLE=Manual
+            -resultBundlePath "$RUNNER_TEMP/Archive.xcresult"
           )
           # Only when explicitly asked for. Left alone, the number comes from
           # the project and stays pinned to gradle's versionCode.
           if [ -n "$BUILD_NUMBER" ]; then
             args+=(CURRENT_PROJECT_VERSION="$BUILD_NUMBER")
           fi
-          xcodebuild "${args[@]}"
+
+          # Teed to a file, and the error lines reprinted at the end on
+          # failure. xcodebuild interleaves the output of parallel tasks, so
+          # the line that actually explains a failure routinely lands hundreds
+          # of lines away from "** ARCHIVE FAILED **" -- and the web log viewer
+          # gives you no way to see them together. This is the difference
+          # between reading a failure and hunting for it.
+          set +e
+          xcodebuild "${args[@]}" 2>&1 | tee "$RUNNER_TEMP/archive.log"
+          status=${PIPESTATUS[0]}
+          set -e
+          if [ "$status" -ne 0 ]; then
+            echo "::group::Errors extracted from the build log"
+            grep -nE 'error:|\*\* ARCHIVE FAILED \*\*' "$RUNNER_TEMP/archive.log" \
+              || echo "(no lines matched 'error:' -- see the uploaded log and xcresult)"
+            echo "::endgroup::"
+            exit "$status"
+          fi
 
       # This step does the signing, not just the upload -- see the archive
       # step for why. `signingStyle: automatic` plus
@@ -212,6 +230,20 @@ jobs:
             -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
             -authenticationKeyID "$KEY_ID" \
             -authenticationKeyIssuerID "$ISSUER_ID"
+
+      # The full log and the result bundle, whatever happened. The bundle is
+      # the structured form of the same failure and survives the log viewer's
+      # interleaving, so it is worth having on a run that went wrong.
+      - name: Keep the build log
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: archive-log
+          path: |
+            ${{ runner.temp }}/archive.log
+            ${{ runner.temp }}/Archive.xcresult
+          if-no-files-found: ignore
+          retention-days: 14
 
       # dSYMs only. The archive itself is large and the app bundle is already
       # on Apple's side by now; symbols are what a later crash report needs.
