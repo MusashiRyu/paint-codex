@@ -114,6 +114,20 @@ jobs:
 
       # DEVELOPMENT_TEAM is passed here rather than committed: the repo is
       # public and the pbxproj deliberately carries no team.
+      #
+      # CODE_SIGN_IDENTITY has to be overridden too. Capacitor's template sets
+      # it to "iPhone Developer" at the *project* level for both
+      # configurations, and the target overrides only CODE_SIGN_STYLE -- so an
+      # archive asks automatic signing for an iOS App Development profile,
+      # which cannot be issued without a registered device. The failure names
+      # devices and reads like an account problem rather than a build setting:
+      #
+      #   Your team has no devices from which to generate a provisioning
+      #   profile. [...] No profiles for 'com.musashi.paco' were found
+      #
+      # Overridden here rather than fixed in the project because the project
+      # value is right for local development, where a development profile is
+      # exactly what is wanted.
       - name: Archive
         env:
           TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
@@ -135,6 +149,7 @@ jobs:
             -authenticationKeyIssuerID "$ISSUER_ID"
             DEVELOPMENT_TEAM="$TEAM_ID"
             CODE_SIGN_STYLE=Automatic
+            CODE_SIGN_IDENTITY="Apple Distribution"
           )
           # Only when explicitly asked for. Left alone, the number comes from
           # the project and stays pinned to gradle's versionCode.
