@@ -256,7 +256,20 @@ In App Store Connect, on the version:
 2. Fill in everything from `store/listing-appstore.md` — description, keywords,
    subtitle, promotional text, support URL, privacy policy URL, category, age
    rating, App Privacy, and the reviewer notes.
-3. Upload the screenshots from `store/graphics/screenshots-ios/`.
+3. Upload the screenshots from `store/graphics/screenshots-ios/` into the
+   **6.9" Display** slot, and only that one.
+
+   The iPhone tab stacks several size slots and they look identical. The 6.9"
+   one is at the top; the **6.5"** immediately below it takes 1242×2688 or
+   1284×2778 and rejects these files with "the dimensions of one or more
+   screenshots are wrong". The files are 1290×2796 and are not the problem —
+   the drop target is. Apple scales 6.9" down for every smaller iPhone, so
+   filling the other iPhone slots is optional and pointless.
+
+   Leave **iPad** empty, and not merely because there is no build for it:
+   supplying iPad screenshots claims a tablet layout that
+   `TARGETED_DEVICE_FAMILY = 1` does not provide, which is the Guideline 4.0
+   rejection described in the settings table below. Apple Watch, likewise.
 4. Choose the release option. **Manual release** for a first submission —
    approval at 3am and an app live before anyone has looked at the listing is a
    bad trade for the two minutes it saves.
