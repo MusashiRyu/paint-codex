@@ -140,6 +140,20 @@ jobs:
       # platform registration that hosted images do not reliably carry, and
       # fails with "iOS 26.0 is not installed" while the SDK is sitting in the
       # Xcode bundle and compiling fine. Naming the SDK skips that lookup.
+      #
+      # ENABLE_ON_DEMAND_RESOURCES=NO because it is on by default and actool
+      # consults the *simulator* runtime list while processing it, even when
+      # compiling `--platform iphoneos`. Hosted images carry simulator runtimes
+      # newer than the Xcode SDK build, so the lookup finds no match and the
+      # asset catalogue fails with a message about a platform the archive does
+      # not target:
+      #
+      #   No simulator runtime version from ["23C54", ...] available to use
+      #   with iphonesimulator SDK version 23A339
+      #
+      # This app tags no assets for on-demand delivery, so the whole code path
+      # is dead weight here. Left on, it is a build failure whose text points
+      # at the asset catalogue, which is the one thing that is not wrong.
       - name: Archive
         env:
           TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
@@ -158,6 +172,7 @@ jobs:
             CODE_SIGNING_REQUIRED=NO
             CODE_SIGN_IDENTITY=""
             CODE_SIGN_STYLE=Manual
+            ENABLE_ON_DEMAND_RESOURCES=NO
             -resultBundlePath "$RUNNER_TEMP/Archive.xcresult"
           )
           # Only when explicitly asked for. Left alone, the number comes from
