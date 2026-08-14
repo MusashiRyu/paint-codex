@@ -189,4 +189,26 @@
   --control-md: 30px; /* header icon buttons */
   --control-lg: 34px; /* add button, colour swatch */
   --control-xl: 56px; /* FAB, icon picker tile */
+
+  /* ---------------------------------------------------------------------
+   * Safe area
+   * The web layer fills the whole screen on both platforms, so the status
+   * bar and the home indicator sit *on top of* the app unless the layout
+   * moves out from under them. The title read as "PAIN CODEX" behind an
+   * iPhone's clock until these existed.
+   *
+   * Two sources, because the platforms report the inset differently:
+   *   - Android: Capacitor's SystemBars plugin sets --safe-area-inset-* on
+   *     <html> from the real window insets. It only passes the insets
+   *     through to the web layer when the viewport meta says
+   *     `viewport-fit=cover` — see index.html — and otherwise pads the
+   *     native view and reports 0 here, which is equally correct.
+   *   - iOS: nothing is injected; env() is the only source, and it too is
+   *     0 without `viewport-fit=cover`.
+   * The 0px tail is the browser, where neither exists. It has to be `0px`
+   * and not `0`: these land inside calc(), which rejects a bare zero as a
+   * length.
+   * ------------------------------------------------------------------ */
+  --inset-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  --inset-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
 }

@@ -35,12 +35,21 @@
     box-shadow:
       var(--shadow-card),
       var(--shadow-card-ring);
+
+    /* Off the screen edges and inside a radius at this width, so there is no
+     * status bar or home indicator to clear. Zeroed here rather than at :root
+     * so every descendant that spends an inset — header, list, FAB, sheets —
+     * sees the framed value without repeating this media query. */
+    --inset-top: 0px;
+    --inset-bottom: 0px;
   }
 }
 
 .headerWrap {
   flex-shrink: 0;
-  padding: var(--gutter) var(--gutter) 0;
+  /* Top padding carries the status bar; the card itself still bleeds under it
+   * so the background image reaches the top of the screen. */
+  padding: calc(var(--gutter) + var(--inset-top)) var(--gutter) 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -76,6 +85,9 @@
 .fab {
   position: absolute;
   right: 20px;
-  bottom: 26px;
+  /* Absolute positioning resolves against the card's *padding* box, so a
+   * padding-bottom on the card would not have moved this. The inset is spent
+   * here, on the offset itself. */
+  bottom: calc(26px + var(--inset-bottom));
   z-index: 5;
 }

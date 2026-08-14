@@ -3,7 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- `viewport-fit=cover` is what turns the safe-area insets on. Both
+         platforms report zero for env(safe-area-inset-*) without it, and
+         Capacitor's Android SystemBars plugin reads this exact string off the
+         meta tag to decide whether to hand the insets to the web layer at all.
+         The app draws under the status bar either way; the insets are how the
+         layout knows to keep its content out from under it. See the safe area
+         section of src/shared/styles/tokens.css. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Paint Codex</title>
     <!-- Fonts are self-hosted; see src/shared/styles/fonts.css -->
   </head>

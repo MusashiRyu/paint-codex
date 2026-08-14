@@ -266,6 +266,91 @@ function collectBrowseViolations() {
   return out;
 }
 
+/**
+ * The status bar and the home indicator sit on top of the app, not beside it.
+ *
+ * The web layer fills the whole screen on both platforms, so the only thing
+ * keeping the title out from under an iPhone's clock is the safe-area inset
+ * the layout spends on itself. It shipped without one: the title read as
+ * "PAIN CODEX" behind 23:17 on a real phone while all 35 combinations above
+ * passed clean, because a desktop Chromium has no notch to report and every
+ * inset it resolves is 0.
+ *
+ * So the insets are injected rather than waited for. Capacitor's Android
+ * SystemBars plugin sets exactly these custom properties on <html>, and the
+ * tokens fall back to env() for iOS where nothing is injected — driving the
+ * custom properties exercises the same calc() chain either way.
+ *
+ * The expectations are deltas, not pixel values: what matters is that each
+ * consumer moved by the inset it was given, whatever the underlying gutter,
+ * FAB offset or sheet padding happen to be this month.
+ */
+const INSET_TOP = 59; // iPhone 15 Pro status bar
+const INSET_BOTTOM = 34; // home indicator
+
+/** Ran in the page, before and after the injection. */
+function measureInsetConsumers() {
+  // The insets are spent as padding, so a header's *border box* does not move
+  // and the text inside it does. Measure the text.
+  const title = document.querySelector('[class*="headerWrap"] [class*="_title_"]');
+  const fab = document.querySelector('button[aria-label="Add paint"]');
+  const list = document.querySelector('[class*="_content_"]');
+  const sheet = document.querySelector('[role="dialog"]');
+  const px = (el, prop) => (el ? parseFloat(getComputedStyle(el)[prop]) : null);
+  return {
+    // Distance from the top of the screen, which is what the status bar covers.
+    titleTop: title ? title.getBoundingClientRect().top : null,
+    // Distance to the bottom of the screen, which is what the indicator covers.
+    fabBottom: fab ? window.innerHeight - fab.getBoundingClientRect().bottom : null,
+    listPad: px(list, 'paddingBottom'),
+    sheetPad: px(sheet, 'paddingBottom'),
+  };
+}
+
+async function checkSafeArea(browser, origin) {
+  const page = await openApp(browser, origin, 390);
+  // With a sheet open, so the overlay's own bottom padding is measured in the
+  // same pass as the card behind it.
+  await page.click('button[aria-label="Add paint"]');
+  await page.waitForSelector('[role="dialog"]');
+  await page.evaluate(() => document.fonts.ready);
+
+  const before = await page.evaluate(measureInsetConsumers);
+  await page.evaluate(
+    (top, bottom) => {
+      document.documentElement.style.setProperty('--safe-area-inset-top', `${top}px`);
+      document.documentElement.style.setProperty('--safe-area-inset-bottom', `${bottom}px`);
+    },
+    INSET_TOP,
+    INSET_BOTTOM
+  );
+  const after = await page.evaluate(measureInsetConsumers);
+  await page.close();
+
+  const out = [];
+  const expect = (key, inset, what) => {
+    if (before[key] === null || after[key] === null) {
+      out.push({ rule: 'inset-target-missing', detail: `${what}: nothing matched the selector` });
+      return;
+    }
+    const moved = Math.round(after[key] - before[key]);
+    if (moved !== inset) {
+      out.push({
+        rule: 'inset-ignored',
+        detail: `${what} moved ${moved}px for a ${inset}px inset (${before[key]} -> ${after[key]})`,
+      });
+    }
+  };
+
+  expect('titleTop', INSET_TOP, 'app title');
+  expect('fabBottom', INSET_BOTTOM, 'FAB');
+  // The FAB's landing zone has to rise with the FAB, or the button lands back
+  // on top of the last paint in the list.
+  expect('listPad', INSET_BOTTOM, 'list bottom padding');
+  expect('sheetPad', INSET_BOTTOM, 'sheet bottom padding');
+  return out;
+}
+
 async function openApp(browser, origin, width) {
   const page = await browser.newPage();
   await page.setViewport({ width, height: 780, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
@@ -334,6 +419,17 @@ async function main() {
       process.exitCode = 1;
     } else {
       console.log(`\nAll ${total} surface/width combinations clean.`);
+    }
+
+    // Not part of the width sweep: it is one measurement of one surface, and
+    // it needs the insets injected rather than sampled.
+    const insetViolations = await checkSafeArea(browser, origin);
+    if (insetViolations.length === 0) {
+      console.log('Safe area: every inset consumer moved with its inset.');
+    } else {
+      console.error('Safe area: FAIL');
+      for (const v of insetViolations) console.error(`         ${v.rule}: ${v.detail}`);
+      process.exitCode = 1;
     }
   } finally {
     preview?.child.kill();
