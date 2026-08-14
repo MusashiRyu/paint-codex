@@ -159,7 +159,7 @@ keyword field is a metadata edit that needs no build and no review.
 | Field | Value | Notes |
 | --- | --- | --- |
 | Bundle ID | `com.musashi.paco` | Must be registered in the Developer portal before an App Store Connect record can be created. Matches Android's `applicationId`, which is not required but is one less thing to get wrong. |
-| SKU | `paco-ios-001` | Internal only, never shown to anyone, and permanent — it cannot be changed after the record is created. |
+| SKU | `paco-ios-001` | Internal only, never shown to anyone, and permanent — it cannot be changed after the record is created. The `-001` is not decoration: SKUs are unique per account and are never released, so a deleted app record spends its SKU for good. The case that bites is a bundle ID that turns out wrong after a build has been uploaded against it, which freezes it and forces a new record. A numbered SKU makes the successor obvious (`paco-ios-002`) instead of improvised, and zero-padding sorts correctly in the sales and financial reports the field appears in. |
 | Primary language | English (U.K.) | The copy is written in British English: "colour" throughout. |
 | Primary category | **Graphics & Design** | The App Store's nearest equivalent to Play's Art & Design, and where hobby colour tools sit. |
 | Secondary category | **Reference** | It is a lookup table before it is anything else. |
