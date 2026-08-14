@@ -196,7 +196,7 @@ chased, and a release does not wait on a particular machine being free.
 ### Create the API key
 
 **App Store Connect → Users and Access → Integrations → App Store Connect API
-→ +**. A **team key**, with the **App Manager** role.
+→ +**. A **team key**, with the **Admin** role.
 
 Team rather than individual: an individual key inherits the permissions of the
 person who made it and stops working when those change, which for a release
@@ -204,13 +204,31 @@ pipeline means it breaks at the next release rather than at the moment someone
 adjusts a role, with nothing to connect the two. A team key carries its own
 role and outlives whoever set it up.
 
-App Manager rather than Developer: both can upload a build, but only App Manager
-can manage TestFlight and app metadata, which is where this grows next.
+**Admin, and not the App Manager role that least privilege would suggest.**
+Signing here is done by `-allowProvisioningUpdates`, which does not merely use
+a distribution certificate — it creates one, and certificates, identifiers and
+profiles are gated to Account Holder and Admin. App Manager covers apps,
+builds and TestFlight, so such a key authenticates perfectly and is then
+refused at the point of minting:
 
-Name it **`github-actions-paco-ios-release`**. The name cannot be edited later,
-and its only job is to let someone reading the key list work out what breaks if
-they revoke it — so it names the system holding it, the project, and the
-workflow file, rather than a person or a date.
+```
+error: exportArchive Cloud signing permission error
+error: exportArchive No signing certificate "iOS Distribution" found
+error: exportArchive No profiles for 'com.musashi.paco' were found
+```
+
+Only the first line is the fault; the other two are consequences. Nothing in
+the message mentions roles, so it reads as a broken key rather than an
+under-privileged one — and the key is fine.
+
+A key's role cannot be edited afterwards, so getting this wrong costs a new
+key and two updated secrets rather than a setting change.
+
+Name it **`github-actions-paco-ios-release`**, suffixing a number if that name
+is already spent on a revoked key. The name cannot be edited later, and its
+only job is to let someone reading the key list work out what breaks if they
+revoke it — so it names the system holding it, the project, and the workflow
+file, rather than a person or a date.
 
 > **The team has to have API access switched on first, and only the Account
 > Holder can do it.** Until then the page offers a greyed-out *Request Access*
@@ -220,10 +238,11 @@ workflow file, rather than a person or a date.
 > Access** on that same page; it is a terms acceptance rather than an Apple
 > review, so it takes effect immediately and is never needed again.
 >
-> Being Admin is otherwise enough for everything here. Certificates and
-> profiles are not restricted this way, which is why the manual path in steps 3
-> to 5 keeps working while this is outstanding — a useful fallback given the
-> Account Holder may not be the person doing the release.
+> Being Admin is otherwise enough for everything here, including creating the
+> key above. Certificates and profiles are not gated on the Account Holder,
+> which is why the manual path in steps 3 to 5 keeps working while this is
+> outstanding — a useful fallback given the Account Holder may not be the
+> person doing the release.
 
 The `.p8` file downloads **once and only once**. Apple will not serve it again;
 losing it means revoking the key and issuing another. Whoever creates it can
