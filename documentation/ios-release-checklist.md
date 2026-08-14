@@ -131,7 +131,16 @@ in your head.
 
 Every value is in
 [`store/listing-appstore.md`](../store/listing-appstore.md) under "App
-information".
+information", except two that exist only in this dialog and nowhere in the
+finished listing:
+
+- **Platforms.** iOS only. Leave macOS, tvOS and visionOS unticked —
+  `TARGETED_DEVICE_FAMILY` is `1` and there is no build for any of them.
+- **User Access.** **Full Access.** Limited Access is for an organisation
+  hiding some of its apps from some of its people; on a one-person account it
+  can only produce an allowlist to maintain for a team that does not exist.
+  Admin, Finance and Reports roles ignore app-level limits regardless. Unlike
+  the two fields below it is editable later, under Users and Access.
 
 Two fields cannot be changed afterwards, so read them twice:
 
