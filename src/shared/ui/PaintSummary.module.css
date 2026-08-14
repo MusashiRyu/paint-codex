@@ -1,0 +1,49 @@
+/*
+ * Moved here from ResultCard.module.css when the row became its own component.
+ * Every class keeps its name: the tests and the layout check select on
+ * `[class*="paintName"]`, which survives the move but not a rename.
+ *
+ * `cardMetrics.ts` measures `.paintRow`'s height to size the search window, so
+ * a change to the type ladder here has to be re-measured there.
+ */
+
+.paintRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gap-row);
+}
+
+.paintInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.paintName {
+  font-family: var(--font-display);
+  font-size: var(--size-2xl);
+  color: var(--text-primary);
+}
+
+.paintBrand {
+  font-size: var(--size-xs);
+  letter-spacing: var(--track-md);
+  text-transform: uppercase;
+  color: var(--text-brand);
+  margin-top: 3px;
+}
+
+.paintMeta {
+  font-size: var(--size-sm);
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.metaDot {
+  color: var(--text-dim);
+  margin: 0 4px;
+}
+
+.metaHex {
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}

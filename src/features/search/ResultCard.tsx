@@ -4,6 +4,7 @@ import { getTopMatches } from '../../domain/paintQueries';
 import { CLOSE_DELTA_MAX, getDeltaLabel, getDeltaStyle } from '../../shared/lib/color';
 import { Badge } from '../../shared/ui/Badge';
 import { GoldButton } from '../../shared/ui/GoldButton';
+import { PaintSummary } from '../../shared/ui/PaintSummary';
 import { Swatch } from '../../shared/ui/Swatch';
 import styles from './ResultCard.module.css';
 
@@ -14,12 +15,23 @@ import styles from './ResultCard.module.css';
  */
 export const MAX_EQUIVALENTS = 6;
 
+/**
+ * What the gold button on a card means.
+ *
+ * `add` puts the paint in the active list; `select` hands it back to whatever
+ * opened the search — a Color Lab slot. Only the accessible name differs, but
+ * it is the whole label a screen reader reads, so it cannot say "add to list"
+ * on a surface that adds nothing.
+ */
+export type ResultAction = 'add' | 'select';
+
 export interface ResultCardProps {
   paint: Paint;
   /** Resolves an equivalent's stored id to the paint it stands for. */
   paintsById: Map<string, Paint>;
   /** Ids in the active list — the IN LIST badge, on the card and on its tiles. */
   activeIds: Set<string>;
+  action: ResultAction;
   /** True for the card the sheet is anchored on: the gold ring, and focusable. */
   anchored: boolean;
   /** Position in the list and its length, for `aria-posinset` / `aria-setsize`. */
@@ -45,6 +57,7 @@ function ResultCardImpl({
   paint,
   paintsById,
   activeIds,
+  action,
   anchored,
   position,
   total,
@@ -69,25 +82,18 @@ function ResultCardImpl({
       data-index={position - 1}
     >
       {/* Paint summary row */}
-      <div className={styles.paintRow}>
-        <Swatch color={paint.hex} size="md" />
-        <div className={styles.paintInfo}>
-          <div className={styles.paintName}>{paint.name}</div>
-          <div className={styles.paintBrand}>{paint.brand}</div>
-          <div className={styles.paintMeta}>
-            {paint.category && <span>{paint.category}</span>}
-            {paint.category && <span className={styles.metaDot}>·</span>}
-            <span className={styles.metaHex}>{paint.hex}</span>
-          </div>
-        </div>
+      <PaintSummary paint={paint}>
         {inList ? (
           <Badge tone="success">IN LIST</Badge>
         ) : (
-          <GoldButton label={`Add ${paint.name} to list`} onClick={() => onAdd(paint)}>
+          <GoldButton
+            label={action === 'add' ? `Add ${paint.name} to list` : `Select ${paint.name}`}
+            onClick={() => onAdd(paint)}
+          >
             +
           </GoldButton>
         )}
-      </div>
+      </PaintSummary>
 
       {/* Equivalents, closest first */}
       <div className={styles.equivalents}>

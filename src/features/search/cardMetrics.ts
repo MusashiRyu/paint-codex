@@ -29,7 +29,11 @@ import { MAX_EQUIVALENTS } from './ResultCard';
 export const CARD_METRICS = {
   /** padding 14×2 + border 1×2 + margin-bottom 14. The pitch, not the box. */
   chrome: 44,
-  /** .paintRow: 16px name + 3 + 11px brand + 2 + 12px meta, at ~1.4 leading. */
+  /**
+   * .paintRow: 16px name + 3 + 11px brand + 2 + 12px meta, at ~1.4 leading.
+   * That row lives in shared/ui/PaintSummary.module.css now, so this number
+   * tracks a stylesheet outside this feature.
+   */
   head: 59,
   /** .equivalents: 12 margin + 12 padding + 1 rule + 15 label + 8 label margin. */
   equivChrome: 48,

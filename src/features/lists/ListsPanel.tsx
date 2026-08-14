@@ -6,6 +6,7 @@ import { ACTION_ICON } from '../../shared/ui/actionIcon';
 import { GhostButton } from '../../shared/ui/GhostButton';
 import { IconButton } from '../../shared/ui/IconButton';
 import { Pill } from '../../shared/ui/Pill';
+import { SectionHeading } from '../../shared/ui/SectionHeading';
 import { TextField } from '../../shared/ui/TextField';
 import { useBackDismiss } from '../../shared/hooks/useBackDismiss';
 import { PaintItem } from './PaintItem';
@@ -208,7 +209,7 @@ export function ListsPanel({
         {hasPaints &&
           sections.map(({ type, items }) => (
             <div key={type}>
-              <div className={styles.sectionType}>{type}</div>
+              <SectionHeading>{type}</SectionHeading>
               {items.map((paint) => (
                 <PaintItem
                   key={paint.id}

@@ -1,3 +1,9 @@
+/*
+ * Renamed from SearchSheet.module.css when the search body was split from the
+ * sheet around it. Every rule here assumes a flex-column parent — the `Sheet`
+ * that holds it — which is why `PaintSearch` renders a fragment.
+ */
+
 .searchField {
   margin-top: 14px;
   flex-shrink: 0;

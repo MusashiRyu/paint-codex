@@ -1,0 +1,16 @@
+/*
+ * Moved here verbatim from ListsPanel.module.css's `.sectionType`, so the
+ * category headings on the List screen and the headings in the Color Lab are
+ * the same rule rather than two that happen to match today.
+ */
+
+.sectionHeading {
+  font-family: var(--font-display);
+  font-size: var(--size-xs);
+  letter-spacing: var(--track-2xl);
+  text-transform: uppercase;
+  color: var(--text-brand);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--gold-line);
+  margin: 16px 0 12px;
+}

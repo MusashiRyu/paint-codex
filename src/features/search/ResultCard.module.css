@@ -5,6 +5,9 @@
  * component -- the sheet owns the chrome around the list, the card owns itself.
  * Every class keeps its name, which is what the tests and the layout check
  * select on.
+ *
+ * The paint row itself now lives in shared/ui/PaintSummary.module.css: the
+ * Color Lab shows the same row without any of the equivalents below.
  */
 
 .resultCard {
@@ -20,47 +23,6 @@
   border-color: var(--gold);
   box-shadow: var(--shadow-selected-ring);
   outline: none;
-}
-
-.paintRow {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--gap-row);
-}
-
-.paintInfo {
-  flex: 1;
-  min-width: 0;
-}
-
-.paintName {
-  font-family: var(--font-display);
-  font-size: var(--size-2xl);
-  color: var(--text-primary);
-}
-
-.paintBrand {
-  font-size: var(--size-xs);
-  letter-spacing: var(--track-md);
-  text-transform: uppercase;
-  color: var(--text-brand);
-  margin-top: 3px;
-}
-
-.paintMeta {
-  font-size: var(--size-sm);
-  color: var(--text-secondary);
-  margin-top: 2px;
-}
-
-.metaDot {
-  color: var(--text-dim);
-  margin: 0 4px;
-}
-
-.metaHex {
-  font-family: var(--font-mono);
-  color: var(--text-secondary);
 }
 
 .equivalents {
