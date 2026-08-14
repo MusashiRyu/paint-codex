@@ -134,6 +134,31 @@ template files — `AppDelegate.swift` and `SceneDelegate.swift`.
 Worth revisiting if any of those files ever gains real code, which today it has
 not.
 
+### 10. The safe-area fix is unverified on hardware
+**Raised:** 030 · **Waiting on the next TestFlight build**
+
+The status bar overlap and the orientation lock are both fixed and both
+asserted, but every assertion runs on a desktop Chromium with the insets
+*injected* — there is no notch on this machine to report a real one. The
+arithmetic is a delta rather than a pixel value, so a device reporting
+something other than the 59/34 used in the check is still handled correctly.
+What has not been seen is the app on a screen with the fix in it.
+
+Check on the next build, in this order — the first is the reported bug, the
+rest are the places the same inset is spent:
+
+1. The title clears the clock, and the card's background still reaches the top
+   of the screen rather than letterboxing.
+2. The FAB clears the home indicator, and the last paint in a full list can be
+   scrolled out from under the FAB.
+3. A sheet's content clears the indicator while its background still runs under
+   it.
+4. Rotating the phone does nothing, on both platforms.
+
+Also worth a glance on an Android device with a WebView older than 140, where
+Capacitor pads the native view instead of passing the insets through. That path
+reports zero to the CSS by design and should look exactly as it did before.
+
 ---
 
 ## Recently closed
