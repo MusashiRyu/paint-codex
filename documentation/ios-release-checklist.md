@@ -28,6 +28,8 @@ below is committed and needs no Mac to have happened.
 | Version numbers | `project.pbxproj`, both configurations | Pinned to the gradle values and asserted by `src/test/appVersion.test.ts`. |
 | Listing copy | `store/listing-appstore.md` | Name, subtitle, keywords, promotional text, description, App Privacy answers, reviewer notes. |
 | Screenshots | `store/graphics/screenshots-ios/` | 1290×2796, the 6.9" iPhone size. `npm run screenshots`. |
+| Shared scheme | `ios/App/App.xcodeproj/xcshareddata/xcschemes/App.xcscheme` | Committed so `xcodebuild -scheme App` resolves on a fresh clone. Asserted by `iosProject.test.ts`. |
+| Release workflow | `.github/workflows/ios-release.yml` | Archives and uploads from a hosted Mac. Needs four repository secrets — see "The CI path". |
 | Privacy policy URL | Already live | The same page Play uses. |
 
 `src/test/iosProject.test.ts` asserts most of the above on every push,
@@ -52,28 +54,20 @@ and an older Intel Mac therefore cannot be brought up to submitting standard at
 any amount of effort. A Mac with a years-old Xcode on it is not an hour from an
 archive; it is an OS upgrade and a ~15 GB download away, if it qualifies at all.
 
-Three ways to get one:
+**The Mac does not have to be yours, or even exist.** Three ways to get one:
 
-1. **Borrow or remote into a Mac.** The existing plan — Parsec to a Mac. Fine
-   for a first submission *if it already meets the Xcode floor above*; the whole
-   session is an hour if nothing is wrong.
-2. **A macOS CI runner.** GitHub Actions has hosted macOS runners, and the repo
-   already has a workflow. This is the option that scales, and it is the only
-   one where releasing does not depend on someone's availability. The setup
-   cost is real though: the distribution certificate and provisioning profile
-   have to be exported, base64-encoded into repository secrets, and imported
-   into a temporary keychain on each run, plus an App Store Connect API key for
-   the upload. Worth doing for the second release, not the first — **unless the
-   available Mac fails the Xcode check**, which inverts the comparison. Hosted
-   runners come with a current Xcode already installed, so against an afternoon
-   of OS upgrade and downloads on a machine that may not qualify anyway, the
-   secrets setup is no longer the slower path.
-3. **A rented Mac.** MacStadium, Scaleway and similar rent Mac minis by the
-   hour or month. Sensible if a borrowed Mac is not available and CI is not set
-   up yet.
+1. **A macOS CI runner.** What this project uses — see "The CI path" below.
+   Hosted runners come with a current Xcode already installed, so the version
+   problem above solves itself, and releasing waits on nobody's availability.
+   The setup is four repository secrets and no Mac at any point.
+2. **Borrow or remote into a Mac.** The original plan, Parsec to a Mac. Fine
+   *if it meets the Xcode floor above*, which is worth checking rather than
+   assuming. An hour if nothing is wrong.
+3. **A rented Mac.** MacStadium, Scaleway and similar, by the hour or month.
+   The fallback if CI is unavailable and no suitable Mac is to hand.
 
-Nothing in this repo assumes which one. The steps below are the same on all
-three.
+Steps 0 to 2 and 6 to 7 are the same whichever you pick. Only the archive
+differs: "The CI path" or steps 3 to 5.
 
 ---
 
@@ -179,7 +173,85 @@ the store name is not a reason to touch either.
 
 ---
 
-## The first archive
+## The CI path, which needs no Mac at all
+
+**This is the route this project actually uses.**
+[`.github/workflows/ios-release.yml`](../.github/workflows/ios-release.yml)
+archives on a hosted macOS runner and uploads to App Store Connect. It replaces
+steps 3 to 5 entirely; steps 6 and 7 are unchanged, and the one-time setup above
+still has to have happened.
+
+CI used to be the option deferred to a later release, on the grounds that
+setting it up meant exporting a distribution certificate — which needs a Mac,
+and is circular when a Mac is the thing being worked around. That objection is
+obsolete. An **App Store Connect API key** is created entirely in the web UI,
+and `-allowProvisioningUpdates` has Xcode issue the certificate and profile on
+the runner. Nothing is exported from anywhere, and the setup is four repository
+secrets.
+
+What is left is a genuine advantage rather than a workaround: the runner
+already has a current Xcode, so the version floor above never has to be
+chased, and a release does not wait on a particular machine being free.
+
+### Create the API key
+
+**App Store Connect → Users and Access → Integrations → App Store Connect API
+→ +**, with the **App Manager** role.
+
+The `.p8` file downloads **once and only once**. Apple will not serve it again;
+losing it means revoking the key and issuing another.
+
+### Set the four repository secrets
+
+**Settings → Secrets and variables → Actions → New repository secret.**
+
+| Secret | Where it comes from |
+| --- | --- |
+| `APPLE_TEAM_ID` | The 10-character Team ID, top right of the developer portal. |
+| `ASC_KEY_ID` | Shown in the key list next to the key just created. |
+| `ASC_ISSUER_ID` | Above the key list. One issuer ID for the whole account. |
+| `ASC_KEY_P8_BASE64` | The `.p8`, base64 encoded. |
+
+Base64 because a secret is a single string and a PEM file is not. On Windows:
+
+```powershell
+[Convert]::ToBase64String([IO.File]::ReadAllBytes("$HOME\Downloads\AuthKey_XXXXXX.p8")) | Set-Clipboard
+```
+
+The Team ID is a secret here only because the repo is public and `pbxproj`
+deliberately carries no `DEVELOPMENT_TEAM`; the workflow passes it to
+`xcodebuild` at build time instead.
+
+### Run it
+
+**Actions → iOS release → Run workflow.** Manual only, deliberately: every run
+consumes a `CFBundleVersion` that cannot be reused, so it must never fire on a
+push.
+
+The **build number override** input exists for exactly the trap described under
+"Every release" — a burned build number. Left blank, the number comes from the
+project and stays pinned to gradle's `versionCode`.
+
+Two things the workflow does that a person in Xcode would not have to:
+
+- **Asserts the Xcode version before building.** Runner images carry several,
+  and the default is not always the newest. A wrong one is otherwise a rejected
+  upload forty minutes later rather than a failure in ten seconds.
+- **Needs a shared scheme.** Xcode keeps schemes under `xcuserdata` until
+  shared, and that is not committed, so `xcodebuild -scheme App` on a fresh
+  clone would fail with "scheme not found" while the project opens perfectly on
+  a developer machine. `App.xcscheme` is committed and asserted by
+  `iosProject.test.ts`.
+
+There is no separate **Validate App** step on this path. Validation failures
+arrive as upload errors instead.
+
+---
+
+## The first archive, if you do have a suitable Mac
+
+Steps 3 to 5 are the manual equivalent of the workflow above. Use them if a Mac
+running Xcode 26 or newer is available and you would rather watch it happen.
 
 ### 3. Get the project onto the Mac and build the web app
 

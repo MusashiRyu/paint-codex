@@ -88,3 +88,34 @@ describe('project.pbxproj', () => {
     expect(pbxproj).toContain('PrivacyInfo.xcprivacy in Resources');
   });
 });
+
+/**
+ * Xcode keeps schemes per-user under `xcuserdata` until they are explicitly
+ * shared, and `xcuserdata` is not committed. Opening the project locally
+ * therefore hides the problem completely: the scheme is right there in the
+ * toolbar, while a fresh clone has none at all and `xcodebuild -scheme App`
+ * fails with "scheme not found".
+ *
+ * That only matters now that the release runs on CI, where every checkout is a
+ * fresh clone -- which is also why nobody would notice it breaking.
+ */
+describe('shared scheme', () => {
+  const scheme = read('ios/App/App.xcodeproj/xcshareddata/xcschemes/App.xcscheme');
+  const pbxproj = read('ios/App/App.xcodeproj/project.pbxproj');
+
+  it('archives the Release configuration', () => {
+    expect(scheme).toMatch(/<ArchiveAction[^>]*buildConfiguration = "Release"/s);
+  });
+
+  /**
+   * A scheme naming a target that no longer exists still parses, and fails at
+   * build time rather than here. Tying the two together is what makes this
+   * assertion worth more than a file-exists check.
+   */
+  it('points at a target that exists in the project', () => {
+    const blueprint = scheme.match(/BlueprintIdentifier = "([0-9A-F]+)"/)?.[1];
+
+    expect(blueprint, 'no BlueprintIdentifier in the scheme').toBeDefined();
+    expect(pbxproj).toContain(`${blueprint} /* App */ = {`);
+  });
+});

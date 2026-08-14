@@ -1,0 +1,193 @@
+# Archives the iOS app on a hosted Mac and uploads it to App Store Connect.
+#
+# Nothing here needs a Mac to set up, or to run. Signing uses an App Store
+# Connect API key created in the web UI, and `-allowProvisioningUpdates` has
+# Xcode issue the certificate and provisioning profile on the runner itself,
+# so no `.p12` is ever exported from anywhere.
+#
+# Required repository secrets:
+#   APPLE_TEAM_ID       the 10-character Team ID
+#   ASC_KEY_ID          App Store Connect API key ID
+#   ASC_ISSUER_ID       App Store Connect API issuer ID
+#   ASC_KEY_P8_BASE64   the .p8 private key, base64 encoded
+name: iOS release
+
+# Manual only. Every run consumes a CFBundleVersion that cannot be reused, so
+# this must never fire off a push.
+on:
+  workflow_dispatch:
+    inputs:
+      build_number:
+        description: 'CFBundleVersion override. Leave blank to use the value in the project. Set this only to step over a build number already burned by a failed upload.'
+        required: false
+        default: ''
+
+# An upload that is half finished should never be cancelled by a second run.
+concurrency:
+  group: ios-release
+  cancel-in-progress: false
+
+jobs:
+  archive:
+    runs-on: macos-latest
+    timeout-minutes: 60
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # Runs before anything expensive. appVersion.test.ts is the guard against
+      # shipping an iOS build whose numbers have drifted from gradle's, and
+      # finding that out after the upload means a burned build number.
+      - name: Test
+        run: npm test
+
+      # Not optional: ios/App/App/public is gitignored, so a fresh checkout has
+      # an Xcode project with no web app inside it.
+      - name: Build web assets
+        run: npm run cap:build
+
+      # The runner image carries several Xcodes and the default is not always
+      # the newest. Selecting explicitly and asserting the floor turns a
+      # rejected upload forty minutes from now into a failure ten seconds from
+      # now. Apple raises this floor most Aprils -- see
+      # https://developer.apple.com/news/upcoming-requirements/
+      - name: Select Xcode
+        env:
+          MIN_XCODE: '26'
+        run: |
+          set -euo pipefail
+          # Prefer an explicitly versioned Xcode, then whatever the image has
+          # made default. Deliberately no `sort -V`: that is a GNU extension
+          # and this is BSD sort, so a clever one-liner here would fail in a
+          # way that reads as an Xcode problem.
+          for candidate in /Applications/Xcode_"$MIN_XCODE"*.app /Applications/Xcode.app; do
+            if [ -d "$candidate" ]; then
+              sudo xcode-select -s "$candidate/Contents/Developer"
+              break
+            fi
+          done
+          xcodebuild -version
+          major=$(xcodebuild -version | head -1 | sed -E 's/^Xcode ([0-9]+).*/\1/')
+          if [ "$major" -lt "$MIN_XCODE" ]; then
+            echo "::error::Xcode $major is below the App Store minimum of $MIN_XCODE."
+            echo "Xcodes present on this runner:"
+            ls -d /Applications/Xcode*.app || true
+            exit 1
+          fi
+
+      # Written to a file because xcodebuild takes a path, not the key itself.
+      # RUNNER_TEMP is wiped with the runner; the cleanup step below is belt
+      # and braces for a self-hosted runner that outlives the job.
+      - name: Write App Store Connect API key
+        env:
+          ASC_KEY_P8_BASE64: ${{ secrets.ASC_KEY_P8_BASE64 }}
+        run: |
+          set -euo pipefail
+          printf '%s' "$ASC_KEY_P8_BASE64" | base64 --decode > "$RUNNER_TEMP/AuthKey.p8"
+          # A truncated or mis-pasted secret fails here rather than inside a
+          # signing error that names something else entirely.
+          grep -q 'BEGIN PRIVATE KEY' "$RUNNER_TEMP/AuthKey.p8"
+
+      # Separate from the archive so that a failure to resolve packages reads as
+      # what it is. The most likely cause is the Windows path-separator bug in
+      # CapApp-SPM/Package.swift, which surfaces as a Swift parse error and
+      # gives no hint that a `cap sync` on another OS caused it.
+      - name: Resolve Swift packages
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project ios/App/App.xcodeproj \
+            -scheme App
+
+      # DEVELOPMENT_TEAM is passed here rather than committed: the repo is
+      # public and the pbxproj deliberately carries no team.
+      - name: Archive
+        env:
+          TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          BUILD_NUMBER: ${{ inputs.build_number }}
+        run: |
+          set -euo pipefail
+          args=(
+            archive
+            -project ios/App/App.xcodeproj
+            -scheme App
+            -configuration Release
+            -destination 'generic/platform=iOS'
+            -archivePath "$RUNNER_TEMP/App.xcarchive"
+            -allowProvisioningUpdates
+            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8"
+            -authenticationKeyID "$KEY_ID"
+            -authenticationKeyIssuerID "$ISSUER_ID"
+            DEVELOPMENT_TEAM="$TEAM_ID"
+            CODE_SIGN_STYLE=Automatic
+          )
+          # Only when explicitly asked for. Left alone, the number comes from
+          # the project and stays pinned to gradle's versionCode.
+          if [ -n "$BUILD_NUMBER" ]; then
+            args+=(CURRENT_PROJECT_VERSION="$BUILD_NUMBER")
+          fi
+          xcodebuild "${args[@]}"
+
+      # `destination: upload` hands the build to App Store Connect from within
+      # xcodebuild. altool is the older route and is not worth depending on.
+      #
+      # This is also where the checklist's separate "Validate App" step goes:
+      # there is no equivalent here, so validation failures arrive as upload
+      # errors instead.
+      - name: Export and upload
+        env:
+          TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        run: |
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/ExportOptions.plist" <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key>
+            <string>app-store-connect</string>
+            <key>destination</key>
+            <string>upload</string>
+            <key>teamID</key>
+            <string>$TEAM_ID</string>
+            <key>signingStyle</key>
+            <string>automatic</string>
+            <key>uploadSymbols</key>
+            <true/>
+          </dict>
+          </plist>
+          PLIST
+          xcodebuild -exportArchive \
+            -archivePath "$RUNNER_TEMP/App.xcarchive" \
+            -exportOptionsPlist "$RUNNER_TEMP/ExportOptions.plist" \
+            -exportPath "$RUNNER_TEMP/export" \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath "$RUNNER_TEMP/AuthKey.p8" \
+            -authenticationKeyID "$KEY_ID" \
+            -authenticationKeyIssuerID "$ISSUER_ID"
+
+      # dSYMs only. The archive itself is large and the app bundle is already
+      # on Apple's side by now; symbols are what a later crash report needs.
+      - name: Keep the symbols
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dsyms
+          path: ${{ runner.temp }}/App.xcarchive/dSYMs
+          if-no-files-found: ignore
+          retention-days: 30
+
+      - name: Remove the API key
+        if: always()
+        run: rm -f "$RUNNER_TEMP/AuthKey.p8"
