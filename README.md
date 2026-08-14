@@ -253,9 +253,20 @@ privacy policy text are in [store/](store/).
 
 ### 3) iOS release flow
 
-Prerequisites (macOS only):
-- Xcode installed
-- Apple Developer Program membership (US$99/yr) and a Team selected in Xcode
+**No Mac required.** Push, then **Actions → iOS release → Run workflow**.
+[`.github/workflows/ios-release.yml`](.github/workflows/ios-release.yml)
+archives on a hosted macOS runner and uploads to App Store Connect, signing
+with an App Store Connect API key and `-allowProvisioningUpdates` so no
+certificate is exported from anywhere.
+
+Prerequisites are an Apple Developer Program membership (US$99/yr) and four
+repository secrets — `APPLE_TEAM_ID`, `ASC_KEY_ID`, `ASC_ISSUER_ID`,
+`ASC_KEY_P8_BASE64`. The API key must carry the **Admin** role: signing here
+creates a distribution certificate rather than using one, and that is gated to
+Account Holder and Admin.
+
+The manual Xcode path is still documented as a fallback, and needs Xcode 26 or
+newer on macOS Sequoia 15.6 or newer:
 
 ```bash
 npm ci
@@ -263,20 +274,21 @@ npm run cap:ios      # vite build + cap sync + open Xcode
 ```
 
 Then in Xcode: target `App` → Signing & Capabilities → tick **Automatically
-manage signing** and pick the Team → set the run destination to **Any iOS
-Device (arm64)** → Product → Archive → Validate, then Distribute.
+manage signing** and pick the Team → run destination **Any iOS Device (arm64)**
+→ Product → Archive → Validate, then Distribute.
 
 `npm run cap:ios` is not optional on a fresh clone. `ios/App/App/public` is
 gitignored, so a clone has an Xcode project with no web app inside it until a
 build and sync have run. There is **no `pod install`** — this project uses Swift
 Package Manager (`ios/App/CapApp-SPM/`), not CocoaPods.
 
-Everything that does not need a Mac is already committed: the app icon and
-splash come from the same source mark as Android's, `Info.plist` answers the
-export-compliance question and asks for `arm64`, the privacy manifest is wired
-into the target, and the listing copy and 1290×2796 screenshots are in
-[store/](store/). `src/test/iosProject.test.ts` asserts the ones that would
-otherwise regress unnoticed, since nothing on Windows compiles Swift.
+Everything the release needs beyond the compile is already committed: the app
+icon and splash come from the same source mark as Android's, `Info.plist`
+answers the export-compliance question and asks for `arm64`, the privacy
+manifest is wired into the target, the scheme is shared so `xcodebuild` can
+find it, and the listing copy and 1290×2796 screenshots are in [store/](store/).
+`src/test/iosProject.test.ts` asserts the ones that would otherwise regress
+unnoticed, since nothing compiles Swift until a release runs.
 
 The full submission path — Apple Developer enrolment, the bundle ID, App Store
 Connect, TestFlight, and the settings that are deliberate rather than

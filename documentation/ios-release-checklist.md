@@ -14,8 +14,8 @@ step is the version bump, and that lives in the Android file because
 
 ## What is already done
 
-The point of this section is that the Mac session should be short. Everything
-below is committed and needs no Mac to have happened.
+Everything below is committed, and none of it needed a Mac to happen. The
+release itself does not need one either — see "How the build gets made".
 
 | Prepared | Where | Notes |
 | --- | --- | --- |
@@ -35,39 +35,41 @@ below is committed and needs no Mac to have happened.
 `src/test/iosProject.test.ts` asserts most of the above on every push,
 because none of it is exercised by any build that runs on Windows.
 
-## What still needs a Mac
+## How the build gets made
 
-Signing, archiving and uploading. There is no way around this: the toolchain
-that produces a `.ipa` and talks to App Store Connect is macOS-only, and Apple
-has never shipped it anywhere else.
+**On a GitHub Actions runner. No Mac is involved, and none is needed.**
+[`.github/workflows/ios-release.yml`](../.github/workflows/ios-release.yml)
+archives and uploads to App Store Connect; the whole path from a Windows
+machine is "push, then press Run workflow". This has shipped a real build, so
+it is the documented route rather than an idea about one.
 
-**Check `xcodebuild -version` before committing to a machine.** Since 28 April
+macOS is still required to *compile* — the toolchain that produces a `.ipa` is
+macOS-only and Apple has never shipped it anywhere else. What changed is who
+has to own the Mac.
+
+Two things made it possible, and both are recent enough that older instructions
+will tell you it cannot be done:
+
+- **An App Store Connect API key is created entirely in the web UI.** The old
+  objection was that CI needs a distribution certificate exported from a Mac,
+  which is circular when a Mac is the thing you lack.
+- **`-allowProvisioningUpdates` creates the certificate and profile on the
+  runner.** Nothing is exported from anywhere, and no `.p12` ever exists.
+
+The manual Xcode path still works and is documented in steps 3 to 5, for when
+you have a suitable Mac and would rather watch it happen. If you go that way,
+**check `xcodebuild -version` before committing to a machine**: since 28 April
 2026 App Store Connect rejects anything not built with **Xcode 26 or later**
-against the iOS 26 SDK, and Apple raises that floor most Aprils, so this
-paragraph has a shelf life —
+against the iOS 26 SDK, and Apple raises that floor most Aprils —
 [developer.apple.com/news/upcoming-requirements](https://developer.apple.com/news/upcoming-requirements/)
-is the current answer.
+is the current answer. That gates on hardware, not just on downloads: Xcode 26
+wants macOS Sequoia 15.6, which wants a 2018-or-later Mac, so an older machine
+cannot be brought up to standard at any amount of effort. A rented Mac
+(MacStadium, Scaleway) is the third option if CI is unavailable and no suitable
+machine is to hand.
 
-The check comes first because the version is not independent of the machine.
-Xcode 26 wants macOS Sequoia 15.6 or newer, Sequoia wants a 2018-or-later Mac,
-and an older Intel Mac therefore cannot be brought up to submitting standard at
-any amount of effort. A Mac with a years-old Xcode on it is not an hour from an
-archive; it is an OS upgrade and a ~15 GB download away, if it qualifies at all.
-
-**The Mac does not have to be yours, or even exist.** Three ways to get one:
-
-1. **A macOS CI runner.** What this project uses — see "The CI path" below.
-   Hosted runners come with a current Xcode already installed, so the version
-   problem above solves itself, and releasing waits on nobody's availability.
-   The setup is four repository secrets and no Mac at any point.
-2. **Borrow or remote into a Mac.** The original plan, Parsec to a Mac. Fine
-   *if it meets the Xcode floor above*, which is worth checking rather than
-   assuming. An hour if nothing is wrong.
-3. **A rented Mac.** MacStadium, Scaleway and similar, by the hour or month.
-   The fallback if CI is unavailable and no suitable Mac is to hand.
-
-Steps 0 to 2 and 6 to 7 are the same whichever you pick. Only the archive
-differs: "The CI path" or steps 3 to 5.
+Steps 0 to 2 and 6 to 7 are the same whichever route you take. Only the archive
+differs.
 
 ---
 
@@ -173,25 +175,15 @@ the store name is not a reason to touch either.
 
 ---
 
-## The CI path, which needs no Mac at all
+## The release, on CI
 
-**This is the route this project actually uses.**
 [`.github/workflows/ios-release.yml`](../.github/workflows/ios-release.yml)
-archives on a hosted macOS runner and uploads to App Store Connect. It replaces
-steps 3 to 5 entirely; steps 6 and 7 are unchanged, and the one-time setup above
-still has to have happened.
+replaces steps 3 to 5 entirely. Steps 6 and 7 are unchanged, and the one-time
+setup below still has to have happened.
 
-CI used to be the option deferred to a later release, on the grounds that
-setting it up meant exporting a distribution certificate — which needs a Mac,
-and is circular when a Mac is the thing being worked around. That objection is
-obsolete. An **App Store Connect API key** is created entirely in the web UI,
-and `-allowProvisioningUpdates` has Xcode issue the certificate and profile on
-the runner. Nothing is exported from anywhere, and the setup is four repository
-secrets.
-
-What is left is a genuine advantage rather than a workaround: the runner
-already has a current Xcode, so the version floor above never has to be
-chased, and a release does not wait on a particular machine being free.
+Setup is a one-off: an API key and four repository secrets. After that a
+release is one button, from any machine, and the runner supplies a current
+Xcode so the version floor never has to be chased.
 
 ### Create the API key
 
@@ -280,26 +272,62 @@ The **build number override** input exists for exactly the trap described under
 "Every release" — a burned build number. Left blank, the number comes from the
 project and stays pinned to gradle's `versionCode`.
 
-Two things the workflow does that a person in Xcode would not have to:
-
-- **Asserts the Xcode version before building.** Runner images carry several,
-  and the default is not always the newest. A wrong one is otherwise a rejected
-  upload forty minutes later rather than a failure in ten seconds.
-- **Needs a shared scheme.** Xcode keeps schemes under `xcuserdata` until
-  shared, and that is not committed, so `xcodebuild -scheme App` on a fresh
-  clone would fail with "scheme not found" while the project opens perfectly on
-  a developer machine. `App.xcscheme` is committed and asserted by
-  `iosProject.test.ts`.
+Expect **15 to 45 minutes**. The spread is the iOS platform download below; a
+run that does not need it is at the fast end.
 
 There is no separate **Validate App** step on this path. Validation failures
 arrive as upload errors instead.
 
+### What the workflow does that a person in Xcode never has to
+
+Each of these was a failed run before it was a line of YAML. They are recorded
+because none of them is discoverable from the error it produces.
+
+- **Installs the iOS platform if the image lacks it.** The SDK ships inside
+  Xcode, but device platform support is a separate downloadable component, and
+  hosted images carry it inconsistently — the same command archived on one run
+  and failed on the next. `-showsdks` lists iOS 26.0 either way, so the absence
+  never presents as a missing platform. It presents as `iOS 26.0 is not
+  installed` or `Found no destinations for the scheme`, and `-showdestinations`
+  is the only command that says plainly which it is. `-runFirstLaunch` does not
+  fix it; `-downloadPlatform iOS` does.
+- **Archives unsigned and signs at export.** Automatic signing signs an
+  *archive* for development and applies a distribution identity only at export.
+  Overriding the identity earns "App has conflicting provisioning settings";
+  leaving it alone asks for a development profile, which Apple will not issue
+  to a team with no registered devices — and a runner is never a registered
+  device. App Store distribution profiles have no such requirement, so all of
+  it happens at export.
+- **Turns off on-demand resources.** On by default, and `actool` consults the
+  *simulator* runtime list while processing them even when compiling for
+  device. Runner simulator runtimes are newer than the Xcode SDK build, so the
+  lookup fails and the asset catalogue is blamed for it. This app tags no
+  assets for on-demand delivery.
+- **Uses a shared scheme.** Xcode keeps schemes under `xcuserdata` until
+  explicitly shared, and that is not committed, so `xcodebuild -scheme App` on
+  a fresh clone fails with "scheme not found" while the project opens perfectly
+  on a developer machine. `App.xcscheme` is committed and asserted by
+  `iosProject.test.ts`.
+- **Asserts the Xcode version before building.** Images carry several and the
+  default is not always the newest. A wrong one is otherwise a rejected upload
+  forty minutes later rather than a failure in ten seconds.
+- **Reprints the errors at the end of a failed archive.** `xcodebuild`
+  interleaves parallel task output, so the line explaining a failure routinely
+  lands hundreds of lines from `** ARCHIVE FAILED **` and the web log viewer
+  cannot show them together. The full log and the `.xcresult` are uploaded as
+  the **archive-log** artifact.
+
 ---
 
-## The first archive, if you do have a suitable Mac
+## The manual path, if you have a suitable Mac
 
-Steps 3 to 5 are the manual equivalent of the workflow above. Use them if a Mac
-running Xcode 26 or newer is available and you would rather watch it happen.
+Steps 3 to 5 are the Xcode equivalent of the workflow above, kept because a Mac
+in front of you is a better place to diagnose a genuinely new problem than a
+runner you cannot inspect. Nothing in the normal release path needs them.
+
+They are also simpler than the workflow in one specific way: Xcode's own
+automatic signing handles the archive-versus-export distinction itself, so none
+of the signing gymnastics above applies here.
 
 ### 3. Get the project onto the Mac and build the web app
 
@@ -445,7 +473,9 @@ iOS values restate it, and
 [`release-checklist.md`](./release-checklist.md#1-bump-the-version) is where
 that table lives. `src/test/appVersion.test.ts` fails the build if they drift.
 
-Then: `npm run cap:build`, archive, upload, submit.
+Then push, and **Actions → iOS release → Run workflow**. The workflow runs
+`cap:build` itself, so there is nothing to build locally and nothing to carry
+to another machine.
 
 One iOS-specific trap. `CFBundleVersion` (`CURRENT_PROJECT_VERSION`) must
 **increase on every upload to App Store Connect**, not merely on every release.
@@ -480,10 +510,13 @@ numbering — a few failed uploads in a row will do it — unpin
 
 Written down so the gap is known rather than assumed away.
 
-- **Nothing here compiles Swift.** CI runs lint, typecheck, tests, a web build
-  and the layout check. It does not build the iOS target, so a broken
-  `AppDelegate` would reach the Mac undetected. The tests in
+- **Nothing compiles Swift until you release.** `ci.yml` runs lint, typecheck,
+  tests, a web build and the layout check on every push, and none of that
+  builds the iOS target — so a broken `AppDelegate` reaches the release
+  workflow undetected and fails there, minutes into a run. The tests in
   `iosProject.test.ts` are string assertions over project files, not a build.
+  Compiling the iOS target on every push would close the gap and cost macOS
+  runner minutes on every push to do it.
 - **The app has never run on iOS hardware or in the Simulator.** Safe-area
   behaviour, WebView scroll bounce, keyboard avoidance in the search sheet and
   the launch image transition are all unverified. That is what step 6 is for.

@@ -47,25 +47,29 @@ persist). Worth remembering before anything else large is persisted, and before
 the catalogue grows by another brand.
 
 ### 4. iOS signing and archive are Mac-only
-**Raised:** 001 · **Environmental**
+**Raised:** 001 · **Resolved 2026-08-14**
 
-Nothing left to fix in the repo. Everything an iOS submission needs that can be
-prepared on Windows was prepared at 024 — icon, splash, privacy manifest,
-`Info.plist`, device family, listing copy, screenshots — and
-[`ios-release-checklist.md`](./ios-release-checklist.md) is the whole path from
-enrolment onward.
-
-What genuinely requires macOS is signing, archiving and uploading. As of
-2026-08-14 that runs on a hosted macOS runner rather than a physical Mac:
+Resolved, in the sense that it no longer requires a Mac *anyone here owns*.
 [`.github/workflows/ios-release.yml`](../.github/workflows/ios-release.yml)
-archives and uploads to App Store Connect, signing with an App Store Connect
-API key and `-allowProvisioningUpdates` so no certificate is exported from
-anywhere. Setup is four repository secrets and no Mac at any point. **Untested
-end to end** — the workflow has not yet completed a real run.
+archives and uploads to App Store Connect from a hosted macOS runner, signing
+with an App Store Connect API key and `-allowProvisioningUpdates`, so no
+certificate is exported from anywhere. **It has completed a real run and
+uploaded a build.** Setup is one API key and four repository secrets; a release
+is one button from Windows.
 
-**Nothing here compiles Swift**, so the iOS target's correctness is asserted by
-string checks in `src/test/iosProject.test.ts` rather than by a build. A broken
-`AppDelegate` would still reach the Mac undetected.
+The manual Xcode path in the checklist is kept as a fallback, not as the plan.
+
+Two things remain true and are worth not forgetting:
+
+- **Nothing compiles Swift until a release runs.** The per-push CI does not
+  build the iOS target, so `src/test/iosProject.test.ts` asserts the project
+  settings as strings and a broken `AppDelegate` surfaces only when the release
+  workflow reaches it.
+- **The runner images are not stable ground.** Device platform support is a
+  separate downloadable component and hosted images carry it inconsistently;
+  the workflow installs it when missing, which is the difference between a
+  15-minute run and a 45-minute one. See the checklist for the failure modes
+  it presents as, none of which name the platform.
 
 ### 5. The shop links earn nothing, and could
 **Raised:** 015 · **Blocked on a commercial decision, not on code**
@@ -93,7 +97,7 @@ Four things gate it, in order:
    and `ListsPanel`, not a link drop. The app has no commercial surface anywhere
    today; adding one changes what it feels like to use.
 4. **Disclosure.** Affiliate links need saying so in `store/listing.md` and
-   `store/privacy-policy.md` — and they would give the
+   `store/privacy-policy.md` — they would give the
    destination a reason to know the visit came from Paco, which the privacy
    policy currently promises does not happen. That paragraph would have to
    change. The cost here is not only compliance; it is tone.
