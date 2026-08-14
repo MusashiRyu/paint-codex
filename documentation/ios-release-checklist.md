@@ -430,11 +430,19 @@ Worth checking specifically on a device, because none of it can be checked here:
 
 In App Store Connect, on the version:
 
-1. Attach the processed build.
-2. Fill in everything from `store/listing-appstore.md` — description, keywords,
+1. **Set the version record to match `MARKETING_VERSION` before looking for the
+   build.** App Store Connect matches builds to a version by
+   `CFBundleShortVersionString`, so a record numbered differently from the
+   build simply offers no build to attach — an empty picker rather than a
+   mismatch warning. A new app record defaults to `1.0`, and this project's
+   iOS version restates Android's `versionName`, which passed 1.0 long ago.
+   Fix the record, never the build: the numbers are pinned across both
+   platforms and asserted by `appVersion.test.ts`.
+2. Attach the processed build.
+3. Fill in everything from `store/listing-appstore.md` — description, keywords,
    subtitle, promotional text, support URL, privacy policy URL, category, age
    rating, App Privacy, and the reviewer notes.
-3. Upload the screenshots from `store/graphics/screenshots-ios/` into the
+4. Upload the screenshots from `store/graphics/screenshots-ios/` into the
    **6.9" Display** slot, and only that one.
 
    The iPhone tab stacks several size slots and they look identical. The 6.9"
@@ -455,10 +463,10 @@ In App Store Connect, on the version:
    supplying iPad screenshots claims a tablet layout that
    `TARGETED_DEVICE_FAMILY = 1` does not provide, which is the Guideline 4.0
    rejection described in the settings table below. Apple Watch, likewise.
-4. Choose the release option. **Manual release** for a first submission —
+5. Choose the release option. **Manual release** for a first submission —
    approval at 3am and an app live before anyone has looked at the listing is a
    bad trade for the two minutes it saves.
-5. Submit.
+6. Submit.
 
 Review is usually a day or two. A first submission from a new account gets the
 most thorough look the app will ever get, which is the reasoning behind the tip

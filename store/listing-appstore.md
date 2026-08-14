@@ -163,7 +163,7 @@ keyword field is a metadata edit that needs no build and no review.
 | Primary language | English (U.K.) | The copy is written in British English: "colour" throughout. |
 | Primary category | **Graphics & Design** | The App Store's nearest equivalent to Play's Art & Design, and where hobby colour tools sit. |
 | Secondary category | **Reference** | It is a lookup table before it is anything else. |
-| Copyright | `2026 <name on the developer account>` | Public on the listing, and must match the legal name the account is enrolled under — an individual enrolment shows a personal name here. Filled in at submission rather than recorded, for the same reason as the contact email. |
+| Copyright | `2026 <the enrolled entity>` | The **rights holder**, not the author — an Organization enrolment takes the registered company name, suffix included, and only an Individual enrolment takes a person's. It is public, and must agree with the seller name Apple derives from the same enrolment. No `©`: Apple renders it. The year is when the rights were obtained, so a first release is the current one. Filled in at submission rather than recorded here, for the same reason as the contact email. |
 | Content rights | **No third-party content** | The question targets media the app streams or displays under licence. The paint data is openly licensed (MIT) reference data that the app derives its own values from, and the credit is in the description regardless. |
 | Age rating | **4+** | Every question in the questionnaire answers "None". No violence, no unrestricted web access — the only outbound links are fixed URLs handed to Safari. |
 | Price | **Free** | |
