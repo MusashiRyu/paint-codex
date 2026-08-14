@@ -196,7 +196,16 @@ chased, and a release does not wait on a particular machine being free.
 ### Create the API key
 
 **App Store Connect → Users and Access → Integrations → App Store Connect API
-→ +**, with the **App Manager** role.
+→ +**. A **team key**, with the **App Manager** role.
+
+Team rather than individual: an individual key inherits the permissions of the
+person who made it and stops working when those change, which for a release
+pipeline means it breaks at the next release rather than at the moment someone
+adjusts a role, with nothing to connect the two. A team key carries its own
+role and outlives whoever set it up.
+
+App Manager rather than Developer: both can upload a build, but only App Manager
+can manage TestFlight and app metadata, which is where this grows next.
 
 > **The team has to have API access switched on first, and only the Account
 > Holder can do it.** Until then the page offers a greyed-out *Request Access*
