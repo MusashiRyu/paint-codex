@@ -37,17 +37,37 @@ because none of it is exercised by any build that runs on Windows.
 
 Signing, archiving and uploading. There is no way around this: the toolchain
 that produces a `.ipa` and talks to App Store Connect is macOS-only, and Apple
-has never shipped it anywhere else. Three ways to get one:
+has never shipped it anywhere else.
+
+**Check `xcodebuild -version` before committing to a machine.** Since 28 April
+2026 App Store Connect rejects anything not built with **Xcode 26 or later**
+against the iOS 26 SDK, and Apple raises that floor most Aprils, so this
+paragraph has a shelf life —
+[developer.apple.com/news/upcoming-requirements](https://developer.apple.com/news/upcoming-requirements/)
+is the current answer.
+
+The check comes first because the version is not independent of the machine.
+Xcode 26 wants macOS Sequoia 15.6 or newer, Sequoia wants a 2018-or-later Mac,
+and an older Intel Mac therefore cannot be brought up to submitting standard at
+any amount of effort. A Mac with a years-old Xcode on it is not an hour from an
+archive; it is an OS upgrade and a ~15 GB download away, if it qualifies at all.
+
+Three ways to get one:
 
 1. **Borrow or remote into a Mac.** The existing plan — Parsec to a Mac. Fine
-   for a first submission; the whole session is an hour if nothing is wrong.
+   for a first submission *if it already meets the Xcode floor above*; the whole
+   session is an hour if nothing is wrong.
 2. **A macOS CI runner.** GitHub Actions has hosted macOS runners, and the repo
    already has a workflow. This is the option that scales, and it is the only
    one where releasing does not depend on someone's availability. The setup
    cost is real though: the distribution certificate and provisioning profile
    have to be exported, base64-encoded into repository secrets, and imported
    into a temporary keychain on each run, plus an App Store Connect API key for
-   the upload. Worth doing for the second release, not the first.
+   the upload. Worth doing for the second release, not the first — **unless the
+   available Mac fails the Xcode check**, which inverts the comparison. Hosted
+   runners come with a current Xcode already installed, so against an afternoon
+   of OS upgrade and downloads on a machine that may not qualify anyway, the
+   secrets setup is no longer the slower path.
 3. **A rented Mac.** MacStadium, Scaleway and similar rent Mac minis by the
    hour or month. Sensible if a borrowed Mac is not available and CI is not set
    up yet.
