@@ -101,6 +101,29 @@ capabilities and there is no reason to leave that door open. The value matches
 Android's `applicationId`, which is not required but is one less thing to hold
 in your head.
 
+> **Do not continue on to Certificates afterwards.** The sidebar puts
+> *Certificates* directly above *Identifiers*, and having just registered one
+> thing by hand it reads as the next manual step. It is not — step 4 has Xcode
+> create the certificates and profiles itself, and this project has no
+> capabilities that would need otherwise.
+>
+> Three reasons it is worth actively avoiding rather than merely skipping:
+> **Create a New Certificate** wants a Certificate Signing Request, which
+> Keychain Access generates *on a Mac*, so the page cannot be finished from
+> Windows anyway. Routing around that with OpenSSL leaves the private key on
+> whichever machine made the CSR, so the Mac that archives cannot sign with the
+> resulting certificate without a `.p12` export carried across — more work than
+> automatic signing, for the same outcome. And Apple allows only two
+> distribution certificates per account: spending one on an unusable key means
+> revoking it later, which invalidates every profile issued against it.
+>
+> If a certificate ever does have to be made by hand — the CI route in "What
+> still needs a Mac" is the realistic case — it is **Apple Distribution**, the
+> all-platform one Xcode itself creates. *iOS Distribution (App Store Connect
+> and Ad Hoc)* is the older iOS-only equivalent and also works. Neither
+> *Developer ID* row is ever relevant; those sign apps distributed outside the
+> store.
+
 ### 2. Create the App Store Connect record
 
 **[appstoreconnect.apple.com](https://appstoreconnect.apple.com) → Apps → +
