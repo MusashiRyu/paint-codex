@@ -98,17 +98,48 @@ jobs:
             exit 1
           fi
 
-      # Not piped, for the SIGPIPE reason above. Printed because when signing
-      # or destination resolution goes wrong, the first question is always
-      # what this image actually has -- and the answer has differed between
-      # runs of the same workflow. Destinations are the half that varies;
-      # `|| true` so an empty list is reported by the build rather than here.
-      - name: Show available SDKs and destinations
+      # The iOS SDK ships inside Xcode, but device *platform support* is a
+      # separate downloadable component, and hosted images carry it
+      # inconsistently -- the same command archived on one run and failed on
+      # the next. `-showsdks` always lists iOS 26.0 regardless, which is why
+      # the absence reads as several unrelated errors instead of one:
+      #
+      #   iOS 26.0 is not installed. Please download and install the platform
+      #   Found no destinations for the scheme 'App' and action archive
+      #
+      # `-runFirstLaunch` does not install it. `-downloadPlatform` does, at
+      # the cost of several minutes and a few GB, so it runs only when the
+      # destination is actually missing rather than on every release.
+      - name: Ensure the iOS platform is installed
         run: |
+          set -euo pipefail
           xcodebuild -showsdks
-          xcodebuild -showdestinations \
-            -project ios/App/App.xcodeproj \
-            -scheme App || true
+
+          destinations() {
+            xcodebuild -showdestinations \
+              -project ios/App/App.xcodeproj \
+              -scheme App 2>&1 || true
+          }
+
+          # A destination that is present but unusable is listed with an
+          # `error:` on the same line, so matching the name alone would call
+          # a broken image healthy.
+          usable() {
+            destinations | grep 'name:Any iOS Device' | grep -qv 'error:'
+          }
+
+          if usable; then
+            echo "iOS platform already installed."
+          else
+            echo "iOS platform missing. Downloading -- expect several minutes."
+            sudo xcodebuild -downloadPlatform iOS
+          fi
+
+          destinations
+          if ! usable; then
+            echo "::error::No usable iOS device destination after downloading the platform."
+            exit 1
+          fi
 
       # Written to a file because xcodebuild takes a path, not the key itself.
       # RUNNER_TEMP is wiped with the runner; the cleanup step below is belt
