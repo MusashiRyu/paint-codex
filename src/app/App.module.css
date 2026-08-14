@@ -86,8 +86,26 @@
   position: absolute;
   right: 20px;
   /* Absolute positioning resolves against the card's *padding* box, so a
-   * padding-bottom on the card would not have moved this. The inset is spent
-   * here, on the offset itself. */
-  bottom: calc(26px + var(--inset-bottom));
+   * padding-bottom on the card would not have moved this. The offset is spent
+   * here.
+   *
+   * The nav bar is below the FAB now and already carries the home indicator, so
+   * this clears the bar rather than the inset — adding both would lift the FAB
+   * an inset higher than it needs on exactly the phones with least room. */
+  bottom: calc(26px + var(--nav-height) + var(--inset-bottom));
   z-index: 5;
+}
+
+/* Confirmation that a Color Lab add landed, and in which list. Centred just
+ * above the nav bar: the Lab has no list header to flash beside, and the FAB's
+ * corner is taken. Above the nav's z-index so it is never half-covered. */
+.addFlash {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(16px + var(--nav-height) + var(--inset-bottom));
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 6;
 }

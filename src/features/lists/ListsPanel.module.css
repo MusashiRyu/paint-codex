@@ -16,9 +16,10 @@
   flex: 1;
   overflow-y: auto;
   /* The 110px is the FAB's landing zone — the last paint has to scroll clear
-   * of it. The FAB now sits an inset higher, so this has to grow with it or
-   * the button covers the row again on a home-indicator phone. */
-  padding: 6px var(--gutter) calc(110px + var(--inset-bottom));
+   * of it. The FAB now sits above the nav bar, and the bar carries the home
+   * indicator, so this has to clear both or the button covers the row again on
+   * a home-indicator phone. */
+  padding: 6px var(--gutter) calc(110px + var(--nav-height) + var(--inset-bottom));
 }
 
 .listHeader {

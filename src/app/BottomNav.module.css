@@ -1,0 +1,58 @@
+/*
+ * The bar sits on the card rather than in its flex column, so a screen's own
+ * scroll area still runs the full height of the card and its background reaches
+ * the bottom of the screen. What keeps content off the bar is padding inside
+ * each screen, not room made here.
+ */
+
+.nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* The bar is the lowest thing on screen, so it owns the home indicator: its
+   * own height plus the inset, with the inset spent as padding so the bar's
+   * background runs under the indicator rather than stopping above it. */
+  height: calc(var(--nav-height) + var(--inset-bottom));
+  padding-bottom: var(--inset-bottom);
+  /* Opaque, and it has to be. The design's mock draws this at 0.94 over a flat
+   * ground; over the card's background image, 6% is enough for a paint name
+   * scrolling underneath to read straight through the bar and compete with the
+   * labels on it. This is `--scrim-card-bottom` with its alpha taken off, so
+   * the bar and the card bottom it sits on are the same colour and the join is
+   * the gold hairline rather than a step. One use, so it stays local. */
+  background: #0a080d;
+  border-top: 1px solid var(--gold-line);
+  display: flex;
+  z-index: 5;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+}
+
+.active {
+  color: var(--gold-bright);
+}
+
+.tab:focus-visible {
+  outline: none;
+  color: var(--gold-bright);
+  background: var(--gold-fill);
+}
+
+.label {
+  font-family: var(--font-display);
+  font-size: var(--size-xxs);
+  letter-spacing: var(--track-md);
+  text-transform: uppercase;
+}

@@ -1,0 +1,45 @@
+/* The computed colour, on one line with its hex and its note. Wraps rather
+ * than truncates: the note is a whole sentence at 320px. */
+.derived {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--gap-chip);
+  margin-bottom: 10px;
+}
+
+.derivedHex {
+  font-family: var(--font-mono);
+  font-size: var(--size-sm);
+  color: var(--text-secondary);
+}
+
+.derivedNote {
+  flex: 1;
+  min-width: 140px;
+  font-size: var(--size-sm);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.card {
+  background: var(--bg-item);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-xl);
+  padding: var(--pad-card);
+}
+
+/* A column, so the delta reads above the action rather than competing with it
+ * for the same narrow gutter beside the paint's name. */
+.actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--gap-chip);
+}
+
+.none {
+  font-size: var(--size-md);
+  color: var(--text-dim);
+  font-style: italic;
+}

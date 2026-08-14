@@ -1,0 +1,22 @@
+/* Mirrors ListsPanel's tab bar, because these are the same control in the same
+ * place — the only difference is that the List screen's tabs are user data and
+ * these two are not. */
+.tabBar {
+  flex-shrink: 0;
+  display: flex;
+  gap: var(--gap-chip);
+  padding: 14px var(--gutter) 12px;
+}
+
+.tabBar > * {
+  flex: 1;
+  justify-content: center;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  /* No FAB on this screen, so the padding only has to clear the nav bar and
+   * the home indicator the bar carries. */
+  padding: 6px var(--gutter) calc(24px + var(--nav-height) + var(--inset-bottom));
+}

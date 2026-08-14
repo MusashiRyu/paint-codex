@@ -68,8 +68,34 @@ const SEED = {
   version: 4,
 };
 
+/** The Collab screen, from a freshly loaded page. */
+async function openCollab(page) {
+  await page.evaluate(() => {
+    const tab = [...document.querySelectorAll('nav button')].find((b) =>
+      b.textContent?.includes('Collab')
+    );
+    tab?.click();
+  });
+  await page.waitForSelector('button[aria-label="Select Paint A"]');
+}
+
 /**
- * The five surfaces the app has. Each says how to reach itself from a freshly
+ * Fill a Color Lab slot from the picker's My Lists mode.
+ *
+ * The empty slot's label is an exact `Select Paint A`; a picker row's is
+ * `Select <name> by <brand>`. Both start with "Select", so every selector here
+ * is exact or anchored on the " by " — the same collision the "Go to" prefix
+ * has with paint rows, and avoided the same way.
+ */
+async function fillSlot(page, slotLabel, paintName) {
+  await page.click(`button[aria-label="Select ${slotLabel}"]`);
+  await page.waitForSelector('[aria-label="Select a paint"][role="dialog"]');
+  await page.click(`button[aria-label^="Select ${paintName} by "]`);
+  await page.waitForSelector(`button[aria-label^="Change ${slotLabel}, currently ${paintName}"]`);
+}
+
+/**
+ * The eight surfaces the app has. Each says how to reach itself from a freshly
  * loaded page; the rules below are then run against whatever is on screen, so
  * a new sheet is one entry here rather than a new set of assertions.
  *
@@ -114,6 +140,43 @@ const SURFACES = [
       await page.click('button[aria-label^="Show equivalents for Mephiston Red"]');
       await page.waitForSelector('[class*="resultCardJumped"]');
       await page.waitForSelector('button[aria-label^="Go to"]');
+    },
+  },
+  {
+    // The tightest row in the app: six blend blocks across the card, each with
+    // a percentage and a six-digit hex beneath it. At 320px that is 46px a
+    // column, which is why this surface exists rather than the empty tab.
+    name: 'collab-mix',
+    open: async (page) => {
+      await openCollab(page);
+      await fillSlot(page, 'Paint A', 'Mephiston Red');
+      await fillSlot(page, 'Paint B', 'Macragge Blue');
+      await page.waitForSelector('[class*="stripLabel"]');
+    },
+  },
+  {
+    // Three derived colours, each with a whole sentence of description beside
+    // its swatch, and a paint card under it carrying two badges and a button.
+    name: 'collab-match',
+    open: async (page) => {
+      await openCollab(page);
+      await page.evaluate(() => {
+        const tab = [...document.querySelectorAll('button')].find(
+          (b) => b.textContent?.trim() === 'Matching'
+        );
+        tab?.click();
+      });
+      await fillSlot(page, 'a Base Paint', 'Abaddon Black');
+      await page.waitForSelector('[class*="derivedNote"]');
+    },
+  },
+  {
+    name: 'collab-pick',
+    open: async (page) => {
+      await openCollab(page);
+      await page.click('button[aria-label="Select Paint A"]');
+      await page.waitForSelector('[aria-label="Select a paint"][role="dialog"]');
+      await page.waitForSelector('button[aria-label^="Select Mephiston Red by "]');
     },
   },
 ];

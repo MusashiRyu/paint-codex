@@ -190,6 +190,11 @@
   --control-lg: 34px; /* add button, colour swatch */
   --control-xl: 56px; /* FAB, icon picker tile */
 
+  /* The bottom nav's own height, before the home indicator is added to it.
+   * Three things read it and have to agree: the bar draws it, the FAB sits
+   * above it, and each screen's scroll padding has to clear it. */
+  --nav-height: 64px;
+
   /* ---------------------------------------------------------------------
    * Safe area
    * The web layer fills the whole screen on both platforms, so the status

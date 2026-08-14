@@ -1,0 +1,67 @@
+.slots {
+  display: flex;
+  gap: var(--gap-row);
+  margin-top: 8px;
+}
+
+.slots > * {
+  flex: 1;
+  min-width: 0;
+}
+
+.empty {
+  text-align: center;
+  padding: 36px 10px 0;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: var(--size-lg);
+}
+
+.note {
+  font-size: var(--size-md);
+  color: var(--text-muted);
+  font-style: italic;
+  margin-bottom: 14px;
+}
+
+/* One continuous band rather than six swatches: the blend is the point, and
+ * gaps between the steps would read as six separate colours. */
+.strip {
+  display: flex;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-swatch);
+}
+
+.block {
+  flex: 1;
+  height: 70px;
+}
+
+.stripLabels {
+  display: flex;
+  margin-top: 8px;
+}
+
+.stripLabel {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.pct {
+  font-family: var(--font-display);
+  font-size: var(--size-xxs);
+  letter-spacing: var(--track-sm);
+  color: var(--text-secondary);
+}
+
+/* The tightest text in the app: six hexes across a 346px card leaves 55px a
+ * column, and a 6-digit hex at 11px does not fit. 9px is legible here because
+ * it is monospace and the reader is comparing digits, not reading words. */
+.hex {
+  font-size: 9px;
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+  margin-top: 2px;
+}

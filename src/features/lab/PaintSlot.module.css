@@ -1,0 +1,118 @@
+/* The two variants differ only in how the colour and the words are arranged:
+ * `stacked` is one of a pair sharing a row, so it goes vertical; `row` has the
+ * whole width to itself and reads left to right. */
+
+.empty {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: none;
+  border: 1.5px dashed var(--gold-border-strong);
+  border-radius: var(--radius-lg);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.empty.stacked {
+  flex-direction: column;
+  height: 128px;
+}
+
+.empty.row {
+  height: 100px;
+}
+
+.empty:hover,
+.empty:focus-visible {
+  border-color: var(--gold);
+  background: var(--gold-fill);
+  outline: none;
+}
+
+.plus {
+  font-size: var(--glyph-md);
+  line-height: 1;
+  color: var(--gold);
+}
+
+.emptyLabel {
+  font-family: var(--font-display);
+  font-size: var(--size-xs);
+  letter-spacing: var(--track-md);
+}
+
+.filled {
+  position: relative;
+  background: var(--bg-item);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-lg);
+  padding: 10px;
+}
+
+.filled.row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-row);
+}
+
+/* Over the top-right corner of the card rather than in the flow: the row
+ * variant would otherwise push it onto the hex, and the stacked one has no
+ * spare line for it. */
+.clear {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 1;
+}
+
+.swatchButton {
+  display: block;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+}
+
+.stacked .swatchButton {
+  width: 100%;
+}
+
+.swatchButton:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+
+.stacked .info {
+  margin-top: 8px;
+}
+
+.row .info {
+  flex: 1;
+  min-width: 0;
+}
+
+.slotName {
+  font-family: var(--font-display);
+  font-size: var(--size-md);
+  color: var(--text-primary);
+  /* The clear button sits over this corner; a long name would run under it. */
+  padding-right: var(--control-sm);
+}
+
+.slotBrand {
+  font-size: var(--size-xs);
+  color: var(--text-brand);
+  text-transform: uppercase;
+  letter-spacing: var(--track-sm);
+  margin-top: 2px;
+}
+
+.hex {
+  font-size: var(--size-xs);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  margin-top: 2px;
+}

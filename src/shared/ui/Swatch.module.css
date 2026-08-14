@@ -18,6 +18,15 @@
   border-radius: var(--radius-md);
 }
 
+/* A Color Lab slot's colour: the full width of the slot, because the slot is
+ * mostly the paint. The only size that is not square, so it is the only one
+ * that has to be told not to shrink to its content. */
+.wide {
+  width: 100%;
+  height: 54px;
+  border-radius: var(--radius-md);
+}
+
 /* The head of an equivalent tile. Square rather than a bar across the column:
  * the tile keeps its width, so what the colour gives up is room for the IN
  * LIST badge to sit beside it. */

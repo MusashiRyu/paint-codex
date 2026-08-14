@@ -1,0 +1,80 @@
+.modes {
+  display: flex;
+  gap: var(--gap-chip);
+  margin-top: 14px;
+  flex-shrink: 0;
+}
+
+.modes > * {
+  flex: 1;
+  justify-content: center;
+}
+
+/* The scrolling half of the sheet. `PaintSearch` brings its own equivalent of
+ * this, which is why only the lists mode needs one here. */
+.lists {
+  flex: 1;
+  overflow-y: auto;
+  margin-top: 16px;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-row);
+  background: var(--bg-item);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-lg);
+  padding: 10px;
+  margin-bottom: var(--gap-chip);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+}
+
+.row:hover,
+.row:focus-visible {
+  border-color: var(--gold-border);
+  background: var(--gold-fill);
+  outline: none;
+}
+
+/* Spans throughout: a button may only contain phrasing content. */
+.info {
+  flex: 1;
+  min-width: 0;
+  display: block;
+}
+
+.rowName {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--size-md);
+  color: var(--text-primary);
+}
+
+.rowBrand {
+  display: block;
+  font-size: var(--size-xs);
+  color: var(--text-brand);
+  text-transform: uppercase;
+  letter-spacing: var(--track-sm);
+  margin-top: 1px;
+}
+
+.hex {
+  flex-shrink: 0;
+  font-size: var(--size-xs);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+}
+
+.empty {
+  text-align: center;
+  padding: 40px 10px 0;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: var(--size-lg);
+}

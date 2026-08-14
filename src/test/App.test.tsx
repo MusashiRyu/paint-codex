@@ -79,3 +79,92 @@ describe('App search sheet entry points', () => {
     expect(searchBox()).toHaveValue('');
   });
 });
+
+/**
+ * The app has two screens and no router, so which one is showing is App's
+ * state. Everything below is about that seam: what each screen brings with it,
+ * and what a Color Lab add does to a list the Lab never shows.
+ */
+
+const goToCollab = () => fireEvent.click(screen.getByRole('button', { name: 'Collab' }));
+
+describe('App navigation', () => {
+  it('swaps the screen and says which one it is', () => {
+    render(<App />);
+    expect(screen.getByText('Color Manager')).toBeInTheDocument();
+
+    goToCollab();
+
+    expect(screen.getByText('Color Laboratory')).toBeInTheDocument();
+    expect(screen.getByLabelText('Select Paint A')).toBeInTheDocument();
+    expect(screen.queryByText('Color Manager')).not.toBeInTheDocument();
+  });
+
+  it('leaves the FAB behind on the List screen', () => {
+    // The FAB adds a paint to the list being shown, and the Lab shows none —
+    // a button that hovered over both would mean two different things.
+    render(<App />);
+    goToCollab();
+    expect(screen.queryByLabelText('Add paint')).toBeNull();
+
+    fireEvent.click(screen.getByRole('button', { name: 'List' }));
+    expect(screen.getByLabelText('Add paint')).toBeInTheDocument();
+  });
+});
+
+describe('App adding from the Color Lab', () => {
+  /** Fill the Matching slot with the seeded list's one paint. */
+  const seedMatchSlot = () => {
+    goToCollab();
+    fireEvent.click(screen.getByText('Matching'));
+    fireEvent.click(screen.getByLabelText('Select a Base Paint'));
+    fireEvent.click(screen.getByLabelText(`Select ${paint.name} by ${paint.brand}`));
+  };
+
+  it('names the list it added to', () => {
+    // The confirmation has to name the destination: the Lab shows no list, so
+    // "Added ✓" alone would not say where the paint went.
+    render(<App />);
+    seedMatchSlot();
+
+    const add = screen.getAllByLabelText(/^Add /)[0];
+    const added = add.getAttribute('aria-label')!.replace(/^Add | to list$/g, '');
+    fireEvent.click(add);
+
+    expect(screen.getByText('Added to Ultramarines')).toBeInTheDocument();
+    expect(useAppStore.getState().lists[0].paintIds).toContain(
+      getPaints().find((p) => p.name === added)?.id
+    );
+  });
+
+  it('badges the card instead of offering it twice', () => {
+    // The offer disappearing is what makes the duplicate case unreachable, and
+    // is why `handleLabAdd` ignores what `addPaintToList` returns.
+    render(<App />);
+    seedMatchSlot();
+
+    const add = screen.getAllByLabelText(/^Add /)[0];
+    const name = add.getAttribute('aria-label')!.replace(/^Add | to list$/g, '');
+    fireEvent.click(add);
+
+    expect(screen.queryByLabelText(`Add ${name} to list`)).toBeNull();
+    expect(screen.getAllByText('IN LIST').length).toBeGreaterThan(0);
+  });
+
+  it('withholds the add button entirely when there is no list', () => {
+    useAppStore.setState({ lists: [], selectedListId: undefined });
+    render(<App />);
+    goToCollab();
+    fireEvent.click(screen.getByText('Matching'));
+
+    // No lists, so the picker's My Lists mode has nothing in it and the
+    // catalogue search is the only way to fill the slot.
+    fireEvent.click(screen.getByLabelText('Select a Base Paint'));
+    fireEvent.click(screen.getByText('Search Catalog'));
+    fireEvent.change(searchBox(), { target: { value: paint.name } });
+    fireEvent.click(screen.getByLabelText(`Select ${paint.name}`));
+
+    expect(screen.getByText('Color Theory')).toBeInTheDocument();
+    expect(screen.queryByLabelText(/ to list$/)).toBeNull();
+  });
+});

@@ -1,0 +1,11 @@
+.slot {
+  margin-top: 8px;
+}
+
+.empty {
+  text-align: center;
+  padding: 36px 10px 0;
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: var(--size-lg);
+}

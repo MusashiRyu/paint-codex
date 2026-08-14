@@ -3,8 +3,11 @@ import styles from './Swatch.module.css';
 export interface SwatchProps {
   /** Any CSS colour — in this app, a paint's `#RRGGBB`. */
   color: string;
-  /** `sm` in a list row, `md` in a search result, `tile` atop a tile. */
-  size?: 'sm' | 'md' | 'tile';
+  /**
+   * `sm` in a list row, `md` in a search result, `tile` atop a tile, `wide`
+   * across a Color Lab slot.
+   */
+  size?: 'sm' | 'md' | 'tile' | 'wide';
   /**
    * Render as a `span` when the swatch sits inside a button, which may only
    * contain phrasing content.
