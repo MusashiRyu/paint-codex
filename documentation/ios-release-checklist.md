@@ -198,8 +198,23 @@ chased, and a release does not wait on a particular machine being free.
 **App Store Connect → Users and Access → Integrations → App Store Connect API
 → +**, with the **App Manager** role.
 
+> **The team has to have API access switched on first, and only the Account
+> Holder can do it.** Until then the page offers a greyed-out *Request Access*
+> button and nothing else, to Admins included — so this is not something a
+> sufficiently privileged user can work around, and it is worth asking for
+> before planning a release around CI. The Account Holder clicks **Request
+> Access** on that same page; it is a terms acceptance rather than an Apple
+> review, so it takes effect immediately and is never needed again.
+>
+> Being Admin is otherwise enough for everything here. Certificates and
+> profiles are not restricted this way, which is why the manual path in steps 3
+> to 5 keeps working while this is outstanding — a useful fallback given the
+> Account Holder may not be the person doing the release.
+
 The `.p8` file downloads **once and only once**. Apple will not serve it again;
-losing it means revoking the key and issuing another.
+losing it means revoking the key and issuing another. Whoever creates it can
+hand over the file, the Key ID and the Issuer ID; nothing downstream depends on
+who generated them.
 
 ### Set the four repository secrets
 
