@@ -28,6 +28,10 @@
     "android:build:release:apk": "node tools/android/gradle.mjs assembleRelease",
     "privacy": "node tools/store/privacy-page.mjs"
   },
+  "engines": {
+    "node": ">=22",
+    "npm": ">=10"
+  },
   "dependencies": {
     "@capacitor/android": "^8.5.0",
     "@capacitor/app": "^8.1.1",

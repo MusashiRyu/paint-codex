@@ -165,9 +165,19 @@ the store name is not a reason to touch either.
 
 ```bash
 git clone <repo> && cd paco
+nvm use                # Node 22, per .nvmrc
 npm ci
 npm run cap:build      # vite build + cap sync
 ```
+
+**Use the npm bundled with Node 22, and do not upgrade it.** `npm ci` prints a
+notice offering a newer major version; take it some other week. The lockfile is
+only ever validated against the Node that
+[`ci.yml`](../.github/workflows/ci.yml) pins, and the way an unfamiliar npm
+fails is by deciding `package-lock.json` needs rewriting — which is dependency
+resolution to debug on a machine that may be borrowed, in exchange for nothing
+this project needs. `engines` in `package.json` records the floor rather than
+the exact version, so a newer Node already on the Mac is not worth fighting.
 
 **This is not optional, and it is not the same as opening the project.**
 `ios/App/App/public` is gitignored — the web assets are a build output, so a
