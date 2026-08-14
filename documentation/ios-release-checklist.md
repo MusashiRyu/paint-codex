@@ -108,7 +108,7 @@ or through the Apple Developer app on an iPhone or iPad.
 | Field | Value |
 | --- | --- |
 | Type | App IDs → App |
-| Description | `Paco Paint Codex` |
+| Description | `Paco - Paint Codex` |
 | Bundle ID | **Explicit** → `com.musashi.paco` |
 | Capabilities | None. No push, no iCloud, no Sign in with Apple, no associated domains. |
 
