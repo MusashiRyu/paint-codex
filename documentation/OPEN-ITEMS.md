@@ -38,7 +38,7 @@ blind between retros 030 and 039 — closed on the iPhone 15 Pro Max on
 store account that was closed too early.
 
 ### 8. Does the twelve-tester gate survive an app transfer?
-**Raised:** 025 · **Closed in 037 on the rule · Reopened 2026-08-15 on the console**
+**Raised:** 025 · **Reopened 2026-08-15 · Play support ticket open, awaiting reply**
 
 Play production access is gated, for personal developer accounts registered
 after 2023-11-13, on a closed test holding **twelve testers opted in for
@@ -95,19 +95,28 @@ Two things to do, in order:
    on the account home page — that surface carries generic onboarding. Gated
    means a testing-requirements message and an "apply for production access"
    flow with a tester counter. Ungated closes this item.
-2. **If gated, open a Play Developer Support ticket** citing the completed
-   transfer and the source account. This is the case the documentation does not
-   cover, so it is a question for the people who can read the account's state
-   rather than one to answer from policy pages. Ask specifically whether the
-   requirement is evaluated against the *current* owner or the account of
-   original publication.
+2. ~~**If gated, open a Play Developer Support ticket**~~ **Done 2026-08-15.**
+   A ticket is open, citing the completed transfer. This is the case the
+   documentation does not cover, so it is a question for the people who can
+   read the account's state rather than one to answer from policy pages.
 
-If it does apply, the route is recruitment: twelve real testers, fourteen
-continuous days, the counter resetting if the count drops. Registering yet
-another account is not a route here — the app is already where it should be,
-and a third account would mean a new package name and re-doing signing, the
-listing and the store presence, to escape a gate that a fortnight of testers
-clears.
+   When the reply lands, record **which** question it answered: whether the
+   requirement is evaluated against the *current* owner or the account of
+   original publication. A reply that merely restates the policy page answers
+   neither, and is worth pushing back on once — that page is silent on
+   transfers, which is why the ticket exists.
+
+**Start recruiting testers now, in parallel, rather than waiting for the
+answer.** The gate is fourteen *continuous* days behind twelve opted-in
+testers, so a bad answer received in a week costs three weeks, not one. Twelve
+opt-ins standing when the reply arrives cost nothing if the answer is good —
+they are people who wanted the app — and save the whole fortnight if it is
+bad. This is the rare case where hedging is strictly cheaper than deciding.
+
+If it does apply, recruitment is the whole route. Registering yet another
+account is not one: the app is already where it should be, and a third account
+would mean a new package name and re-doing signing, the listing and the store
+presence, to escape a gate that a fortnight of testers clears.
 
 ---
 
