@@ -138,10 +138,30 @@ equivalents of something else.
 Still entirely offline. No account, no ads, no tracking.
 ```
 
-iOS has not shipped 1.0.0 yet, so this text is what the first App Store release
-will carry only if it goes out at 1.1.0 or later — otherwise it is the second
-release's notes. Nothing here needs deciding until the archive can be built; see
-OPEN-ITEMS 4.
+**What's New 1.2.0** (4000 char limit) — the same copy as Play's release notes, for the same reason
+
+```
+THE COLOR LAB
+
+A second screen. Pick two paints and see the blend between them in 20% steps,
+or pick one and get its complementary, its highlight and its shade. Every
+colour Paco works out is matched back to the nearest real paint, with the same
+delta score the equivalents use, and goes straight into a list.
+
+Also fixed: the title no longer sits behind the status bar, the app stays in
+portrait, and opening a paint's equivalents no longer lands on a blank list.
+```
+
+**1.2.0 is what the App Store will see first.** Nothing has shipped there: the
+1.1.0 archive was rejected on Guideline 2.1 before review reached the app, and
+1.2.0 is the build that answers it. So the blocks above it are house style and
+history rather than text anyone will read — Apple shows the description, not the
+notes, for a first release.
+
+It is worth being deliberate about the last line for that reason. Naming the
+three fixes is right for Play, where 1.1.0 is live and users met those bugs. For
+Apple it also answers, in one sentence and without drawing attention to it, the
+"what changed since the build you rejected" question a reviewer may have.
 
 ### On the brand names in the keyword field
 
@@ -453,3 +473,10 @@ a layout that has only ever been checked at phone widths.
 One screenshot size is enough: Apple scales the 6.9" set down for every smaller
 iPhone. Older display sizes are only worth uploading to show a genuinely
 different layout, and there is not one here.
+
+**One shot per section of the description**, since 1.2.0: the list, the
+catalogue with its equivalents, and the Color Lab's two halves. Before that all
+four were List screens. That matters more here than on Play — this listing is
+attached to a submission already returned once for an incomplete account of
+what the app is, and four pictures of a list under a description of a colour
+laboratory is the same failure in a second medium.

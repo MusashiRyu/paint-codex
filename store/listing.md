@@ -113,6 +113,20 @@ equivalents of something else.
 Still entirely offline. No account, no ads, no tracking.
 ```
 
+**Release notes 1.2.0** (500 char limit) — the "What's new" text for version 1.2.0
+
+```
+THE COLOR LAB
+
+A second screen. Pick two paints and see the blend between them in 20% steps,
+or pick one and get its complementary, its highlight and its shade. Every
+colour Paco works out is matched back to the nearest real paint, with the same
+delta score the equivalents use, and goes straight into a list.
+
+Also fixed: the title no longer sits behind the status bar, the app stays in
+portrait, and opening a paint's equivalents no longer lands on a blank list.
+```
+
 Play keeps release notes per language and per release, so each version keeps its
 own block here rather than overwriting the last. Reuse the 1.0.0 wording for a
 first release on any track.
@@ -246,3 +260,9 @@ Generated, not hand-exported. See [`tools/icons/`](../tools/icons/) and
 
 Screenshot list names are invented on purpose — see the comment in
 `tools/store/screenshots.mjs`.
+
+**One shot per section of the description**, since 1.2.0: the list, the
+catalogue with its equivalents, and the Color Lab's two halves. Before that all
+four were List screens, which was survivable while the copy only described
+lists and stopped being so the moment it described a colour laboratory. A
+reviewer reads the images against the words.
