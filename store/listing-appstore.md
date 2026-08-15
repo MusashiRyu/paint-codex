@@ -331,8 +331,6 @@ COLLAB
    shade under Color Theory, each likewise resolved to a real paint.
 8. The gold "+" on any of those cards adds that paint to the current list.
 
-That is the whole app. There is no further screen, mode or unlockable state.
-
 EXTERNAL SERVICES
 
 One, and it is optional. At launch the app makes three anonymous HTTPS GET
@@ -380,7 +378,7 @@ of theirs is reproduced.
 
 TESTED ON
 
-iPhone 15 Pro Max, iOS 26.x - physical device, via TestFlight.
+iPhone 15 Pro Max, iOS 26.6.1 - physical device, via TestFlight.
 ```
 
 **No em dashes, no typographic quotes, no `Δ`.** The block is deliberately
@@ -390,8 +388,42 @@ and a mojibake'd notes field is a worse first impression than a hyphen.
 ### The screen recording
 
 Apple wants it captured on a physical device on the latest OS, starting from
-launch. iOS Screen Recording (Settings → Control Centre → Screen Recording)
-produces a `.mp4` that App Store Connect accepts directly.
+launch. iOS Screen Recording (Settings → Control Centre → Screen Recording) is
+the tool.
+
+**It writes a `.MOV`, not an `.mp4`.** An earlier version of this line said
+otherwise, which is the kind of error that is only ever read at the point of
+attaching a file. The container is QuickTime; the file is `IMG_xxxx.MOV`.
+
+Pull it off the phone over **USB** — File Explorer → Apple iPhone → Internal
+Storage → DCIM — because iCloud Photos on the web and every messaging app
+recompress on the way. Then:
+
+```bash
+ffmpeg -i IMG_0001.MOV -c copy out.mp4
+```
+
+`-c copy` remuxes the container rather than re-encoding: lossless, seconds, and
+correct because iOS records H.264 or HEVC and both are legal in MP4. Two checks
+on the output. If `ffprobe` says **hevc**, re-encode for the reviewer's sake
+(`-c:v libx264 -crf 20`). And watch the size — two minutes at 1290×2796 is not
+small and has to go through the Resolution Center attachment, where
+`-vf scale=-2:1080` costs nothing anyone will see.
+
+`.MOV` is likely accepted as-is. Converting is free, so there is no reason to
+find out on the submission that has already been returned once.
+
+Before starting the capture:
+
+- **Focus on.** A notification banner landing mid-flow means recording all
+  ninety seconds again. Aeroplane mode, required below for its own reasons,
+  stops most of them but not all.
+- **Microphone off.** Long-press the record button to confirm. It defaults off
+  and stays on once it has ever been switched on.
+- **Trim the Control Centre swipe** off the front afterwards, in Photos.
+
+The status bar is captured, which is wanted here: it is what visibly proves
+aeroplane mode is on.
 
 **Record the build that is actually under review.** A recording of a newer
 local build is a description of an app Apple does not have, and the differences
@@ -418,15 +450,6 @@ Two conditions on the recording rather than steps in it:
 - **Search something with a near-miss**, so a delta score is visibly doing work
   rather than reading 0.00 on an exact match.
 
-**Nothing else.** No About screen — it is not a user
-flow, and a reviewer asked for typical usage is owed typical usage. No settings
-tour, no empty-state gallery, no rotation demo. Every extra second is a second
-of something that was not asked for.
-
-Steps 3 and 4 are why this matters more than it did in August. A reviewer who
-sees only List may reasonably read the app as a lookup table with a saved-items
-feature; the Mix Preview strip resolving to paints that can actually be bought
-is the part that is hard to mistake for a generic list app.
 
 Attach it in **App Review Information → Attachment** (one file) as well as in
 the Resolution Center reply. The Notes field survives to the next submission;
@@ -439,7 +462,7 @@ because it has to be re-answered truthfully at every submission.
 
 | Device | OS | How |
 | --- | --- | --- |
-| iPhone 15 Pro Max | iOS 26.x | TestFlight, physical device |
+| iPhone 15 Pro Max | iOS 26.6.1 | TestFlight, physical device |
 
 One device is a thin answer and there is no point pretending otherwise. It is
 also the honest one: `TARGETED_DEVICE_FAMILY` is `1`, the layout is a single
