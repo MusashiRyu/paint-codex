@@ -50,13 +50,6 @@
   gap: var(--gap-chip);
 }
 
-.exportFlash {
-  font-size: var(--size-xs);
-  color: var(--ok-text);
-  font-family: var(--font-display);
-  letter-spacing: var(--track-sm);
-}
-
 /* `.sectionType` moved to shared/ui/SectionHeading.module.css — the Color Lab
  * wants the same rule, and two copies would drift. */
 

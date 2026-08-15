@@ -13,30 +13,6 @@ closed it is the record.
 
 ## Open
 
-### 1. Markdown export cannot work in the Android WebView
-**Raised:** 005 · **Dormant while the flag is off**
-
-Capacitor registers no `DownloadListener`, so the anchor-click blob download in
-`App.handleExport` silently does nothing on a device. Harmless today because
-`appConfig.featureFlags.markdownExport` is `false` and the UI entry point is
-hidden.
-
-Before that flag goes back on, mobile export needs `@capacitor/filesystem` to
-write the file and `@capacitor/share` to hand it off. Decision taken
-2026-08-08: leave as is for now.
-
-### 2. Shop links cover 186 paints out of 2,279
-**Raised:** 014 · **Dormant while the export flag is off**
-
-`shopLinks.snapshot.json` was remapped through the id migration rather than
-re-crawled, so it still only covers what the 310-paint catalog had. Re-running
-`npm run scrape:shoplinks` would crawl vliegeruit.com for 2,279 paints with a
-per-paint search fallback — a much heavier crawl than the one that produced the
-current file, and worth pacing deliberately.
-
-Only `features/export/markdownExport.ts` reads it, and that is behind
-`appConfig.featureFlags.markdownExport`, which is `false`.
-
 ### 3. The cached catalog is ~2.2 MB of localStorage
 **Raised:** 014 · **Watch, not fix**
 
@@ -62,12 +38,16 @@ trade to an ad.
 Four things gate it, in order:
 
 1. **A retailer with an affiliate program.** vliegeruit.com has no known one,
-   so the current snapshot points somewhere that pays nothing no matter how
-   complete it gets. Element Games, Wayland Games and Amazon all run programs.
-   Choosing one is the decision everything else waits on — and it interacts with
-   item 2, since switching retailer means re-crawling anyway.
-2. **Retargeting the snapshot and the scraper** at that retailer's URL scheme,
-   including the referral parameter.
+   so any snapshot pointing there pays nothing no matter how complete it gets.
+   Element Games, Wayland Games and Amazon all run programs. Choosing one is the
+   decision everything else waits on.
+2. **A scraper and a snapshot, written from scratch** against that retailer's
+   URL scheme, including the referral parameter. Retro 037 deleted
+   `scrapeShopLinks.mjs` and `shopLinks.snapshot.json` with the export feature,
+   and that was the right call even for this item: both were aimed at
+   vliegeruit.com, which is not the retailer this would use. What survives is
+   `tools/scraper/types.ts` and the pattern in `scrape.mjs`, and both are still
+   in git history if the crawl logic is worth reading back.
 3. **A per-paint buy affordance.** A real design decision inside `SearchSheet`
    and `ListsPanel`, not a link drop. The app has no commercial surface anywhere
    today; adding one changes what it feels like to use.
@@ -81,7 +61,7 @@ Not started. Decision as of 2026-08-09: revisit after launch when
 there are install numbers to reason about.
 
 ### 8. Production access needs twelve testers for fourteen continuous days
-**Raised:** 025 · **Waiting, not work**
+**Raised:** 025 · **Waiting, not work · Premise unconfirmed as of 037**
 
 1.0.0 went to internal and closed testing on 2026-08-10. Production access
 cannot even be *applied* for until a closed test has held **at least twelve
@@ -89,8 +69,23 @@ testers opted in for fourteen continuous days**. The clock does not start until
 the twelfth opts in, and it resets if the count drops below twelve — so this is
 recruitment and retention, not a wait that passes on its own.
 
-This is the longest pole to a public release and nothing in the repo shortens
-it. One smaller thing trails it:
+**Check the account type before treating any of that as binding.** Google
+applies the twelve-tester requirement to *personal* developer accounts
+registered after roughly November 2023; **organization accounts are not subject
+to it** and can apply for production without a closed test at all. This item has
+been carried since 025 as the longest pole to release, and nobody has confirmed
+which kind of account this is. If it is an organization account the item is not
+a long wait — it is closable today.
+
+Where to look: **Play Console → Setup → Advanced settings**, or the account
+type shown under the developer account's own settings page. The requirement, if
+it applies, is surfaced in **Release → Testing → Closed testing** as a progress
+tracker; its absence there is itself a signal.
+
+This is the cheapest open question in the file — one console screen against an
+item that has shaped the release plan for eleven retros.
+
+Assuming it does apply, one smaller thing trails it:
 
 - The package name registration is still in **Draft** pending the app signing
   key's SHA-256 from **Release → Setup → App signing**. Minutes of work, but the
@@ -339,6 +334,8 @@ Prune this section once it stops being useful.
 | iOS signing and archive needed a Mac nobody here has — the only one is a 2015 model, permanently below the Xcode 26 floor | 001 | 029 — `ios-release.yml` archives and uploads from a hosted runner; a release is one button from Windows |
 | Both stores showed one screen out of two — four List screenshots per store under a description of a color laboratory, and no release notes for the version carrying it | 031 | 034 — one shot per section of the description, and a 1.2.0 block in both listing files |
 | `store/` was still British English while the rest of the repo was American, deferred because the listing declared itself English (U.K.) | 035 | 035 — converted with the privacy page; the console setting it pairs with is item 15 |
+| Markdown export could not work in the Android WebView — no `DownloadListener` behind the anchor-click blob download | 005 | 037 — the export feature was deleted rather than fixed; the flag had been `false` since 005 |
+| Shop links covered 186 paints out of 2,279, remapped through the id migration rather than re-crawled | 014 | 037 — deleted with the export feature that was its only reader. The affiliate question it fed is item 5, which needs a different retailer anyway |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
 removals in the redesign rather than pending work, and are not tracked.

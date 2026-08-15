@@ -9,17 +9,12 @@ Arcturus5404/miniature-paints and writes app data to:
 
 - `src/data/paints.snapshot.json`
 
-`scrapeShopLinks.mjs` crawls Vliegeruit brand paint pages and writes product link mappings to:
-
-- `src/data/shopLinks.snapshot.json`
-
 ## Run
 
 From repository root:
 
 ```bash
 npm run scrape
-npm run scrape:shoplinks
 ```
 
 ## Notes
@@ -31,8 +26,11 @@ npm run scrape:shoplinks
   same documents. The import runs on Node's type stripping, so that module must
   stay free of non-erasable syntax and of value imports from `src/` — which is
   why the CIELAB conversion lives inside it rather than in `shared/lib/color.ts`.
-- `scrapeShopLinks.mjs` keeps the original rule: no imports from `src/`, and
-  its types stay local in `tools/scraper/types.ts`.
+- `scrapeShopLinks.mjs` was deleted in 037 with the export feature it fed. It
+  was the one tool holding to the original rule — no imports from `src/`, types
+  kept local in `types.ts` — so `types.ts` now has no importer. Left in place
+  rather than swept up with the feature: it is the shape any future scraper
+  would start from, and the affiliate work in OPEN-ITEMS 5 is the likely caller.
 - `buildIdMigration.mjs` is a one-shot, not part of any pipeline. It produced
   `src/data/paintIdMigration.json` when paint ids gained their range, reading
   the pre-migration snapshot out of git history. Its output is committed; see

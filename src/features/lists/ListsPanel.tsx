@@ -27,9 +27,6 @@ interface ListsPanelProps {
   onRemovePaint: (paintId: string) => void;
   onDeleteList: (listId: string) => void;
   onRenameList: (listId: string, name: string) => void;
-  /** Omitted when the markdownExport feature flag is off; hides the export action. */
-  onExportList?: () => void;
-  exportFlash?: boolean;
 }
 
 export function ListsPanel({
@@ -43,8 +40,6 @@ export function ListsPanel({
   onRemovePaint,
   onDeleteList,
   onRenameList,
-  onExportList,
-  exportFlash,
 }: ListsPanelProps) {
   const [renaming, setRenaming] = useState(false);
   const [draftName, setDraftName] = useState('');
@@ -172,14 +167,6 @@ export function ListsPanel({
               <div className={styles.listName}>{activeList.name}</div>
             )}
             <div className={styles.listActions}>
-              {exportFlash && <span className={styles.exportFlash}>Exported ✓</span>}
-              {onExportList && (
-                <IconButton label="Export list" onClick={onExportList}>
-                  <svg {...ACTION_ICON}>
-                    <path d="M12 4 V15 M8 11 L12 15 L16 11 M5 19 H19" />
-                  </svg>
-                </IconButton>
-              )}
               <IconButton
                 label="Rename list"
                 tone={renaming ? 'active' : 'neutral'}

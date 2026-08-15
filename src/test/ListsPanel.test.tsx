@@ -36,25 +36,11 @@ function renderPanel(overrides: Partial<React.ComponentProps<typeof ListsPanel>>
     onRemovePaint: vi.fn(),
     onDeleteList: vi.fn(),
     onRenameList: vi.fn(),
-    onExportList: vi.fn(),
-    exportFlash: false,
     ...overrides,
   };
   render(<ListsPanel {...props} />);
   return props;
 }
-
-describe('ListsPanel export action', () => {
-  it('renders the export button when a handler is supplied', () => {
-    renderPanel();
-    expect(screen.getByTitle('Export list')).toBeInTheDocument();
-  });
-
-  it('hides the export button when the markdownExport flag is off', () => {
-    renderPanel({ onExportList: undefined });
-    expect(screen.queryByTitle('Export list')).not.toBeInTheDocument();
-  });
-});
 
 describe('ListsPanel header on an empty list', () => {
   const emptyList: PaintList = { ...mockList, paintIds: [] };

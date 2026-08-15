@@ -3,7 +3,6 @@ import { resolvePaints } from '../domain/paintRepository';
 import type { Paint } from '../domain/types';
 import { useAppStore } from './providers/store';
 import { usePaintCatalog } from './providers/usePaintCatalog';
-import { generatePaintListMarkdown, getExportFilename } from '../features/export/markdownExport';
 import { AboutSheet } from '../features/about/AboutSheet';
 import { ColorLab } from '../features/lab/ColorLab';
 import { ListsPanel } from '../features/lists/ListsPanel';
@@ -15,11 +14,8 @@ import { Badge } from '../shared/ui/Badge';
 import { GoldButton } from '../shared/ui/GoldButton';
 import { IconButton } from '../shared/ui/IconButton';
 import { useBackDismiss } from '../shared/hooks/useBackDismiss';
-import { appConfig } from './config';
 import type { ListIcon } from './providers/store';
 import styles from './App.module.css';
-
-const markdownExportEnabled = appConfig.featureFlags.markdownExport;
 
 function App() {
   const [screen, setScreen] = useState<Screen>('lists');
@@ -28,7 +24,6 @@ function App() {
   const [focusPaintId, setFocusPaintId] = useState<string | null>(null);
   const [newListOpen, setNewListOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [exportFlash, setExportFlash] = useState(false);
 
   const {
     lists,
@@ -100,22 +95,6 @@ function App() {
     addFlashTimer.current = setTimeout(() => setAddFlash(null), 1500);
   };
 
-  const handleExport = () => {
-    if (!activeList) return;
-    const md = generatePaintListMarkdown({ name: activeList.name, paints: activePaints });
-    const filename = getExportFilename(activeList.name);
-    const blob = new Blob([md], { type: 'text/markdown' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    // Revoking in the same tick can cancel the download before it starts.
-    setTimeout(() => URL.revokeObjectURL(url), 0);
-    setExportFlash(true);
-    setTimeout(() => setExportFlash(false), 1500);
-  };
-
   return (
     <div className={styles.viewport}>
       <div className={styles.card}>
@@ -163,8 +142,6 @@ function App() {
           }}
           onDeleteList={(listId) => deleteList(listId)}
           onRenameList={(listId, name) => renameList(listId, name)}
-          onExportList={markdownExportEnabled ? handleExport : undefined}
-          exportFlash={markdownExportEnabled && exportFlash}
         />
         )}
 

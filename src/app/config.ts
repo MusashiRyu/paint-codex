@@ -1,5 +1,4 @@
 export interface FeatureFlags {
-  markdownExport: boolean;
   supportLink: boolean;
 }
 
@@ -28,8 +27,6 @@ export const APP_VERSION = '1.2.0';
 
 export const appConfig: AppConfig = {
   featureFlags: {
-    // Off for now: Markdown download is opt-in until the format settles.
-    markdownExport: false,
     // Toggles the About sheet's support section.
     supportLink: true,
   },
