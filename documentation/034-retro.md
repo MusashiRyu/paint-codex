@@ -11,7 +11,7 @@ Three retros' worth of work reached a store artefact for the first time:
 | From | What |
 | --- | --- |
 | 030 | The status bar overlap and the portrait lock |
-| 031 | The Color Lab — a second screen |
+| 031 | The Colour Lab — a second screen |
 | 033 | The blank sheet when opening a paint's equivalents |
 
 A new screen is a minor bump, so 1.2.0 / `versionCode` 4. The bump has four

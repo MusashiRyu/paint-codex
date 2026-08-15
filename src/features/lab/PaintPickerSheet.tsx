@@ -62,7 +62,7 @@ export function PaintPickerSheet({
           My Lists
         </Pill>
         <Pill selected={mode === 'search'} onClick={() => setMode('search')}>
-          Search Catalog
+          Search Catalogue
         </Pill>
       </div>
 

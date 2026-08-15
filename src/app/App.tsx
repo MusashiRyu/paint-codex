@@ -124,7 +124,7 @@ function App() {
           <div>
             <div className={styles.title}>PAINT CODEX</div>
             <div className={styles.subtitle}>
-              {screen === 'lists' ? 'Color Manager' : 'Color Laboratory'}
+              {screen === 'lists' ? 'Colour Manager' : 'Colour Laboratory'}
             </div>
           </div>
           <IconButton label="About Paco" onClick={() => setAboutOpen(true)}>

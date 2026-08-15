@@ -115,7 +115,7 @@ describe('ColorLab matching', () => {
     fireEvent.click(screen.getByText('Matching'));
     fillSlot('a Base Paint', 'Macragge Blue', 'Citadel');
 
-    expect(screen.getByText('Color Theory')).toBeInTheDocument();
+    expect(screen.getByText('Colour Theory')).toBeInTheDocument();
     expect(screen.getByText('Complementary')).toBeInTheDocument();
     expect(screen.getByText('Highlight')).toBeInTheDocument();
     expect(screen.getByText('Shade')).toBeInTheDocument();
@@ -189,11 +189,11 @@ describe('ColorLab adding to a list', () => {
 
     // No lists, so My Lists has nothing in it and the catalogue is the way in.
     fireEvent.click(screen.getByLabelText('Select a Base Paint'));
-    fireEvent.click(screen.getByText('Search Catalog'));
+    fireEvent.click(screen.getByText('Search Catalogue'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
     fireEvent.click(screen.getByLabelText('Select Macragge Blue by Citadel'));
 
-    expect(screen.getByText('Color Theory')).toBeInTheDocument();
+    expect(screen.getByText('Colour Theory')).toBeInTheDocument();
     expect(screen.queryByLabelText(/^Add /)).toBeNull();
   });
 });
