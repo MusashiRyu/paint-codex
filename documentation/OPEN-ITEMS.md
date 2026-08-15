@@ -31,83 +31,14 @@ title, not by number.
 
 ## Open
 
-### 17. The tile-jump landing is unverified on WebKit
-**Raised:** 038 · **Reworked in 039 — the 038 fix was never on a device, and was wrong anyway**
+The whole unverified-fix backlog — the safe area, the anchor scroll, the zoom
+lock and the tile-jump landing, four fixes shipped blind between retros 030
+and 039 — closed on the iPhone 15 Pro Max on 2026-08-15.
 
-Searching for a color and tapping an equivalent tile landed among the blacks at
-the top of the browse order instead of on the paint.
-
-**The "fix didn't fix it" report against 038 was made from a build that predates
-the fix** — the commit was never pushed, and both iOS release runs that day
-built from the 1.2.1 cut. Before concluding any future fix failed on device:
-the About sheet must say **1.2.3 or later**, and
-`gh run list --workflow=ios-release.yml --json headSha` says what a build
-actually contains.
-
-The 038 mechanism was replaced regardless, because research showed its premise
-wrong: WebKit's `setScrollTop` clamps against *fresh* layout, so the write is
-accepted and read back truthfully — the read-back-keyed retry never fires. The
-real failure is the compositor reverting the position afterwards (WebKit bug
-195584: the UIScrollView adopting a new contentSize resets its offset to
-(0,0)). Retro 039 has the full account. The landing is now a geometry-judged
-feedback loop with the anchor's window held mounted throughout, a post-arrival
-guard against the revert, and user gestures cancelling everything. Asserted
-under four engine models in `check-layout.mjs`; the 038 code fails three of
-them.
-
-Check on the iPhone 15 Pro Max, in the same pass as item 16, **after
-confirming the About sheet says 1.2.3** (1.2.2 was renumbered away when the
-stores diverged — see the version table in
-[release-checklist.md](./release-checklist.md#where-this-actually-stands)):
-
-1. Search `green`, open a Vallejo Game Color green, tap **Warpstone Glow**. The
-   ringed card is Warpstone Glow, at the top of the list, and it *stays* there —
-   watch a full second, since the engine's revert arrives late.
-2. The same with the keyboard still up (tap the tile straight after typing) —
-   the keyboard-dismiss animation is the likeliest source of the late revert.
-3. Chain two tile jumps without closing the sheet.
-4. Jump to a paint at each end of the color order — a black and a white. The
-   white end also exercises the bottom-of-list landing, which counts the
-   fully-scrolled position as arrived.
-5. Flick the list *during* a jump. The jump must yield instantly — the loop
-   cancels on touch — and the list must scroll normally afterwards.
-6. After a successful jump, scroll away normally within the first second. The
-   guard must not yank the list back.
-
-If it still lands at the top, the next thing to reach for is the one item 13
-named and neither fix took: the scroller's ~950,000px extent itself — anchor
-the window near the top and grow the spacers as the user scrolls, so no jump
-is ever large enough to race the compositor.
-
-### 16. The zoom lock is unverified on hardware
-**Raised:** 036 · **Same device session as item 17**
-
-Opening the search sheet on iOS left the whole app zoomed in and pannable after
-it closed — iOS's focus zoom on a sub-16px input, which never reverses on blur.
-`index.html` now pins the scale. The mechanism is not in doubt, but nothing on
-this machine can observe it: a desktop Chromium has no soft keyboard, so
-`npm run check:layout` sees the same page either way, and the assertion in
-`androidShell.test.ts` reads the meta tag rather than a web view honouring it.
-
-The safe-area and anchor-scroll fixes it used to be grouped with were both
-confirmed on device on 2026-08-15. This one could not be checked in that pass
-because the fix landed after the build under test; it needs the next one — the
-same build item 17 needs.
-
-Check on the iPhone 15 Pro Max:
-
-1. Open search from the FAB, type nothing, close it. The app is at the scale it
-   started at and does not drag under a finger.
-2. Do the same having typed a query, and again having scrolled the results.
-3. Rename a list — the 13px inline field is the other input that trips this, and
-   it is the one that could not be fixed by raising a font size.
-4. Open the Color Lab's paint picker, which holds the same `PaintSearch`.
-5. Pinch anywhere. Nothing should zoom; that is the cost of the fix and is worth
-   seeing rather than assuming.
-
-If the app still zooms, WKWebView is ignoring the scale limits and the fallback
-is a 16px floor on `TextField`'s `pill` variant — which fixes search and leaves
-the rename, for the reasons retro 036 sets out.
+That is a state worth noticing rather than passing through: everything this
+repo knows about is either settled, accepted, or waiting on Apple. The next
+fix that cannot be checked on this machine starts the backlog over at one, and
+retro 039 records what letting it reach four cost.
 
 ---
 
@@ -202,6 +133,8 @@ Prune this section once it stops being useful.
 | The App Store resubmission blocked on a build predating the safe-area and portrait fixes | 032 | 037 — **removed as active work, not as an open item.** The mechanics live in [ios-release-checklist.md](./ios-release-checklist.md); the answers Apple asked for live in [store/listing-appstore.md](../store/listing-appstore.md#app-review-information). A submission in flight is a task, not a known-but-unfixed thing |
 | The safe-area fix was unverified on hardware — status bar overlap, FAB clearance, sheet insets, orientation lock | 030 | 037 — confirmed working on the iPhone 15 Pro Max, 2026-08-15 |
 | The anchor-scroll fix was unverified on WebKit — opening the catalog on a paint showed an empty sheet on iOS | 033 | 037 — confirmed working on the iPhone 15 Pro Max, 2026-08-15. The ~950,000px scroller redesign the item held in reserve is not needed |
+| The zoom lock was unverified on hardware — opening search left the whole app zoomed in and pannable | 036 | 039 — confirmed on the iPhone 15 Pro Max against 1.2.3, 2026-08-15. The `TextField` 16px-floor fallback is not needed |
+| The tile-jump landing was unverified on WebKit — searching, then tapping an equivalent tile, landed among the blacks at the top of the browse order | 038 | 039 — confirmed on the iPhone 15 Pro Max against 1.2.3, 2026-08-15, against all six checks including the late-revert watch and the mid-jump flick. The scroller-extent redesign held in reserve since 033 is **not needed** |
 | Play production access needed twelve testers for fourteen continuous days — carried since 025 as the longest pole to release | 025 | 037 — **moot.** The developer account is an organization account, which Google exempts from the rule. The package-name half of the item was stale too: `release-checklist.md` recorded it done on 2026-08-10 and OPEN-ITEMS never caught up |
 | App Store primary language declared English (U.K.) while the copy was American | 035 | 037 — changed to English (U.S.) in App Store Connect, 2026-08-15. The pair item 14 described is now consistent on both halves |
 

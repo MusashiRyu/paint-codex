@@ -57,9 +57,8 @@ inventing a benefit.
 
 The `.aab` is signed with the `PACO-UPL` upload key, and the matching release
 APK is built for the hardware smoke test — though neither fix it carries can be
-observed on Android hardware. Both need the iPhone; see "The zoom lock is
-unverified on hardware" and "The tile-jump landing is unverified on WebKit" in
-[OPEN-ITEMS.md](./OPEN-ITEMS.md).
+observed on Android hardware. Both were confirmed on the iPhone 15 Pro Max
+against 1.2.3 on 2026-08-15, which closed the last of the unverified-fix items.
 
 **The listing did not change this time.** The screenshots are the ones uploaded
 with 1.2.0 and need no re-upload; only the release-notes block is new.

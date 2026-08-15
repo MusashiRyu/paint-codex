@@ -151,3 +151,31 @@ string mean different code per store. So this session's mechanism ships as
 Apple never meets a 1.2.2, and the About sheet must say **1.2.3** before any
 conclusion is drawn on device. The version table in `release-checklist.md`
 holds the full ledger.
+
+## Confirmed on hardware, 2026-08-15
+
+The About sheet read **1.2.3**, and the jump behaves against all six checks —
+including the two that exist only because of the model this session built: the
+full-second watch for a late revert, and the mid-jump flick that must yield
+instantly. The zoom lock (retro 036) was confirmed in the same pass.
+
+So the `relapse` model was right about the shape of the failure, or right
+enough that a mechanism built against it works on the device. That is a weaker
+claim than "iOS does exactly this", and it is the strongest one available
+without instrumenting the phone. Both are recorded because the difference will
+matter if this ever regresses.
+
+Two things worth keeping from the arc rather than only from the fix:
+
+**The scroller-extent redesign is not needed.** Item 13 held it in reserve
+from retro 033 and both later fixes declined to take it — anchoring the window
+near the top and growing the spacers as the user scrolls, at the cost of
+rewriting `useWindowedList`. Three device-confirmed fixes later, the
+~950,000px extent is survivable and the redesign can be dropped from the list
+of things this component might still need.
+
+**Nothing is now carried unverified.** Items 10, 13, 16 and 17 were the whole
+unverified-fix backlog — four fixes shipped blind across retros 030 to 039,
+every one of them invisible to a desktop Chromium at any width. All four are
+closed. The next fix that cannot be checked here starts that backlog over at
+one, and the cost of letting it grow to four is this session.

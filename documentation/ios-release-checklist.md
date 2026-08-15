@@ -566,15 +566,20 @@ Written down so the gap is known rather than assumed away.
   `iosProject.test.ts` are string assertions over project files, not a build.
   Compiling the iOS target on every push would close the gap and cost macOS
   runner minutes on every push to do it.
-- **Not much has been seen on iOS hardware, though more than there was.** The
-  app runs on an iPhone 15 Pro Max via TestFlight, which is what found the two
-  bugs in retro 030. As of 2026-08-15 the safe-area fix and the anchor-scroll
-  fix are both **confirmed on that device**. Still unseen: WebView scroll
-  bounce, keyboard avoidance in the search sheet, the launch image transition,
-  and the viewport zoom lock from retro 036, which landed after the build that
-  was tested. That last one is the only fix currently carried unverified — see
-  "The zoom lock is unverified on hardware" in
-  [OPEN-ITEMS.md](./OPEN-ITEMS.md).
+- **Every fix this repo has shipped blind is now confirmed on hardware, and
+  that is recent.** The app runs on an iPhone 15 Pro Max via TestFlight, which
+  is what found the two bugs in retro 030. As of 2026-08-15 the safe-area fix,
+  the anchor-scroll fix, the viewport zoom lock (036) and the reworked
+  tile-jump landing (039) are all confirmed on that device — the last two
+  against 1.2.3, and the landing against all six checks including the
+  late-revert watch. Nothing is currently carried unverified.
+
+  Still unseen, because nothing has ever needed them checked: WebView scroll
+  bounce, keyboard avoidance in the search sheet, and the launch image
+  transition. Read that as a smaller gap than it was, not as an empty one —
+  three of the four fixes above were invisible on this machine at every width,
+  and one of them (039) survived a Chromium harness that modeled the engine
+  wrongly. A desktop Chromium is still not an iPhone.
 - **Screenshots are captured in desktop Chromium at an iPhone viewport**, not on
   iOS Safari. The engines differ. The layout check has the same limitation and
   says so.
