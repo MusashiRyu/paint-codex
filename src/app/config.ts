@@ -24,7 +24,7 @@ export interface AppConfig {
  * `src/test/appVersion.test.ts` pins it to `versionName` in
  * `android/app/build.gradle`, so the two cannot drift apart unnoticed.
  */
-export const APP_VERSION = '1.1.0';
+export const APP_VERSION = '1.2.0';
 
 export const appConfig: AppConfig = {
   featureFlags: {
