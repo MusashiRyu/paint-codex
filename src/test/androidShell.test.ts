@@ -67,6 +67,27 @@ describe('index.html', () => {
     expect(viewport, 'no viewport meta tag').toBeDefined();
     expect(viewport).toContain('viewport-fit=cover');
   });
+
+  /**
+   * iOS zooms the page in when a text input with a computed font-size under
+   * 16px takes focus, and does not zoom back out on blur -- the web view is
+   * left scaled and pannable in both axes. Every input in the app is under
+   * that threshold on purpose (15px search field, 13px inline rename) and the
+   * search sheet autofocuses, so opening and closing it was enough to trigger
+   * it. Pinning the scale is what prevents it; a 16px floor on inputs would
+   * mean changing type sizes the design chose.
+   *
+   * Like the assertion above, `npm run check:layout` cannot catch this: a
+   * desktop Chromium has no soft keyboard and no focus zoom to suppress.
+   */
+  it('pins the page scale, so a focused input cannot zoom the web view', () => {
+    const viewport = html.match(/<meta name="viewport" content="([^"]+)"/)?.[1];
+
+    expect(viewport, 'no viewport meta tag').toBeDefined();
+    for (const limit of ['minimum-scale=1.0', 'maximum-scale=1.0', 'user-scalable=no']) {
+      expect(viewport).toContain(limit);
+    }
+  });
 });
 
 describe('safe-area tokens', () => {

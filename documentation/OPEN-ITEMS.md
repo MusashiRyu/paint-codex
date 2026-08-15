@@ -126,7 +126,9 @@ So the order is fixed, and it is not the order the email implies:
    verified.
 4. **Push master**, then run **Actions → iOS release**. The workflow builds from
    the pushed commit, so nothing before this point is visible to it. Expect 15
-   to 45 minutes. ← **next**
+   to 45 minutes. ← **next**. The zoom fix (036, item 16) has to be in this
+   build: step 6 records the search sheet, and the rejected binary leaves the
+   app zoomed the moment that sheet opens.
 5. Attach the new build to the version record.
 6. Record the flow on the iPhone 15 Pro Max against *that* build. The shot list
    has to cover items 10 and 13 as well; that is the same session.
@@ -278,6 +280,31 @@ If the sheet still opens blank, the next thing to reach for is **not** another
 landing retry: it is the scroller's ~950,000px extent itself. Anchoring the
 window near the top and growing the spacers as the user scrolls would keep every
 jump small, at the cost of a redesign of `useWindowedList`.
+
+### 16. The zoom lock is unverified on hardware
+**Raised:** 036 · **Same session as items 10 and 13**
+
+Opening the search sheet on iOS left the whole app zoomed in and pannable after
+it closed — iOS's focus zoom on a sub-16px input, which never reverses on blur.
+`index.html` now pins the scale. The mechanism is not in doubt, but nothing on
+this machine can observe it: a desktop Chromium has no soft keyboard, so
+`npm run check:layout` sees the same page either way, and the assertion in
+`androidShell.test.ts` reads the meta tag rather than a web view honouring it.
+
+Check on the iPhone 15 Pro Max, in the same pass as items 10 and 13:
+
+1. Open search from the FAB, type nothing, close it. The app is at the scale it
+   started at and does not drag under a finger.
+2. Do the same having typed a query, and again having scrolled the results.
+3. Rename a list — the 13px inline field is the other input that trips this, and
+   it is the one that could not be fixed by raising a font size.
+4. Open the Color Lab's paint picker, which holds the same `PaintSearch`.
+5. Pinch anywhere. Nothing should zoom; that is the cost of the fix and is worth
+   seeing rather than assuming.
+
+If the app still zooms, WKWebView is ignoring the scale limits and the fallback
+is a 16px floor on `TextField`'s `pill` variant — which fixes search and leaves
+the rename, for the reasons retro 036 sets out.
 
 ---
 
