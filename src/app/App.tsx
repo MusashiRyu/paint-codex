@@ -41,7 +41,7 @@ function App() {
     removePaintFromList,
   } = useAppStore();
 
-  // Re-renders if the background refresh swaps the catalogue mid-session.
+  // Re-renders if the background refresh swaps the catalog mid-session.
   const paintCatalog = usePaintCatalog();
 
   /*
@@ -73,7 +73,7 @@ function App() {
     [lists, selectedListId]
   );
 
-  // Resolved from the catalogue, so a refreshed snapshot reaches saved lists.
+  // Resolved from the catalog, so a refreshed snapshot reaches saved lists.
   const activePaints = useMemo(
     () => (activeList ? resolvePaints(activeList.paintIds, paintCatalog) : []),
     [activeList, paintCatalog]

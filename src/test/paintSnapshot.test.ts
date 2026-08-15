@@ -24,7 +24,7 @@ describe('bundled snapshot', () => {
     expect(ids.size).toBe(paints.length);
   });
 
-  it('gives every paint a renderable colour and a range', () => {
+  it('gives every paint a renderable color and a range', () => {
     for (const paint of paints) {
       expect(paint.hex).toMatch(/^#[0-9A-F]{6}$/);
       expect(paint.category).toBeTruthy();
@@ -42,7 +42,7 @@ describe('bundled snapshot', () => {
     }
   });
 
-  it('lists no paint twice under the same brand, name and colour', () => {
+  it('lists no paint twice under the same brand, name and color', () => {
     const seen = new Map<string, string>();
     for (const paint of paints) {
       const key = `${paint.brand}|${paint.name.toLowerCase()}|${paint.hex}`;
@@ -52,7 +52,7 @@ describe('bundled snapshot', () => {
   });
 
   it('never shows one paint two equivalents that read identically', () => {
-    // Six tiles resolving to two colours is what the range merge fixed; this
+    // Six tiles resolving to two colors is what the range merge fixed; this
     // is the assertion that keeps it fixed.
     const byId = new Map(paints.map((paint) => [paint.id, paint]));
     for (const paint of paints) {

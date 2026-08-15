@@ -3,7 +3,7 @@ import { getShopLinks, type ShopLinkMap } from '../../domain/shopLinkRepository'
 
 /**
  * Only what the export needs. The store holds paint ids, so the caller
- * resolves them against the catalogue before handing them over.
+ * resolves them against the catalog before handing them over.
  */
 export interface ExportableList {
   name: string;

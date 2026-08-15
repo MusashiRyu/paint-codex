@@ -200,7 +200,7 @@ describe('getTopMatches', () => {
     expect(matches.map((match) => match.paint.name)).toEqual(['Dead White']);
   });
 
-  it('drops a match whose paint has left the catalogue', () => {
+  it('drops a match whose paint has left the catalog', () => {
     const retired = new Map(mockIndex);
     retired.delete('army-painter-warpaints-dragon-red');
     const matches = getTopMatches(mockPaints[1], retired, 10);

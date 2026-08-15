@@ -27,7 +27,7 @@
  *
  * So the check has to be a real engine at real widths. It drives the built app
  * exactly as the store screenshots do, and asserts geometry rather than pixels:
- * no screenshot to re-approve when a colour changes, and a failure names the
+ * no screenshot to re-approve when a color changes, and a failure names the
  * element and the two numbers that disagree.
  *
  * ## The widths
@@ -155,7 +155,7 @@ const SURFACES = [
     },
   },
   {
-    // Three derived colours, each with a whole sentence of description beside
+    // Three derived colors, each with a whole sentence of description beside
     // its swatch, and a paint card under it carrying two badges and a button.
     name: 'collab-match',
     open: async (page) => {
@@ -180,7 +180,7 @@ const SURFACES = [
     },
   },
   {
-    // The picker's catalogue search, which is *not* the same box as the List
+    // The picker's catalog search, which is *not* the same box as the List
     // screen's: a picking card has no add button and its whole summary row is
     // one button, pulled out to the card's edges with a negative margin. That
     // margin is exactly what rule 3 exists to catch.
@@ -303,7 +303,7 @@ function collectBrowseViolations() {
   const count = document.querySelector('[class*="resultCount"]')?.textContent ?? '';
   const total = Number(count.replace(/\D+/g, '')) || 0;
 
-  // 1. The window is a window. Mounting the catalogue is what this replaced,
+  // 1. The window is a window. Mounting the catalog is what this replaced,
   //    and it would still "work" — just at 84,000 elements and a locked scroll.
   if (total > 100 && cards.length > 16) {
     out.push({
@@ -313,7 +313,7 @@ function collectBrowseViolations() {
   }
 
   // 2. The spacers carry what is not mounted, so the scroll is as long as the
-  //    catalogue rather than as long as the window.
+  //    catalog rather than as long as the window.
   if (scroller && total > 100 && scroller.scrollHeight < scroller.clientHeight * 50) {
     out.push({
       rule: 'extent-short',
@@ -510,7 +510,7 @@ async function openApp(browser, origin, width, prelude) {
   const page = await browser.newPage();
   await page.setViewport({ width, height: 780, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
 
-  // The catalogue refresh would otherwise swap the paints mid-run, making the
+  // The catalog refresh would otherwise swap the paints mid-run, making the
   // check depend on upstream and on the network.
   await page.setRequestInterception(true);
   page.on('request', (req) => (req.url().includes('githubusercontent.com') ? req.abort() : req.continue()));

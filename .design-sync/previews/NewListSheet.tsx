@@ -8,7 +8,7 @@ const Frame = ({ children }: { children: React.ReactNode }) => (
 
 const noop = () => {};
 
-/** Name, an 8-emblem picker and the 5-colour banner palette. */
+/** Name, an 8-emblem picker and the 5-color banner palette. */
 export const Open = () => (
   <Frame>
     <NewListSheet onClose={noop} onCreate={noop} />

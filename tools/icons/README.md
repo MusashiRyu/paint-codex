@@ -10,8 +10,8 @@ tools/icons/source/icon.png     1024x1024 or larger
 
 ## What the mark needs to be
 
-- **Square and centred**, on a **transparent** background. The generator adds
-  the ground colour and the padding each target needs; artwork that bakes in
+- **Square and centered**, on a **transparent** background. The generator adds
+  the ground color and the padding each target needs; artwork that bakes in
   its own background will sit as a visible square inside the adaptive icon's
   mask.
 - **Minimal internal padding.** The script insets the mark to Android's 66dp
@@ -31,16 +31,16 @@ tools/icons/source/icon.png     1024x1024 or larger
 | Legacy launcher icon, 48dp | `android/.../mipmap-*/ic_launcher.png` |
 | Round launcher icon | `android/.../mipmap-*/ic_launcher_round.png` |
 | Adaptive foreground, 108dp canvas | `android/.../mipmap-*/ic_launcher_foreground.png` |
-| Adaptive background colour | `android/.../values/ic_launcher_background.xml` |
+| Adaptive background color | `android/.../values/ic_launcher_background.xml` |
 | Splash, both orientations | `android/.../drawable-{port,land}-*/splash.png` |
 | iOS app icon, 1024px | `ios/.../Assets.xcassets/AppIcon.appiconset/` |
 | iOS launch image, 2732px square | `ios/.../Assets.xcassets/Splash.imageset/` |
 | Play listing icon, 512px | `store/graphics/icon-512.png` |
 | Browser tab icon | `public/favicon.svg` |
 
-The adaptive background is a colour resource rather than a bitmap, so it is
+The adaptive background is a color resource rather than a bitmap, so it is
 written from the `BACKGROUND` constant in `generate-icons.mjs`. Change the
-colour there, not in the XML — the XML is regenerated.
+color there, not in the XML — the XML is regenerated.
 
 ## iOS
 

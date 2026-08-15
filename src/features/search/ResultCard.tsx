@@ -46,12 +46,12 @@ export interface ResultCardProps {
 /**
  * One paint in the results list, with its cross-brand equivalents.
  *
- * Memoised, and that is the point of it existing as a component: the list is
+ * Memoized, and that is the point of it existing as a component: the list is
  * windowed, so a scroll re-renders the sheet several times a second. Without
  * the memo every mounted card re-renders and re-sorts its matches on each one;
  * with it, only the cards that just entered the window do any work. That
  * depends on every prop being stable — `onAdd`, `onJump` and `registerCard` are
- * `useCallback`s in the sheet, and the two collections are memoised there.
+ * `useCallback`s in the sheet, and the two collections are memoized there.
  */
 function ResultCardImpl({
   paint,
@@ -72,7 +72,7 @@ function ResultCardImpl({
    * Picking, on a surface that picks.
    *
    * On the List screen a card is a thing you read and a small button is what
-   * acts on it — the card itself has nowhere to go. In a picker every colour on
+   * acts on it — the card itself has nowhere to go. In a picker every color on
    * screen is a candidate, so tapping one has an obvious meaning and not
    * honouring it reads as a card that does not work. The whole summary row
    * becomes the button, and the gold `+` goes: two adjacent tab stops calling
@@ -81,7 +81,7 @@ function ResultCardImpl({
    * The equivalent tiles move with it. Jumping the list to a tile is browsing,
    * which is the right verb when you are filling a list and the wrong one when
    * you are filling a slot — the perceptual browse order is still there to
-   * scroll if what you want is the colours nearby.
+   * scroll if what you want is the colors nearby.
    */
   const picking = action === 'select';
 
@@ -92,7 +92,7 @@ function ResultCardImpl({
       tabIndex={anchored ? -1 : undefined}
       /* The list is windowed, so the DOM holds a handful of a few thousand
        * cards. These two say so, rather than letting a screen reader announce
-       * "9 items" for the whole catalogue. */
+       * "9 items" for the whole catalog. */
       role="listitem"
       aria-posinset={position}
       aria-setsize={total}

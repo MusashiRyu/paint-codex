@@ -1,7 +1,7 @@
 import { SearchSheet } from 'paco';
 import type { Paint } from 'paco';
 
-/* Real catalogue shapes — a paint carries its cross-brand equivalents inline. */
+/* Real catalog shapes — a paint carries its cross-brand equivalents inline. */
 const CATALOG: Paint[] = [
   {
     id: 'citadel-mephiston-red',

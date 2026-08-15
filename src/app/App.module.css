@@ -96,7 +96,7 @@
   z-index: 5;
 }
 
-/* Confirmation that a Color Lab add landed, and in which list. Centred just
+/* Confirmation that a Color Lab add landed, and in which list. Centered just
  * above the nav bar: the Lab has no list header to flash beside, and the FAB's
  * corner is taken. Above the nav's z-index so it is never half-covered. */
 .addFlash {

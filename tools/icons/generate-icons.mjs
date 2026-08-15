@@ -12,7 +12,7 @@
  *   npm run icons
  *
  * Source: tools/icons/source/icon.svg, or icon.png at 1024x1024 or larger.
- * The mark should be square and centred, with its own padding kept minimal --
+ * The mark should be square and centered, with its own padding kept minimal --
  * this script adds the padding each target needs.
  */
 import { Buffer } from 'node:buffer';
@@ -48,7 +48,7 @@ const DENSITIES = [
 const LEGACY_DP = 48;
 
 /**
- * Adaptive icon: a 108dp canvas of which only the centre 72dp is guaranteed
+ * Adaptive icon: a 108dp canvas of which only the center 72dp is guaranteed
  * visible -- the launcher masks the rest and may parallax it. Sizing the mark
  * to 66dp keeps it inside that safe zone with room to spare, so no launcher
  * shape clips it.
@@ -120,7 +120,7 @@ async function findSource() {
         `Put the app icon at one of:\n` +
         `  tools/icons/source/icon.svg   (preferred -- resolution independent)\n` +
         `  tools/icons/source/icon.png   (1024x1024 or larger)\n\n` +
-        `It should be a square, centred mark on a transparent background.\n` +
+        `It should be a square, centered mark on a transparent background.\n` +
         `Until then the app still ships Capacitor's placeholder logo, which\n` +
         `must not reach the Play Store.`
     );
@@ -129,7 +129,7 @@ async function findSource() {
 }
 
 /**
- * Rasterise the source at exactly `px`. Sharp renders SVG at its intrinsic
+ * Rasterize the source at exactly `px`. Sharp renders SVG at its intrinsic
  * size and then resamples, which quietly costs sharpness on a small source, so
  * ask for the density that lands on the size we want instead.
  */
@@ -150,7 +150,7 @@ async function renderSource(sourcePath, px) {
     .toBuffer();
 }
 
-/** A square canvas of BACKGROUND with the mark centred at `markPx`. */
+/** A square canvas of BACKGROUND with the mark centered at `markPx`. */
 async function onBackground(sourcePath, canvasPx, markPx, { alpha = false } = {}) {
   const mark = await renderSource(sourcePath, markPx);
   return sharp({
@@ -196,7 +196,7 @@ async function generateLauncherIcons(sourcePath) {
       .toBuffer();
     written.push(await write(join(dir, 'ic_launcher_round.png'), round));
 
-    // The adaptive foreground is transparent: the background layer is a colour
+    // The adaptive foreground is transparent: the background layer is a color
     // resource, so baking the ground in here would defeat the mask entirely.
     const adaptivePx = Math.round(ADAPTIVE_DP * scale);
     const safePx = Math.round(ADAPTIVE_SAFE_DP * scale);
@@ -278,7 +278,7 @@ async function generateIosAssets(sourcePath) {
  */
 async function generateFavicon(sourcePath) {
   if (sourcePath.toLowerCase().endsWith('.svg')) {
-    // An SVG favicon stays sharp at every tab size; no reason to rasterise it.
+    // An SVG favicon stays sharp at every tab size; no reason to rasterize it.
     return [await write(join(repoRoot, 'public', 'favicon.svg'), await readFile(sourcePath))];
   }
   const png = await renderSource(sourcePath, 180);
@@ -294,7 +294,7 @@ async function generateStoreIcon(sourcePath) {
 }
 
 /**
- * Both colours the native shell needs, from the one constant above.
+ * Both colors the native shell needs, from the one constant above.
  *
  * `splash_background` is the same value as `ic_launcher_background` but is a
  * separate name on purpose: styles.xml reads it for the window background, and

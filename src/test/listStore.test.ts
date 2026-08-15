@@ -48,7 +48,7 @@ describe('list store', () => {
     expect(useAppStore.getState().lists[0].paintIds).toHaveLength(0);
   });
 
-  it('stores only ids, so a refreshed catalogue reaches saved lists', () => {
+  it('stores only ids, so a refreshed catalog reaches saved lists', () => {
     const id = useAppStore.getState().createList('Favorites');
     useAppStore.getState().addPaintToList(id, samplePaint.id);
 
@@ -134,7 +134,7 @@ describe('list store', () => {
     await useAppStore.persist.rehydrate();
 
     const [list] = useAppStore.getState().lists;
-    // Air and Base Abaddon Black are one colour under two labels and merged;
+    // Air and Base Abaddon Black are one color under two labels and merged;
     // Mephiston Red was already the surviving id and must not move.
     expect(list.paintIds).toEqual([
       'citadel-base-abaddon-black',
@@ -142,7 +142,7 @@ describe('list store', () => {
     ]);
   });
 
-  it('carries v2 paint ids onto the ranges the new catalogue splits them into', async () => {
+  it('carries v2 paint ids onto the ranges the new catalog splits them into', async () => {
     localStorage.setItem(
       'paco-app-store',
       JSON.stringify({

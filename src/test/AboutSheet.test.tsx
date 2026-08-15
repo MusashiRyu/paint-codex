@@ -97,7 +97,7 @@ describe('AboutSheet', () => {
 
 describe('the header entry point', () => {
   beforeEach(() => {
-    // App refreshes the catalogue on mount; keep the test off the network.
+    // App refreshes the catalog on mount; keep the test off the network.
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')));
   });
 

@@ -7,7 +7,7 @@ interface SearchSheetProps {
   /** Ids already in the active list, used for the IN LIST badge. */
   listedPaintIds: string[] | undefined;
   /**
-   * Open the catalogue at one paint. See `PaintSearch` — the anchoring, and the
+   * Open the catalog at one paint. See `PaintSearch` — the anchoring, and the
    * reasons it is read once at mount, live there.
    */
   focusPaintId?: string | null;
@@ -16,7 +16,7 @@ interface SearchSheetProps {
 }
 
 /**
- * The List screen's catalogue search: `PaintSearch` in a sheet.
+ * The List screen's catalog search: `PaintSearch` in a sheet.
  *
  * Everything that makes the search work moved to `PaintSearch` so the Color
  * Lab's picker could hold the same component under a different header. What is

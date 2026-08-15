@@ -17,7 +17,7 @@ beforeEach(() => {
   localStorage.clear();
   resetPaints();
   useAppStore.setState({ lists: [], selectedListId: undefined });
-  // App refreshes the catalogue on mount; keep the test off the network.
+  // App refreshes the catalog on mount; keep the test off the network.
   vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')));
 
   const listId = useAppStore.getState().createList('Ultramarines');
@@ -36,14 +36,14 @@ afterEach(() => {
 const searchBox = () => screen.getByPlaceholderText('Search by name or brand...');
 
 describe('App search sheet entry points', () => {
-  it('opens the catalogue at the paint whose row was tapped', () => {
+  it('opens the catalog at the paint whose row was tapped', () => {
     render(<App />);
 
     fireEvent.click(
       screen.getByLabelText(`Show equivalents for ${paint.name} by ${paint.brand}`)
     );
 
-    // The only test that puts the real 2,279-paint catalogue through the sheet,
+    // The only test that puts the real 2,279-paint catalog through the sheet,
     // so it is also the end-to-end net for the windowed list: the tapped paint
     // is mounted, its card is anchored, and nothing was searched for.
     expect(searchBox()).toHaveValue('');
@@ -158,7 +158,7 @@ describe('App adding from the Color Lab', () => {
     fireEvent.click(screen.getByText('Matching'));
 
     // No lists, so the picker's My Lists mode has nothing in it and the
-    // catalogue search is the only way to fill the slot.
+    // catalog search is the only way to fill the slot.
     fireEvent.click(screen.getByLabelText('Select a Base Paint'));
     fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.change(searchBox(), { target: { value: paint.name } });

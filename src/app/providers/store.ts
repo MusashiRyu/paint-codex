@@ -16,8 +16,8 @@ export type ListIcon =
 
 /**
  * A list stores paint *ids*, not paint objects. Embedding copies meant a
- * corrected hex or a new equivalent in the catalogue snapshot never reached
- * paints already saved in a list. Resolve against the catalogue at read time
+ * corrected hex or a new equivalent in the catalog snapshot never reached
+ * paints already saved in a list. Resolve against the catalog at read time
  * with `resolvePaints` from the domain layer.
  */
 export type PaintList = {
@@ -135,8 +135,8 @@ export const useAppStore = create<AppStore>()(
         };
         let lists = state.lists ?? [];
 
-        // v0 -> v1: lists gained an icon and a banner colour.
-        // The colour is deliberately the literal v1 shipped with, not
+        // v0 -> v1: lists gained an icon and a banner color.
+        // The color is deliberately the literal v1 shipped with, not
         // DEFAULT_LIST_COLOR: a migration has to keep writing what it wrote
         // then, or changing the palette silently rewrites old lists.
         if (version < 1) {
@@ -147,7 +147,7 @@ export const useAppStore = create<AppStore>()(
           }));
         }
 
-        // v1 -> v2: embedded paint copies become ids resolved from the catalogue.
+        // v1 -> v2: embedded paint copies become ids resolved from the catalog.
         if (version < 2) {
           lists = lists.map(({ paints, ...rest }) => ({
             ...rest,
@@ -156,9 +156,9 @@ export const useAppStore = create<AppStore>()(
         }
 
         // v2 -> v3 and v3 -> v4: paint ids have moved twice. First the
-        // catalogue changed source and an id gained its range
+        // catalog changed source and an id gained its range
         // (`citadel-white-scar` -> `citadel-layer-white-scar`); then rows that
-        // were the same colour under two range names merged into one entry, so
+        // were the same color under two range names merged into one entry, so
         // `citadel-air-abaddon-black` folded into `citadel-base-abaddon-black`.
         //
         // `resolvePaints` drops ids it cannot find, so an unmigrated list would

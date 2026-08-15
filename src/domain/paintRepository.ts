@@ -6,9 +6,9 @@ import type { ResolvedMatch } from './paintQueries';
 import { sortPaintsPerceptually } from './paintQueries';
 
 /**
- * The live paint catalogue.
+ * The live paint catalog.
  *
- * Three layers, newest wins: a catalogue refreshed from upstream this session,
+ * Three layers, newest wins: a catalog refreshed from upstream this session,
  * one cached from a previous session, and the snapshot bundled with the build.
  * The bundled snapshot is always present, so reads are synchronous and the app
  * has paints to show before any network call is made — see `paintCatalogSync`
@@ -36,13 +36,13 @@ let signatureCache: string | undefined;
 
 const listeners = new Set<() => void>();
 
-/** Returns the current catalogue. The reference is stable until it changes. */
+/** Returns the current catalog. The reference is stable until it changes. */
 export function getPaints(): Paint[] {
   return paints;
 }
 
 /**
- * Identity of the current catalogue's contents, memoised. Lets the refresh
+ * Identity of the current catalog's contents, memoized. Lets the refresh
  * tell "upstream changed" from "upstream changed in a way that matters".
  */
 export function getCatalogSignature(): string {
@@ -51,7 +51,7 @@ export function getCatalogSignature(): string {
 }
 
 /**
- * Hash of the upstream document the current catalogue came from, or undefined
+ * Hash of the upstream document the current catalog came from, or undefined
  * when we are still serving the bundled snapshot. The refresh compares against
  * this to decide whether a fetched document is worth parsing.
  */
@@ -60,15 +60,15 @@ export function getSourceHtmlHash(): string | undefined {
 }
 
 /**
- * Record which upstream document the current catalogue matches, without
- * touching the catalogue itself. Used when a changed document turns out to
+ * Record which upstream document the current catalog matches, without
+ * touching the catalog itself. Used when a changed document turns out to
  * parse to the paints we already have — worth remembering, not worth a render.
  */
 export function markSourceHtmlHash(htmlHash: string): void {
   sourceHtmlHash = htmlHash;
 }
 
-/** Subscribe to catalogue replacements. Returns an unsubscribe function. */
+/** Subscribe to catalog replacements. Returns an unsubscribe function. */
 export function subscribeToPaints(listener: () => void): () => void {
   listeners.add(listener);
   return () => {
@@ -77,7 +77,7 @@ export function subscribeToPaints(listener: () => void): () => void {
 }
 
 /**
- * Replace the catalogue and notify subscribers. Callers own validation — this
+ * Replace the catalog and notify subscribers. Callers own validation — this
  * takes whatever it is given, which is why `paintCatalogSync` is the only
  * production caller.
  */
@@ -93,7 +93,7 @@ export function setPaints(next: Paint[], htmlHash?: string): void {
  *
  * A test seam, and only that: a rejected cache never reaches here, because
  * `readCachedCatalog` answers undefined and the seeding above falls through to
- * the bundled array on its own. Kept because the catalogue is module state
+ * the bundled array on its own. Kept because the catalog is module state
  * seeded at import, so a test that replaces it has no other way back.
  */
 export function resetPaints(): void {
@@ -101,8 +101,8 @@ export function resetPaints(): void {
 }
 
 /**
- * Catalogue keyed by paint id. Memoised against the array it was built from,
- * so replacing the catalogue invalidates it without anyone having to remember
+ * Catalog keyed by paint id. Memoized against the array it was built from,
+ * so replacing the catalog invalidates it without anyone having to remember
  * to say so.
  */
 export function getPaintIndex(catalog: Paint[] = getPaints()): Map<string, Paint> {
@@ -114,13 +114,13 @@ export function getPaintIndex(catalog: Paint[] = getPaints()): Map<string, Paint
 }
 
 /**
- * The catalogue in perceptual order — what the search sheet browses.
+ * The catalog in perceptual order — what the search sheet browses.
  *
- * Memoised against the array it was built from, on the same contract as
+ * Memoized against the array it was built from, on the same contract as
  * `getPaintIndex` and for the same reason: the background refresh replaces the
- * catalogue, and an order held against the old array would put the browse view
+ * catalog, and an order held against the old array would put the browse view
  * at paints that have left it. The sort is ~2ms, so this is not about the cost
- * of sorting; it is about paying it once per catalogue rather than once per
+ * of sorting; it is about paying it once per catalog rather than once per
  * sheet, and the sheet unmounts on every close.
  */
 export function getBrowseOrder(catalog: Paint[] = getPaints()): Paint[] {
@@ -143,9 +143,9 @@ export function getBrowsePosition(catalog: Paint[] = getPaints()): Map<string, n
 }
 
 /**
- * Every paint's colour in CIELAB, flat as `[L, a, b, L, a, b, …]`.
+ * Every paint's color in CIELAB, flat as `[L, a, b, L, a, b, …]`.
  *
- * Memoised against the array it was built from, on the same contract as
+ * Memoized against the array it was built from, on the same contract as
  * `getPaintIndex`. A typed array rather than objects because the only thing
  * that reads it is a scan over all 2,279 entries, several times per screen.
  */
@@ -165,9 +165,9 @@ export function getLabIndex(catalog: Paint[] = getPaints()): Float64Array {
 }
 
 /**
- * The catalogue paint closest to an arbitrary colour, with its ΔE.
+ * The catalog paint closest to an arbitrary color, with its ΔE.
  *
- * This is the Color Lab's bridge back to reality: a mixed or derived colour is
+ * This is the Color Lab's bridge back to reality: a mixed or derived color is
  * not a paint, so it has no precomputed `matches` to read and needs a live
  * scan. CIE76 in the Lab of `hexToLab`, which is the Lab the snapshot's own
  * deltas were measured in — the two numbers have to mean the same thing.
@@ -175,10 +175,10 @@ export function getLabIndex(catalog: Paint[] = getPaints()): Float64Array {
  * Unlike `getTopMatches` this does **not** exclude any brand. Equivalents
  * answer "what do I buy instead of this Citadel paint", where the same brand is
  * an answer to a different question; this answers "what is closest to this
- * colour", where every paint is a candidate.
+ * color", where every paint is a candidate.
  *
- * Null on an empty catalogue or an unparseable colour. The delta is often past
- * `CLOSE_DELTA_MAX` — a computed colour has no reason to have a near neighbour
+ * Null on an empty catalog or an unparseable color. The delta is often past
+ * `CLOSE_DELTA_MAX` — a computed color has no reason to have a near neighbour
  * — and that is signal, not failure, which is why nothing is filtered here.
  */
 export function findNearestPaint(hex: string, catalog: Paint[] = getPaints()): ResolvedMatch | null {
@@ -211,9 +211,9 @@ export function findNearestPaint(hex: string, catalog: Paint[] = getPaints()): R
 }
 
 /**
- * Resolve stored ids to catalogue entries, so a list always reflects the
+ * Resolve stored ids to catalog entries, so a list always reflects the
  * current snapshot. Ids no longer present are dropped rather than rendered as
- * holes — a paint can disappear when the catalogue is rescraped.
+ * holes — a paint can disappear when the catalog is rescraped.
  */
 export function resolvePaints(paintIds: string[], catalog: Paint[] = getPaints()): Paint[] {
   const index = getPaintIndex(catalog);

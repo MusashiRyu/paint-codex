@@ -4,13 +4,13 @@ import styles from './Badge.module.css';
 export interface BadgeProps {
   /** `success` is the muted green membership tone; omit when passing `style`. */
   tone?: 'success';
-  /** Fills its column and centres — the delta pill under an equivalent tile. */
+  /** Fills its column and centers — the delta pill under an equivalent tile. */
   block?: boolean;
   /** Cut down to the delta pill's height, to sit level with it in a tile. */
   compact?: boolean;
   /**
-   * For badges whose colour is computed rather than fixed — the ΔE pill, whose
-   * three-part colour comes from `shared/lib/color.ts`.
+   * For badges whose color is computed rather than fixed — the ΔE pill, whose
+   * three-part color comes from `shared/lib/color.ts`.
    */
   style?: CSSProperties;
   title?: string;

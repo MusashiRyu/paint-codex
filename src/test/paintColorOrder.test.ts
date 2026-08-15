@@ -6,7 +6,7 @@ import { getBrowseOrder, getBrowsePosition, getPaints } from '../domain/paintRep
 
 /**
  * The browse order is the feature: a paint's neighbours in this list are what
- * the user is offered when the catalogue holds no close equivalent. So the
+ * the user is offered when the catalog holds no close equivalent. So the
  * tests that matter are not "is it sorted" but "are neighbours actually near
  * each other", measured in the same ΔE the app judges matches in.
  */
@@ -31,15 +31,15 @@ describe('sortPaintsPerceptually', () => {
       paint('red', '#FF0000'),
       paint('white', '#FFFFFF'),
       paint('black', '#000000'),
-      paint('grey', '#808080'),
+      paint('gray', '#808080'),
     ]).map((p) => p.id);
 
-    expect(order.slice(0, 3)).toEqual(['black', 'grey', 'white']);
+    expect(order.slice(0, 3)).toEqual(['black', 'gray', 'white']);
     expect(order[3]).toBe('red');
   });
 
-  it('draws the neutral line at chroma, not at how grey a colour looks', () => {
-    // #4A4C58 computes a hue of 285° and would file under purple; it is a grey.
+  it('draws the neutral line at chroma, not at how gray a color looks', () => {
+    // #4A4C58 computes a hue of 285° and would file under purple; it is a gray.
     const order = sortPaintsPerceptually([
       paint('purple', '#8000FF'),
       paint('battlegrey', '#4A4C58'),
@@ -63,7 +63,7 @@ describe('sortPaintsPerceptually', () => {
   it('breaks a step of lightness on chroma, dull before vivid', () => {
     // Same band, same 10-wide lightness step (L 13.2 and 18.1): chroma is what
     // is left, and it is the axis that decides whether two paints of one
-    // darkness read as the same colour.
+    // darkness read as the same color.
     const order = sortPaintsPerceptually([
       paint('vivid', '#5A0F0C'),
       paint('dull', '#4A0603'),
@@ -82,7 +82,7 @@ describe('sortPaintsPerceptually', () => {
     expect(order).toEqual(['red', 'green', 'blue']);
   });
 
-  it('orders by the catalogue contents, not by the order brands were parsed in', () => {
+  it('orders by the catalog contents, not by the order brands were parsed in', () => {
     const paints = [
       paint('a', '#960C09'),
       paint('b', '#0F4B8F'),
@@ -97,12 +97,12 @@ describe('sortPaintsPerceptually', () => {
     expect(backwards).toEqual(forwards);
   });
 
-  it('does not let an unparseable colour scramble the sort', () => {
-    // A catalogue read back out of localStorage has not been validated. A NaN
+  it('does not let an unparseable color scramble the sort', () => {
+    // A catalog read back out of localStorage has not been validated. A NaN
     // comparator leaves Array#sort free to return any order at all.
     const order = sortPaintsPerceptually([
       paint('red', '#960C09'),
-      paint('broken', 'not-a-colour'),
+      paint('broken', 'not-a-color'),
       paint('black', '#000000'),
     ]).map((p) => p.id);
 
@@ -112,16 +112,16 @@ describe('sortPaintsPerceptually', () => {
   });
 });
 
-describe('the shipped catalogue in browse order', () => {
+describe('the shipped catalog in browse order', () => {
   const order = getBrowseOrder(getPaints());
 
   /**
-   * The number the ordering exists to make small. Raw catalogue order scores a
+   * The number the ordering exists to make small. Raw catalog order scores a
    * median of 36.95 with 121 close pairs; this order measured 5.91 and 1,370
    * when it was chosen. The floors are loose enough to survive a rescrape and
    * tight enough that a broken comparator cannot pass.
    */
-  it('puts a substitutable colour one card away, on average', () => {
+  it('puts a substitutable color one card away, on average', () => {
     const gaps: number[] = [];
     for (let i = 1; i < order.length; i++) gaps.push(deltaE(order[i - 1].hex, order[i].hex));
     const sorted = [...gaps].sort((a, b) => a - b);
@@ -145,11 +145,11 @@ describe('the shipped catalogue in browse order', () => {
     expect(positions.size).toBe(order.length);
   });
 
-  it('memoises against the catalogue array, as the id index does', () => {
+  it('memoizes against the catalog array, as the id index does', () => {
     const catalog = getPaints();
 
     expect(getBrowseOrder(catalog)).toBe(getBrowseOrder(catalog));
-    // A refreshed catalogue is a new array, and must not reuse the old order.
+    // A refreshed catalog is a new array, and must not reuse the old order.
     expect(getBrowseOrder([...catalog])).not.toBe(getBrowseOrder(catalog));
   });
 });

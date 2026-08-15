@@ -22,7 +22,7 @@ interface PaintPickerSheetProps {
  * Two ways in, because they answer different questions. **My Lists** is for a
  * paint you own, which is most of them — you are mixing what is on the desk.
  * **Search Catalog** is the List screen's own search, `PaintSearch` itself
- * rather than a lookalike, so the Lab gets Fuse ranking, the colour-ordered
+ * rather than a lookalike, so the Lab gets Fuse ranking, the color-ordered
  * browse and windowing over all 2,279 paints for free, and gets them again
  * whenever that search improves.
  *
@@ -40,7 +40,7 @@ export function PaintPickerSheet({
   const [mode, setMode] = useState<'lists' | 'search'>('lists');
 
   // Resolved rather than stored: a list holds ids, and one whose paint has left
-  // the catalogue must not render as a blank row you can pick.
+  // the catalog must not render as a blank row you can pick.
   const sections = useMemo(
     () =>
       lists
@@ -77,7 +77,7 @@ export function PaintPickerSheet({
         <div className={styles.lists}>
           {sections.length === 0 ? (
             <div className={styles.empty}>
-              No paints saved yet — search the catalogue instead.
+              No paints saved yet — search the catalog instead.
             </div>
           ) : (
             sections.map((section) => (

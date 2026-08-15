@@ -27,8 +27,8 @@ export const CompactBesideDelta = () => (
 );
 
 /**
- * The delta pill. Its colour is never picked by hand — it comes from
- * getDeltaStyle, the one place a ΔE becomes a colour.
+ * The delta pill. Its color is never picked by hand — it comes from
+ * getDeltaStyle, the one place a ΔE becomes a color.
  */
 export const DeltaScale = () => (
   <Panel>

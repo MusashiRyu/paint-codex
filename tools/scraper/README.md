@@ -4,7 +4,7 @@ This folder contains development-only tooling and is never shipped in the app bu
 
 ## Purpose
 
-`scrape.mjs` fetches the Citadel, Vallejo and Army Painter colour tables from
+`scrape.mjs` fetches the Citadel, Vallejo and Army Painter color tables from
 Arcturus5404/miniature-paints and writes app data to:
 
 - `src/data/paints.snapshot.json`
@@ -27,7 +27,7 @@ npm run scrape:shoplinks
 - `scrape.mjs` and `checkUpstream.mjs` are the exception to "no imports from
   `src/`": they import `PAINT_CATALOG_SOURCES` and `parsePaintCatalog` from
   `src/domain/paintCatalogSource.ts`, because the app refreshes the same
-  catalogue at runtime and a second parser would let the two disagree about the
+  catalog at runtime and a second parser would let the two disagree about the
   same documents. The import runs on Node's type stripping, so that module must
   stay free of non-erasable syntax and of value imports from `src/` — which is
   why the CIELAB conversion lives inside it rather than in `shared/lib/color.ts`.

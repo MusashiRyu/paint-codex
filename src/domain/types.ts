@@ -4,12 +4,12 @@ export interface Match {
    *
    * An id rather than a brand/name pair: upstream carries the same name in
    * more than one range — Citadel's "Abaddon Black" exists as both an Air and
-   * a Base paint, with different colour — so a name no longer identifies a
+   * a Base paint, with different color — so a name no longer identifies a
    * paint and a lookup by name would land on whichever one happened to be
    * indexed last. Resolve through `getPaintIndex`.
    */
   id: string;
-  /** CIE76 ΔE between the two colours. Lower is closer. */
+  /** CIE76 ΔE between the two colors. Lower is closer. */
   delta: number;
 }
 

@@ -1,6 +1,6 @@
 /**
  * The shared spec for the app's stroked line icons: 24px grid, drawn in
- * `currentColor` so the button around it owns the colour, at the one weight the
+ * `currentColor` so the button around it owns the color, at the one weight the
  * design uses. An icon that sets its own stroke or fill is a bug.
  *
  * Spread onto an `<svg>` and give it `<path>` children.

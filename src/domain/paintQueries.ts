@@ -2,11 +2,11 @@ import { hexToLab } from './paintCatalogSource';
 import type { Paint } from './types';
 
 /**
- * Pure queries over the paint catalogue. Kept out of the feature folders so
+ * Pure queries over the paint catalog. Kept out of the feature folders so
  * more than one view can share them without importing across features.
  */
 
-/** Brands present in the catalogue, sorted, for building filter controls. */
+/** Brands present in the catalog, sorted, for building filter controls. */
 export function getUniqueBrands(paints: Paint[]): string[] {
   const brands = new Set(paints.map((p) => p.brand));
   return Array.from(brands).sort();
@@ -20,12 +20,12 @@ export interface ResolvedMatch {
 
 /**
  * A paint's equivalents, best first and capped, resolved against the
- * catalogue. Callers must not render `paint.matches` directly: it stores ids
- * and deltas, and an id whose paint has since left the catalogue is dropped
+ * catalog. Callers must not render `paint.matches` directly: it stores ids
+ * and deltas, and an id whose paint has since left the catalog is dropped
  * here rather than rendered as a hole.
  *
  * These are cross-brand only, because they were built that way by the parser.
- * For "what is nearest to this colour" — where the answer may be any brand, and
+ * For "what is nearest to this color" — where the answer may be any brand, and
  * where there is no paint to have precomputed matches for — see
  * `paintRepository.findNearestPaint`.
  */
@@ -45,9 +45,9 @@ export function getTopMatches(
 }
 
 /**
- * Chroma below which a hue angle is arithmetic rather than colour. Adeptus
+ * Chroma below which a hue angle is arithmetic rather than color. Adeptus
  * Battlegrey (#4A4C58) computes a hue of 285° and would file under purple; it
- * is a grey. The 541 paints under this threshold — a quarter of the catalogue —
+ * is a gray. The 541 paints under this threshold — a quarter of the catalog —
  * are given a band of their own instead.
  */
 const ACHROMATIC_CHROMA_MAX = 10;
@@ -57,17 +57,17 @@ const ACHROMATIC_CHROMA_MAX = 10;
  *
  * The banding is not cosmetic: it is what makes the later keys fire at all. No
  * two of 2,279 hue angles are ever equal, so an unbanded "hue, then lightness"
- * sort never reaches its second key and orders the catalogue by a float nobody
+ * sort never reaches its second key and orders the catalog by a float nobody
  * can see. Measured over the shipped snapshot as the median CIE76 gap between
  * neighbouring entries — which is the number this ordering exists to make small:
  *
- *   catalogue order (brand blocks)        ΔE 36.95   121 adjacent pairs under 7
+ *   catalog order (brand blocks)        ΔE 36.95   121 adjacent pairs under 7
  *   raw hex string                        ΔE 23.02   411
  *   hue 15°, then lightness               ΔE  9.25   866
  *   hue 15°, lightness 10, then chroma    ΔE  5.91  1370   <- this
  *
  * The median neighbour therefore sits inside CLOSE_DELTA_MAX, which is the
- * property the browse view needs: scrolling one card is a substitutable colour.
+ * property the browse view needs: scrolling one card is a substitutable color.
  * A 5-wide lightness band scores marginally better at the median (5.66) and
  * distinctly worse at the p90 (19.23 against 15.58), so 10 it is.
  */
@@ -87,7 +87,7 @@ interface PerceptualKey {
 function perceptualKey(paint: Paint): PerceptualKey {
   const [lightness, a, b] = hexToLab(paint.hex);
 
-  // A catalogue read back out of localStorage has not been through
+  // A catalog read back out of localStorage has not been through
   // `normalizeHex`, and a comparator that returns NaN leaves Array#sort free to
   // produce any order at all.
   if (!Number.isFinite(lightness)) {
@@ -111,7 +111,7 @@ function perceptualKey(paint: Paint): PerceptualKey {
 }
 
 /**
- * The catalogue in perceptual order: the near-neutrals first as a black-to-white
+ * The catalog in perceptual order: the near-neutrals first as a black-to-white
  * ramp, then the hue wheel from red, each band running dark to light and, within
  * one step of lightness, dull to vivid.
  *
@@ -130,10 +130,10 @@ export function sortPaintsPerceptually(paints: Paint[]): Paint[] {
       x.band - y.band ||
       x.lightnessBand - y.lightnessBand ||
       x.chroma - y.chroma ||
-      // A total order, so the browse list is a function of the catalogue's
+      // A total order, so the browse list is a function of the catalog's
       // contents and not of the order the brands were parsed in — five paints
       // share #000000. Plain comparison rather than localeCompare, which would
-      // order the catalogue differently on differently-configured phones.
+      // order the catalog differently on differently-configured phones.
       (x.paint.id < y.paint.id ? -1 : x.paint.id > y.paint.id ? 1 : 0)
   );
   return keys.map((key) => key.paint);

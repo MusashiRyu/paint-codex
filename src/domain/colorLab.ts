@@ -1,13 +1,13 @@
 /**
- * The colour transforms behind the Color Lab: blending two paints, and deriving
+ * The color transforms behind the Color Lab: blending two paints, and deriving
  * a complementary, a highlight and a shade from one.
  *
- * Pure and catalogue-free on purpose. Turning a computed colour back into a
- * paint you can buy is a separate job, and it lives with the catalogue in
+ * Pure and catalog-free on purpose. Turning a computed color back into a
+ * paint you can buy is a separate job, and it lives with the catalog in
  * `paintRepository.findNearestPaint`.
  *
- * Every hex in and out is `#RRGGBB`, uppercase, matching the catalogue's own
- * format — these values are rendered directly beside catalogue hexes.
+ * Every hex in and out is `#RRGGBB`, uppercase, matching the catalog's own
+ * format — these values are rendered directly beside catalog hexes.
  */
 
 interface Rgb {
@@ -17,7 +17,7 @@ interface Rgb {
 }
 
 /**
- * A catalogue read back out of localStorage has not been through the parser's
+ * A catalog read back out of localStorage has not been through the parser's
  * `normalizeHex`, so a malformed hex is reachable here. Returning null rather
  * than NaN channels keeps `#NaNNaNNaN` off the screen: the panels render their
  * empty state instead.
@@ -103,14 +103,14 @@ export interface MixStep {
  * Paint A to Paint B in 20% steps, endpoints included.
  *
  * The interpolation is in sRGB, which is worth a word because the app measures
- * colour in CIELAB everywhere else. A mix strip is a preview of a blend, not a
+ * color in CIELAB everywhere else. A mix strip is a preview of a blend, not a
  * measurement: nothing is compared against a threshold here, so the smoother
  * Lab path would buy an inverse conversion nothing else in the app wants. The
  * ΔE shown against each step is still computed in Lab, so the number and the
  * swatch it sits under never disagree.
  *
  * Neither is a model of physical paint, which mixes subtractively. The strip
- * says what these two colours look like blended, and the nearest-paint row
+ * says what these two colors look like blended, and the nearest-paint row
  * under it is what makes that actionable.
  */
 export function mixRamp(hexA: string, hexB: string): MixStep[] {
@@ -136,13 +136,13 @@ export type TheoryKey = 'complementary' | 'highlight' | 'shade';
 export interface TheoryColor {
   key: TheoryKey;
   label: string;
-  /** One line on what the colour is for, shown under the heading. */
+  /** One line on what the color is for, shown under the heading. */
   description: string;
   hex: string;
 }
 
 /**
- * How far each derived colour moves from its base, in HSL.
+ * How far each derived color moves from its base, in HSL.
  *
  * These are the design's numbers, and they are deliberately blunt: a highlight
  * is "much lighter and a little less saturated", a shade is "much darker and a
@@ -156,7 +156,7 @@ const SHADE = { saturation: +8, lightness: -32, lightnessMin: 6 };
 /**
  * A paint's complementary, highlight and shade.
  *
- * Order is fixed and is the order they render in: the contrast colour first,
+ * Order is fixed and is the order they render in: the contrast color first,
  * then the two that sit either side of the base on a blended edge.
  */
 export function deriveTheoryColors(hex: string): TheoryColor[] {

@@ -24,7 +24,7 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<!-- Answers the export-compliance question at build time instead of
 	     stopping every single upload to ask it in App Store Connect. The one
-	     network call the app makes is an HTTPS GET of a public catalogue file;
+	     network call the app makes is an HTTPS GET of a public catalog file;
 	     HTTPS alone is exempt, and the app ships no cryptography of its own. -->
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>

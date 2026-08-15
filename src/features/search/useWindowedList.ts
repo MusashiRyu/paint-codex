@@ -5,7 +5,7 @@ import { ANCHOR_GAP, CARD_METRICS, estimateCardHeight, visibleTileCount } from '
 /**
  * Mount only the cards on screen, and keep the scroll honest about the rest.
  *
- * The search sheet browses the whole catalogue — 2,279 paints, ~37 DOM elements
+ * The search sheet browses the whole catalog — 2,279 paints, ~37 DOM elements
  * and a match lookup each. Rendered whole that is ~84,000 elements and 8,722
  * focusable buttons, which the focus trap re-queries on every Tab. So the list
  * renders a window of about nine cards and two spacer divs whose heights stand
@@ -123,7 +123,7 @@ export function useWindowedList(
   /**
    * A card's pitch: measured if it has ever been on screen, estimated if not.
    *
-   * Memoised on `paintsById` alone — everything else it reads is a ref — so the
+   * Memoized on `paintsById` alone — everything else it reads is a ref — so the
    * layout effect below can depend on it without re-running on every render.
    */
   const heightOf = useCallback(

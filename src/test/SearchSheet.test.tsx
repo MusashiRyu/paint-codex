@@ -79,7 +79,7 @@ function renderSheet() {
 /**
  * The result card a paint is rendered in. Every card carries equivalents of
  * its own, so an assertion about one paint's tiles has to be scoped to it or
- * it is really an assertion about the whole catalogue.
+ * it is really an assertion about the whole catalog.
  */
 const cardFor = (name: string) =>
   // Matched on the card's own heading, not on the name anywhere: a paint's
@@ -149,7 +149,7 @@ describe('SearchSheet equivalents', () => {
     expect(within(unlisted).queryByText('IN LIST')).not.toBeInTheDocument();
   });
 
-  it('colours each pill from the shared delta thresholds', () => {
+  it('colors each pill from the shared delta thresholds', () => {
     renderSheet();
     const card = within(cardFor('Mephiston Red'));
 
@@ -161,7 +161,7 @@ describe('SearchSheet equivalents', () => {
 });
 
 /**
- * A catalogue where the equivalents are themselves paints, which is what a
+ * A catalog where the equivalents are themselves paints, which is what a
  * jump needs. Dragon Red is deliberately referenced but absent.
  */
 const jumpCatalog: Paint[] = [
@@ -225,7 +225,7 @@ describe('SearchSheet equivalent jump', () => {
     );
   });
 
-  it('moves rather than searches, so the colours around it stay on screen', () => {
+  it('moves rather than searches, so the colors around it stay on screen', () => {
     renderJumpSheet();
 
     fireEvent.click(screen.getByRole('button', { name: 'Go to Gory Red by Vallejo' }));
@@ -255,7 +255,7 @@ describe('SearchSheet equivalent jump', () => {
     renderJumpSheet();
 
     // "X" is one character, under Fuse's minMatchCharLength. Browsing does not
-    // care: the whole catalogue is the list, so the paint is simply in it.
+    // care: the whole catalog is the list, so the paint is simply in it.
     fireEvent.click(screen.getByRole('button', { name: 'Go to X by Vallejo' }));
 
     expect(screen.getByLabelText('Add X to list')).toBeInTheDocument();
@@ -271,11 +271,11 @@ describe('SearchSheet equivalent jump', () => {
     expect(screen.queryByLabelText('Add X to list')).not.toBeInTheDocument();
   });
 
-  it('omits an equivalent whose paint has left the catalogue', () => {
+  it('omits an equivalent whose paint has left the catalog', () => {
     renderJumpSheet();
 
     // Dragon Red is the closest match Mephiston Red stores, but no paint in
-    // this catalogue has that id — a refresh can retire one. Rendering the
+    // this catalog has that id — a refresh can retire one. Rendering the
     // tile anyway would offer a jump that goes nowhere.
     expect(
       screen.queryByRole('button', { name: 'Go to Dragon Red by Army Painter' })
@@ -334,11 +334,11 @@ describe('SearchSheet opened on a paint', () => {
     expect(within(cardFor('Mephiston Red')).getByText('IN LIST')).toBeInTheDocument();
   });
 
-  it('shows the whole catalogue around it, not just the paint', () => {
+  it('shows the whole catalog around it, not just the paint', () => {
     renderFocusedSheet('citadel-base-mephiston-red');
 
     // The point of the change: a paint with no close equivalent is answered by
-    // what sits next to it in colour order, which a one-result view cannot show.
+    // what sits next to it in color order, which a one-result view cannot show.
     expect(screen.getByText('Found 3 paint(s)')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'All' })).toBeInTheDocument();
     expect(
@@ -356,14 +356,14 @@ describe('SearchSheet opened on a paint', () => {
     ).not.toBeInTheDocument();
   });
 
-  it('opens the blank search when the paint has left the catalogue', () => {
+  it('opens the blank search when the paint has left the catalog', () => {
     // A refresh can retire a paint between the row rendering and the tap.
     renderFocusedSheet('citadel-base-retired', []);
 
     expect(screen.getByText('Search the grimoire for a paint...')).toBeInTheDocument();
   });
 
-  it('does not re-seed when the background refresh swaps the catalogue', () => {
+  it('does not re-seed when the background refresh swaps the catalog', () => {
     const { rerender } = renderFocusedSheet('citadel-base-mephiston-red');
     fireEvent.change(searchBox(), { target: { value: 'Gory' } });
 
@@ -399,7 +399,7 @@ describe('SearchSheet opened on a paint', () => {
 });
 
 describe('SearchSheet brand filter', () => {
-  it('derives its chips from the catalogue rather than a hardcoded list', () => {
+  it('derives its chips from the catalog rather than a hardcoded list', () => {
     renderSheet();
 
     // Scale75 is absent from the old hardcoded list.

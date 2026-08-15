@@ -57,13 +57,13 @@ export const packageSwiftPath = join(
  */
 const PATH_ARGUMENT = /(path:\s*")([^"]*)(")/g;
 
-export function normalisePaths(source) {
+export function normalizePaths(source) {
   return source.replace(PATH_ARGUMENT, (_, open, value, close) => open + value.replace(/\\/g, '/') + close);
 }
 
 async function main() {
   const original = await readFile(packageSwiftPath, 'utf8');
-  const fixed = normalisePaths(original);
+  const fixed = normalizePaths(original);
 
   if (fixed === original) {
     console.log('Package.swift: local package paths already use forward slashes.');

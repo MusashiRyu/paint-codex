@@ -3,19 +3,19 @@
  *
  * Paint ids used to be brand + name (`citadel-abaddon-black`). Moving to the
  * Arcturus5404 tables split most of those in two — Citadel sells Abaddon Black
- * as both an Air and a Base paint, with different colour — so the id gained
+ * as both an Air and a Base paint, with different color — so the id gained
  * the range (`citadel-base-abaddon-black`). Lists persist paint ids and
  * `resolvePaints` drops ids it cannot find, so without a map every saved list
  * would have emptied itself silently on update.
  *
  * The old id is matched to the new paint of the same brand and name whose
- * colour is nearest the one the old snapshot carried. Nearest rather than
- * first: the old catalogue stored one hex per name, and it is that hex which
+ * color is nearest the one the old snapshot carried. Nearest rather than
+ * first: the old catalog stored one hex per name, and it is that hex which
  * says which range the entry actually came from.
  *
  * Takes every superseded snapshot at once and unions the result, because the
  * ids have now moved twice: once when the source changed, and again when rows
- * that were the same colour under two range names were merged into one entry.
+ * that were the same color under two range names were merged into one entry.
  * The store applies the same map at each version step, so one file covers a
  * store that has sat at any of them.
  *
@@ -74,10 +74,10 @@ const channels = (hex) => [
 ];
 
 /**
- * Ranges the legacy catalogue never contained. It was built from redgrimm's
+ * Ranges the legacy catalog never contained. It was built from redgrimm's
  * table, which carried Citadel "Base Layer" and "Edge" and Vallejo's Game and
  * Model ranges — brush paint throughout. Where a name now exists in both a
- * brush and an airbrush range at the same colour, and it often does, the
+ * brush and an airbrush range at the same color, and it often does, the
  * brush one is what the saved list meant.
  */
 const SPRAYED = /\b(air|spray|primer|varnish)\b/i;
@@ -92,7 +92,7 @@ function nearest(hex, group) {
       (r - pr) ** 2 + (g - pg) ** 2 + (b - pb) ** 2,
       SPRAYED.test(paint.category ?? '') ? 1 : 0,
     ];
-    // Colour first, brush-over-airbrush second, then catalogue order, which
+    // Color first, brush-over-airbrush second, then catalog order, which
     // is stable across runs.
     if (score[0] < bestScore[0] || (score[0] === bestScore[0] && score[1] < bestScore[1])) {
       bestScore = score;
@@ -111,14 +111,14 @@ for (const priorPath of priorPaths) {
   let mapped = 0;
 
   for (const paint of prior) {
-    // An id the current catalogue still has needs no entry, whichever
+    // An id the current catalog still has needs no entry, whichever
     // snapshot it came from.
     if (live.has(paint.id)) continue;
 
     const group =
       candidates.get(key(paint.brand, paint.name)) ??
       looseCandidates.get(looseKey(paint.brand, paint.name));
-    // Deliberately no colour-based fallback for what is left: those are paints
+    // Deliberately no color-based fallback for what is left: those are paints
     // the new source does not carry, and mapping them to whatever is nearest
     // would put a different product in someone's list under the old name.
     if (!group) {
@@ -150,7 +150,7 @@ if (chained.length > 0) {
 
 const missing = Object.values(migration).filter((target) => !live.has(target));
 if (missing.length > 0) {
-  console.error(`\nFAIL: ${missing.length} entries point at an id the catalogue does not have.`);
+  console.error(`\nFAIL: ${missing.length} entries point at an id the catalog does not have.`);
   process.exit(1);
 }
 

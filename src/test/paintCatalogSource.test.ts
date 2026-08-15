@@ -67,7 +67,7 @@ describe('parsePaintCatalog', () => {
     ]);
   });
 
-  it('collapses rows identical in range, name and colour', () => {
+  it('collapses rows identical in range, name and color', () => {
     const paints = parsePaintCatalog([
       buildBrandDocument('Vallejo', [
         { name: 'Black', code: '72.051', set: 'Game Color', hex: '#000000' },
@@ -79,7 +79,7 @@ describe('parsePaintCatalog', () => {
     expect(paints[0].id).toBe('vallejo-game-color-black');
   });
 
-  it('merges one colour sold across several ranges into a single paint', () => {
+  it('merges one color sold across several ranges into a single paint', () => {
     const paints = parsePaintCatalog([
       citadel([
         { name: 'Abaddon Black', set: 'Air', hex: '#000000' },
@@ -113,7 +113,7 @@ describe('parsePaintCatalog', () => {
     expect(layerFirst[0].category).toBe(airFirst[0].category);
   });
 
-  it('keeps a name that is a different colour in a different range', () => {
+  it('keeps a name that is a different color in a different range', () => {
     const paints = parsePaintCatalog([
       citadel([
         { name: 'Administratum Grey', set: 'Layer', hex: '#989C94' },
@@ -121,14 +121,14 @@ describe('parsePaintCatalog', () => {
       ]),
     ]);
 
-    // Genuinely two greys, so genuinely two paints.
+    // Genuinely two grays, so genuinely two paints.
     expect(paints.map((paint) => paint.id)).toEqual([
       'citadel-layer-administratum-grey',
       'citadel-air-administratum-grey',
     ]);
   });
 
-  it('never offers the same brand, name and colour twice among one paint\'s equivalents', () => {
+  it('never offers the same brand, name and color twice among one paint\'s equivalents', () => {
     const paints = parsePaintCatalog([
       citadel([{ name: 'Abaddon Black', set: 'Base', hex: '#000000' }]),
       buildBrandDocument('Vallejo', [
@@ -187,7 +187,7 @@ describe('parsePaintCatalog', () => {
     expect(mephiston?.matches[0].delta).toBeLessThan(mephiston?.matches[1].delta ?? 0);
   });
 
-  it('gives an identical colour a delta of zero', () => {
+  it('gives an identical color a delta of zero', () => {
     const paints = parsePaintCatalog([
       citadel([{ name: 'Abaddon Black', set: 'Base', hex: '#000000' }]),
       buildBrandDocument('Army Painter', [
@@ -208,7 +208,7 @@ describe('parsePaintCatalog', () => {
     }
   });
 
-  it('resolves every stored match id to a paint in the same catalogue', () => {
+  it('resolves every stored match id to a paint in the same catalog', () => {
     const paints = parsePaintCatalog(buildCatalogDocumentsOfSize(12));
     const ids = new Set(paints.map((paint) => paint.id));
 

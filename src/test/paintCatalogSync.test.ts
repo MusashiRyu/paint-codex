@@ -5,7 +5,7 @@ import type { CatalogDocument } from '../domain/paintCatalogSource';
 import { buildCatalogDocumentsOfSize } from './helpers/catalogMarkdown';
 
 /**
- * The catalogue is module-level state seeded at import time, so each case
+ * The catalog is module-level state seeded at import time, so each case
  * re-imports the graph to get a clean repository plus whatever localStorage
  * was left holding.
  */
@@ -65,7 +65,7 @@ afterEach(() => {
 });
 
 describe('refreshPaintCatalog', () => {
-  it('adopts a fetched catalogue and notifies subscribers', async () => {
+  it('adopts a fetched catalog and notifies subscribers', async () => {
     vi.stubGlobal('fetch', respondWith(HEALTHY));
     const { repository, sync } = await loadModules();
 
@@ -103,7 +103,7 @@ describe('refreshPaintCatalog', () => {
     }
   });
 
-  it('reports an unchanged upstream without touching the catalogue', async () => {
+  it('reports an unchanged upstream without touching the catalog', async () => {
     vi.stubGlobal('fetch', respondWith(HEALTHY));
     const { repository, sync } = await loadModules();
     await sync.refreshPaintCatalog();
@@ -137,7 +137,7 @@ describe('refreshPaintCatalog', () => {
     expect(listener).not.toHaveBeenCalled();
   });
 
-  it('rejects a parse that lost most of the catalogue', async () => {
+  it('rejects a parse that lost most of the catalog', async () => {
     vi.stubGlobal('fetch', respondWith(buildCatalogDocumentsOfSize(3)));
     const { repository, sync } = await loadModules();
     const bundled = repository.getPaints();
@@ -152,7 +152,7 @@ describe('refreshPaintCatalog', () => {
   it('rejects when a single brand document goes missing', async () => {
     // The brand that vanishes is the smallest one in the real snapshot, so its
     // absence is invisible in the total — the per-brand floor is what catches
-    // it. Guarding on the sum alone would adopt this and ship a catalogue with
+    // it. Guarding on the sum alone would adopt this and ship a catalog with
     // no Citadel paints in it.
     const partial = [{ brand: 'Citadel', markdown: '404: Not Found' }, HEALTHY[1], HEALTHY[2]];
     vi.stubGlobal('fetch', respondWith(partial));
@@ -163,7 +163,7 @@ describe('refreshPaintCatalog', () => {
     expect(repository.getPaints()).toBe(bundled);
   });
 
-  it('rejects documents it cannot find a catalogue in at all', async () => {
+  it('rejects documents it cannot find a catalog in at all', async () => {
     vi.stubGlobal('fetch', respondWith('404: Not Found'));
     const { repository, sync } = await loadModules();
     const bundled = repository.getPaints();
@@ -172,7 +172,7 @@ describe('refreshPaintCatalog', () => {
     expect(repository.getPaints()).toBe(bundled);
   });
 
-  it('keeps the current catalogue when the network fails', async () => {
+  it('keeps the current catalog when the network fails', async () => {
     vi.stubGlobal('fetch', vi.fn().mockRejectedValue(new Error('offline')));
     const { repository, sync } = await loadModules();
     const bundled = repository.getPaints();
@@ -181,7 +181,7 @@ describe('refreshPaintCatalog', () => {
     expect(repository.getPaints()).toBe(bundled);
   });
 
-  it('keeps the current catalogue on an HTTP error', async () => {
+  it('keeps the current catalog on an HTTP error', async () => {
     vi.stubGlobal('fetch', respondWith('', { ok: false, status: 503 }));
     const { repository, sync } = await loadModules();
     const bundled = repository.getPaints();
@@ -202,8 +202,8 @@ describe('refreshPaintCatalog', () => {
   });
 });
 
-describe('catalogue persistence', () => {
-  it('serves a refreshed catalogue on the next launch, before any fetch', async () => {
+describe('catalog persistence', () => {
+  it('serves a refreshed catalog on the next launch, before any fetch', async () => {
     vi.stubGlobal('fetch', respondWith(HEALTHY));
     const first = await loadModules();
     await first.sync.refreshPaintCatalog();

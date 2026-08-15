@@ -1,9 +1,9 @@
 /**
  * Paint scraper — fetches the brand tables from Arcturus5404/miniature-paints
- * and writes src/data/paints.snapshot.json, the catalogue bundled with the app.
+ * and writes src/data/paints.snapshot.json, the catalog bundled with the app.
  *
  * The parsing itself lives in src/domain/paintCatalogSource.ts because the app
- * refreshes the same catalogue at runtime; keeping one parser is what stops a
+ * refreshes the same catalog at runtime; keeping one parser is what stops a
  * bundled snapshot and a refreshed one from disagreeing.
  *
  * Run with: node tools/scraper/scrape.mjs

@@ -66,7 +66,7 @@ describe('ColorLab empty states', () => {
     expect(screen.queryByText('Mix Preview')).not.toBeInTheDocument();
   });
 
-  it('asks for a base paint before deriving colour theory', () => {
+  it('asks for a base paint before deriving color theory', () => {
     renderLab();
     fireEvent.click(screen.getByText('Matching'));
     expect(
@@ -110,7 +110,7 @@ describe('ColorLab mixing', () => {
 });
 
 describe('ColorLab matching', () => {
-  it('names all three derived colours', () => {
+  it('names all three derived colors', () => {
     renderLab();
     fireEvent.click(screen.getByText('Matching'));
     fillSlot('a Base Paint', 'Macragge Blue', 'Citadel');
@@ -121,7 +121,7 @@ describe('ColorLab matching', () => {
     expect(screen.getByText('Shade')).toBeInTheDocument();
   });
 
-  it('shows the derived colour as well as the paint nearest it', () => {
+  it('shows the derived color as well as the paint nearest it', () => {
     // Without the computed hex the card is just a paint, and the reader has no
     // way to see how far the answer sits from what was asked for.
     renderLab();
@@ -153,7 +153,7 @@ describe('ColorLab tabs', () => {
 describe('ColorLab adding to a list', () => {
   it('offers the nearest paint to the active list', () => {
     // Empty list, so every card offers rather than badges — which of these
-    // five paints a derived colour lands on is `findNearestPaint`'s business.
+    // five paints a derived color lands on is `findNearestPaint`'s business.
     const { onAddPaint } = renderLab({ activeListPaintIds: [] });
     fireEvent.click(screen.getByText('Matching'));
     fillSlot('a Base Paint', 'Macragge Blue', 'Citadel');
@@ -162,7 +162,7 @@ describe('ColorLab adding to a list', () => {
     fireEvent.click(within(complementary).getByLabelText(/^Add /));
 
     expect(onAddPaint).toHaveBeenCalledTimes(1);
-    // The paint handed over is a catalogue paint, not the computed colour —
+    // The paint handed over is a catalog paint, not the computed color —
     // that is the whole point of the card.
     expect(catalog).toContain(onAddPaint.mock.calls[0][0]);
   });
@@ -187,7 +187,7 @@ describe('ColorLab adding to a list', () => {
     renderLab({ onAddPaint: undefined, activeListPaintIds: undefined, lists: [] });
     fireEvent.click(screen.getByText('Matching'));
 
-    // No lists, so My Lists has nothing in it and the catalogue is the way in.
+    // No lists, so My Lists has nothing in it and the catalog is the way in.
     fireEvent.click(screen.getByLabelText('Select a Base Paint'));
     fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));

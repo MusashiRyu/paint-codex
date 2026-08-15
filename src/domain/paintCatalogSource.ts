@@ -1,7 +1,7 @@
 import type { Match, Paint } from './types';
 
 /**
- * The upstream paint catalogue: `Arcturus5404/miniature-paints`, one
+ * The upstream paint catalog: `Arcturus5404/miniature-paints`, one
  * markdown table per brand, served raw from GitHub under MIT.
  *
  * Both the build-time scraper (`tools/scraper/scrape.mjs`) and the runtime
@@ -50,9 +50,9 @@ function slugify(value: string): string {
 }
 
 /**
- * Normalise to `#RRGGBB`, or reject.
+ * Normalize to `#RRGGBB`, or reject.
  *
- * Upstream writes `#rrggbb` in a code span. Anything else is not a colour a
+ * Upstream writes `#rrggbb` in a code span. Anything else is not a color a
  * browser will render, and the Lab conversion below slices six digits
  * unconditionally — a four-digit value would give it NaN. Dropping the entry
  * loses one paint; letting it through puts an invisible swatch in the UI.
@@ -67,7 +67,7 @@ function normalizeHex(raw: string): string | null {
 }
 
 /**
- * The colour literal in a Hex cell:
+ * The color literal in a Hex cell:
  *   ![#A32F26](https://placehold.co/15x15/A32F26/A32F26.png) `#A32F26`
  *
  * Read from the backticked span rather than the row at large, because the
@@ -138,11 +138,11 @@ function parseBrandTable(markdown: string): ParsedRow[] {
 }
 
 /**
- * Ranges that are the same colour in a different medium.
+ * Ranges that are the same color in a different medium.
  *
- * Where one name is sold at one colour across several ranges, the brush
- * version leads: it is what someone browsing a colour usually wants, and it is
- * what the pre-Arcturus catalogue held, so the lists carried over by
+ * Where one name is sold at one color across several ranges, the brush
+ * version leads: it is what someone browsing a color usually wants, and it is
+ * what the pre-Arcturus catalog held, so the lists carried over by
  * `paintIdMigration.json` land on it.
  */
 const SPRAYED = /\b(air|spray|primer|varnish)\b/i;
@@ -162,16 +162,16 @@ interface MergedRow {
 /**
  * Collapse rows that describe the same paint, within one brand.
  *
- * Upstream lists a colour once per range it is sold in, so Citadel's Abaddon
+ * Upstream lists a color once per range it is sold in, so Citadel's Abaddon
  * Black arrives as both Air and Base at `#000000` and Vallejo's Black three
  * times over. Those are one entry with several ranges, not several paints: on
  * screen they are the same name, the same swatch and the same hex, and a
  * search answering with six identical-looking rows is worse than one answering
  * with one. It also fixes the equivalents, where six tiles could resolve to
- * two actual colours.
+ * two actual colors.
  *
- * A name at *different* colours is a different paint and is kept — Citadel's
- * Administratum Grey really is a different grey in Layer and in Air.
+ * A name at *different* colors is a different paint and is kept — Citadel's
+ * Administratum Grey really is a different gray in Layer and in Air.
  */
 function mergeRanges(rows: ParsedRow[]): MergedRow[] {
   const merged = new Map<string, MergedRow>();
@@ -198,8 +198,8 @@ function mergeRanges(rows: ParsedRow[]): MergedRow[] {
  * every saved list that referenced it.
  *
  * What survives the merge above and still clashes is a handful of rows sharing
- * a name and a primary range at different colours — Vallejo reissues under two
- * product codes, mostly. Those are ordered by code then colour and suffixed
+ * a name and a primary range at different colors — Vallejo reissues under two
+ * product codes, mostly. Those are ordered by code then color and suffixed
  * `-2`, `-3`. Ordering by the row's own content rather than by its position in
  * the file is what keeps the suffixes from shuffling when upstream re-sorts.
  */
@@ -225,7 +225,7 @@ function assignIds(brand: string, rows: ParsedRow[]): Paint[] {
         brand,
         name: row.name,
         hex: row.hex,
-        // Every range the colour is sold in, primary first. Dropping the rest
+        // Every range the color is sold in, primary first. Dropping the rest
         // would make the merge look like data loss to anyone checking against
         // upstream.
         category: row.ranges.join(' · '),
@@ -275,7 +275,7 @@ export function hexToLab(hex: string): [number, number, number] {
 /**
  * Attach each paint's nearest equivalents from the *other* brands.
  *
- * Upstream ships colour, not conversions, so the equivalents are ours. The
+ * Upstream ships color, not conversions, so the equivalents are ours. The
  * metric is CIE76 — a plain Euclidean distance in CIELAB — because that is
  * the scale the thresholds in `shared/lib/color.ts` are expressed on: 3 for
  * "indistinguishable", 7 for "still usable". CIEDE2000 is the better model of
@@ -335,7 +335,7 @@ function attachMatches(paints: Paint[]): void {
 }
 
 /**
- * Parse the fetched brand documents into a flat catalogue with equivalents.
+ * Parse the fetched brand documents into a flat catalog with equivalents.
  *
  * A document that yields no rows contributes nothing rather than throwing:
  * the caller's paint-count floor is what decides whether the result is

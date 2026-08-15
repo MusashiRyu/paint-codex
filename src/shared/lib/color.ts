@@ -19,7 +19,7 @@ export function getDeltaQuality(delta: number): DeltaQuality {
 }
 
 /**
- * CSS custom property group backing each quality, so the pill colours in every
+ * CSS custom property group backing each quality, so the pill colors in every
  * view come from one mapping.
  */
 const QUALITY_TOKENS: Record<DeltaQuality, string> = {

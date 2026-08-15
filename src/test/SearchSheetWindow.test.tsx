@@ -9,7 +9,7 @@ import { WINDOW_BYPASS_BELOW } from '../features/search/useWindowedList';
 afterEach(cleanup);
 
 /**
- * The windowed list, over a catalogue big enough to need one.
+ * The windowed list, over a catalog big enough to need one.
  *
  * jsdom has no layout engine, so every `getBoundingClientRect` is zero and no
  * card is ever measured — which is exactly what makes this testable. Heights
@@ -24,7 +24,7 @@ afterEach(cleanup);
 
 const COUNT = 200;
 
-/** A catalogue walking the hue wheel, so the browse order is well spread. */
+/** A catalog walking the hue wheel, so the browse order is well spread. */
 function buildCatalog(count = COUNT): Paint[] {
   const paints: Paint[] = [];
   for (let i = 0; i < count; i++) {
@@ -98,7 +98,7 @@ const mountedNames = () =>
   screen.queryAllByText(/^Paint /, { selector: '[class*="paintName"]' }).map((el) => el.textContent);
 
 describe('SearchSheet windowed list', () => {
-  it('mounts a handful of cards while reporting the whole catalogue', () => {
+  it('mounts a handful of cards while reporting the whole catalog', () => {
     renderBrowse();
 
     expect(screen.getByText(`Found ${COUNT} paint(s)`)).toBeInTheDocument();
@@ -115,7 +115,7 @@ describe('SearchSheet windowed list', () => {
     const padding = spacers.reduce((sum, el) => sum + parseFloat(el.style.height || '0'), 0);
 
     // Nothing is lost: what is on screen plus what the spacers stand in for is
-    // the whole catalogue's height.
+    // the whole catalog's height.
     expect(padding + rendered).toBeCloseTo(total, 0);
   });
 
@@ -137,7 +137,7 @@ describe('SearchSheet windowed list', () => {
 
     const names = mountedNames();
     expect(names).toContain(anchor.name);
-    // The colours either side of it are what the user came to scroll through.
+    // The colors either side of it are what the user came to scroll through.
     expect(names).toContain(order[119].name);
     expect(names).toContain(order[121].name);
     expect(names).not.toContain(order[0].name);

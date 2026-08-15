@@ -9,13 +9,13 @@ import { Swatch } from '../../shared/ui/Swatch';
 import styles from './NearestPaintCard.module.css';
 
 interface NearestPaintCardProps {
-  /** Names the computed colour — "Complementary", "40%". */
+  /** Names the computed color — "Complementary", "40%". */
   heading: string;
-  /** The computed colour itself, which is not a paint and cannot be bought. */
+  /** The computed color itself, which is not a paint and cannot be bought. */
   hex: string;
-  /** One line on what the colour is for. Omitted on the mix steps. */
+  /** One line on what the color is for. Omitted on the mix steps. */
   description?: string;
-  /** The catalogue paint closest to `hex`, from `findNearestPaint`. */
+  /** The catalog paint closest to `hex`, from `findNearestPaint`. */
   nearest: ResolvedMatch | null;
   /** Whether that paint is already in the active list. */
   inList: boolean;
@@ -24,11 +24,11 @@ interface NearestPaintCardProps {
 }
 
 /**
- * A computed colour, and the real paint you would reach for instead.
+ * A computed color, and the real paint you would reach for instead.
  *
  * The computed swatch and its hex come first because they are the answer to
  * what was asked; the card under them is what makes the answer actionable. The
- * ΔE is shown rather than hidden even when it is large — a derived colour has
+ * ΔE is shown rather than hidden even when it is large — a derived color has
  * no reason to have a near neighbour, and saying "the closest thing is not very
  * close" is more useful than implying a match.
  */

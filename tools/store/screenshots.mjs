@@ -62,7 +62,7 @@ const DEVICES = [
  * src/app/providers/store.ts, or the migration runs against the wrong shape.
  *
  * List names are deliberately invented rather than real faction names. The
- * catalogue naming paint brands is nominative use -- a conversion chart has to
+ * catalog naming paint brands is nominative use -- a conversion chart has to
  * say "Citadel" to be a conversion chart. A store listing whose screenshots are
  * covered in another company's faction trademarks is not that, and is the kind
  * of thing that draws a complaint against the listing rather than the app.
@@ -104,7 +104,7 @@ const SEED = {
 };
 
 /**
- * The catalogue refresh fires once per launch against raw.githubusercontent.com.
+ * The catalog refresh fires once per launch against raw.githubusercontent.com.
  * Left alone it can swap the paints mid-capture, so a screenshot run would
  * depend on upstream and on the network. Block it and let the app fall back to
  * the bundled snapshot, which is what a fresh install shows anyway.
@@ -177,9 +177,9 @@ async function fillSlot(page, slotLabel, paintName) {
  * would drift the moment one of them was updated for a UI change.
  *
  * **One shot per section of the description.** The listing sells four things —
- * lists, the catalogue and its equivalents, the Color Lab, and offline — and
+ * lists, the catalog and its equivalents, the Color Lab, and offline — and
  * the first three are the ones a picture can carry. Until 1.2.0 all four shots
- * were List screens while the copy described a colour laboratory, which is a
+ * were List screens while the copy described a color laboratory, which is a
  * worse listing than one that never mentions it: a reviewer reads the images
  * against the words. The second-list and new-list shots are what gave way, and
  * they were the two that showed a screen the set already had.
@@ -205,7 +205,7 @@ async function captureSequence(page, outDir) {
   await page.waitForSelector('[class*="stripLabel"]');
   await shoot(page, outDir, '03-color-lab-mix');
 
-  // The other half of the same screen: one paint in, three derived colours out,
+  // The other half of the same screen: one paint in, three derived colors out,
   // each matched back to a real paint.
   await page.evaluate(() => {
     const tab = [...document.querySelectorAll('button')].find(

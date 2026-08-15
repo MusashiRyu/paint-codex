@@ -28,7 +28,7 @@ const lists: PaintList[] = [
     paintIds: ['citadel-red', 'citadel-blue'],
   },
   { id: 'list-b', name: 'Rust and Bone', icon: 'skull', color: '#7a8a5a', paintIds: [] },
-  // A list holding an id the catalogue no longer has. `resolvePaints` drops it.
+  // A list holding an id the catalog no longer has. `resolvePaints` drops it.
   { id: 'list-c', name: 'Retired', icon: 'moon', color: '#c9a86a', paintIds: ['gone-away'] },
 ];
 
@@ -53,7 +53,7 @@ describe('PaintPickerSheet modes', () => {
     expect(screen.queryByPlaceholderText('Search by name or brand...')).not.toBeInTheDocument();
   });
 
-  it('switches to the catalogue search', () => {
+  it('switches to the catalog search', () => {
     renderPicker();
     fireEvent.click(screen.getByText('Search Catalog'));
     expect(screen.getByPlaceholderText('Search by name or brand...')).toBeInTheDocument();
@@ -67,16 +67,16 @@ describe('PaintPickerSheet modes', () => {
 
   it('leaves out a list with nothing pickable in it', () => {
     // An empty list is a heading over nothing, and so is one whose paints have
-    // all left the catalogue — `resolvePaints` drops those ids rather than
+    // all left the catalog — `resolvePaints` drops those ids rather than
     // rendering rows that cannot be picked.
     renderPicker();
     expect(screen.queryByText('Rust and Bone')).not.toBeInTheDocument();
     expect(screen.queryByText('Retired')).not.toBeInTheDocument();
   });
 
-  it('points at the catalogue when no list has anything in it', () => {
+  it('points at the catalog when no list has anything in it', () => {
     renderPicker({ lists: [] });
-    expect(screen.getByText('No paints saved yet — search the catalogue instead.')).toBeInTheDocument();
+    expect(screen.getByText('No paints saved yet — search the catalog instead.')).toBeInTheDocument();
   });
 });
 
@@ -119,9 +119,9 @@ describe('PaintPickerSheet picking', () => {
   });
 
   it('picks from the card itself, not from a button on it', () => {
-    // The whole point of the row being the button. A card full of colour that
+    // The whole point of the row being the button. A card full of color that
     // does nothing when tapped reads as broken on a surface whose entire job
-    // is choosing a colour — this was reported from the app, not caught here.
+    // is choosing a color — this was reported from the app, not caught here.
     const { onPick } = renderPicker();
     fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));

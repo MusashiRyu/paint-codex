@@ -19,7 +19,7 @@ export interface PaintSummaryProps {
    * a stack of them. A slot rather than props because "what you can do with
    * this paint" is the only thing that differs between the surfaces showing
    * one: the search results add it to a list, the Color Lab adds the nearest
-   * paint to a colour you cannot buy.
+   * paint to a color you cannot buy.
    */
   children?: ReactNode;
 }

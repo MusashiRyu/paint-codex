@@ -22,7 +22,7 @@ const outDir = join(repoRoot, 'store', 'graphics');
 const WIDTH = 1024;
 const HEIGHT = 500;
 
-/** Swatches lifted from the bundled catalogue, so the colours are real paints. */
+/** Swatches lifted from the bundled catalog, so the colors are real paints. */
 const SWATCHES = [
   '#14397A', // Macragge Blue
   '#456EB5', // Calgar Blue

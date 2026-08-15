@@ -22,7 +22,7 @@ on:
         required: false
         default: ''
 
-# An upload that is half finished should never be cancelled by a second run.
+# An upload that is half finished should never be canceled by a second run.
 concurrency:
   group: ios-release
   cancel-in-progress: false
@@ -191,7 +191,7 @@ jobs:
       # consults the *simulator* runtime list while processing it, even when
       # compiling `--platform iphoneos`. Hosted images carry simulator runtimes
       # newer than the Xcode SDK build, so the lookup finds no match and the
-      # asset catalogue fails with a message about a platform the archive does
+      # asset catalog fails with a message about a platform the archive does
       # not target:
       #
       #   No simulator runtime version from ["23C54", ...] available to use
@@ -199,7 +199,7 @@ jobs:
       #
       # This app tags no assets for on-demand delivery, so the whole code path
       # is dead weight here. Left on, it is a build failure whose text points
-      # at the asset catalogue, which is the one thing that is not wrong.
+      # at the asset catalog, which is the one thing that is not wrong.
       - name: Archive
         env:
           TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}

@@ -17,7 +17,7 @@ const CATEGORY_ORDER = ['Base Layer', 'Layer', 'Edge', 'Shade', 'Technical', 'Co
 interface ListsPanelProps {
   lists: PaintList[];
   activeListId: string | undefined;
-  /** Active list's paints, already resolved from the catalogue by the caller. */
+  /** Active list's paints, already resolved from the catalog by the caller. */
   activePaints: Paint[];
   onSelectList: (id: string) => void;
   onOpenNewList: () => void;
@@ -120,9 +120,9 @@ export function ListsPanel({
               style={
                 isActive
                   ? {
-                      // The list's own banner colour is user data, so it cannot
+                      // The list's own banner color is user data, so it cannot
                       // come from a token; `26` is the 0.15 alpha the gold
-                      // hairline uses, applied to whichever colour was picked.
+                      // hairline uses, applied to whichever color was picked.
                       border: `1px solid ${list.color}`,
                       background: `${list.color}26`,
                       color: 'var(--gold-bright)',

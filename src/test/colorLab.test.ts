@@ -6,7 +6,7 @@ import { getPaintIndex } from '../domain/paintRepository';
 import type { Paint } from '../domain/types';
 
 /**
- * The Color Lab computes colours that are not paints, then finds the paint
+ * The Color Lab computes colors that are not paints, then finds the paint
  * nearest each one. Both halves are asserted here: the transforms, and the
  * lookup that turns their output back into something buyable.
  */
@@ -22,7 +22,7 @@ const paint = (id: string, brand: string, hex: string, matches: Paint['matches']
 describe('mixRamp', () => {
   it('starts at A and ends at B exactly', () => {
     // The endpoints are what the slots above the strip show, so a rounding
-    // error here would render the same paint in two different colours.
+    // error here would render the same paint in two different colors.
     const ramp = mixRamp('#102030', '#A0B0C0');
     expect(ramp[0].hex).toBe('#102030');
     expect(ramp[ramp.length - 1].hex).toBe('#A0B0C0');
@@ -40,15 +40,15 @@ describe('mixRamp', () => {
   });
 
   it('returns nothing for a hex it cannot parse', () => {
-    // A catalogue restored from localStorage never went through the parser's
+    // A catalog restored from localStorage never went through the parser's
     // normalizeHex, so this input is reachable. The panel renders its empty
     // state rather than a swatch of "#NaNNaNNaN".
     expect(mixRamp('not-a-hex', '#FFFFFF')).toEqual([]);
     expect(mixRamp('#FFFFFF', '#GGG')).toEqual([]);
   });
 
-  it('emits uppercase hex, like the catalogue', () => {
-    // These render in a column beside catalogue hexes; mixed case would show.
+  it('emits uppercase hex, like the catalog', () => {
+    // These render in a column beside catalog hexes; mixed case would show.
     for (const step of mixRamp('#0a0b0c', '#d4d5d6')) {
       expect(step.hex).toMatch(/^#[0-9A-F]{6}$/);
     }
@@ -122,7 +122,7 @@ describe('findNearestPaint', () => {
 
   it('will return a same-brand paint where getTopMatches would not', () => {
     // The reason this exists rather than reusing the equivalents: a computed
-    // colour has no brand to exclude, so excluding one would hide the answer.
+    // color has no brand to exclude, so excluding one would hide the answer.
     const citadelPair = [
       paint('citadel-a', 'Citadel', '#FF0000', [{ id: 'vallejo-far', delta: 40 }]),
       paint('citadel-b', 'Citadel', '#FE0000'),
@@ -135,7 +135,7 @@ describe('findNearestPaint', () => {
     expect(getTopMatches(citadelPair[0], index).map((m) => m.paint.id)).toEqual(['vallejo-far']);
   });
 
-  it('answers null on an empty catalogue or an unreadable colour', () => {
+  it('answers null on an empty catalog or an unreadable color', () => {
     expect(findNearestPaint('#FF0000', [])).toBeNull();
     expect(findNearestPaint('not-a-hex', catalog)).toBeNull();
   });
@@ -149,8 +149,8 @@ describe('findNearestPaint', () => {
 });
 
 describe('getLabIndex', () => {
-  it('rebuilds when the catalogue is replaced', () => {
-    // The background refresh swaps the catalogue mid-session. An index held
+  it('rebuilds when the catalog is replaced', () => {
+    // The background refresh swaps the catalog mid-session. An index held
     // against the old array would answer with paints that have left it.
     const first = [paint('a', 'Citadel', '#FF0000')];
     const second = [paint('b', 'Vallejo', '#00FF00')];
@@ -165,7 +165,7 @@ describe('getLabIndex', () => {
     resetPaints();
   });
 
-  it('hands back the same array for the same catalogue', () => {
+  it('hands back the same array for the same catalog', () => {
     const catalog = [paint('a', 'Citadel', '#FF0000')];
     expect(getLabIndex(catalog)).toBe(getLabIndex(catalog));
   });

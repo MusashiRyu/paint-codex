@@ -1,7 +1,7 @@
 import styles from './Swatch.module.css';
 
 export interface SwatchProps {
-  /** Any CSS colour — in this app, a paint's `#RRGGBB`. */
+  /** Any CSS color — in this app, a paint's `#RRGGBB`. */
   color: string;
   /**
    * `sm` in a list row, `md` in a search result, `tile` atop a tile, `wide`
@@ -15,7 +15,7 @@ export interface SwatchProps {
   as?: 'div' | 'span';
 }
 
-/** A block of colour with an inset dark ring, so pale paints stay visible. */
+/** A block of color with an inset dark ring, so pale paints stay visible. */
 export function Swatch({ color, size = 'sm', as = 'div' }: SwatchProps) {
   const Tag = as;
   return (

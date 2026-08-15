@@ -4,7 +4,7 @@
  * The runtime refresh is deliberately silent: if the upstream tables change
  * shape, `parsePaintCatalog` starts returning too few paints, the refresh
  * rejects the result, and every install quietly serves the snapshot it shipped
- * with. That is the right behaviour for a user and a terrible one for us —
+ * with. That is the right behavior for a user and a terrible one for us —
  * nobody finds out. This runs the same parser against live upstream on a
  * schedule so the failure shows up as a red build instead of a bug report
  * months later.

@@ -8,7 +8,7 @@ const Panel = ({ children }: { children: React.ReactNode }) => (
 
 const noop = () => {};
 
-/** The list tab bar: an active tab tinted with the list's own banner colour. */
+/** The list tab bar: an active tab tinted with the list's own banner color. */
 export const ListTabs = () => (
   <Panel>
     <Pill style={{ border: '1px solid #c9a86a', background: '#c9a86a26', color: 'var(--gold-bright)' }} onClick={noop}>

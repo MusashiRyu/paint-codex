@@ -1,5 +1,5 @@
 /* `display`, `text-align` and `text-decoration` are here for the anchor
- * variant: a <button> already centres its label, sits inline-block and carries
+ * variant: a <button> already centers its label, sits inline-block and carries
  * no underline, but an <a> does none of the three. Stating them keeps the two
  * renderings pixel-identical instead of nearly so. */
 .btn {

@@ -68,7 +68,7 @@
     "jsx-a11y/no-noninteractive-element-interactions": "off",
 
     // `<dialog>` brings its own top-layer, its own ::backdrop and its own focus
-    // and Escape behaviour, all of which would have to be fought rather than
+    // and Escape behavior, all of which would have to be fought rather than
     // used — the sheet animates from the bottom lip, traps focus itself, and
     // must not close on Escape without telling the caller. `role="dialog"` on a
     // div announces identically and behaves the way this app needs.

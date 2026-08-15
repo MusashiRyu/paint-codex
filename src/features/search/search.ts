@@ -9,9 +9,9 @@ const FUSE_OPTIONS: IFuseOptions<Paint> = {
 };
 
 /**
- * Fuzzy search over the catalogue, optionally narrowed to one brand.
+ * Fuzzy search over the catalog, optionally narrowed to one brand.
  *
- * The index is rebuilt per call rather than memoised: the catalogue can be
+ * The index is rebuilt per call rather than memoized: the catalog can be
  * replaced underneath by the background refresh, and a stale index would keep
  * answering with paints that are no longer in it. Building over 2,279 entries
  * is cheap enough that caching it would buy less than the invalidation costs.

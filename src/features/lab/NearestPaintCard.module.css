@@ -1,4 +1,4 @@
-/* The computed colour, on one line with its hex and its note. Wraps rather
+/* The computed color, on one line with its hex and its note. Wraps rather
  * than truncates: the note is a whole sentence at 320px. */
 .derived {
   display: flex;

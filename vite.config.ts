@@ -17,7 +17,7 @@ export default defineConfig({
      * import to split it out — which is exactly what this app must not do:
      * `paintRepository` resolves cache-then-bundled *at import*, so reads stay
      * synchronous and there is never a paintless first render. Splitting the
-     * catalogue would make the one thing the app is for arrive asynchronously,
+     * catalog would make the one thing the app is for arrive asynchronously,
      * in a packaged app where the payload is on local disk and costs no round
      * trip anyway.
      *

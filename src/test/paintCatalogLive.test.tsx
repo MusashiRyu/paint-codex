@@ -25,7 +25,7 @@ const PER_BRAND = (() => {
   return Math.ceil(Math.max(...counts.values()) / 2) + 8;
 })();
 
-// A plausible-sized catalogue that also contains the new paint.
+// A plausible-sized catalog that also contains the new paint.
 const REFRESHED = (() => {
   const documents = buildCatalogDocumentsOfSize(PER_BRAND);
   const citadel = documents[0];
@@ -66,7 +66,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe('live catalogue in the app', () => {
+describe('live catalog in the app', () => {
   it('shows a newly published paint in a saved list without a reload', async () => {
     const listId = useAppStore.getState().createList('Blood Angels');
     // The user saved this id earlier; the bundled snapshot has never heard of it.

@@ -59,7 +59,7 @@ Three rules the system depends on:
    Everything else is outline-and-tint: `GhostButton` for labelled actions,
    `IconButton` for icon-only ones. Destructive actions use `tone="danger"` —
    outline only, deliberately quieter than the gold beside them.
-3. **Never pick a match colour by hand.** A ΔE quality becomes a colour only
+3. **Never pick a match color by hand.** A ΔE quality becomes a color only
    through `getDeltaStyle(delta)`, which returns `{background, border, color}`.
    Pair it with `getDeltaLabel(delta)`.
 

@@ -19,7 +19,7 @@
    * ground; over the card's background image, 6% is enough for a paint name
    * scrolling underneath to read straight through the bar and compete with the
    * labels on it. This is `--scrim-card-bottom` with its alpha taken off, so
-   * the bar and the card bottom it sits on are the same colour and the join is
+   * the bar and the card bottom it sits on are the same color and the join is
    * the gold hairline rather than a step. One use, so it stays local. */
   background: #0a080d;
   border-top: 1px solid var(--gold-line);

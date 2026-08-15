@@ -15,7 +15,7 @@
   box-shadow: var(--shadow-sheet-lip);
 }
 
-/* Both variants keep their *ground* against bottom: 0, so the sheet colour
+/* Both variants keep their *ground* against bottom: 0, so the sheet color
  * still runs under the home indicator, and pay the inset in padding so the
  * content inside them does not. */
 

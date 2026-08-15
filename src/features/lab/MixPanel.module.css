@@ -25,7 +25,7 @@
 }
 
 /* One continuous band rather than six swatches: the blend is the point, and
- * gaps between the steps would read as six separate colours. */
+ * gaps between the steps would read as six separate colors. */
 .strip {
   display: flex;
   border-radius: var(--radius-md);

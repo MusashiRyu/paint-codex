@@ -1,4 +1,4 @@
-name: Upstream catalogue check
+name: Upstream catalog check
 
 # The runtime refresh fails silently by design, so a markup change upstream
 # would otherwise go unnoticed until a user reported missing paints. This is

@@ -1,12 +1,12 @@
 /*
- * Design tokens — the single source of truth for every colour, radius, type
+ * Design tokens — the single source of truth for every color, radius, type
  * size, tracking, elevation and structural spacing in the app.
  *
  * The rule that keeps this file honest: a raw value may appear in a component
  * stylesheet only if it is used exactly once. The moment the same number or
- * colour turns up in a second file it belongs here, under a name. Every token
+ * color turns up in a second file it belongs here, under a name. Every token
  * below was extracted from values that had already been written out two to
- * seven times by hand — four near-identical greys, a gold that existed as
+ * seven times by hand — four near-identical grays, a gold that existed as
  * `--gold-title` and was pasted as `#dcb877` anyway, and a sheet header
  * duplicated byte-for-byte across two overlays.
  *
@@ -60,7 +60,7 @@
   --track-3xl: 3px;
 
   /* ---------------------------------------------------------------------
-   * Colour — grounds
+   * Color — grounds
    * ------------------------------------------------------------------ */
   --bg-page: #050409;
   --bg-sheet: #14111b;
@@ -76,7 +76,7 @@
   --scrim-card-bottom: rgba(10, 8, 13, 0.96);
 
   /* ---------------------------------------------------------------------
-   * Colour — gold
+   * Color — gold
    * The brand axis. Every gold in the app is one of these five; the alpha
    * ladder below covers fills, hairlines and borders drawn from --gold.
    * ------------------------------------------------------------------ */
@@ -97,8 +97,8 @@
   --gold-inset: rgba(201, 168, 106, 0.14); /* the card's 1px inner ring */
 
   /* ---------------------------------------------------------------------
-   * Colour — text
-   * Five steps from parchment to dim. Four more greys existed as literals
+   * Color — text
+   * Five steps from parchment to dim. Four more grays existed as literals
    * (#9a8f79, #8f8574, #a89d8a, #c9b898) within 7 per channel of these; they
    * were near-duplicates, and are folded in here.
    * ------------------------------------------------------------------ */
@@ -109,9 +109,9 @@
   --text-brand: #b99a5b; /* brand names, section heads — gold-leaning text */
 
   /* ---------------------------------------------------------------------
-   * Colour — state
+   * Color — state
    * Consumed only through shared/lib/color.ts, which maps ΔE quality onto
-   * these three groups. Nothing renders a delta colour any other way.
+   * these three groups. Nothing renders a delta color any other way.
    * ------------------------------------------------------------------ */
   --ok-bg: rgba(76, 140, 86, 0.18);
   --ok-border: #4c8c56;
@@ -134,7 +134,7 @@
   --danger-border: rgba(178, 70, 70, 0.35);
 
   /* ---------------------------------------------------------------------
-   * Colour — neutral borders
+   * Color — neutral borders
    * ------------------------------------------------------------------ */
   --border-subtle: rgba(255, 255, 255, 0.1); /* resting control edge */
   --border-faint: rgba(255, 255, 255, 0.08); /* unselected tile, equiv card */
@@ -151,7 +151,7 @@
   --radius-pill: 20px; /* every pill: tabs, inputs, primary buttons */
   --radius-sheet: 22px; /* bottom-sheet top corners */
   --radius-card: 30px; /* the desktop phone card */
-  --radius-round: 50%; /* FAB, icon buttons, colour swatches */
+  --radius-round: 50%; /* FAB, icon buttons, color swatches */
 
   /* ---------------------------------------------------------------------
    * Elevation
@@ -162,7 +162,7 @@
   --shadow-fab: 0 10px 26px rgba(180, 140, 60, 0.4);
   --shadow-sheet-lip: 0 -1px 0 rgba(201, 168, 106, 0.18);
   /* Two swatch rings, and they are not interchangeable: square swatches carry
-   * the ring inside their radius, the round colour chips carry it outside. */
+   * the ring inside their radius, the round color chips carry it outside. */
   --shadow-swatch: inset 0 0 0 1px rgba(0, 0, 0, 0.35);
   --shadow-swatch-ring: 0 0 0 1px rgba(0, 0, 0, 0.4);
   --shadow-selected-ring: 0 0 0 3px rgba(201, 168, 106, 0.35);
@@ -187,7 +187,7 @@
   /* Control sizing — the two round icon buttons and the primary action. */
   --control-sm: 22px; /* inline remove */
   --control-md: 30px; /* header icon buttons */
-  --control-lg: 34px; /* add button, colour swatch */
+  --control-lg: 34px; /* add button, color swatch */
   --control-xl: 56px; /* FAB, icon picker tile */
 
   /* The bottom nav's own height, before the home indicator is added to it.

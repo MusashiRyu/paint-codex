@@ -1,5 +1,5 @@
 /* The ring is inset so it sits inside the radius rather than haloing the
- * colour — a swatch has to read as the paint, not as a bordered box. */
+ * color — a swatch has to read as the paint, not as a bordered box. */
 .swatch {
   flex-shrink: 0;
   display: block;
@@ -18,7 +18,7 @@
   border-radius: var(--radius-md);
 }
 
-/* A Color Lab slot's colour: the full width of the slot, because the slot is
+/* A Color Lab slot's color: the full width of the slot, because the slot is
  * mostly the paint. The only size that is not square, so it is the only one
  * that has to be told not to shrink to its content. */
 .wide {
@@ -28,7 +28,7 @@
 }
 
 /* The head of an equivalent tile. Square rather than a bar across the column:
- * the tile keeps its width, so what the colour gives up is room for the IN
+ * the tile keeps its width, so what the color gives up is room for the IN
  * LIST badge to sit beside it. */
 .tile {
   width: var(--control-lg);

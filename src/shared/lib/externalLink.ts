@@ -8,7 +8,7 @@
  *
  * `rel` is not decoration either. `noopener` closes the reverse-window handle,
  * and `noreferrer` means the destination is never told which app the visit came
- * from — which is the behaviour the privacy policy claims, so it has to be true
+ * from — which is the behavior the privacy policy claims, so it has to be true
  * of every link and not just the ones someone remembered.
  *
  * One constant rather than four hand-typed attribute pairs, so that if a device

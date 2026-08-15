@@ -11,7 +11,7 @@ createRoot(document.getElementById('root')!).render(
 );
 
 /**
- * Check upstream for catalogue changes once per launch.
+ * Check upstream for catalog changes once per launch.
  *
  * Deliberately outside React: it must run exactly once, and an effect under
  * StrictMode runs twice in development. Queued for idle time so it competes

@@ -9,7 +9,7 @@ export interface PillProps {
   /** Dashed outline — the "create one" slot rather than an existing value. */
   dashed?: boolean;
   /**
-   * Escape hatch for a pill tinted with user-chosen colour (a list's banner),
+   * Escape hatch for a pill tinted with user-chosen color (a list's banner),
    * which cannot come from a token. Prefer `selected` for everything else.
    */
   style?: CSSProperties;

@@ -15,8 +15,8 @@ export interface PaintSearchProps {
   /** Ids already in the active list, used for the IN LIST badge. */
   listedPaintIds: string[] | undefined;
   /**
-   * Open the catalogue at one paint: the whole thing in colour order, scrolled
-   * to that paint and nothing filtered out, so the colours either side of it
+   * Open the catalog at one paint: the whole thing in color order, scrolled
+   * to that paint and nothing filtered out, so the colors either side of it
    * are there to scroll through when it has no close equivalent. Omitted or
    * null is the blank search the FAB opens. Read once, at mount; after that the
    * query, the brand filter and the anchor belong to the user.
@@ -30,12 +30,12 @@ export interface PaintSearchProps {
 const ALL_BRANDS = 'All';
 
 /**
- * The catalogue itself: search field, brand filters, and the windowed results.
+ * The catalog itself: search field, brand filters, and the windowed results.
  *
  * Deliberately renders no chrome of its own and returns a fragment, so the
  * `flex: 1` on the results list resolves against whichever `Sheet` is holding
  * it. Split out of `SearchSheet` so the Color Lab's paint picker could offer
- * the real search — Fuse ranking, colour-ordered browse, windowing over all
+ * the real search — Fuse ranking, color-ordered browse, windowing over all
  * 2,279 paints — rather than a second, worse one built to look like it.
  */
 export function PaintSearch({
@@ -50,7 +50,7 @@ export function PaintSearch({
    * changes identity when the background refresh lands, and an effect keyed on
    * it would wipe whatever the user had typed and re-anchor the list away from
    * wherever they had scrolled to. A lazy initialiser, because this scans the
-   * catalogue.
+   * catalog.
    */
   const [focusPaint] = useState(() =>
     focusPaintId ? paintCatalog.find((p) => p.id === focusPaintId) : undefined
@@ -67,26 +67,26 @@ export function PaintSearch({
   /** Where the list is anchored: the ringed card, and where it opens. */
   const [anchorId, setAnchorId] = useState<string | null>(focusPaint?.id ?? null);
 
-  // Derived from the catalogue so a new brand in the snapshot needs no code change.
+  // Derived from the catalog so a new brand in the snapshot needs no code change.
   const brands = useMemo(() => [ALL_BRANDS, ...getUniqueBrands(paintCatalog)], [paintCatalog]);
 
   const activeIds = useMemo(() => new Set(listedPaintIds ?? []), [listedPaintIds]);
 
   // An equivalent stores the id of the paint it stands for; this turns it back
-  // into the paint. Memoised against the catalogue array by the repository.
+  // into the paint. Memoized against the catalog array by the repository.
   const paintsById = useMemo(() => getPaintIndex(paintCatalog), [paintCatalog]);
 
   const results = useMemo(() => {
     const q = query.trim();
     if (!q && !browseAll) return null; // show empty prompt
 
-    // Colour order, not catalogue order: browsing is for finding what sits near
+    // Color order, not catalog order: browsing is for finding what sits near
     // a paint, so the list has to be arranged by what "near" means.
     const ordered = getBrowseOrder(paintCatalog);
     const pool =
       brandFilter === ALL_BRANDS ? ordered : ordered.filter((p) => p.brand === brandFilter);
 
-    // Fuse ranks by relevance, so the pool's colour order survives only as the
+    // Fuse ranks by relevance, so the pool's color order survives only as the
     // tiebreak between equal scores — which is an improvement on brand order.
     return q ? searchPaints(pool, q) : pool;
   }, [query, brandFilter, browseAll, paintCatalog]);
@@ -102,7 +102,7 @@ export function PaintSearch({
    * the question here is "show me what is near it", and a query and a brand
    * filter are the two things that can hide the answer.
    *
-   * No dependencies, so `ResultCard` stays memoised across a scroll.
+   * No dependencies, so `ResultCard` stays memoized across a scroll.
    */
   const jumpToMatch = useCallback((target: Paint) => {
     setQuery('');
@@ -124,7 +124,7 @@ export function PaintSearch({
           }}
           placeholder="Search by name or brand..."
           /* Not when the sheet opened on a paint: the soft keyboard would cover
-           * the colours the user came to compare, and the anchor then moves
+           * the colors the user came to compare, and the anchor then moves
            * focus to the card anyway, leaving the keyboard up over nothing. */
           autoFocus={!focusPaint}
         />

@@ -23,11 +23,11 @@ interface ColorLabProps {
 }
 
 /**
- * The Collab screen: mix two paints, or derive colour theory from one.
+ * The Collab screen: mix two paints, or derive color theory from one.
  *
  * Slots hold paint *ids*, not paints, on the same reasoning the store does —
- * the background refresh can replace the catalogue mid-session, and a held
- * `Paint` object would go on showing a colour that had left it. Resolving on
+ * the background refresh can replace the catalog mid-session, and a held
+ * `Paint` object would go on showing a color that had left it. Resolving on
  * every render costs a map lookup.
  */
 export function ColorLab({ paintCatalog, lists, activeListPaintIds, onAddPaint }: ColorLabProps) {

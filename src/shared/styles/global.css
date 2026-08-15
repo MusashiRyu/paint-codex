@@ -1,7 +1,7 @@
 /* Self-hosted Cinzel + EB Garamond; see fonts.css for why they are not on a CDN. */
 @import './fonts.css';
 
-/* Every colour, radius, type size and elevation in the app. Component
+/* Every color, radius, type size and elevation in the app. Component
  * stylesheets pull from here; see documentation/0.2-design-system.md. */
 @import './tokens.css';
 

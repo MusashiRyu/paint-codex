@@ -1,7 +1,7 @@
 /*
  * One result card: the paint, and the equivalents under it.
  *
- * Split out of SearchSheet.module.css when the card became its own memoised
+ * Split out of SearchSheet.module.css when the card became its own memoized
  * component -- the sheet owns the chrome around the list, the card owns itself.
  * Every class keeps its name, which is what the tests and the layout check
  * select on.

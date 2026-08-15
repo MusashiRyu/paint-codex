@@ -21,11 +21,11 @@ export function AboutSheet({ onClose }: AboutSheetProps) {
   const [version, setVersion] = useState(APP_VERSION);
 
   useEffect(() => {
-    let cancelled = false;
+    let canceled = false;
 
     CapacitorApp.getInfo()
       .then((info) => {
-        if (!cancelled) setVersion(info.version);
+        if (!canceled) setVersion(info.version);
       })
       .catch(() => {
         // No native package to ask (browser, tests). The build-time constant
@@ -33,7 +33,7 @@ export function AboutSheet({ onClose }: AboutSheetProps) {
       });
 
     return () => {
-      cancelled = true;
+      canceled = true;
     };
   }, []);
 
@@ -48,7 +48,7 @@ export function AboutSheet({ onClose }: AboutSheetProps) {
       <div className={styles.body}>
         <p className={styles.prose}>
           Paco converts paint between Citadel, Vallejo and The Army Painter, ranking every
-          equivalent by a measured colour distance rather than by eye. The whole catalogue
+          equivalent by a measured color distance rather than by eye. The whole catalog
           ships inside the app and refreshes itself when it can, so it keeps working with
           the radio off.
         </p>
@@ -72,7 +72,7 @@ export function AboutSheet({ onClose }: AboutSheetProps) {
         <section className={styles.section}>
           <h2 className={styles.sectionLabel}>Credits</h2>
           <p className={styles.prose}>
-            Paint data is derived from the open colour database at{' '}
+            Paint data is derived from the open color database at{' '}
             <ExternalLink href={appConfig.links.paintData}>miniature-paints</ExternalLink> (MIT),
             published by the Miniature Painter Pro team.
           </p>

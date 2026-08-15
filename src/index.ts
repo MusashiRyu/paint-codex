@@ -47,7 +47,7 @@ export { ListIconSvg } from './shared/ui/ListIconSvg';
 export { LIST_COLORS, DEFAULT_LIST_COLOR } from './shared/ui/listPalette';
 export type { ListColorOption } from './shared/ui/listPalette';
 
-/* ΔE classification — the one place a match quality becomes a colour. */
+/* ΔE classification — the one place a match quality becomes a color. */
 export {
   CLOSE_DELTA_MAX,
   VERY_CLOSE_DELTA_MAX,

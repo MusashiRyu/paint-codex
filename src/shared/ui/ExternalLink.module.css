@@ -1,4 +1,4 @@
-/* Colour comes from the global `a` rule — gold is the base mark for links, and
+/* Color comes from the global `a` rule — gold is the base mark for links, and
  * restating it here would be the second copy the token rule exists to prevent.
  * Only the underline treatment is local: it sits clear of the descenders so a
  * link inside a Garamond paragraph reads as text with a rule under it rather

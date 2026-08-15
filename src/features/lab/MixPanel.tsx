@@ -31,7 +31,7 @@ export function MixPanel({
 }: MixPanelProps) {
   const ramp = useMemo(() => (a && b ? mixRamp(a.hex, b.hex) : []), [a, b]);
 
-  // Four scans of the catalogue, and only when both slots are full. Memoised
+  // Four scans of the catalog, and only when both slots are full. Memoized
   // against the ramp so switching tabs does not repeat them.
   const steps = useMemo(
     () =>

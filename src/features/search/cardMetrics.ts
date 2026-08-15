@@ -70,7 +70,7 @@ export function equivalentColumns(width: number): number {
 /**
  * Tiles a paint will actually render: what `getTopMatches` keeps, without
  * resolving anything. Counting rather than resolving is the point — this runs
- * for every paint in the catalogue, not just the mounted ones.
+ * for every paint in the catalog, not just the mounted ones.
  */
 export function visibleTileCount(paint: Paint, paintsById: Map<string, Paint>): number {
   let count = 0;
