@@ -32,6 +32,17 @@ export const WINDOW_BYPASS_BELOW = 24;
 /** Viewport to assume before the scroller has been laid out — and under jsdom. */
 const FALLBACK_VIEWPORT = 800;
 
+/**
+ * Landings to attempt before settling for wherever the anchor scroll got to.
+ *
+ * Writing `scrollTop` is a request, not a result: the engine clamps it to the
+ * scroll extent it currently believes in, and on a scroller nearly a million
+ * pixels tall that belief can lag the spacers already in the DOM. Each retry
+ * costs one commit, and the range is taken to wherever the scroll actually
+ * landed either way, so a run of failures is slightly-wrong rather than blank.
+ */
+const ANCHOR_TRIES = 3;
+
 export interface WindowedList {
   /** The scroll container. */
   scrollerRef: (node: HTMLDivElement | null) => void;
@@ -83,14 +94,21 @@ export function useWindowedList(
     requestedVersion.current += 1;
     setVersion((v) => v + 1);
   }, []);
-  /** Set while this hook is writing scrollTop, so its own scroll event is ignored. */
-  const programmatic = useRef(false);
   /**
    * An id to bring to the top once its card is mounted. Seeded with the anchor
    * the sheet opened on: the basis check below only fires when the list or the
    * anchor *changes*, and the first render is not a change.
    */
   const pendingScrollId = useRef<string | null>(anchorId);
+  /** Landings left to attempt for `pendingScrollId`; see the anchor block. */
+  const scrollTries = useRef(ANCHOR_TRIES);
+  /**
+   * The same id again, tracked apart because moving focus is not a geometric
+   * operation. The scroll has to wait for the card to have a box; focus does
+   * not, and holding it back until the scroll succeeds would mean a keyboard or
+   * a screen reader lands on a sheet that merely happens to be near the paint.
+   */
+  const pendingFocusId = useRef<string | null>(anchorId);
 
   const list = items ?? [];
   const windowed = list.length >= WINDOW_BYPASS_BELOW;
@@ -101,6 +119,24 @@ export function useWindowedList(
 
   const builtFor = useRef<Paint[] | null>(null);
   const builtVersion = useRef(-1);
+
+  /**
+   * A card's pitch: measured if it has ever been on screen, estimated if not.
+   *
+   * Memoised on `paintsById` alone — everything else it reads is a ref — so the
+   * layout effect below can depend on it without re-running on every render.
+   */
+  const heightOf = useCallback(
+    (paint: Paint): number => {
+      const measured = heights.current.get(paint.id);
+      if (measured !== undefined) return measured;
+      return estimateCardHeight(
+        visibleTileCount(paint, paintsById),
+        measuredWidth.current || FALLBACK_VIEWPORT
+      );
+    },
+    [paintsById]
+  );
 
   // Rebuilt during render, not in an effect: the spacers this feeds are part of
   // the same output, and an effect would paint one frame of wrong heights.
@@ -115,15 +151,6 @@ export function useWindowedList(
     offsets.current = next;
     builtFor.current = items;
     builtVersion.current = version;
-  }
-
-  function heightOf(paint: Paint): number {
-    const measured = heights.current.get(paint.id);
-    if (measured !== undefined) return measured;
-    return estimateCardHeight(
-      visibleTileCount(paint, paintsById),
-      measuredWidth.current || FALLBACK_VIEWPORT
-    );
   }
 
   /** The index whose card contains `y`, by binary search over the prefix sums. */
@@ -151,6 +178,23 @@ export function useWindowedList(
     [indexAt, list.length, windowed]
   );
 
+  /**
+   * Mount the cards the scroller is actually looking at.
+   *
+   * The one rule this list cannot break: wherever the scroll ends up, the
+   * window has to cover it. Moving the window never moves content — the top
+   * spacer is `offsets[start]`, so every card keeps its absolute position no
+   * matter which of them happen to be mounted — so this is always safe to call
+   * and there is never a reason not to.
+   */
+  const syncRange = useCallback(
+    (el: HTMLDivElement) => {
+      const next = rangeFor(el.scrollTop, el.clientHeight || FALLBACK_VIEWPORT);
+      setRange((prev) => (prev.start === next.start && prev.end === next.end ? prev : next));
+    },
+    [rangeFor]
+  );
+
   // A new list, or a new anchor, starts the window over — offsets measured
   // against one list mean nothing against another. Render-phase, per React's
   // documented "adjusting state when props change", so no wrong frame paints.
@@ -158,8 +202,11 @@ export function useWindowedList(
   if (basis.current.items !== items || basis.current.anchorIndex !== anchorIndex) {
     basis.current = { items, anchorIndex };
     setRange(initialRange(list.length, anchorIndex, windowed));
-    if (anchorIndex >= 0) pendingScrollId.current = anchorId;
-    else if (scroller.current) scroller.current.scrollTop = 0;
+    if (anchorIndex >= 0) {
+      pendingScrollId.current = anchorId;
+      pendingFocusId.current = anchorId;
+      scrollTries.current = ANCHOR_TRIES;
+    } else if (scroller.current) scroller.current.scrollTop = 0;
   }
 
   /*
@@ -215,13 +262,23 @@ export function useWindowedList(
 
     if (changed) {
       bumpVersion();
-      // The offsets rebuild on the next render; correct against what this
-      // measurement pass implies for the card the user is looking at.
-      const after = offsets.current[topIndex] + into + headerOffset.current;
-      if (Math.abs(after - before) > 0.5) {
-        programmatic.current = true;
-        el.scrollTop = after;
-      }
+      /*
+       * Hold the view still, against what this pass just measured.
+       *
+       * The offsets rebuild on the next render, so the corrected position has
+       * to be summed from `heights` directly. Reading it back out of
+       * `offsets.current` — which is what this did — makes `after` equal
+       * `before` by construction, because that same stale array produced
+       * `topIndex` and `into` a few lines above. The correction was a no-op for
+       * as long as it existed, and scrolling up into cards nobody had measured
+       * moved the ground under the finger by however much their estimates were
+       * out.
+       */
+      const rows = items ?? [];
+      let topOffset = 0;
+      for (let i = 0; i < topIndex; i++) topOffset += heightOf(rows[i]);
+      const after = topOffset + into + headerOffset.current;
+      if (Math.abs(after - before) > 0.5) el.scrollTop = after;
     }
 
     /*
@@ -243,21 +300,49 @@ export function useWindowedList(
     const pending = pendingScrollId.current;
     if (pending && settled && !changed && !resized) {
       const card = cards.current.get(pending);
-      if (card) {
-        pendingScrollId.current = null;
-        programmatic.current = true;
+      if (card && pendingFocusId.current === pending) {
+        pendingFocusId.current = null;
+        card.focus?.({ preventScroll: true });
+      }
+
+      const box = card?.getBoundingClientRect();
+      // A card with no box has not been laid out yet, and under jsdom never
+      // will be. Scrolling to it would be scrolling to zero, so wait instead.
+      if (card && box && box.height > 0) {
         // Geometric, so it holds whatever the offsetParent chain looks like and
         // wherever the list is already scrolled to. Short of the top by the
         // width of the ring the anchored card wears, which is drawn outside its
         // border box and would otherwise be cut off.
-        el.scrollTop += card.getBoundingClientRect().top - scrollerBox.top - ANCHOR_GAP;
-        card.focus?.({ preventScroll: true });
+        const want = el.scrollTop + (box.top - scrollerBox.top - ANCHOR_GAP);
+        el.scrollTop = want;
+
+        /*
+         * Did it land?
+         *
+         * This used to assume so, and that assumption is the bug behind an
+         * empty sheet on iOS: the browse list is nearly a million pixels tall,
+         * WebKit clamps a jump into it against a scroll extent it has not
+         * finished laying out, and the scroller stops short of the card. The
+         * window mounted around the anchor is then nowhere near the viewport,
+         * which is left inside a spacer — a blank screen, until a finger
+         * scrolls and the range is finally derived from a real position.
+         *
+         * Reading `scrollTop` back says so immediately: the scroll *position*
+         * updates synchronously on assignment, only the event is deferred. So
+         * a short landing is retried on the next commit, by which time layout
+         * has usually caught up, and then settled for either way.
+         */
+        const landed = Math.abs(el.scrollTop - want) <= 1;
+        if (landed || --scrollTries.current <= 0) pendingScrollId.current = null;
+        else bumpVersion();
+        // Whatever happened above, mount what the scroller is now looking at.
+        syncRange(el);
       }
     }
     // Every commit that can change a card's height is in this list: a new list,
     // cards entering or leaving the window, and a re-measure. It converges,
     // because a pass that moves nothing does not bump the version.
-  }, [bumpVersion, indexAt, items, range.start, range.end, version]);
+  }, [bumpVersion, heightOf, indexAt, items, range.start, range.end, syncRange, version]);
 
   // Rotation changes the column count and so every card's height, and React has
   // no reason to re-render for it. Width only: the Android soft keyboard
@@ -271,22 +356,25 @@ export function useWindowedList(
     return () => window.removeEventListener('resize', onResize);
   }, [bumpVersion]);
 
-  // Plain listener rather than React's onScroll, so `passive` is explicit and a
-  // test's fireEvent.scroll hits the same path a finger does.
+  /*
+   * Plain listener rather than React's onScroll, so `passive` is explicit and a
+   * test's fireEvent.scroll hits the same path a finger does.
+   *
+   * Every scroll counts, including the ones this hook causes. There used to be
+   * a flag here that swallowed the next event after a programmatic write, on
+   * the reasoning that the hook already knew where it had put the scroller —
+   * but it only knew where it had *asked* for it to be, and swallowing the
+   * event threw away the one correction that would have caught the difference.
+   * The flag was also a latch: a write that moved nothing produced no event to
+   * clear it, and the next real scroll was eaten instead.
+   */
   useLayoutEffect(() => {
     const el = scroller.current;
     if (!el || !windowed) return;
-    const onScroll = () => {
-      if (programmatic.current) {
-        programmatic.current = false;
-        return;
-      }
-      const next = rangeFor(el.scrollTop, el.clientHeight || FALLBACK_VIEWPORT);
-      setRange((prev) => (prev.start === next.start && prev.end === next.end ? prev : next));
-    };
+    const onScroll = () => syncRange(el);
     el.addEventListener('scroll', onScroll, { passive: true });
     return () => el.removeEventListener('scroll', onScroll);
-  }, [rangeFor, windowed]);
+  }, [syncRange, windowed]);
 
   const registerCard = useCallback((id: string, node: HTMLDivElement | null) => {
     if (node) cards.current.set(id, node);
