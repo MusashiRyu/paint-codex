@@ -19,24 +19,34 @@ carries the equivalents work from retros 021–026. `versionCode` 3 was cut from
 the same `versionName` for the App Store, which rejected it before review
 reached the app. Both are superseded; neither is worth uploading now.
 
-**1.2.0 (`versionCode` 4) was built on 2026-08-15 and is the one to upload.**
-It is the first build from merged `master` and carries everything the two
-stores have been waiting on:
+**1.2.0 (`versionCode` 4) is live on Play**, uploaded 2026-08-15. It was the
+first build from merged `master` and carried the Color Lab (retro 031), the
+status bar overlap and portrait lock (retro 030), and the blank sheet when
+opening a paint's equivalents (retro 033).
 
-- **The Color Lab** (retro 031) — a second screen, and the reason for the minor
-  bump rather than a patch one.
-- **The status bar overlap and the portrait lock** (retro 030), neither of
-  which is in any build either store currently holds.
-- **The blank sheet when opening a paint's equivalents** (retro 033).
+**1.2.1 (`versionCode` 5) was built on 2026-08-15 and is the one to upload.**
+It carries exactly one change: the search sheet no longer leaves the app zoomed
+in (retro 036).
 
-The `.aab` is signed and `jarsigner`-verified as `CN=Paco, O=Musashi, C=NL`;
-`aapt2 dump badging` confirms `versionCode='4' versionName='1.2.0'` in the
-matching release APK, which is built for the hardware smoke test.
+**That fix is iOS-only, and Android is shipping it anyway.** The bug is
+WKWebView's focus-zoom on a sub-16px input and has no Android counterpart, so
+Play users get a release that changes nothing they can see. It goes out because
+`versionName` is one string for both stores — and the alternative, letting the
+platforms drift to different numbers, costs more than a dull release note. The
+1.2.1 block in `store/listing.md` says so plainly rather than inventing a
+benefit.
 
-**The listing changed this time**, so this is not step 6 onward. The four
-screenshots per store were all List screens and are now one per section of the
-description, and both files carry a 1.2.0 release-notes block. Re-upload the
-screenshot set with the release.
+The number is not a free choice in either direction. 1.2.0 is live, so the fix
+cannot reuse it; and `versionCode` 5 is forced independently, because 4 went to
+TestFlight to verify the safe-area and anchor-scroll fixes and an uploaded build
+number is spent whatever becomes of it.
+
+The `.aab` is signed with the `PACO-UPL` upload key, and the matching release
+APK is built for the hardware smoke test — though the fix it carries cannot be
+observed on Android hardware. It needs the iPhone; see OPEN-ITEMS 16.
+
+**The listing did not change this time.** The screenshots are the ones uploaded
+with 1.2.0 and need no re-upload; only the release-notes block is new.
 
 The package name registration is **done** — confirmed 2026-08-10, with the app
 signing key's fingerprint already attached to `com.musashi.paco`. Earlier
@@ -500,7 +510,11 @@ notes → review → roll out. Start at a staged percentage on production.
 The release notes live in `store/listing.md`, one block per version — Play keeps
 them per release, so each version's text stays alongside the last rather than
 replacing it. `npm run listing:check` measures every block against the 500-char
-limit. For this upload, paste **Release notes 1.1.0**.
+limit. For this upload, paste **Release notes 1.2.1**.
+
+That instruction is version-specific and goes stale silently, since a wrong
+paste is a plausible-looking release note rather than an error. It is stated
+once here and once at the top of this file, and both are updated with the cut.
 
 ---
 
