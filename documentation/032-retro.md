@@ -57,7 +57,7 @@ Seven answers in **4,000 characters**, which is less room than it sounds once
 setup instructions and a services list are in it. The block that went in is
 about 3,890, and that budget is why it reads as prose rather than an essay.
 
-Two things were decided rather than merely written.
+Three things were decided rather than merely written.
 
 ### The flow had to be checked against the build, not remembered
 
@@ -93,6 +93,16 @@ There is a listing consequence and OPEN-ITEMS 11 already named it: master's
 description does not mention Collab, the branch's does, and all four screenshots
 in both stores are List screens. Shipping the merge makes those release
 blockers rather than the tidy-up they were on the branch.
+
+### The About screen is not a core flow
+
+The first version of this block put the About sheet in both the flow and the
+recording. The premise was that the reviewer would end up on the About screen.
+They will not, because nothing sends them there. **Apple asked for "the typical
+user flow through its core features"**, and About is not a core feature — the
+four things a user actually does here are create a list, add a paint to it, mix
+two colours, and match one. A version number and a credits list are not a flow,
+and a recording that detours into one is answering a question nobody asked.
 
 ### Plain ASCII, deliberately
 

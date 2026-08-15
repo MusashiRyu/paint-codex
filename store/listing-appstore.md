@@ -282,9 +282,10 @@ against the actual archive — the first draft of this block described a "starte
 list" the store does not seed and a `NEW LIST` button that reads **New**, both
 from writing it out of memory rather than out of the code.
 
-**3,989 of the field's 4,000 characters.** Eleven spare, so anything added has
-to displace something, and the count is worth re-running after any edit. That
-budget is the reason this is prose and not an essay.
+**3,926 of the field's 4,000 characters**, and the listing check now measures it
+on every run, so drift shows up rather than being discovered in the form. There
+is not much room: anything added has to displace something, which is the reason
+this is prose and not an essay.
 
 **Notes for the reviewer** (4000 char limit) — paste this into the Notes field.
 The limit is declared so the listing check measures this like any other field.
@@ -329,7 +330,8 @@ COLLAB
 7. Matching tab: pick a base paint to get its complementary, highlight and
    shade under Color Theory, each likewise resolved to a real paint.
 8. The gold "+" on any of those cards adds that paint to the current list.
-9. The info button, top right, opens About: version and credits.
+
+That is the whole app. There is no further screen, mode or unlockable state.
 
 EXTERNAL SERVICES
 
@@ -352,8 +354,9 @@ there is no advertising identifier and nothing to track.
 
 PURCHASES
 
-None. No in-app purchase, subscription or paid tier, no StoreKit code in the
-binary, and nothing locked, limited or time-restricted.
+None. No in-app purchase, subscription or paid tier, and no StoreKit code in
+the binary. Nothing is locked, limited, trial-gated or time-restricted: every
+feature described above is free and available immediately, in every region.
 
 USER-GENERATED CONTENT
 
@@ -394,26 +397,36 @@ produces a `.mp4` that App Store Connect accepts directly.
 local build is a description of an app Apple does not have, and the differences
 are exactly what a reviewer is looking at.
 
-The flow is the nine numbered steps above, in order, at a pace that can be read
-— roughly 90 to 120 seconds now that Collab is in it. Four things earn their
-place beyond the happy path:
+**Four flows, and only four**, because those are the app's core features and
+Apple asked for the typical path through them. In order, roughly 90 to 120
+seconds at a pace that can be read:
 
-1. **Aeroplane mode on before launch.** It demonstrates the central claim in one
-   gesture, and removes the question of what the network request is doing.
-2. **A search that returns a near-miss**, so the delta score is visibly doing
-   work rather than reading 0.00 on an exact match.
-3. **A mix in Collab, filled from both halves of the picker** — one slot from My
-   Lists, one from Search Catalog. It shows the second screen is reachable and
-   populated rather than an empty pair of slots, which is what a reviewer sees
-   for the first few seconds of that tab.
-4. **A rotation**, which the portrait lock now ships — it shows the app holding
-   still rather than appearing not to have been tested.
+1. **Create a new list** — name, emblem, banner colour. It is also the app's
+   genuine first-run state, so the recording starts where a real user does
+   rather than in a populated app that has to be explained.
+2. **Add a paint to it** — search, read the equivalents, tap the gold "+" and
+   watch the result turn to IN LIST.
+3. **Mix two colours** — the Mixing tab, both slots filled, the Mix Preview
+   strip resolving each step to a real paint.
+4. **Match one colour** — the Matching tab, a base paint, complementary,
+   highlight and shade under Color Theory.
 
-Collab is also the answer to a question the old recording could not have
-answered well. A reviewer who sees only List may reasonably read the app as a
-lookup table with a saved-items feature; the Mix Preview strip resolving to real
-buyable paints is the part that is hard to mistake for a generic list app, and
-it is the strongest ninety seconds the app has.
+Two conditions on the recording rather than steps in it:
+
+- **Aeroplane mode on before launch.** It demonstrates the central claim in one
+  gesture, and removes any question about what the network request is doing.
+- **Search something with a near-miss**, so a delta score is visibly doing work
+  rather than reading 0.00 on an exact match.
+
+**Nothing else.** No About screen — it is not a user
+flow, and a reviewer asked for typical usage is owed typical usage. No settings
+tour, no empty-state gallery, no rotation demo. Every extra second is a second
+of something that was not asked for.
+
+Steps 3 and 4 are why this matters more than it did in August. A reviewer who
+sees only List may reasonably read the app as a lookup table with a saved-items
+feature; the Mix Preview strip resolving to paints that can actually be bought
+is the part that is hard to mistake for a generic list app.
 
 Attach it in **App Review Information → Attachment** (one file) as well as in
 the Resolution Center reply. The Notes field survives to the next submission;

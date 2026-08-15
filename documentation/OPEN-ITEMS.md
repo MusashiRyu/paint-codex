@@ -72,7 +72,7 @@ Four things gate it, in order:
    and `ListsPanel`, not a link drop. The app has no commercial surface anywhere
    today; adding one changes what it feels like to use.
 4. **Disclosure.** Affiliate links need saying so in `store/listing.md` and
-   `store/privacy-policy.md` — they would give the
+   `store/privacy-policy.md` — and they would give the
    destination a reason to know the visit came from Paco, which the privacy
    policy currently promises does not happen. That paragraph would have to
    change. The cost here is not only compliance; it is tone.
