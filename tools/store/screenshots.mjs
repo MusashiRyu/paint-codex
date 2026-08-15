@@ -143,6 +143,32 @@ async function shoot(page, outDir, name) {
   console.log(`  wrote ${path.replace(repoRoot, '.')}`);
 }
 
+/** Move to the Collab screen and wait for its first empty slot. */
+async function openCollab(page) {
+  await page.evaluate(() => {
+    const tab = [...document.querySelectorAll('nav button')].find((b) =>
+      b.textContent?.includes('Collab')
+    );
+    tab?.click();
+  });
+  await page.waitForSelector('button[aria-label="Select Paint A"]');
+}
+
+/**
+ * Fill a Color Lab slot from the picker's My Lists mode.
+ *
+ * The empty slot's label is an exact `Select Paint A`; a picker row's is
+ * `Select <name> by <brand>`. Both start with "Select", so every selector here
+ * is exact or anchored on the " by " — the same collision `check-layout.mjs`
+ * documents, and avoided the same way.
+ */
+async function fillSlot(page, slotLabel, paintName) {
+  await page.click(`button[aria-label="Select ${slotLabel}"]`);
+  await page.waitForSelector('[aria-label="Select a paint"][role="dialog"]');
+  await page.click(`button[aria-label^="Select ${paintName} by "]`);
+  await page.waitForSelector(`button[aria-label^="Change ${slotLabel}, currently ${paintName}"]`);
+}
+
 /**
  * The four shots, in order, against an already-seeded page.
  *
@@ -150,8 +176,16 @@ async function shoot(page, outDir, name) {
  * screenshot set is that both listings show the same app, and two sequences
  * would drift the moment one of them was updated for a UI change.
  *
- * Two of these steps use `?.click()` and would no-op silently if a selector
- * stopped matching, which is why the closing message says to look at the files.
+ * **One shot per section of the description.** The listing sells four things —
+ * lists, the catalogue and its equivalents, the Color Lab, and offline — and
+ * the first three are the ones a picture can carry. Until 1.2.0 all four shots
+ * were List screens while the copy described a colour laboratory, which is a
+ * worse listing than one that never mentions it: a reviewer reads the images
+ * against the words. The second-list and new-list shots are what gave way, and
+ * they were the two that showed a screen the set already had.
+ *
+ * Some steps use `?.click()` and would no-op silently if a selector stopped
+ * matching, which is why the closing message says to look at the files.
  */
 async function captureSequence(page, outDir) {
   await shoot(page, outDir, '01-list');
@@ -162,21 +196,26 @@ async function captureSequence(page, outDir) {
   await shoot(page, outDir, '02-search');
   await page.click('button[aria-label="Close search"]');
 
-  // Second list: a different palette, so the two list screenshots do not read
-  // as the same picture twice.
-  await page.evaluate(() => {
-    const tabs = [...document.querySelectorAll('button')];
-    tabs.find((b) => b.textContent?.includes('Rust & Bone'))?.click();
-  });
-  await shoot(page, outDir, '03-second-list');
+  // Red into yellow: the blend runs through orange, so the strip reads as a
+  // gradient at a glance. Two paints from opposite sides of the wheel mostly
+  // pass through mud, which is true of paint and makes a poor picture.
+  await openCollab(page);
+  await fillSlot(page, 'Paint A', 'Mephiston Red');
+  await fillSlot(page, 'Paint B', 'Averland Sunset');
+  await page.waitForSelector('[class*="stripLabel"]');
+  await shoot(page, outDir, '03-color-lab-mix');
 
+  // The other half of the same screen: one paint in, three derived colours out,
+  // each matched back to a real paint.
   await page.evaluate(() => {
-    const tabs = [...document.querySelectorAll('button')];
-    tabs.find((b) => b.textContent?.trim().startsWith('+'))?.click();
+    const tab = [...document.querySelectorAll('button')].find(
+      (b) => b.textContent?.trim() === 'Matching'
+    );
+    tab?.click();
   });
-  await page.waitForSelector('input[placeholder="List name..."]');
-  await page.type('input[placeholder="List name..."]', 'Crimson Order', { delay: 40 });
-  await shoot(page, outDir, '04-new-list');
+  await fillSlot(page, 'a Base Paint', 'Macragge Blue');
+  await page.waitForSelector('[class*="derivedNote"]');
+  await shoot(page, outDir, '04-color-lab-match');
 }
 
 async function main() {
