@@ -16,6 +16,14 @@
  * name, so `notes`, `1.2.0` and `subtitle` all work. An ambiguous match lists
  * the candidates rather than guessing, because guessing wrong here means
  * pasting the description into the What's New field.
+ *
+ * **An exact name beats a substring**, or one field would be unreachable: every
+ * substring of the App Store's `Description` is also inside Play's `Short
+ * description` and `Full description`, so nothing could ever select it. With
+ * this rule `description` is the App Store's and `full description` is Play's.
+ *
+ * `--play` and `--appstore` narrow by store, which is what separates the two
+ * fields that genuinely share a name — `App name` exists in both files.
  */
 import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
@@ -37,20 +45,33 @@ for (const { store, file } of LISTINGS) {
   }
 }
 
-const query = process.argv.slice(2).join(' ').trim().toLowerCase();
+const args = process.argv.slice(2);
+const wantStore = args.includes('--play')
+  ? 'Play'
+  : args.includes('--appstore')
+    ? 'App Store'
+    : null;
+const query = args
+  .filter((a) => !a.startsWith('--'))
+  .join(' ')
+  .trim()
+  .toLowerCase();
 
 /** Everything goes to stderr except the field itself, so `| clip` stays clean. */
 const say = (line = '') => console.error(line);
 
+const pool = wantStore ? all.filter((f) => f.store === wantStore) : all;
+
 if (!query) {
-  say('Usage: npm run listing:paste -- <part of a field name>\n');
-  for (const { store, name, limit } of all) {
+  say('Usage: npm run listing:paste -- [--play|--appstore] <part of a field name>\n');
+  for (const { store, name, limit } of pool) {
     say(`  ${store.padEnd(10)} ${name.padEnd(22)} ${limit} char limit`);
   }
   process.exit(1);
 }
 
-const hits = all.filter((f) => f.name.toLowerCase().includes(query));
+const exact = pool.filter((f) => f.name.toLowerCase() === query);
+const hits = exact.length > 0 ? exact : pool.filter((f) => f.name.toLowerCase().includes(query));
 
 if (hits.length === 0) {
   say(`No field matching "${query}". Run with no argument to list them.`);
@@ -59,7 +80,7 @@ if (hits.length === 0) {
 if (hits.length > 1) {
   say(`"${query}" matches ${hits.length} fields:\n`);
   for (const { store, name } of hits) say(`  ${store.padEnd(10)} ${name}`);
-  say('\nNarrow it down.');
+  say('\nNarrow it down, or pass --play / --appstore.');
   process.exit(1);
 }
 

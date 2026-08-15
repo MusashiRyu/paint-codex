@@ -11,6 +11,14 @@ sentence. `npm run listing:paste -- "full description" | clip` undoes the wrap
 and keeps the headings and lists intact; with no argument it lists every field
 in both listing files.
 
+It removes the *wrap*, not every newline. Paragraph breaks and the caps section
+headings survive, because a description pasted as one unbroken block is a worse
+store page than a hard-wrapped one.
+
+An exact field name beats a partial one, and `--play` / `--appstore` narrow by
+store — `App name` exists in both files, and every substring of the App Store's
+`Description` is also inside `Short description` and `Full description`.
+
 ---
 
 ## Store listing
