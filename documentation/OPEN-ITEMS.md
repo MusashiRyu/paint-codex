@@ -40,7 +40,7 @@ the top of the browse order instead of on the paint.
 **The "fix didn't fix it" report against 038 was made from a build that predates
 the fix** — the commit was never pushed, and both iOS release runs that day
 built from the 1.2.1 cut. Before concluding any future fix failed on device:
-the About sheet must say **1.2.2 or later**, and
+the About sheet must say **1.2.3 or later**, and
 `gh run list --workflow=ios-release.yml --json headSha` says what a build
 actually contains.
 
@@ -56,7 +56,9 @@ under four engine models in `check-layout.mjs`; the 038 code fails three of
 them.
 
 Check on the iPhone 15 Pro Max, in the same pass as item 16, **after
-confirming the About sheet says 1.2.2**:
+confirming the About sheet says 1.2.3** (1.2.2 was renumbered away when the
+stores diverged — see the version table in
+[release-checklist.md](./release-checklist.md#where-this-actually-stands)):
 
 1. Search `green`, open a Vallejo Game Color green, tap **Warpstone Glow**. The
    ringed card is Warpstone Glow, at the top of the list, and it *stays* there —

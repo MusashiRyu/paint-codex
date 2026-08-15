@@ -157,13 +157,23 @@ Android is unaffected by that bug, so this release changes nothing you will
 notice. It exists because both stores ship the same version number.
 ```
 
-**Release notes 1.2.2** (500 char limit) — the "What's new" text for version 1.2.2
+**Release notes 1.2.2** (500 char limit) — uploaded to Play 2026-08-15; superseded by 1.2.3
 
 ```
 Fixed: on iPhone, tapping an equivalent paint could scroll the catalog to the
 wrong place instead of to that paint.
 
 As with 1.2.1, Android is unaffected and this release changes nothing you will
+notice. Both stores ship the same version number.
+```
+
+**Release notes 1.2.3** (500 char limit) — the "What's new" text for version 1.2.3
+
+```
+Fixed: on iPhone, tapping an equivalent paint could scroll the catalog to the
+wrong place instead of to that paint. This finishes the fix 1.2.2 attempted.
+
+As before, Android is unaffected and this release changes nothing you will
 notice. Both stores ship the same version number.
 ```
 

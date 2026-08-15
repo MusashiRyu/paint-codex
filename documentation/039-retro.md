@@ -136,5 +136,18 @@ workarounds — not from instrumenting the phone. It is a far better-grounded
 hypothesis than 038's, and the mechanism now converges under every model
 anyone has articulated, including several that are probably too hostile. But
 the only evidence that counts is the same device that reported the bug,
-running a build that — this time verifiably — contains the fix. The About
-sheet must say 1.2.2 before any conclusion is drawn.
+running a build that — this time verifiably — contains the fix.
+
+## Postscript: the fix ships as 1.2.3, not 1.2.2
+
+Between the rework and the push, the stores diverged. The pre-rework 1.2.2
+(`versionCode` 6) `.aab` had already been uploaded to Play, so "1.2.2" was
+spent on the superseded 038 code; the App Store Connect console meanwhile
+showed a 1.2.1 **build 6** that no workflow log accounts for, so 6 is treated
+as burned there too. A number either store has accepted is spent everywhere —
+reusing one would put two binaries under one number, or let the same version
+string mean different code per store. So this session's mechanism ships as
+**1.2.3 / versionCode 7** on both stores, Play's 1.2.2 is simply superseded,
+Apple never meets a 1.2.2, and the About sheet must say **1.2.3** before any
+conclusion is drawn on device. The version table in `release-checklist.md`
+holds the full ledger.

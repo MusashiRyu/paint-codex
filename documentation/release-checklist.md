@@ -24,33 +24,36 @@ first build from merged `master` and carried the Color Lab (retro 031), the
 status bar overlap and portrait lock (retro 030), and the blank sheet when
 opening a paint's equivalents (retro 033).
 
-**1.2.1 (`versionCode` 5) was built on 2026-08-15 and superseded the same day.**
-It carried the zoom fix (retro 036) and nothing else. Do not upload it.
+**1.2.3 (`versionCode` 7) is the one to upload, to both stores.** It carries
+the zoom fix (036) plus the reworked tile-jump landing (039, which replaced
+038's mechanism entirely — retro 039 has the account).
 
-**1.2.2 (`versionCode` 6) is the one to upload.** It carries the zoom fix plus
-retros 038/039: tapping an equivalent paint after a search landed among the
-blacks at the top of the browse order instead of on the paint. 039 replaced
-038's mechanism entirely — the 038 build was reported still-broken from a
-device that turned out to be running 1.2.1, but the mechanism was wrong anyway;
-039 has the account. On iOS, note **build number 5 was uploaded twice** on
-2026-08-15 (neither run used the override; the second upload will fail
-asynchronous processing as a duplicate — the email about it is expected and
-ignorable). Build 6 is unburned.
+**How the stores briefly diverged on 2026-08-15, and how 1.2.3 reconverges
+them.** The day spent three numbers in an afternoon, and for a few hours the
+two stores genuinely disagreed about what "1.2.2" meant:
 
-**Both fixes are iOS-only, and Android is shipping them anyway.** The zoom bug
-is WKWebView's focus-zoom on a sub-16px input; the landing bug is WebKit
-clamping a scroll into a region it has not laid out, and Chromium lands those
-writes exactly. Neither has an Android counterpart, so Play users get two
-consecutive releases that change nothing they can see. They go out because
-`versionName` is one string for both stores — and the alternative, letting the
-platforms drift to different numbers, costs more than a dull release note. The
-1.2.2 block in `store/listing.md` says so plainly rather than inventing a
-benefit.
+| Number | Play holds | Apple holds |
+| --- | --- | --- |
+| 5 | never uploaded (superseded same day) | 1.2.1, uploaded **twice** — the duplicate fails processing; the email is ignorable |
+| 6 | **1.2.2 with the superseded 038 fix** — uploaded before 039 replaced it | reported as a 1.2.1 build 6 in the console; no workflow log accounts for it, so treat 6 as spent |
+| 7 | 1.2.3, this build | 1.2.3, from the next workflow run |
 
-The number is not a free choice. 1.2.0 is live so a fix cannot reuse it, and 5
-was spent on an artifact that was built and signed before 038 existed —
-rebuilding under the same number would leave a signed `.aab` and its release
-notes describing different code.
+The rule that resolves it: a number either store has *accepted* is spent
+everywhere, whatever it contains — reusing it would put two different binaries
+under one number, or let `versionName` mean different code per store. So the
+039 rework ships as 1.2.3 / `versionCode` 7 on both, Play's 1.2.2 release is
+simply superseded (its notes block in `store/listing.md` is kept, marked
+superseded), and Apple never meets a 1.2.2 at all.
+
+**All of these fixes are iOS-only, and Android ships them anyway.** The zoom
+bug is WKWebView's focus-zoom on a sub-16px input; the landing bug is iOS's
+async scrolling reverting an accepted scroll (WebKit bug 195584 class).
+Neither has an Android counterpart, so Play gets consecutive releases that
+change nothing its users can see. They go out because `versionName` is one
+string for both stores — and the alternative, letting the platforms drift to
+different numbers, is exactly the divergence the table above shows being paid
+for. The 1.2.3 block in `store/listing.md` says so plainly rather than
+inventing a benefit.
 
 The `.aab` is signed with the `PACO-UPL` upload key, and the matching release
 APK is built for the hardware smoke test — though neither fix it carries can be
@@ -523,7 +526,7 @@ notes → review → roll out. Start at a staged percentage on production.
 The release notes live in `store/listing.md`, one block per version — Play keeps
 them per release, so each version's text stays alongside the last rather than
 replacing it. `npm run listing:check` measures every block against the 500-char
-limit. For this upload, paste **Release notes 1.2.2**.
+limit. For this upload, paste **Release notes 1.2.3**.
 
 That instruction is version-specific and goes stale silently, since a wrong
 paste is a plausible-looking release note rather than an error. It is stated
