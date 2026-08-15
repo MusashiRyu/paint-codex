@@ -60,41 +60,6 @@ Four things gate it, in order:
 Not started. Decision as of 2026-08-09: revisit after launch when
 there are install numbers to reason about.
 
-### 8. Production access needs twelve testers for fourteen continuous days
-**Raised:** 025 · **Waiting, not work · Premise unconfirmed as of 037**
-
-1.0.0 went to internal and closed testing on 2026-08-10. Production access
-cannot even be *applied* for until a closed test has held **at least twelve
-testers opted in for fourteen continuous days**. The clock does not start until
-the twelfth opts in, and it resets if the count drops below twelve — so this is
-recruitment and retention, not a wait that passes on its own.
-
-**Check the account type before treating any of that as binding.** Google
-applies the twelve-tester requirement to *personal* developer accounts
-registered after roughly November 2023; **organization accounts are not subject
-to it** and can apply for production without a closed test at all. This item has
-been carried since 025 as the longest pole to release, and nobody has confirmed
-which kind of account this is. If it is an organization account the item is not
-a long wait — it is closable today.
-
-Where to look: **Play Console → Setup → Advanced settings**, or the account
-type shown under the developer account's own settings page. The requirement, if
-it applies, is surfaced in **Release → Testing → Closed testing** as a progress
-tracker; its absence there is itself a signal.
-
-This is the cheapest open question in the file — one console screen against an
-item that has shaped the release plan for eleven retros.
-
-Assuming it does apply, one smaller thing trails it:
-
-- The package name registration is still in **Draft** pending the app signing
-  key's SHA-256 from **Release → Setup → App signing**. Minutes of work, but the
-  registration is not complete without it.
-
-The hardware smoke test is done — all five checks in release-checklist step 5
-passed on the 1.0.0 release APK on 2026-08-10, including the About sheet's
-outbound links, which had never been proven on a device before.
-
 ### 12. The App Store submission needs a new build before it can be answered
 **Raised:** 032 · **Blocking the resubmission**
 
@@ -151,32 +116,6 @@ certainly wrong:
   a status bar. They are not wrong, and they are not the new build either. The
   only way to a screenshot with real insets in it is a device capture, which is
   the same session as the recording in step 6.
-
-### 15. One console setting has to move with the copy that just changed
-**Raised:** 035 · **A setting, not work — but it is half of a pair**
-
-`store/` is American English as of retro 035, and the published privacy page
-with it. The other half is in App Store Connect:
-
-**App Store primary language, English (U.K.) → English (U.S.).**
-
-This is not tidying. Item 14 held the conversion back precisely because doing
-the copy without the setting leaves American text under a listing that declares
-itself British — the same inconsistency the rule exists to remove, only now
-visible to users rather than only to us. The copy has moved; until this does,
-the repo is in the state that item warned about.
-
-**Play needs nothing.** Its default language is **English (United States)** and
-has been since the app was created — it is recorded in
-[release-checklist.md](./release-checklist.md#2-create-the-app) step 2, which an
-earlier draft of this item missed. Confirm it under *Grow → Store presence →
-Main store listing*, where the language selector marks the default.
-
-That is worth stating rather than just deleting, because it reframes what
-happened. Play was declaring American and serving British copy for every
-release so far. The conversion did not create work there; it removed a mismatch
-nobody had noticed, and the App Store is the only store where the setting still
-disagrees with the words.
 
 ### 6. `npm audit` reports three moderate advisories, all dev-only
 **Raised:** 017 · **Watch, not fix**
@@ -336,6 +275,8 @@ Prune this section once it stops being useful.
 | `store/` was still British English while the rest of the repo was American, deferred because the listing declared itself English (U.K.) | 035 | 035 — converted with the privacy page; the console setting it pairs with is item 15 |
 | Markdown export could not work in the Android WebView — no `DownloadListener` behind the anchor-click blob download | 005 | 037 — the export feature was deleted rather than fixed; the flag had been `false` since 005 |
 | Shop links covered 186 paints out of 2,279, remapped through the id migration rather than re-crawled | 014 | 037 — deleted with the export feature that was its only reader. The affiliate question it fed is item 5, which needs a different retailer anyway |
+| Play production access needed twelve testers for fourteen continuous days — carried since 025 as the longest pole to release | 025 | 037 — **moot.** The developer account is an organization account, which Google exempts from the rule. The package-name half of the item was stale too: `release-checklist.md` recorded it done on 2026-08-10 and OPEN-ITEMS never caught up |
+| App Store primary language declared English (U.K.) while the copy was American | 035 | 037 — changed to English (U.S.) in App Store Connect, 2026-08-15. The pair item 14 described is now consistent on both halves |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
 removals in the redesign rather than pending work, and are not tracked.

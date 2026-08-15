@@ -1,8 +1,8 @@
 # Retro 037 — Reading the open items instead of adding to them
 
 A walkthrough of every item in `OPEN-ITEMS.md`, item by item, to decide what
-each one is actually for. Thirteen items went in; eleven came out. Nothing was
-closed by doing the work it described.
+each one is actually for. Thirteen items went in and nine came out. Of the four
+that closed, exactly one was closed by doing the work it described.
 
 ## The list had been quietly damaged
 
@@ -108,3 +108,54 @@ item that has been carried long enough starts being treated as a fact about the
 world rather than a claim someone once wrote down. Item 8 is the clearest case,
 item 7's damage is the most consequential, and the unstable numbering is the
 mechanism that let both hide.
+
+## The homework came back, and both items closed
+
+Two console checks were handed off at the end of the walkthrough. Both came
+back the same day, and both closed their items outright.
+
+**Item 8 was never real.** The account is an **organization** account, which
+Google exempts from the twelve-tester requirement entirely. Production can be
+applied for without a closed test at all. An item carried since retro 025 as
+"the single longest pole in the schedule" — language this repo used in
+`release-checklist.md` as well as in OPEN-ITEMS — evaporated on one console
+screen.
+
+Its trailing half was stale too, and in a way worth recording separately: the
+item said the package name registration was "still in **Draft** pending the app
+signing key's SHA-256". `release-checklist.md` line 41 has said since
+2026-08-10 that it is **done**, and that "earlier revisions of this file listed
+it as an outstanding Draft; it was not, because Google now registers package
+names itself." The checklist corrected itself and OPEN-ITEMS never heard about
+it. So item 8 was two claims, both false, sitting under a heading nobody
+reread.
+
+**Item 15 is done.** App Store Connect's primary language is English (U.S.) as
+of 2026-08-15. The pair item 14 described — American copy under a listing
+declaring itself British — is consistent on both halves for the first time.
+
+`release-checklist.md` needed four edits to catch up, which is the real cost of
+having let this drift: step 0's 12-testers note, the "one thing is outstanding"
+summary near the top, step 6's framing of closed testing as a gate, and the
+pointer back to step 0 that told the reader not to assume production was close.
+The note itself is **kept rather than deleted** — it is still the first thing
+to check on any new account, and a future reader who finds a populated closed
+track deserves to know why it was started. It now says why it does not bind
+here, and adds the one caveat that matters for a *converted* account: the rule
+is written about account type at registration, so trust the console's own
+behavior over the rule as stated.
+
+## Where the release actually stands now
+
+Play has no blockers left. Production is a decision, not a wait.
+
+The App Store is down to item 12, and item 12 is down to its mechanical tail:
+push, run the workflow, attach the build, record the flow on the phone, reply.
+The device session that recording requires is the same one that closes items 10,
+13 and 16.
+
+Four items closed today. One of them — the App Store language — was closed by
+doing what it asked. The other three were closed by finding out they described
+work nobody was ever going to do, or work that had already been done and never
+recorded back. That ratio is the argument for reading the list end to end
+occasionally instead of only appending to it.

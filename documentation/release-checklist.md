@@ -43,10 +43,10 @@ signing key's fingerprint already attached to `com.musashi.paco`. Earlier
 revisions of this file listed it as an outstanding Draft; it was not, because
 Google now registers package names itself. See step 1.
 
-One thing is outstanding, and it is not work:
-
-- **Production needs twelve testers opted in for fourteen continuous days.**
-  Waiting, plus recruitment. See the 12-testers note in step 0.
+**Nothing is outstanding on the Play side.** Production used to need twelve
+testers opted in for fourteen continuous days; that was resolved on 2026-08-15,
+not by waiting it out but by finding it never applied. See the 12-testers note
+in step 0.
 
 Paste this into Play Console → App content → Privacy policy:
 
@@ -104,13 +104,26 @@ below can start until it clears, so do it first.
 > (Settings → System → Multiple users) and deleting it afterwards keeps the two
 > accounts from ever mixing.
 
-> **The 12-testers rule.** Personal developer accounts registered from late 2023
-> onward must run a **closed test with at least 12 testers opted in for 14
-> continuous days** before they can even apply for production access. The 14
-> days do not start until the twelfth tester has opted in, and the counter
-> resets if you drop below twelve. This is the single longest pole in the
-> schedule and it is invisible until you go looking for it — start the closed
-> track the day the account clears, not after the listing is polished.
+> **The 12-testers rule — and why it does not apply here.** *Personal*
+> developer accounts registered from late 2023 onward must run a **closed test
+> with at least 12 testers opted in for 14 continuous days** before they can
+> even apply for production access. The 14 days do not start until the twelfth
+> tester has opted in, and the counter resets if you drop below twelve.
+>
+> **This account is an organization account, and Google exempts those.**
+> Confirmed 2026-08-15. Production can be applied for without a closed test at
+> all, which removes what this file called the single longest pole in the
+> schedule and what OPEN-ITEMS carried as item 8 from retro 025 onward.
+>
+> The rule is written about the account type *at registration*, so on an account
+> that was converted rather than created as an organization, trust the console
+> over the rule: if **Release → Testing → Closed testing** shows no tester
+> progress tracker and production is applicable, the requirement is gone. That
+> is the observable that settles it.
+>
+> Left in place rather than deleted because it is still the first thing to check
+> on any new account, and because a future reader finding the closed track
+> populated deserves to know why it was started.
 
 ### 1. Register the package name
 
@@ -278,6 +291,11 @@ Then **Store settings** for category (Art & Design) and contact details, and
 
 ### 6. Closed testing, then production
 
+Closed testing is now a choice rather than a gate — see the 12-testers note in
+step 0. It is still worth running for what it is actually good at, which is
+finding out whether the app works on hardware nobody here owns; it is no longer
+something production waits on.
+
 **Testing → Closed testing → Create new release.** Upload
 `app-release.aab`, paste the release notes from `listing.md`, add testers.
 
@@ -295,9 +313,11 @@ The track page has three tabs, and the first release only fills in one of them:
 - **Testers** — the email list, and the opt-in URL that goes to testers. The
   link only appears once a list is attached to the track.
 
-Read the 12-testers note in step 0 again before assuming production is close.
 Click the opt-in link on a real phone before sending it to anyone: a broken
 first impression costs more than the two minutes of checking.
+
+**Production** is **Release → Production → Create new release**, and on this
+account nothing gates it but the review itself.
 
 ### Automating what comes next
 
