@@ -147,9 +147,25 @@ Also fixed: the title no longer sits behind the status bar, the app stays in
 portrait, and opening a paint's equivalents no longer lands on a blank list.
 ```
 
+**Release notes 1.2.1** (500 char limit) — the "What's new" text for version 1.2.1
+
+```
+Fixed: opening search on iPhone left the whole app zoomed in and draggable
+after the sheet closed.
+
+Android is unaffected by that bug, so this release changes nothing you will
+notice. It exists because both stores ship the same version number.
+```
+
 Play keeps release notes per language and per release, so each version keeps its
 own block here rather than overwriting the last. Reuse the 1.0.0 wording for a
 first release on any track.
+
+**1.2.1 is an iOS fix that Android has to carry.** The zoom bug is WKWebView's
+focus-zoom behavior and has no Android counterpart, but `versionName` is one
+string for both stores — so Play gets a release whose notes honestly say
+nothing changed for its users. The alternative is letting the two platforms
+drift to different version numbers, which costs more than a dull release note.
 
 ---
 
