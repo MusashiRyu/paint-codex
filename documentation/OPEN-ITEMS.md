@@ -169,8 +169,17 @@ itself British — the same inconsistency the rule exists to remove, only now
 visible to users rather than only to us. The copy has moved; until this does,
 the repo is in the state that item warned about.
 
-Worth checking Play's default language in the same sitting. It was never
-recorded here, and Play does not surface it as prominently.
+**Play needs nothing.** Its default language is **English (United States)** and
+has been since the app was created — it is recorded in
+[release-checklist.md](./release-checklist.md#2-create-the-app) step 2, which an
+earlier draft of this item missed. Confirm it under *Grow → Store presence →
+Main store listing*, where the language selector marks the default.
+
+That is worth stating rather than just deleting, because it reframes what
+happened. Play was declaring American and serving British copy for every
+release so far. The conversion did not create work there; it removed a mismatch
+nobody had noticed, and the App Store is the only store where the setting still
+disagrees with the words.
 
 ### 6. `npm audit` reports three moderate advisories, all dev-only
 **Raised:** 017 · **Watch, not fix**

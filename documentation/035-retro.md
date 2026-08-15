@@ -107,5 +107,11 @@ stragglers in `documentation/`, both `judgement`, were fixed that way.
   state item 14 warned against. It is one dropdown and it is open item 15, but
   until it is changed this session has traded one inconsistency for another —
   and this one is visible to users.
-- **Play's default language was never recorded**, so nobody knows whether it
-  needs the same change. Worth a look in the same sitting.
+- **Play needs nothing**, and this was almost written down as an unknown.
+  Its default language is English (United States) and has been since the app
+  was created — recorded in release-checklist step 2, where a search for
+  "language" would have found it before the sentence claiming otherwise was
+  written. Worth the correction rather than a quiet delete: it means Play has
+  been declaring American while serving British copy for every release so far,
+  so the conversion removed a mismatch there rather than creating one. The App
+  Store is the only store where the setting still disagrees with the words.
