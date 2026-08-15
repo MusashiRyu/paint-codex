@@ -34,55 +34,80 @@ title, not by number.
 Nothing here is a bug. The whole unverified-fix backlog — the safe area, the
 anchor scroll, the zoom lock and the tile-jump landing, four fixes shipped
 blind between retros 030 and 039 — closed on the iPhone 15 Pro Max on
-2026-08-15. What is left is one question about a store account that was closed
-too early.
+2026-08-15. What is left is one question about a
+store account that was closed too early.
 
-### 8. The twelve-tester requirement may apply after all
+### 8. Does the twelve-tester gate survive an app transfer?
 **Raised:** 025 · **Closed in 037 on the rule · Reopened 2026-08-15 on the console**
 
 Play production access is gated, for personal developer accounts registered
 after 2023-11-13, on a closed test holding **twelve testers opted in for
-fourteen continuous days**. Retro 037 closed this item on the account being an
-organization account, which Google exempts.
+fourteen continuous days**. Organization accounts are exempt.
 
-**The Play Console still shows the requirement.** That is the observable this
-file said to trust over the rule, and it was not checked before closing — the
-closure read the policy and stopped. So the item is back, and the reopening is
-the correction, not new information.
+**The history matters and was misrecorded twice.** Paco was published under a
+*personal* developer account, registered in 2026 and therefore subject to the
+rule. It was later moved to the company's organization account by Google's
+**app transfer** process, which is complete; closed-test binaries have shipped
+under the new owner since. That is not the same thing as a converted account —
+Google does not convert accounts, and retro 037's closure and the first version
+of this reopened item both described one.
 
-What is actually established:
+**The Play Console still shows the requirement after the transfer.** That is
+the observable this repo said to trust over the rule, and 037 closed the item
+without looking at it.
+
+What is established:
 
 - Google's
   [official page](https://support.google.com/googleplay/android-developer/answer/14151465)
-  says the requirement applies to "personal developer accounts created after
-  November 13, 2023" and **says nothing about conversion**. The exemption is
-  written about how an account was *registered*.
-- Third-party sources agree that converting a personal account to an
-  organization does not lift it, because it attaches to what was registered.
-  All of them sell tester recruitment. Motivated, not therefore wrong, and
-  consistent with the console.
+  gates on "personal developer accounts created after November 13, 2023" and is
+  **silent on app transfers**. It describes the requirement as a property of the
+  *account*, which taken literally would mean an app under an exempt account is
+  exempt.
+- **The community sources conflict**, and neither could be read from this
+  machine — Google's forum renders its thread bodies in JavaScript, so only the
+  titles are retrievable. One is titled
+  [Transfer of App to Business account still requires closed testing!](https://support.google.com/googleplay/android-developer/thread/279206872/transfer-of-app-to-business-account-still-requires-closed-testing),
+  which is somebody in this exact position reporting this exact symptom; another
+  asks for a
+  [waiver for existing apps moved personal → org](https://support.google.com/googleplay/android-developer/thread/409685281/personal-to-org-account-14-day-closed-testing-waiver-for-existing-apps).
+  Titles corroborate the console; they do not report a resolution.
+- Secondary write-ups split. Some say a transferred app inherits the
+  requirement and no waiver is given; others say it should not apply and a
+  persistent display is worth a support ticket. Every one of them sells tester
+  recruitment.
 - **Nothing shipped is blocked.** 1.2.3 released to closed testing without
-  complaint. This gates production only, so it is a release-timing question
-  rather than a broken thing.
+  complaint. This gates production only.
 
-Two checks settle it, in order:
+So it is genuinely unresolved, and the honest summary is that the requirement
+may follow the app rather than the account — which the official page does not
+say and the forum titles suggest.
 
-1. **Which account owns `com.musashi.paco`.** If the organization account is a
-   *separate, newer* account and the app still lives under the original one,
-   the requirement applies to the app's actual owner and no amount of
-   organization status elsewhere changes it. The console's account switcher
-   answers this in one look.
-2. **Release → Production → Create new release.** Gated means a message about
-   testing requirements and an "apply for production access" flow carrying a
-   tester counter. Ungated means the card on the home page is generic
-   onboarding and this item closes for real. A home-page card alone is weak
-   evidence; the production page is the authority.
+**Uploading builds does not advance this.** The gate counts twelve testers
+*opted in continuously for fourteen days*; binaries pushed to the closed track
+are not progress toward it. If the opted-in count is below twelve the clock
+reads zero however active the track is. Worth stating because an active track
+feels like progress and is not.
 
-If it does apply, the routes are recruitment — twelve real testers, fourteen
-continuous days, the clock resetting if the count drops — or registering a
-genuinely new organization account and creating the app fresh under it, which
-means a new package name and re-doing the signing, the listing and the store
-presence. Recruitment is almost certainly the cheaper of the two for one app.
+Two things to do, in order:
+
+1. **Release → Production → Create new release.** The authority, over any card
+   on the account home page — that surface carries generic onboarding. Gated
+   means a testing-requirements message and an "apply for production access"
+   flow with a tester counter. Ungated closes this item.
+2. **If gated, open a Play Developer Support ticket** citing the completed
+   transfer and the source account. This is the case the documentation does not
+   cover, so it is a question for the people who can read the account's state
+   rather than one to answer from policy pages. Ask specifically whether the
+   requirement is evaluated against the *current* owner or the account of
+   original publication.
+
+If it does apply, the route is recruitment: twelve real testers, fourteen
+continuous days, the counter resetting if the count drops. Registering yet
+another account is not a route here — the app is already where it should be,
+and a third account would mean a new package name and re-doing signing, the
+listing and the store presence, to escape a gate that a fortnight of testers
+clears.
 
 ---
 

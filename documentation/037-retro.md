@@ -121,19 +121,29 @@ applied for without a closed test at all. An item carried since retro 025 as
 `release-checklist.md` as well as in OPEN-ITEMS — evaporated on one console
 screen.
 
-> **Corrected 2026-08-15, later the same day: it was real, and this closure was
-> the same mistake it diagnoses.** The Play Console still displays the
-> requirement. The paragraph above closed the item on the *rule* — organization
-> accounts are exempt — having written, four paragraphs earlier, that an item
-> carried long enough "starts being treated as a fact about the world rather
-> than a claim someone once wrote down". The exemption is written about accounts
-> **registered** as organizations, Google's page is silent on conversion, and no
-> console screen was actually looked at before the closure: "one console screen
-> to confirm" was named as the cheap check and then not performed. The item is
-> reopened in OPEN-ITEMS with the two observables that settle it. Nothing about
-> the *rest* of this retro changes — but the section immediately above, on
-> premises being trusted because they are old, now has a second example, and it
-> is this one.
+> **Corrected 2026-08-15, later the same day: it was not resolved, and this
+> closure was the same mistake it diagnoses.** The Play Console still displays
+> the requirement. The paragraph above closed the item on the *rule* —
+> organization accounts are exempt — having written, four paragraphs earlier,
+> that an item carried long enough "starts being treated as a fact about the
+> world rather than a claim someone once wrote down". No console screen was
+> looked at: "one console screen to confirm" was named as the cheap check and
+> then not performed.
+>
+> The account history was also wrong in a way that matters. Paco was published
+> under a **personal** account registered in 2026 and later moved to the
+> organization account by Google's **app transfer** process — accounts are not
+> converted, apps are moved. Whether the gate travels with the app is
+> undocumented: Google's page describes the requirement as a property of the
+> account and is silent on transfers, and the developer forum carries threads
+> titled for precisely this symptom. Reopened in OPEN-ITEMS, where it belongs
+> until the production page or Play support answers it.
+>
+> Nothing about the *rest* of this retro changes — but the section immediately
+> above, on premises trusted because they are old, now has a second example,
+> and it is this one. Note the shape of it: the correct instinct was written
+> down, in this same file, and the check it named was skipped in favour of the
+> policy page that agreed with what everyone hoped.
 
 Its trailing half was stale too, and in a way worth recording separately: the
 item said the package name registration was "still in **Draft** pending the app

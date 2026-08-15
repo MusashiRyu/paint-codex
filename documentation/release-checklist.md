@@ -144,21 +144,26 @@ below can start until it clears, so do it first.
 > still displayed the requirement afterwards**, so that confirmation was the
 > rule being read, not the console being checked.
 >
-> The exemption is written about accounts **registered** as organizations.
-> Google's own page —
+> **What actually happened here was an app transfer, not a converted account.**
+> Google does not convert accounts. Paco was published under a personal account
+> registered in 2026 — squarely inside the rule — and later moved to the
+> company's organization account by the app transfer process. Whether the gate
+> moves with the app is the open question; Google's own page —
 > [App testing requirements for new personal developer accounts](https://support.google.com/googleplay/android-developer/answer/14151465)
-> — says only that it applies to "personal developer accounts created after
-> November 13, 2023", and is **silent on conversion**. Third-party accounts of
-> it are consistent that a personal account converted later keeps the
-> requirement, since it attaches to what was registered; every such source sells
-> tester recruitment, so read them as motivated but not therefore wrong.
+> — describes the requirement as a property of the *account* and says nothing
+> about transfers, while the developer forum carries threads titled for exactly
+> this symptom. See the reopened item in
+> [OPEN-ITEMS.md](./OPEN-ITEMS.md) for the full state and the support-ticket
+> route.
 >
 > **Trust the console over the rule.** The observable that settles it is
 > **Release → Production → Create new release**: if production is gated, the
 > page says so and offers an "apply for production access" flow with a tester
 > counter. A card on the account home page is weaker evidence — that surface
 > carries generic onboarding — but it is not nothing. Closed testing is
-> unaffected either way; this gates production only.
+> unaffected either way; this gates production only, and **pushing binaries to
+> the closed track is not progress toward it** — the clock counts twelve
+> testers opted in continuously, not releases.
 >
 > Left in place rather than deleted because it is still the first thing to check
 > on any new account, and because a future reader finding the closed track
