@@ -434,7 +434,79 @@ async function checkSafeArea(browser, origin) {
   return out;
 }
 
-async function openApp(browser, origin, width) {
+/**
+ * A jump that lands somewhere other than where it asked must not blank the list.
+ *
+ * Writing `scrollTop` is a request. The engine clamps it to the scroll extent
+ * it currently believes in, and the browse list is nearly a million pixels
+ * tall — on iOS WebKit that belief lags the spacers already in the DOM, the
+ * jump stops short, and the window mounted around the anchor ends up nowhere
+ * near the viewport. What the user sees is an empty sheet: no cards, not even
+ * the "Found 2,279 paint(s)" line, until a finger scrolls and the range is
+ * finally derived from a real position.
+ *
+ * Chromium lands every one of those writes exactly, which is why this shipped.
+ * So the landing is broken deliberately: every `scrollTop` write on the page is
+ * capped, standing in for the clamp, and the rule is the one that actually
+ * matters — whatever the scroller ends up looking at, something is drawn there.
+ *
+ * The cap is well short of where the anchor sits, so a hook that assumes its
+ * write landed puts the viewport inside the top spacer and draws nothing.
+ */
+const LANDING_CAP = 2000;
+
+async function checkScrollLanding(browser, origin) {
+  const page = await openApp(browser, origin, 390, (p) =>
+    p.evaluateOnNewDocument((cap) => {
+      const desc = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollTop');
+      Object.defineProperty(Element.prototype, 'scrollTop', {
+        configurable: true,
+        enumerable: desc.enumerable,
+        get() {
+          return desc.get.call(this);
+        },
+        set(v) {
+          desc.set.call(this, Math.min(Number(v), cap));
+        },
+      });
+    }, LANDING_CAP)
+  );
+
+  await page.click('button[aria-label^="Show equivalents for Mephiston Red"]');
+  await page.waitForSelector('[class*="resultCard"]');
+  await page.evaluate(() => document.fonts.ready);
+  // The landing is retried across a few commits before it settles.
+  await new Promise((r) => setTimeout(r, 500));
+
+  const state = await page.evaluate(() => {
+    const scroller = document.querySelector('[class*="results"]');
+    const box = scroller.getBoundingClientRect();
+    const onScreen = (el) => {
+      const b = el.getBoundingClientRect();
+      return b.bottom > box.top + 1 && b.top < box.bottom - 1;
+    };
+    const cards = [...document.querySelectorAll('[class*="resultCard"]')];
+    const count = document.querySelector('[class*="resultCount"]');
+    return {
+      scrollTop: Math.round(scroller.scrollTop),
+      drawn: cards.filter(onScreen).length + (count && onScreen(count) ? 1 : 0),
+      mounted: [cards[0]?.dataset.index ?? null, cards[cards.length - 1]?.dataset.index ?? null],
+    };
+  });
+  await page.close();
+
+  if (state.drawn > 0) return [];
+  return [
+    {
+      rule: 'landed-outside-window',
+      detail:
+        `scroller stopped at ${state.scrollTop}px with cards ` +
+        `${state.mounted[0]}-${state.mounted[1]} mounted; nothing is drawn in the results area`,
+    },
+  ];
+}
+
+async function openApp(browser, origin, width, prelude) {
   const page = await browser.newPage();
   await page.setViewport({ width, height: 780, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
 
@@ -446,6 +518,9 @@ async function openApp(browser, origin, width) {
   // localStorage is origin-scoped, so the page has to exist before seeding it.
   await page.goto(origin, { waitUntil: 'domcontentloaded' });
   await page.evaluate((seed) => localStorage.setItem('paco-app-store', JSON.stringify(seed)), SEED);
+  // Anything that has to be installed before app code runs goes on here, after
+  // the seed's navigation and before the one the app is measured in.
+  if (prelude) await prelude(page);
   await page.goto(origin, { waitUntil: 'networkidle0' });
   await page.waitForSelector('button[aria-label="Add paint"]');
   return page;
@@ -512,6 +587,17 @@ async function main() {
     } else {
       console.error('Safe area: FAIL');
       for (const v of insetViolations) console.error(`         ${v.rule}: ${v.detail}`);
+      process.exitCode = 1;
+    }
+
+    // Also outside the sweep: it breaks the page's scrolling on purpose, so it
+    // gets a page of its own rather than a surface in the table above.
+    const landingViolations = await checkScrollLanding(browser, origin);
+    if (landingViolations.length === 0) {
+      console.log('Scroll landing: the window covers the viewport wherever the jump stops.');
+    } else {
+      console.error('Scroll landing: FAIL');
+      for (const v of landingViolations) console.error(`         ${v.rule}: ${v.detail}`);
       process.exitCode = 1;
     }
   } finally {
