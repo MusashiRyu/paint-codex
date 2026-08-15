@@ -243,6 +243,33 @@ Also worth a glance on an Android device with a WebView older than 140, where
 Capacitor pads the native view instead of passing the insets through. That path
 reports zero to the CSS by design and should look exactly as it did before.
 
+### 13. The anchor-scroll fix is unverified on WebKit
+**Raised:** 033 · **Same session as item 10 · Waiting on the next TestFlight build**
+
+Opening the catalogue on a paint showed an empty sheet on iOS. The cause is
+established and the fix is asserted, but the assertion runs on a Chromium whose
+scrolling has been broken on purpose — there is no WebKit on the development
+machine, so *why* WebKit lands a jump short is inference. That a short landing
+produces exactly this blank screen, and that the window now follows the scroller
+wherever it stops, is not.
+
+Check on the same device pass as item 10, on the iPhone 15 Pro Max:
+
+1. Open a list paint's equivalents — the card is on screen, ringed, at the top.
+2. Do it for a paint at each end of the colour order. **Pure Black** is the one
+   that was reported (browse position 8, near the start); a white or a pale
+   grey is the other end.
+3. Do it twice in a row without closing the sheet, via an equivalent tile — that
+   is the path that re-anchors an already-scrolled list rather than a fresh one.
+4. Scroll *up* through cards nobody has measured and watch for the content
+   shifting under the finger. The correction for that had never run; it does
+   now, and a real device is where its cost shows.
+
+If the sheet still opens blank, the next thing to reach for is **not** another
+landing retry: it is the scroller's ~950,000px extent itself. Anchoring the
+window near the top and growing the spacers as the user scrolls would keep every
+jump small, at the cost of a redesign of `useWindowedList`.
+
 ---
 
 ## Recently closed
