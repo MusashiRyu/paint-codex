@@ -370,8 +370,8 @@ rather than shipping:
 | `versionCode` | `CURRENT_PROJECT_VERSION`, both iOS build configurations | `CFBundleVersion` on an iOS build |
 
 The iOS values are the easy ones to forget: they cannot be built on this
-machine (OPEN-ITEMS 4), so nothing here ever renders them. `Info.plist` reads
-both through `$(…)` and needs no edit.
+machine — no Mac, and the release archives on CI instead — so nothing here ever
+renders them. `Info.plist` reads both through `$(…)` and needs no edit.
 
 Note that iOS and Play count uploads separately. `CURRENT_PROJECT_VERSION` is
 pinned to `versionCode` to keep one number to bump; if App Store Connect ever

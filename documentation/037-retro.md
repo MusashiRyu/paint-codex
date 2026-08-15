@@ -159,3 +159,56 @@ doing what it asked. The other three were closed by finding out they described
 work nobody was ever going to do, or work that had already been done and never
 recorded back. That ratio is the argument for reading the list end to end
 occasionally instead of only appending to it.
+
+## The second pass: what the list is *for*
+
+Reading the nine survivors back produced a sharper objection than any of the
+individual decisions: **the file was mixing two different kinds of thing under
+one heading.**
+
+Items 6 (`npm audit`) and 9 (no Swift compile in CI) are not outstanding work.
+Nobody is going to do them, and that is the correct outcome in both cases — the
+audit fix downgrades the toolchain that builds the release in exchange for
+nothing a user touches, and the CI job costs macOS minutes on every push to
+guard two untouched template files. They are *raised concerns*: looked at,
+understood, deliberately left. Filing them next to real work made the list read
+as nine outstanding tasks when most of it was settled thinking.
+
+So the file now has two sections, and the test is whether anyone is expected to
+act. Item 3 (localStorage headroom) moved with them — it carries the same
+**Watch, not fix** marker item 6 does, and leaving it in Open while moving its
+twin would have been the inconsistency the split exists to remove.
+
+**Two items were removed rather than closed**, and the distinction matters:
+
+- **The affiliate-links idea** was four gates deep with no retailer chosen, and
+  its third gate was "a per-paint buy affordance", which is a design decision
+  that would put the app's first commercial surface in front of users. Carrying
+  it as an open item implied a plan. Dropped; retro 015 holds the reasoning if
+  it is ever revived.
+- **The App Store resubmission** is *active work*, not a known-but-unfixed
+  thing. Its mechanics belong in `ios-release-checklist.md`, which already
+  carries them, and Apple's seven answers belong in `store/listing-appstore.md`,
+  which already carries those. A task in flight does not need a third home.
+
+**Two more closed on hardware.** The safe-area fix and the anchor-scroll fix
+were both confirmed on the iPhone 15 Pro Max on 2026-08-15. Item 13 had held a
+fallback in reserve — a redesign of `useWindowedList` to avoid the ~950,000px
+scroller extent — and it is not needed. The zoom lock from 036 could not be
+checked in that pass because it landed after the build under test, so it is now
+the only fix the repo carries unverified.
+
+### The dangling numbers were real, not theoretical
+
+The first pass noted that item numbers had been reused and were unsafe to cite.
+Grepping for cross-references before deleting anything turned up two live
+citations of **OPEN-ITEMS 4** — in `release-checklist.md` and in
+`appVersion.test.ts` — pointing at "iOS signing and archive are Mac-only",
+closed by retro 029. Both had been wrong for eight retros. Both now state the
+fact directly instead of pointing at a slot.
+
+That is the concrete argument for the rule the file's header now carries: **cite
+items by title, not by number.** A title that goes stale reads as stale; a
+number that goes stale reads as a working reference to something else entirely.
+
+Nine items became five: two open, three concerns.

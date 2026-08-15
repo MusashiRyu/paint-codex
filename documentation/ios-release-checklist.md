@@ -560,12 +560,15 @@ Written down so the gap is known rather than assumed away.
   `iosProject.test.ts` are string assertions over project files, not a build.
   Compiling the iOS target on every push would close the gap and cost macOS
   runner minutes on every push to do it.
-- **Almost nothing has been seen on iOS hardware.** The app has now run on an
-  iPhone 15 Pro Max via TestFlight, which is what found the two bugs in retro
-  030 — but that was one screenshot of one screen. WebView scroll bounce,
-  keyboard avoidance in the search sheet, the launch image transition and the
-  safe-area fix itself are all still unverified on a device. That is what step 6
-  is for, and OPEN-ITEMS 10 tracks the specific checks.
+- **Not much has been seen on iOS hardware, though more than there was.** The
+  app runs on an iPhone 15 Pro Max via TestFlight, which is what found the two
+  bugs in retro 030. As of 2026-08-15 the safe-area fix and the anchor-scroll
+  fix are both **confirmed on that device**. Still unseen: WebView scroll
+  bounce, keyboard avoidance in the search sheet, the launch image transition,
+  and the viewport zoom lock from retro 036, which landed after the build that
+  was tested. That last one is the only fix currently carried unverified — see
+  "The zoom lock is unverified on hardware" in
+  [OPEN-ITEMS.md](./OPEN-ITEMS.md).
 - **Screenshots are captured in desktop Chromium at an iPhone viewport**, not on
   iOS Safari. The engines differ. The layout check has the same limitation and
   says so.

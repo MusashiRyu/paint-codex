@@ -12,9 +12,9 @@ import { APP_VERSION } from '../app/config';
  *   reports the real package version instead, so a stale constant survives
  *   every hardware check.
  * - iOS `MARKETING_VERSION` / `CURRENT_PROJECT_VERSION` can only be built on a
- *   Mac (OPEN-ITEMS 4), so nothing on this machine ever renders them. They sat
- *   at Capacitor's `1.0` default against a `versionName` of `1.0.0` until this
- *   test was written.
+ *   Mac, and this project archives on CI rather than owning one, so nothing on
+ *   this machine ever renders them. They sat at Capacitor's `1.0` default
+ *   against a `versionName` of `1.0.0` until this test was written.
  *
  * All three are asserted here so that bumping the version for a release and
  * missing one turns CI red instead of shipping a lie.
