@@ -47,14 +47,37 @@ for (const { store, file } of LISTINGS) {
     const length = body.length;
     const ok = length <= limit;
     if (!ok) failed = true;
-    console.log(`  ${ok ? 'ok  ' : 'OVER'} ${name.padEnd(20)} ${String(length).padStart(4)} / ${limit}`);
+
+    /*
+     * Store copy is plain ASCII, and this is the check rather than a habit.
+     *
+     * These fields are pasted into web forms through a Windows clipboard, and
+     * `clip.exe` reads its input in the console's active code page -- 437 here,
+     * which has no em dash. Every byte of a UTF-8 em dash arrives as a question
+     * mark, so a field written with one is pasted into the store as `???`. The
+     * store would have rendered the character; the path to it will not.
+     *
+     * It is reported next to the length because both are the same kind of
+     * problem: something that looks right in the repo and is wrong in the form.
+     */
+    const exotic = [...new Set([...body].filter((c) => c.codePointAt(0) > 126))];
+    if (exotic.length > 0) failed = true;
+
+    const codes = exotic
+      .map((c) => `${c} U+${c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')}`)
+      .join(' ');
+    console.log(
+      `  ${ok && exotic.length === 0 ? 'ok  ' : ok ? 'NONASCII' : 'OVER'} ` +
+        `${name.padEnd(20)} ${String(length).padStart(4)} / ${limit}` +
+        (codes ? `   ${codes}` : '')
+    );
   }
   console.log('');
   total += fields.length;
 }
 
 if (failed) {
-  console.error('At least one field is over its store\'s limit.');
+  console.error('At least one field is over its limit or carries a non-ASCII character.');
   process.exit(1);
 }
 console.log(`${total} fields within limits.`);

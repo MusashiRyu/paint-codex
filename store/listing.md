@@ -7,9 +7,14 @@ are checked by `npm run listing:check`.
 **Copy fields out with `npm run listing:paste`, not by hand.** Every block here
 is wrapped at 80 columns to be readable as markdown, and a Console field is a
 plain textarea — a raw copy lands with a line break in the middle of every
-sentence. `npm run listing:paste -- "full description" | clip` undoes the wrap
+sentence. `npm run listing:paste -- "full description" --copy` undoes the wrap
 and keeps the headings and lists intact; with no argument it lists every field
 in both listing files.
+
+**`--copy`, not `| clip`.** `clip.exe` decodes its stdin using the console's
+active code page, so anything outside it is silently mangled — a UTF-8 em dash
+arrives in the Console field as three question marks. `--copy` sets the
+clipboard directly, with the encoding stated at both ends.
 
 It removes the *wrap*, not every newline. Paragraph breaks and the caps section
 headings survive, because a description pasted as one unbroken block is a worse
@@ -42,7 +47,7 @@ Paco is a paint conversion table and list keeper for miniature painters.
 
 Found a recipe that calls for a paint you do not own? Paco shows you the
 closest equivalents across Citadel, Vallejo and The Army Painter, ranked by how
-close the match actually is — not by a guess, but by a measured color distance
+close the match actually is - not by a guess, but by a measured color distance
 between the two paints.
 
 BUILD YOUR LISTS
@@ -56,7 +61,7 @@ SEARCH THE CATALOG
 Fuzzy search across every paint in the catalog by name or brand. Filter to a
 single brand when you already know what you are shopping for. Every result
 shows its swatch, its hex value, and the equivalents in the other two ranges
-with a delta score for each — so you can tell a near-perfect substitute from a
+with a delta score for each - so you can tell a near-perfect substitute from a
 rough one at a glance.
 
 MIX AND MATCH IN THE COLOR LAB
@@ -64,15 +69,15 @@ MIX AND MATCH IN THE COLOR LAB
 Pick two paints and see the blend between them in twenty percent steps, or
 pick one and get its complementary, its highlight and its shade. Every color
 Paco works out is matched back to the nearest real paint in the catalog, with
-the same delta score the equivalents use — so a mix you cannot buy still ends
+the same delta score the equivalents use - so a mix you cannot buy still ends
 at one you can, and it goes straight into a list.
 
 WORKS WITH THE RADIO OFF
 
 Paco ships the whole catalog inside the app. There is no loading screen, no
 sign-in and no "you appear to be offline". It quietly checks for an updated
-catalog when you open it, and if that check fails — no signal, airplane
-mode, hobby shop basement — nothing about the app changes.
+catalog when you open it, and if that check fails - no signal, airplane
+mode, hobby shop basement - nothing about the app changes.
 
 NO ACCOUNTS, NO ADS, NO TRACKING
 
@@ -83,10 +88,10 @@ public paint color tables it is built on, and it sends nothing about you with
 it.
 
 Paco is free, and every part of it is. There is a tip jar on the About screen
-for anyone who wants to leave something, and nothing at all behind it — no
+for anyone who wants to leave something, and nothing at all behind it - no
 feature is locked, limited or nagged about.
 
-—
+---
 
 The Paint Codex design is by Lukas Stordeur (github.com/LukasStordeur).
 

@@ -50,7 +50,7 @@ Paco is a paint conversion table and list keeper for miniature painters.
 
 Found a recipe that calls for a paint you do not own? Paco shows you the
 closest equivalents across Citadel, Vallejo and The Army Painter, ranked by how
-close the match actually is — not by a guess, but by a measured color distance
+close the match actually is - not by a guess, but by a measured color distance
 between the two paints.
 
 BUILD YOUR LISTS
@@ -64,7 +64,7 @@ SEARCH THE CATALOG
 Fuzzy search across every paint in the catalog by name or brand. Filter to a
 single brand when you already know what you are shopping for. Every result
 shows its swatch, its hex value, and the equivalents in the other two ranges
-with a delta score for each — so you can tell a near-perfect substitute from a
+with a delta score for each - so you can tell a near-perfect substitute from a
 rough one at a glance.
 
 MIX AND MATCH IN THE COLOR LAB
@@ -72,15 +72,15 @@ MIX AND MATCH IN THE COLOR LAB
 Pick two paints and see the blend between them in twenty percent steps, or
 pick one and get its complementary, its highlight and its shade. Every color
 Paco works out is matched back to the nearest real paint in the catalog, with
-the same delta score the equivalents use — so a mix you cannot buy still ends
+the same delta score the equivalents use - so a mix you cannot buy still ends
 at one you can, and it goes straight into a list.
 
 WORKS WITH THE RADIO OFF
 
 Paco ships the whole catalog inside the app. There is no loading screen, no
 sign-in and no "you appear to be offline". It quietly checks for an updated
-catalog when you open it, and if that check fails — no signal, airplane
-mode, hobby shop basement — nothing about the app changes.
+catalog when you open it, and if that check fails - no signal, airplane
+mode, hobby shop basement - nothing about the app changes.
 
 NO ACCOUNTS, NO ADS, NO TRACKING
 
@@ -93,7 +93,7 @@ it.
 Paco is free, and every part of it is. No feature is locked, limited or nagged
 about.
 
-—
+---
 
 The Paint Codex design is by Lukas Stordeur (github.com/LukasStordeur).
 
@@ -388,6 +388,12 @@ iPhone 15 Pro Max, iOS 26.6.1 - physical device, via TestFlight.
 plain ASCII: it is pasted into a web form that has mangled non-ASCII before,
 and a mojibake'd notes field is a worse first impression than a hyphen.
 
+That rule now covers **every** field in both files, and `npm run listing:check`
+enforces it rather than trusting anyone to remember. It was only ever written
+here, so the two descriptions carried em dashes for months — and the first
+thing to actually mangle one was not a store form but the clipboard on the way
+to it.
+
 **Do not paste this by hand.** Every field in these two files is wrapped at 80
 columns to be readable as markdown. A store console is a plain textarea, so a
 raw copy arrives with a line break in the middle of every sentence — which is
@@ -395,8 +401,13 @@ what the reviewer then reads. Take it from the tool instead, which undoes the
 wrap and leaves the headings and the numbered steps alone:
 
 ```bash
-npm run listing:paste -- reviewer | clip
+npm run listing:paste -- reviewer --copy
 ```
+
+**`--copy`, not `| clip`.** `clip.exe` decodes its stdin in the console's active
+code page — 437 here, which has no em dash — so a UTF-8 one arrives in the form
+as three question marks. That is the exact mojibake this section already warned
+about, arriving by a route nobody had checked.
 
 Run it with no argument to list every field across both files; the match is
 loose, and an ambiguous one prints the candidates rather than guessing. It

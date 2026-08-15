@@ -8,9 +8,12 @@
  * that has to be exact, and there are fifteen of them across two files.
  *
  * Usage:
- *   npm run listing:paste                       # list the fields
- *   npm run listing:paste -- notes              # print, matched loosely
- *   npm run listing:paste -- notes | clip       # straight to the clipboard
+ *   npm run listing:paste                        # list the fields
+ *   npm run listing:paste -- notes               # print, matched loosely
+ *   npm run listing:paste -- notes --copy        # straight to the clipboard
+ *
+ * Use `--copy`, not `| clip`. See the note above the copy itself: the pipe
+ * decodes in the console's code page and silently mangles anything outside it.
  *
  * The match is case-insensitive and needs only to be contained in the field's
  * name, so `notes`, `1.2.0` and `subtitle` all work. An ambiguous match lists
@@ -25,7 +28,9 @@
  * `--play` and `--appstore` narrow by store, which is what separates the two
  * fields that genuinely share a name — `App name` exists in both files.
  */
-import { readFile } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { readFile, rm, writeFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseFields, unwrap } from './listingFields.mjs';
@@ -63,7 +68,7 @@ const say = (line = '') => console.error(line);
 const pool = wantStore ? all.filter((f) => f.store === wantStore) : all;
 
 if (!query) {
-  say('Usage: npm run listing:paste -- [--play|--appstore] <part of a field name>\n');
+  say('Usage: npm run listing:paste -- [--copy] [--play|--appstore] <part of a field name>\n');
   for (const { store, name, limit } of pool) {
     say(`  ${store.padEnd(10)} ${name.padEnd(22)} ${limit} char limit`);
   }
@@ -89,6 +94,40 @@ const text = unwrap(field.body);
 
 say(`${field.store} — ${field.name}`);
 say(`${text.length} of ${field.limit} characters (${field.body.length} wrapped)`);
-say('');
 
-process.stdout.write(text);
+/*
+ * `--copy` puts it on the clipboard without a pipe, because the pipe is lossy.
+ *
+ * `| clip` looks like the obvious way to do this and quietly corrupts anything
+ * outside the console's active code page: clip.exe decodes its stdin with that
+ * code page, 437 on this machine, so a UTF-8 em dash arrives as three question
+ * marks. `listing:check` now rejects non-ASCII in a field so the fields cannot
+ * carry one -- this is the second half of the same guarantee, for the day one
+ * legitimately can.
+ *
+ * A temp file rather than stdin: it is the one channel where both ends can be
+ * told the encoding outright, and PowerShell's own stdin decoding has the same
+ * code page problem being avoided.
+ */
+if (args.includes('--copy')) {
+  const tmp = join(tmpdir(), `paco-listing-${process.pid}.txt`);
+  await writeFile(tmp, text, 'utf8');
+  try {
+    execFileSync(
+      'powershell',
+      [
+        '-NoProfile',
+        '-Command',
+        `Set-Clipboard -Value ([IO.File]::ReadAllText('${tmp}', [Text.Encoding]::UTF8))`,
+      ],
+      { stdio: 'ignore' }
+    );
+    say('');
+    say('Copied to the clipboard.');
+  } finally {
+    await rm(tmp, { force: true });
+  }
+} else {
+  say('');
+  process.stdout.write(text);
+}
