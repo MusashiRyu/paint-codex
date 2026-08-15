@@ -68,10 +68,12 @@ signing key's fingerprint already attached to `com.musashi.paco`. Earlier
 revisions of this file listed it as an outstanding Draft; it was not, because
 Google now registers package names itself. See step 1.
 
-**Nothing is outstanding on the Play side.** Production used to need twelve
-testers opted in for fourteen continuous days; that was resolved on 2026-08-15,
-not by waiting it out but by finding it never applied. See the 12-testers note
-in step 0.
+**Closed testing is clear; production may not be.** 1.2.3 released to closed
+testing on 2026-08-15 without complaint. The twelve-testers-for-fourteen-days
+gate on *production* was recorded as resolved the same day and then unresolved
+again within hours, because the Play Console still displays it — see the
+12-testers note in step 0 and the reopened item in
+[OPEN-ITEMS.md](./OPEN-ITEMS.md). Nothing already shipped is affected.
 
 Paste this into Play Console → App content → Privacy policy:
 
@@ -135,16 +137,28 @@ below can start until it clears, so do it first.
 > even apply for production access. The 14 days do not start until the twelfth
 > tester has opted in, and the counter resets if you drop below twelve.
 >
-> **This account is an organization account, and Google exempts those.**
-> Confirmed 2026-08-15. Production can be applied for without a closed test at
-> all, which removes what this file called the single longest pole in the
-> schedule and what OPEN-ITEMS carried as item 8 from retro 025 onward.
+> **This account is an organization account, and Google exempts those** — which
+> is true as a rule and was not enough to close the question. An earlier
+> revision of this note said the requirement had been removed, "confirmed
+> 2026-08-15", on the strength of the account type alone. **The Play Console
+> still displayed the requirement afterwards**, so that confirmation was the
+> rule being read, not the console being checked.
 >
-> The rule is written about the account type *at registration*, so on an account
-> that was converted rather than created as an organization, trust the console
-> over the rule: if **Release → Testing → Closed testing** shows no tester
-> progress tracker and production is applicable, the requirement is gone. That
-> is the observable that settles it.
+> The exemption is written about accounts **registered** as organizations.
+> Google's own page —
+> [App testing requirements for new personal developer accounts](https://support.google.com/googleplay/android-developer/answer/14151465)
+> — says only that it applies to "personal developer accounts created after
+> November 13, 2023", and is **silent on conversion**. Third-party accounts of
+> it are consistent that a personal account converted later keeps the
+> requirement, since it attaches to what was registered; every such source sells
+> tester recruitment, so read them as motivated but not therefore wrong.
+>
+> **Trust the console over the rule.** The observable that settles it is
+> **Release → Production → Create new release**: if production is gated, the
+> page says so and offers an "apply for production access" flow with a tester
+> counter. A card on the account home page is weaker evidence — that surface
+> carries generic onboarding — but it is not nothing. Closed testing is
+> unaffected either way; this gates production only.
 >
 > Left in place rather than deleted because it is still the first thing to check
 > on any new account, and because a future reader finding the closed track

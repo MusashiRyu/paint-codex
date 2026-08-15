@@ -31,14 +31,58 @@ title, not by number.
 
 ## Open
 
-The whole unverified-fix backlog — the safe area, the anchor scroll, the zoom
-lock and the tile-jump landing, four fixes shipped blind between retros 030
-and 039 — closed on the iPhone 15 Pro Max on 2026-08-15.
+Nothing here is a bug. The whole unverified-fix backlog — the safe area, the
+anchor scroll, the zoom lock and the tile-jump landing, four fixes shipped
+blind between retros 030 and 039 — closed on the iPhone 15 Pro Max on
+2026-08-15. What is left is one question about a store account that was closed
+too early.
 
-That is a state worth noticing rather than passing through: everything this
-repo knows about is either settled, accepted, or waiting on Apple. The next
-fix that cannot be checked on this machine starts the backlog over at one, and
-retro 039 records what letting it reach four cost.
+### 8. The twelve-tester requirement may apply after all
+**Raised:** 025 · **Closed in 037 on the rule · Reopened 2026-08-15 on the console**
+
+Play production access is gated, for personal developer accounts registered
+after 2023-11-13, on a closed test holding **twelve testers opted in for
+fourteen continuous days**. Retro 037 closed this item on the account being an
+organization account, which Google exempts.
+
+**The Play Console still shows the requirement.** That is the observable this
+file said to trust over the rule, and it was not checked before closing — the
+closure read the policy and stopped. So the item is back, and the reopening is
+the correction, not new information.
+
+What is actually established:
+
+- Google's
+  [official page](https://support.google.com/googleplay/android-developer/answer/14151465)
+  says the requirement applies to "personal developer accounts created after
+  November 13, 2023" and **says nothing about conversion**. The exemption is
+  written about how an account was *registered*.
+- Third-party sources agree that converting a personal account to an
+  organization does not lift it, because it attaches to what was registered.
+  All of them sell tester recruitment. Motivated, not therefore wrong, and
+  consistent with the console.
+- **Nothing shipped is blocked.** 1.2.3 released to closed testing without
+  complaint. This gates production only, so it is a release-timing question
+  rather than a broken thing.
+
+Two checks settle it, in order:
+
+1. **Which account owns `com.musashi.paco`.** If the organization account is a
+   *separate, newer* account and the app still lives under the original one,
+   the requirement applies to the app's actual owner and no amount of
+   organization status elsewhere changes it. The console's account switcher
+   answers this in one look.
+2. **Release → Production → Create new release.** Gated means a message about
+   testing requirements and an "apply for production access" flow carrying a
+   tester counter. Ungated means the card on the home page is generic
+   onboarding and this item closes for real. A home-page card alone is weak
+   evidence; the production page is the authority.
+
+If it does apply, the routes are recruitment — twelve real testers, fourteen
+continuous days, the clock resetting if the count drops — or registering a
+genuinely new organization account and creating the app fresh under it, which
+means a new package name and re-doing the signing, the listing and the store
+presence. Recruitment is almost certainly the cheaper of the two for one app.
 
 ---
 
@@ -135,7 +179,7 @@ Prune this section once it stops being useful.
 | The anchor-scroll fix was unverified on WebKit — opening the catalog on a paint showed an empty sheet on iOS | 033 | 037 — confirmed working on the iPhone 15 Pro Max, 2026-08-15. The ~950,000px scroller redesign the item held in reserve is not needed |
 | The zoom lock was unverified on hardware — opening search left the whole app zoomed in and pannable | 036 | 039 — confirmed on the iPhone 15 Pro Max against 1.2.3, 2026-08-15. The `TextField` 16px-floor fallback is not needed |
 | The tile-jump landing was unverified on WebKit — searching, then tapping an equivalent tile, landed among the blacks at the top of the browse order | 038 | 039 — confirmed on the iPhone 15 Pro Max against 1.2.3, 2026-08-15, against all six checks including the late-revert watch and the mid-jump flick. The scroller-extent redesign held in reserve since 033 is **not needed** |
-| Play production access needed twelve testers for fourteen continuous days — carried since 025 as the longest pole to release | 025 | 037 — **moot.** The developer account is an organization account, which Google exempts from the rule. The package-name half of the item was stale too: `release-checklist.md` recorded it done on 2026-08-10 and OPEN-ITEMS never caught up |
+| Play production access needed twelve testers for fourteen continuous days — carried since 025 as the longest pole to release | 025 | 037 — closed as moot on the organization-account exemption, then **reopened the same day**: the Play Console still shows the requirement. Back in the Open section above. The package-name half of the item was genuinely stale and stays closed: `release-checklist.md` recorded it done on 2026-08-10 and OPEN-ITEMS never caught up |
 | App Store primary language declared English (U.K.) while the copy was American | 035 | 037 — changed to English (U.S.) in App Store Connect, 2026-08-15. The pair item 14 described is now consistent on both halves |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate

@@ -121,6 +121,20 @@ applied for without a closed test at all. An item carried since retro 025 as
 `release-checklist.md` as well as in OPEN-ITEMS — evaporated on one console
 screen.
 
+> **Corrected 2026-08-15, later the same day: it was real, and this closure was
+> the same mistake it diagnoses.** The Play Console still displays the
+> requirement. The paragraph above closed the item on the *rule* — organization
+> accounts are exempt — having written, four paragraphs earlier, that an item
+> carried long enough "starts being treated as a fact about the world rather
+> than a claim someone once wrote down". The exemption is written about accounts
+> **registered** as organizations, Google's page is silent on conversion, and no
+> console screen was actually looked at before the closure: "one console screen
+> to confirm" was named as the cheap check and then not performed. The item is
+> reopened in OPEN-ITEMS with the two observables that settle it. Nothing about
+> the *rest* of this retro changes — but the section immediately above, on
+> premises being trusted because they are old, now has a second example, and it
+> is this one.
+
 Its trailing half was stale too, and in a way worth recording separately: the
 item said the package name registration was "still in **Draft** pending the app
 signing key's SHA-256". `release-checklist.md` line 41 has said since
@@ -148,6 +162,11 @@ behavior over the rule as stated.
 ## Where the release actually stands now
 
 Play has no blockers left. Production is a decision, not a wait.
+
+> **Corrected the same day.** See the note under item 8 above: the console
+> still shows the twelve-tester gate on production, so this sentence was
+> written on a closure that had not been checked. Closed testing is genuinely
+> clear; production is not established either way.
 
 The App Store is down to item 12, and item 12 is down to its mechanical tail:
 push, run the workflow, attach the build, record the flow on the phone, reply.
