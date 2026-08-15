@@ -298,11 +298,24 @@ because none of them is discoverable from the error it produces.
   to a team with no registered devices — and a runner is never a registered
   device. App Store distribution profiles have no such requirement, so all of
   it happens at export.
-- **Turns off on-demand resources.** On by default, and `actool` consults the
-  *simulator* runtime list while processing them even when compiling for
-  device. Runner simulator runtimes are newer than the Xcode SDK build, so the
-  lookup fails and the asset catalog is blamed for it. This app tags no
-  assets for on-demand delivery.
+- **Selects the image's default Xcode, not the lowest one that clears the
+  floor.** Images carry several, and their simulator runtimes are aligned with
+  the default. Pinning an older bundle leaves `actool` looking for a simulator
+  runtime that was never installed, and it fails the *asset catalog* over it:
+
+  ```
+  Assets.xcassets: error: No simulator runtime version from
+  ["23C54", "23E254a", "23F77"] available to use with
+  iphonesimulator SDK version 23A339
+  ```
+
+  Nothing in that message is about the asset catalog, and nothing is about
+  Xcode. `xcrun simctl list runtimes` is where the two halves can be compared,
+  and the workflow prints it before building for exactly that reason.
+- **Turns off on-demand resources.** This app tags no assets for on-demand
+  delivery, so the processing is dead weight. It is *not* what fixes the error
+  above, though it was added believing that — the error recurred with the
+  setting in place, on an image whose Xcode had been pinned backwards.
 - **Uses a shared scheme.** Xcode keeps schemes under `xcuserdata` until
   explicitly shared, and that is not committed, so `xcodebuild -scheme App` on
   a fresh clone fails with "scheme not found" while the project opens perfectly

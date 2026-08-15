@@ -64,16 +64,35 @@ jobs:
           MIN_XCODE: '26'
         run: |
           set -euo pipefail
-          # Prefer an explicitly versioned Xcode, then whatever the image has
-          # made default. Deliberately no `sort -V`: that is a GNU extension
-          # and this is BSD sort, so a clever one-liner here would fail in a
-          # way that reads as an Xcode problem.
-          for candidate in /Applications/Xcode_"$MIN_XCODE"*.app /Applications/Xcode.app; do
-            if [ -d "$candidate" ]; then
-              sudo xcode-select -s "$candidate/Contents/Developer"
-              break
-            fi
-          done
+
+          xcode_major() {
+            "$1/Contents/Developer/usr/bin/xcodebuild" -version 2>/dev/null \
+              | sed -n '1s/^Xcode \([0-9][0-9]*\).*/\1/p'
+          }
+
+          # The image default first, and a versioned bundle only if it is too
+          # old. This order matters and used to be the other way round, which
+          # was a real bug: `/Applications/Xcode_26*.app` expands
+          # alphabetically, so an image carrying 26.0.1 and 26.2 got pinned to
+          # 26.0.1 -- older than the simulator runtimes the image ships. actool
+          # then finds no runtime matching its simulator SDK build and fails
+          # the asset catalog, naming a platform the archive does not target.
+          #
+          # GitHub aligns each image's simulators and components around its
+          # default Xcode, so the default is the version least likely to
+          # disagree with the rest of the machine.
+          chosen=/Applications/Xcode.app
+          if [ ! -d "$chosen" ] || [ "$(xcode_major "$chosen" || echo 0)" -lt "$MIN_XCODE" ]; then
+            for candidate in /Applications/Xcode_*.app; do
+              [ -d "$candidate" ] || continue
+              if [ "$(xcode_major "$candidate" || echo 0)" -ge "$MIN_XCODE" ]; then
+                chosen=$candidate
+                break
+              fi
+            done
+          fi
+          echo "Selected $chosen"
+          sudo xcode-select -s "$chosen/Contents/Developer"
           # Captured rather than piped. `xcodebuild -version | head -1` closes
           # the pipe after the first line, and xcodebuild answers SIGPIPE with
           # an uncaught NSFileHandleOperationException rather than exiting --
@@ -114,6 +133,12 @@ jobs:
         run: |
           set -euo pipefail
           xcodebuild -showsdks
+
+          # The runtime list is the half that matters when actool complains
+          # about a simulator while building for device: its message names the
+          # runtime builds it found and the simulator SDK build it wanted, and
+          # this is the only place to see whether they could ever have matched.
+          xcrun simctl list runtimes || true
 
           destinations() {
             xcodebuild -showdestinations \
@@ -187,19 +212,19 @@ jobs:
       # fails with "iOS 26.0 is not installed" while the SDK is sitting in the
       # Xcode bundle and compiling fine. Naming the SDK skips that lookup.
       #
-      # ENABLE_ON_DEMAND_RESOURCES=NO because it is on by default and actool
-      # consults the *simulator* runtime list while processing it, even when
-      # compiling `--platform iphoneos`. Hosted images carry simulator runtimes
-      # newer than the Xcode SDK build, so the lookup finds no match and the
-      # asset catalog fails with a message about a platform the archive does
-      # not target:
+      # ENABLE_ON_DEMAND_RESOURCES=NO because this app tags no assets for
+      # on-demand delivery, so the processing is dead weight. It is *not* the
+      # cure for actool's
       #
       #   No simulator runtime version from ["23C54", ...] available to use
       #   with iphonesimulator SDK version 23A339
       #
-      # This app tags no assets for on-demand delivery, so the whole code path
-      # is dead weight here. Left on, it is a build failure whose text points
-      # at the asset catalog, which is the one thing that is not wrong.
+      # which was the reason it was first added and recurred with the setting
+      # in place. That failure is an Xcode-versus-runtime mismatch, and the
+      # fix is in "Select Xcode": picking a bundle older than the image's own
+      # simulator runtimes leaves actool looking for a runtime that was never
+      # installed. Kept because it is correct on its own terms, and recorded
+      # this way so the next mismatch is not mistaken for it.
       - name: Archive
         env:
           TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
