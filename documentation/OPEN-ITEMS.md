@@ -31,11 +31,34 @@ title, not by number.
 
 ## Open
 
-Nothing here is a bug. The whole unverified-fix backlog — the safe area, the
-anchor scroll, the zoom lock and the tile-jump landing, four fixes shipped
-blind between retros 030 and 039 — closed on the iPhone 15 Pro Max on
-2026-08-15. What is left is one question about a
-store account that was closed too early.
+The backlog that closed on the iPhone on 2026-08-15 — the safe area, the anchor
+scroll, the zoom lock and the tile-jump landing — is not carried here any more.
+What is left is one Android fix waiting on the phone that reported the bug and
+one question about a store account that was closed too early.
+
+### 18. The soft-keyboard fix is unverified on hardware
+**Raised:** 040 · **Fix shipped in 040, needs the Galaxy S9**
+
+Opening the keyboard on the Galaxy S9 collapsed the web view to a ~34px strip —
+the search sheet's header under the status bar and black for the rest of the
+screen. Every Android below 15 resizes the window for the keyboard *and* gets
+padded for it by Capacitor's `SystemBars` plugin, so the keyboard's height came
+out of the layout twice. `android:windowSoftInputMode="adjustNothing"` stops
+the window resize so the plugin's padding stands alone. Retro 040 has the
+arithmetic and the upstream report.
+
+**The check is the phone, and it is unambiguous:** open search on the S9 and
+type. The sheet should shrink to sit above the keyboard, exactly as it does on
+the S22.
+
+Two outcomes close this. If the sheet resizes, the fix is confirmed. If the
+sheet instead stays full height with the keyboard covering its lower half, the
+black screen is gone but API 29 is not reporting an inset for a window that was
+never resized — the one part of the fix that is inference rather than
+established. That is worth recording rather than re-fixing blind; the search
+field stays visible either way.
+
+Nothing to check on Android 15+ or iOS. Neither one's behaviour changes.
 
 ### 8. Does the twelve-tester gate survive an app transfer?
 **Raised:** 025 · **Reopened 2026-08-15 · Play support ticket open, awaiting reply**
