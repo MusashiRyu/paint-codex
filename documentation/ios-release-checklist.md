@@ -412,8 +412,20 @@ regressed rather than something is unfinished:
 
 Optional but nearly free. **Internal testers** — up to 100 people on the team —
 need no Beta App Review and get the build as soon as processing finishes. It is
-the only way to see the app on real hardware before the public does, and this
-app has never run on an iPhone.
+the only way to see the app on real hardware before the public does.
+
+**Not optional in practice, on the evidence.** The first build to reach an
+iPhone 15 Pro Max produced one screenshot, and that screenshot contained two
+bugs that had survived twenty-nine retros — the title drawn behind the status
+bar, and an unlocked orientation. See [030-retro.md](./030-retro.md). Neither
+was findable on this machine at any width, because a desktop Chromium has no
+notch to report.
+
+It is now also a **submission requirement rather than a nicety**: Guideline 2.1
+asks which physical devices and OS versions the app was tested on, and asks for
+a screen recording captured on one. Both answers live in
+[`store/listing-appstore.md`](../store/listing-appstore.md#devices-tested), and
+neither can be produced without this step.
 
 External testing is a larger step (Beta App Review, a public link, up to 10,000
 testers) and is not needed for a first release.
@@ -442,6 +454,16 @@ In App Store Connect, on the version:
 3. Fill in everything from `store/listing-appstore.md` — description, keywords,
    subtitle, promotional text, support URL, privacy policy URL, category, age
    rating, App Privacy, and the reviewer notes.
+
+   **The reviewer notes are not a courtesy, and a short one costs a review
+   cycle.** The first submission was rejected under Guideline 2.1 — Information
+   Needed for exactly that: three paragraphs where Apple wanted seven answers
+   and a screen recording. The replacement block, the recording shot list and
+   the tested-devices table are all in
+   [`store/listing-appstore.md`](../store/listing-appstore.md#app-review-information).
+   Attach the recording under **App Review Information → Attachment**, where it
+   persists to the next submission, rather than only in a Resolution Center
+   reply, which does not.
 4. Upload the screenshots from `store/graphics/screenshots-ios/` into the
    **6.9" Display** slot, and only that one.
 
@@ -525,9 +547,12 @@ Written down so the gap is known rather than assumed away.
   `iosProject.test.ts` are string assertions over project files, not a build.
   Compiling the iOS target on every push would close the gap and cost macOS
   runner minutes on every push to do it.
-- **The app has never run on iOS hardware or in the Simulator.** Safe-area
-  behaviour, WebView scroll bounce, keyboard avoidance in the search sheet and
-  the launch image transition are all unverified. That is what step 6 is for.
+- **Almost nothing has been seen on iOS hardware.** The app has now run on an
+  iPhone 15 Pro Max via TestFlight, which is what found the two bugs in retro
+  030 — but that was one screenshot of one screen. WebView scroll bounce,
+  keyboard avoidance in the search sheet, the launch image transition and the
+  safe-area fix itself are all still unverified on a device. That is what step 6
+  is for, and OPEN-ITEMS 10 tracks the specific checks.
 - **Screenshots are captured in desktop Chromium at an iPhone viewport**, not on
   iOS Safari. The engines differ. The layout check has the same limitation and
   says so.

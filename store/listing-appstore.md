@@ -239,23 +239,183 @@ collecting anything.
 | Demo account | Not needed. Every feature is reachable on first launch with no account, no region lock and nothing gated. |
 | Contact | First and last name, phone and email of whoever can answer during review. Not recorded here. |
 
-**Notes for the reviewer** — paste this into the Notes field:
+### The first submission was rejected for an empty Notes field
+
+Submission `7fce4ac9-c042-4e78-8187-a3397c78dd81`, 14 August 2026, came back
+under **Guideline 2.1 — Information Needed**. Not a bug report and not a
+judgement about the app: Apple asked seven questions and requested a screen
+recording, because the Notes field carried three paragraphs where it needed to
+answer all of them.
+
+The block below is the replacement, and it is written to Apple's seven
+questions in their order — app function and audience, setup and access,
+external services, regional differences, regulated industry and third-party
+material, plus the permissions/purchases/UGC prompts the recording request
+enumerates.
+
+**It describes both screens, because the resubmission ships both.** `feat/color-lab`
+merges before the next build, so Collab is in the binary a reviewer opens and
+belongs in the flow. The reverse is the rule that matters and it is easy to get
+wrong in either direction: the notes describe *the build being submitted*, not
+the branch and not the design. Before every submission, walk the numbered steps
+against the actual archive — the first draft of this block described a "starter
+list" the store does not seed and a `NEW LIST` button that reads **New**, both
+from writing it out of memory rather than out of the code.
+
+**3,989 of the field's 4,000 characters.** Eleven spare, so anything added has
+to displace something, and the count is worth re-running after any edit. That
+budget is the reason this is prose and not an essay.
+
+**Notes for the reviewer** (4000 char limit) — paste this into the Notes field.
+The limit is declared so the listing check measures this like any other field.
+No inline code in this paragraph, deliberately: the checker binds a heading to
+its own fence with a pattern that cannot cross a backtick, so one here would
+silently drop the field from the run rather than fail it.
 
 ```
-Paco is fully functional offline and requires no account. Every feature is
-available immediately on first launch.
+WHAT THE APP DOES, AND FOR WHOM
 
-The app makes exactly one network request, at launch: an HTTPS GET to
-raw.githubusercontent.com for an updated copy of the public paint colour table
-the app is built on. If it fails, the bundled catalogue is used and nothing
-about the app changes. No user data is sent with it. The app can be reviewed
-entirely in aeroplane mode.
+Paco is an offline paint-conversion reference for miniature painters -
+hobbyists who paint tabletop miniatures. It ships a catalogue of 2,279 paints
+from Citadel, Vallejo and The Army Painter and, for each, shows the nearest
+match in the other two brands, ranked by a measured CIE colour distance rather
+than a guess. Two screens, from the bottom bar: List keeps saved paints and
+searches the catalogue; Collab is a colour laboratory that blends or derives a
+colour and names the closest real paint.
 
-Citadel, Vallejo and The Army Painter are named throughout because the app's
-function is converting between those three paint ranges. The app is
-independent and not affiliated with any of them; the disclaimer is in the
-description.
+ACCESS - NO LOGIN, NOTHING GATED
+
+No account, sign-in, demo credentials or sample files. Everything is available
+on first launch and works offline; the app can be reviewed end to end in
+aeroplane mode. It opens with no lists, so step 1 creates one.
+
+LIST
+
+1. Tap "+ New" in the tab bar. Give the list a name, an emblem and a banner
+   colour, then create it.
+2. Tap the gold "+", bottom right, to open the catalogue.
+3. Search by name ("Abaddon") or brand ("Vallejo"), or filter to one brand.
+   Each result shows a swatch, brand, category and hex, plus its closest
+   equivalents in the other two brands, each with a delta score.
+4. Tap the gold "+" on a result to add it; it then reads IN LIST.
+5. Tap a paint in the list to reopen the catalogue anchored on it, ordered by
+   colour; tap any equivalent tile to jump to that paint.
+
+COLLAB
+
+6. Mixing tab: tap Select Paint A, then Select Paint B; each opens a picker
+   offering My Lists and Search Catalog. The Mix Preview strip shows the blend
+   in 20% steps, each resolved to the nearest real paint.
+7. Matching tab: pick a base paint to get its complementary, highlight and
+   shade under Color Theory, each likewise resolved to a real paint.
+8. The gold "+" on any of those cards adds that paint to the current list.
+9. The info button, top right, opens About: version and credits.
+
+EXTERNAL SERVICES
+
+One, and it is optional. At launch the app makes three anonymous HTTPS GET
+requests to raw.githubusercontent.com for the public, MIT-licensed paint tables
+at github.com/Arcturus5404/miniature-paints, refreshing the bundled catalogue
+between releases. No user data, identifiers or cookies are sent; if they fail,
+the bundled catalogue is used and nothing observable changes.
+
+Nothing else: no server of our own, no authentication, analytics, crash
+reporting, advertising SDK, AI or ML service, payment processor, or third-party
+data collection. Runtime dependencies are React, Zustand, Fuse.js and
+Capacitor. All colour maths runs on the device.
+
+PERMISSIONS
+
+None requested, and no system prompt appears: no location, contacts, camera,
+microphone, photos or notifications, and no App Tracking Transparency prompt -
+there is no advertising identifier and nothing to track.
+
+PURCHASES
+
+None. No in-app purchase, subscription or paid tier, no StoreKit code in the
+binary, and nothing locked, limited or time-restricted.
+
+USER-GENERATED CONTENT
+
+None that leaves the device. Users name their own lists, which stay in local
+storage. Nothing is uploaded, shared or visible to any other user, so there is
+nothing to report or block.
+
+REGIONAL DIFFERENCES
+
+None. Identical catalogue, features and content in every region: no geo-gating,
+no regional pricing (free everywhere). English (U.K.) only.
+
+REGULATED INDUSTRY AND THIRD-PARTY MATERIAL
+
+Neither applies. The colour data derives from the openly licensed (MIT) public
+database credited above and in the app. The three brands are named only as a
+nominative reference to the ranges the app converts between; Paco is not
+affiliated with, endorsed by or sponsored by Games Workshop, Acrylicos Vallejo
+or The Army Painter, as the description states. No artwork, logo or trade dress
+of theirs is reproduced.
+
+TESTED ON
+
+iPhone 15 Pro Max, iOS 26.x - physical device, via TestFlight.
 ```
+
+**No em dashes, no typographic quotes, no `Δ`.** The block is deliberately
+plain ASCII: it is pasted into a web form that has mangled non-ASCII before,
+and a mojibake'd notes field is a worse first impression than a hyphen.
+
+### The screen recording
+
+Apple wants it captured on a physical device on the latest OS, starting from
+launch. iOS Screen Recording (Settings → Control Centre → Screen Recording)
+produces a `.mp4` that App Store Connect accepts directly.
+
+**Record the build that is actually under review.** A recording of a newer
+local build is a description of an app Apple does not have, and the differences
+are exactly what a reviewer is looking at.
+
+The flow is the nine numbered steps above, in order, at a pace that can be read
+— roughly 90 to 120 seconds now that Collab is in it. Four things earn their
+place beyond the happy path:
+
+1. **Aeroplane mode on before launch.** It demonstrates the central claim in one
+   gesture, and removes the question of what the network request is doing.
+2. **A search that returns a near-miss**, so the delta score is visibly doing
+   work rather than reading 0.00 on an exact match.
+3. **A mix in Collab, filled from both halves of the picker** — one slot from My
+   Lists, one from Search Catalog. It shows the second screen is reachable and
+   populated rather than an empty pair of slots, which is what a reviewer sees
+   for the first few seconds of that tab.
+4. **A rotation**, which the portrait lock now ships — it shows the app holding
+   still rather than appearing not to have been tested.
+
+Collab is also the answer to a question the old recording could not have
+answered well. A reviewer who sees only List may reasonably read the app as a
+lookup table with a saved-items feature; the Mix Preview strip resolving to real
+buyable paints is the part that is hard to mistake for a generic list app, and
+it is the strongest ninety seconds the app has.
+
+Attach it in **App Review Information → Attachment** (one file) as well as in
+the Resolution Center reply. The Notes field survives to the next submission;
+a Resolution Center thread does not.
+
+### Devices tested
+
+Apple's question 2, and the answer belongs here rather than only in the reply,
+because it has to be re-answered truthfully at every submission.
+
+| Device | OS | How |
+| --- | --- | --- |
+| iPhone 15 Pro Max | iOS 26.x | TestFlight, physical device |
+
+One device is a thin answer and there is no point pretending otherwise. It is
+also the honest one: `TARGETED_DEVICE_FAMILY` is `1`, the layout is a single
+column checked at seven phone widths, and the 6.9" screenshot set is what Apple
+scales to every smaller iPhone. Adding a second physical device is the single
+highest-value thing available here — see
+[ios-release-checklist.md](../documentation/ios-release-checklist.md#6-testflight),
+where one screenshot from this device found two bugs that had survived
+twenty-nine retros.
 
 ---
 

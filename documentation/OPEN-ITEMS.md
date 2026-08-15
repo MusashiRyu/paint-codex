@@ -72,7 +72,7 @@ Four things gate it, in order:
    and `ListsPanel`, not a link drop. The app has no commercial surface anywhere
    today; adding one changes what it feels like to use.
 4. **Disclosure.** Affiliate links need saying so in `store/listing.md` and
-   `store/privacy-policy.md` — and they would give the
+   `store/privacy-policy.md` — they would give the
    destination a reason to know the visit came from Paco, which the privacy
    policy currently promises does not happen. That paragraph would have to
    change. The cost here is not only compliance; it is tone.
@@ -101,7 +101,14 @@ passed on the 1.0.0 release APK on 2026-08-10, including the About sheet's
 outbound links, which had never been proven on a device before.
 
 ### 11. Both stores show one screen out of two
-**Raised:** 031 · **Release-time work, not branch-time**
+**Raised:** 031 · **Now blocking, via item 12**
+
+> The release that carries this is the App Store resubmission, so "release-time
+> work" has arrived. The reviewer will be reading the description and the
+> screenshots against a build that has Collab in it, having already rejected
+> this app once for an incomplete account of what it is. A listing that
+> describes a colour laboratory and shows four pictures of a list is exactly the
+> kind of mismatch that earns a second look.
 
 Collab shipped in 031 and the descriptions in `store/listing.md` and
 `store/listing-appstore.md` now mention it. Two things trail that and are
@@ -119,6 +126,51 @@ feature rather than to the branch that built it:
 
 Neither is blocked on anything. They are just the wrong side of the line
 between building a feature and shipping one.
+
+### 12. The App Store submission needs a new build before it can be answered
+**Raised:** 032 · **Blocking the resubmission**
+
+Submission `7fce4ac9-c042-4e78-8187-a3397c78dd81` was rejected on 2026-08-14
+under **Guideline 2.1 — Information Needed**. Seven questions and a screen
+recording; the answers are all written and live in
+[`store/listing-appstore.md`](../store/listing-appstore.md#app-review-information).
+
+**The answers are not the blocker. The binary is.** The build under review was
+archived from `0a7914f`, which predates `2cd1f95` (safe area) and `a1a5b6f`
+(portrait lock) by about ninety minutes. So the app Apple is holding still draws
+`PAINT CODEX` behind the status bar and still rotates into landscape — the two
+bugs retro 030 is about. Apple asked for a recording of it, on a device,
+starting from launch. That recording would be ninety seconds of evidence for a
+Guideline 2.1 *bugs and crashes* rejection to go with the information one.
+
+So the order is fixed, and it is not the order the email implies:
+
+1. Merge `feat/color-lab`. The resubmission ships Collab, which is why the Notes
+   block and the recording shot list both cover two screens.
+2. Close item 11 — the description on master does not mention Collab, and all
+   four screenshots per store are List screens. Both are now release blockers
+   rather than trailing work, because the listing would otherwise describe an
+   app the images do not show.
+3. Bump `versionCode` / `versionName` in `android/app/build.gradle`.
+4. Run **Actions → iOS release** on master, which then carries both fixes and
+   the new screen.
+5. Attach the new build to the version record.
+6. Record the flow on the iPhone 15 Pro Max against *that* build.
+7. Paste the Notes block, attach the recording, reply.
+
+Steps 1 and 2 are the ones with real work in them. Everything from 3 down is
+mechanical, and step 6 cannot start until 5 has finished processing.
+
+Two smaller things to check while in App Store Connect, neither of them
+certainly wrong:
+
+- **Apple's email says "App Version 1.0 for iOS" while `MARKETING_VERSION` is
+  `1.1.0`.** The version record and the build may have been allowed to disagree.
+  Worth looking at, because checklist step 7.1 assumes App Store Connect
+  prevents exactly this.
+- **The screenshots predate the safe-area fix**, since they are captured in
+  desktop Chromium where the insets are always zero. They are not wrong, but
+  they are not the new build either.
 
 ### 6. `npm audit` reports three moderate advisories, all dev-only
 **Raised:** 017 · **Watch, not fix**
@@ -155,7 +207,19 @@ Worth revisiting if any of those files ever gains real code, which today it has
 not.
 
 ### 10. The safe-area fix is unverified on hardware
-**Raised:** 030 · **Waiting on the next TestFlight build**
+**Raised:** 030 · **Waiting on the next TestFlight build · Now gates item 12**
+
+The device is an **iPhone 15 Pro Max**, and it is the only one the app has ever
+run on — worth recording here because Apple asks for that list at every
+submission and retro 030 never wrote it down. Note the check injects an iPhone
+15 Pro's 59/34 insets, which is a different phone; the arithmetic is a delta, so
+that is fine, but the two numbers are not the same fact and should not be
+conflated.
+
+The four checks below are no longer only good practice. The screen recording
+item 12 owes Apple has to be made on this device, against the build that carries
+this fix, so the first hardware confirmation and the recording are the same
+session.
 
 The status bar overlap and the orientation lock are both fixed and both
 asserted, but every assertion runs on a desktop Chromium with the insets
