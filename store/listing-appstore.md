@@ -293,6 +293,9 @@ No inline code in this paragraph, deliberately: the checker binds a heading to
 its own fence with a pattern that cannot cross a backtick, so one here would
 silently drop the field from the run rather than fail it.
 
+Which is also why the note about *how* to copy this field sits after it rather
+than here — see "Do not paste this by hand" below the block.
+
 ```
 WHAT THE APP DOES, AND FOR WHOM
 
@@ -384,6 +387,23 @@ iPhone 15 Pro Max, iOS 26.6.1 - physical device, via TestFlight.
 **No em dashes, no typographic quotes, no `Δ`.** The block is deliberately
 plain ASCII: it is pasted into a web form that has mangled non-ASCII before,
 and a mojibake'd notes field is a worse first impression than a hyphen.
+
+**Do not paste this by hand.** Every field in these two files is wrapped at 80
+columns to be readable as markdown. A store console is a plain textarea, so a
+raw copy arrives with a line break in the middle of every sentence — which is
+what the reviewer then reads. Take it from the tool instead, which undoes the
+wrap and leaves the headings and the numbered steps alone:
+
+```bash
+npm run listing:paste -- reviewer | clip
+```
+
+Run it with no argument to list every field across both files; the match is
+loose, and an ambiguous one prints the candidates rather than guessing. It
+reports the character count as the console will count it, which is slightly
+under what `listing:check` says — the check measures the wrapped source, so it
+over-counts by the indentation the unwrap removes and can never let an
+over-length field through.
 
 ### The screen recording
 

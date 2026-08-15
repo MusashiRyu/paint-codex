@@ -12,6 +12,7 @@
     "screenshots": "node tools/store/screenshots.mjs",
     "feature-graphic": "node tools/store/feature-graphic.mjs",
     "listing:check": "node tools/store/check-listing.mjs",
+    "listing:paste": "node tools/store/paste-field.mjs",
     "check:layout": "node tools/layout/check-layout.mjs",
     "scrape": "node tools/scraper/scrape.mjs",
     "check:upstream": "node tools/scraper/checkUpstream.mjs",

@@ -4,6 +4,13 @@ Everything the Play Console asks for, written out so it is reviewed here rather
 than improvised into a web form at midnight. Character limits are Google's and
 are checked by `npm run listing:check`.
 
+**Copy fields out with `npm run listing:paste`, not by hand.** Every block here
+is wrapped at 80 columns to be readable as markdown, and a Console field is a
+plain textarea — a raw copy lands with a line break in the middle of every
+sentence. `npm run listing:paste -- "full description" | clip` undoes the wrap
+and keeps the headings and lists intact; with no argument it lists every field
+in both listing files.
+
 ---
 
 ## Store listing

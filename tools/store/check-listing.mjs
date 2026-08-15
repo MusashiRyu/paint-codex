@@ -17,6 +17,7 @@
 import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseFields } from './listingFields.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const storeDir = join(here, '..', '..', 'store');
@@ -25,25 +26,6 @@ const LISTINGS = [
   { store: 'Play', file: 'listing.md' },
   { store: 'App Store', file: 'listing-appstore.md' },
 ];
-
-/**
- * `**Field name** (80 char limit)` followed by the next fenced block.
- *
- * The `[^`]*` between the two is what keeps a field bound to its own fence: it
- * cannot cross a backtick, so a heading whose fence is missing fails to match
- * rather than silently measuring some later block. It also means the prose
- * between a heading and its fence must not contain inline code.
- */
-const FIELD = /\*\*(.+?)\*\*\s*\((\d+)\s*char limit\)[^`]*```\r?\n([\s\S]*?)```/g;
-
-function parseFields(markdown) {
-  return [...markdown.matchAll(FIELD)].map(([, name, limit, body]) => ({
-    name,
-    limit: Number(limit),
-    // The store counts the field's content; the fence's trailing newline is ours.
-    length: body.replace(/\r\n/g, '\n').trimEnd().length,
-  }));
-}
 
 let failed = false;
 let total = 0;
@@ -58,7 +40,11 @@ for (const { store, file } of LISTINGS) {
   }
 
   console.log(`${store}  (store/${file})`);
-  for (const { name, limit, length } of fields) {
+  for (const { name, limit, body } of fields) {
+    // The wrapped source, which is never shorter than what `paste-field.mjs`
+    // hands the console -- so this can over-count but never under-count, and a
+    // field that passes here cannot be rejected for length.
+    const length = body.length;
     const ok = length <= limit;
     if (!ok) failed = true;
     console.log(`  ${ok ? 'ok  ' : 'OVER'} ${name.padEnd(20)} ${String(length).padStart(4)} / ${limit}`);
