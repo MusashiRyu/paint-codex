@@ -155,35 +155,22 @@ certainly wrong:
   only way to a screenshot with real insets in it is a device capture, which is
   the same session as the recording in step 6.
 
-### 14. `store/` is still British English, and the listing says so
-**Raised:** 035 · **Deliberately deferred until review is answered**
+### 15. One console setting has to move with the copy that just changed
+**Raised:** 035 · **A setting, not work — but it is half of a pair**
 
-The repo is American English now — the rule and its exceptions are in the
-README. `documentation/` and `README.md` were converted; `store/` was not, and
-neither was the published privacy policy.
+`store/` is American English as of retro 035, and the published privacy page
+with it. The other half is in App Store Connect:
 
-That is a decision rather than an unfinished sweep. The copy in `store/` is in
-front of a reviewer right now, and the listing's primary language is registered
-**English (U.K.)**, which is what makes British correct there today. Editing the
-description mid-review is churn on a live artifact for no review benefit, and
-the privacy policy has a public URL that would need regenerating and
-republishing to match.
+**App Store primary language, English (U.K.) → English (U.S.).**
 
-When the current submission is resolved, three things move together or not at
-all:
+This is not tidying. Item 14 held the conversion back precisely because doing
+the copy without the setting leaves American text under a listing that declares
+itself British — the same inconsistency the rule exists to remove, only now
+visible to users rather than only to us. The copy has moved; until this does,
+the repo is in the state that item warned about.
 
-1. `store/listing.md`, `store/listing-appstore.md`, `store/privacy-policy.md`.
-2. The published privacy page — `npm run privacy`, then push to GitHub Pages.
-3. The App Store primary language, **English (U.K.) → English (U.S.)**.
-
-Doing 1 without 3 is worse than doing neither: it leaves American copy under a
-listing that declares itself British, which is the same inconsistency this rule
-exists to remove, only now visible to users.
-
-Two things that do **not** change whenever this happens. Paint names are data —
-Administratum Grey stays. And the App Store keyword field keeps both `colour`
-and `color`, because it is an index rather than a sentence and people search
-both spellings.
+Worth checking Play's default language in the same sitting. It was never
+recorded here, and Play does not surface it as prominently.
 
 ### 6. `npm audit` reports three moderate advisories, all dev-only
 **Raised:** 017 · **Watch, not fix**
@@ -315,6 +302,7 @@ Prune this section once it stops being useful.
 | `CapApp-SPM/Package.swift` was committed with Windows path separators, which are invalid Swift escape sequences | 024 | 024 — `tools/ios/fix-spm-paths.mjs` runs after every `cap:sync`, asserted by `iosProject.test.ts` |
 | iOS signing and archive needed a Mac nobody here has — the only one is a 2015 model, permanently below the Xcode 26 floor | 001 | 029 — `ios-release.yml` archives and uploads from a hosted runner; a release is one button from Windows |
 | Both stores showed one screen out of two — four List screenshots per store under a description of a color laboratory, and no release notes for the version carrying it | 031 | 034 — one shot per section of the description, and a 1.2.0 block in both listing files |
+| `store/` was still British English while the rest of the repo was American, deferred because the listing declared itself English (U.K.) | 035 | 035 — converted with the privacy page; the console setting it pairs with is item 15 |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
 removals in the redesign rather than pending work, and are not tracked.

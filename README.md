@@ -143,12 +143,23 @@ Three deliberate exceptions:
 - **Paint names are data, not prose.** Administratum Grey is a product; 179
   paints in the catalog spell it that way and none of them are ours to respell.
 - **Other people's proper nouns** keep their own spelling — Google's Developer
-  Program Policies, Apple's Organization enrollment type.
-- **`store/` is still British**, along with the published privacy policy. That
-  copy is in front of an App Store reviewer right now and the listing's primary
-  language is registered English (U.K.). Convert it, and switch that setting,
-  once the current submission is resolved — see
-  [OPEN-ITEMS](documentation/OPEN-ITEMS.md).
+  Program Policies, Apple's Organization enrollment type. Upstream identifiers
+  too: the source database's file is `Citadel_Colour.md` and renaming it in our
+  code would only break the fetch.
+- **The App Store keyword field carries both spellings**, `colour` and `color`.
+  It is an index rather than a sentence, people search both, and the field is
+  billed by the character rather than read by anyone.
+
+`store/` used to be a fourth exception, held back because the listing's primary
+language was registered English (U.K.) and the copy was in front of a reviewer.
+Both halves moved together in retro 035, which is the only way that switch is
+safe to make — American copy under a listing that declares itself British is the
+same inconsistency, only visible to users.
+
+**Not yet converted:** comments in `src/` and `tools/`, roughly 300 of them.
+They reach nobody and the diff would be large, so they are being left to be
+corrected in passing rather than swept. The rule above still governs anything
+newly written.
 
 ## Fonts
 
