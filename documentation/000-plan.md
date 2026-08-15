@@ -13,7 +13,7 @@
 
 # Plan: Paint Conversion Web App
 
-**TL;DR**: Build a React web app that lets users search miniature paint colours across three brands (Citadel, Vallejo, Army Painter) and see colour-matched alternatives with quality metrics. MVP focuses on search + display with client-side data; **Phase 1.5 refactors the codebase for a clean shipped-app / dev-tools separation before feature work continues**; Phase 2 adds paint lists + Markdown exports with shop links; Phase 3 adds iOS/Android via Capacitor.
+**TL;DR**: Build a React web app that lets users search miniature paint colors across three brands (Citadel, Vallejo, Army Painter) and see color-matched alternatives with quality metrics. MVP focuses on search + display with client-side data; **Phase 1.5 refactors the codebase for a clean shipped-app / dev-tools separation before feature work continues**; Phase 2 adds paint lists + Markdown exports with shop links; Phase 3 adds iOS/Android via Capacitor.
 
 ---
 
@@ -38,7 +38,7 @@ paco/
 │   ├── shared/                   #   Reusable across features
 │   │   ├── ui/                   #   Generic UI primitives (Badge, Pill, Card…)
 │   │   ├── hooks/                #   useDarkMode, useDebounce…
-│   │   ├── lib/                  #   colour math (hexToHSL), delta classification
+│   │   ├── lib/                  #   color math (hexToHSL), delta classification
 │   │   └── styles/               #   Global CSS, CSS variables, resets
 │   ├── domain/                   #   Domain types + pure business logic
 │   │   ├── types.ts              #   Paint, Match interfaces (single source of truth)
@@ -107,7 +107,7 @@ tools/scraper/scrape.mjs ──writes──► src/data/paints.snapshot.json ─
 
 ## **Phase 1.5 — Architecture Refactor** 🟡 *Current focus*
 
-Reach the target architecture above **without changing user-visible behaviour**. All 57 tests must still pass after each step.
+Reach the target architecture above **without changing user-visible behavior**. All 57 tests must still pass after each step.
 
 ### 1. Isolate the scraper (highest priority — the explicit ask)
 
@@ -150,7 +150,7 @@ Reach the target architecture above **without changing user-visible behaviour**.
 3. ✅ Move global styles (resets, base typography, app shell, dark-mode vars) to `src/shared/styles/global.css`, imported once from `main.tsx`.
 
 **Verification**
-- [x] Manual visual check: dark mode, delta colours, responsive breakpoints look identical.
+- [x] Manual visual check: dark mode, delta colors, responsive breakpoints look identical.
 
 ### 4. Domain layer for data loading
 
@@ -183,7 +183,7 @@ Reach the target architecture above **without changing user-visible behaviour**.
 2. ✅ **List UI** — `src/features/lists/` — pages/components to create/edit/delete lists; "Add to list" buttons on `PaintCard`.
 3. ✅ **Markdown export** — `src/features/export/` — generate `## Paint List: [name]\n- [Brand] Paint Name — [link](vliegeruit.com/...)`.
 4. ✅ **Shop link integration** — Bundled hand-maintained `src/data/shopLinks.snapshot.json` map keyed by paint id, with export fallback to vliegeruit search URLs.
-5. ✅ **Tests** — List CRUD and store behaviour tests implemented, including export format tests.
+5. ✅ **Tests** — List CRUD and store behavior tests implemented, including export format tests.
 
 **Verification**
 - [x] Create/delete/edit lists

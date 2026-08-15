@@ -55,7 +55,7 @@ describe('PaintPickerSheet modes', () => {
 
   it('switches to the catalogue search', () => {
     renderPicker();
-    fireEvent.click(screen.getByText('Search Catalogue'));
+    fireEvent.click(screen.getByText('Search Catalog'));
     expect(screen.getByPlaceholderText('Search by name or brand...')).toBeInTheDocument();
   });
 
@@ -89,7 +89,7 @@ describe('PaintPickerSheet picking', () => {
 
   it('hands back the paint a search result names', () => {
     const { onPick } = renderPicker();
-    fireEvent.click(screen.getByText('Search Catalogue'));
+    fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
     fireEvent.click(screen.getByLabelText('Select Deep Plum by Vallejo'));
     expect(onPick).toHaveBeenCalledWith(catalog[2]);
@@ -101,7 +101,7 @@ describe('PaintPickerSheet picking', () => {
     // and an IN LIST badge where the button should be would look like a
     // control that had been taken away.
     renderPicker();
-    fireEvent.click(screen.getByText('Search Catalogue'));
+    fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
 
     expect(screen.queryByText('IN LIST')).not.toBeInTheDocument();
@@ -113,7 +113,7 @@ describe('PaintPickerSheet picking', () => {
     // The same `ResultCard` serves both surfaces; only the accessible name
     // separates "this goes in your list" from "this goes in the slot".
     renderPicker();
-    fireEvent.click(screen.getByText('Search Catalogue'));
+    fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
     expect(screen.queryByLabelText(/to list$/)).toBeNull();
   });
@@ -123,7 +123,7 @@ describe('PaintPickerSheet picking', () => {
     // does nothing when tapped reads as broken on a surface whose entire job
     // is choosing a colour — this was reported from the app, not caught here.
     const { onPick } = renderPicker();
-    fireEvent.click(screen.getByText('Search Catalogue'));
+    fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
 
     const row = screen.getByLabelText('Select Deep Plum by Vallejo');
@@ -153,7 +153,7 @@ describe('PaintPickerSheet picking', () => {
         onClose={vi.fn()}
       />
     );
-    fireEvent.click(screen.getByText('Search Catalogue'));
+    fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.click(screen.getByText('BROWSE FULL CATALOG'));
 
     expect(screen.queryByLabelText(/^Go to /)).toBeNull();

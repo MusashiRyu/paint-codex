@@ -91,13 +91,13 @@ const goToCollab = () => fireEvent.click(screen.getByRole('button', { name: 'Col
 describe('App navigation', () => {
   it('swaps the screen and says which one it is', () => {
     render(<App />);
-    expect(screen.getByText('Colour Manager')).toBeInTheDocument();
+    expect(screen.getByText('Color Manager')).toBeInTheDocument();
 
     goToCollab();
 
-    expect(screen.getByText('Colour Laboratory')).toBeInTheDocument();
+    expect(screen.getByText('Color Laboratory')).toBeInTheDocument();
     expect(screen.getByLabelText('Select Paint A')).toBeInTheDocument();
-    expect(screen.queryByText('Colour Manager')).not.toBeInTheDocument();
+    expect(screen.queryByText('Color Manager')).not.toBeInTheDocument();
   });
 
   it('leaves the FAB behind on the List screen', () => {
@@ -160,14 +160,14 @@ describe('App adding from the Color Lab', () => {
     // No lists, so the picker's My Lists mode has nothing in it and the
     // catalogue search is the only way to fill the slot.
     fireEvent.click(screen.getByLabelText('Select a Base Paint'));
-    fireEvent.click(screen.getByText('Search Catalogue'));
+    fireEvent.click(screen.getByText('Search Catalog'));
     fireEvent.change(searchBox(), { target: { value: paint.name } });
     // Tapping the card is what picks it. `getAll` because an equivalent tile on
     // some other result may stand for this same paint, and carries the same
     // label — both select it, so either will do.
     fireEvent.click(screen.getAllByLabelText(`Select ${paint.name} by ${paint.brand}`)[0]);
 
-    expect(screen.getByText('Colour Theory')).toBeInTheDocument();
+    expect(screen.getByText('Color Theory')).toBeInTheDocument();
     expect(screen.queryByLabelText(/ to list$/)).toBeNull();
   });
 });

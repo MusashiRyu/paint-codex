@@ -23,7 +23,7 @@ reached the app. Both are superseded; neither is worth uploading now.
 It is the first build from merged `master` and carries everything the two
 stores have been waiting on:
 
-- **The Colour Lab** (retro 031) — a second screen, and the reason for the minor
+- **The Color Lab** (retro 031) — a second screen, and the reason for the minor
   bump rather than a patch one.
 - **The status bar overlap and the portrait lock** (retro 030), neither of
   which is in any build either store currently holds.

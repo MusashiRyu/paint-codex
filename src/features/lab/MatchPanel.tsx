@@ -49,7 +49,7 @@ export function MatchPanel({
         </div>
       ) : (
         <>
-          <SectionHeading>Colour Theory</SectionHeading>
+          <SectionHeading>Color Theory</SectionHeading>
           {cards.map((card) => (
             <NearestPaintCard
               key={card.key}

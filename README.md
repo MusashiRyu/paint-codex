@@ -126,25 +126,6 @@ stylesheet.
 The full system, including what is deliberately *not* tokenised, is in
 [documentation/0.2-design-system.md](documentation/0.2-design-system.md).
 
-## Language
-
-**British English in everything a person reads. American English in everything
-a compiler reads.**
-
-The App Store listing is registered as English (U.K.), so the UI, the store copy
-and the docs say colour, catalogue, centred, grey. Identifiers do not:
-`color.ts`, `paintCatalog`, `--gold-color`, `.colorSwatch`. That is not
-laziness — CSS's own property is `color`, so an all-British codebase would still
-read `colour: var(--gold-colour)` at every call site and be less consistent, not
-more.
-
-The line falls between a string literal and a symbol. `<SectionHeading>Colour
-Theory</SectionHeading>` renders to a user; `ColorLab.tsx` does not. Comments
-are prose and follow the prose rule.
-
-One deliberate exception: the App Store keyword field carries both `colour` and
-`color`, because it is an index rather than a sentence and people search both.
-
 ## Fonts
 
 Cinzel and EB Garamond are **self-hosted**, not loaded from Google Fonts. The

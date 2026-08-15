@@ -52,7 +52,7 @@ export function NewListSheet({ onClose, onCreate }: NewListSheetProps) {
         ))}
       </div>
 
-      <div className={styles.sectionLabel}>Choose a banner colour</div>
+      <div className={styles.sectionLabel}>Choose a banner color</div>
       <div className={styles.colorRow}>
         {LIST_COLORS.map((opt) => (
           <button

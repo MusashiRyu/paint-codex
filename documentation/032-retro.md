@@ -94,15 +94,15 @@ description does not mention Collab, the branch's does, and all four screenshots
 in both stores are List screens. Shipping the merge makes those release
 blockers rather than the tidy-up they were on the branch.
 
-### Four flows, because that is what was asked for
+### The About screen is not a core flow
 
-Apple asked for "the typical user flow through its core features", so the notes
-and the recording cover four: create a list, add a paint to it, mix two colours,
-match one. Nothing else — the app has no other screen a user goes to in order to
-do something.
-
-Every answer in the block is complete as asked, including question 5: the only
-external service is the catalogue host.
+The first version of this block put the About sheet in both the flow and the
+recording. The premise was that the reviewer would end up on the About screen.
+They will not, because nothing sends them there. **Apple asked for "the typical
+user flow through its core features"**, and About is not a core feature — the
+four things a user actually does here are create a list, add a paint to it, mix
+two colours, and match one. A version number and a credits list are not a flow,
+and a recording that detours into one is answering a question nobody asked.
 
 ### Plain ASCII, deliberately
 

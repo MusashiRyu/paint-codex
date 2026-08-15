@@ -9,11 +9,11 @@ The design is by [Lukas Stordeur](https://github.com/LukasStordeur). This retro 
 ### New app structure (lists-first flow):
 - **Viewport**: Full-screen card with two-layer dark background (grungy texture page bg + swirling abstract art card bg)
 - **Header**: "PAINT CODEX" / "Color Manager" with Cinzel font and gold decorative SVG divider
-- **Tab bar**: Horizontally scrollable list tabs (icon + name, colour-coded border) + dashed "+ New" button
+- **Tab bar**: Horizontally scrollable list tabs (icon + name, color-coded border) + dashed "+ New" button
 - **Content area**: Active list's paints grouped by category (Base Layer, Edge, Other), with export / edit / delete header actions; empty state with grimoire messaging
 - **FAB**: Gold gradient circular + button (bottom-right, absolute) to open search sheet
-- **Search sheet**: Bottom-sheet overlay (88% height) with text input, brand filter chips, fuzzy search results, equivalents grid with ΔE colour pills, IN LIST badge, and + add button
-- **New list sheet**: Bottom-sheet overlay with name input, 8-icon emblem picker, 5-colour banner picker, CREATE LIST button
+- **Search sheet**: Bottom-sheet overlay (88% height) with text input, brand filter chips, fuzzy search results, equivalents grid with ΔE color pills, IN LIST badge, and + add button
+- **New list sheet**: Bottom-sheet overlay with name input, 8-icon emblem picker, 5-color banner picker, CREATE LIST button
 
 ### Background images added:
 - `public/imagery/bg-page.png` — dark grungy/aged texture (full page background)
@@ -53,10 +53,10 @@ The design is by [Lukas Stordeur](https://github.com/LukasStordeur). This retro 
 
 ## Assumptions made
 
-- The 390×844px card is presented centred on desktop; on mobile (Capacitor) it fills the viewport via `width: 100%; height: 100%`
+- The 390×844px card is presented centered on desktop; on mobile (Capacitor) it fills the viewport via `width: 100%; height: 100%`
 - Paint `category` field maps to the design's "type" groups; most paints have no category and fall into an implicit "Other" group (current data limitation)
 - The `paint.matches[]` array maps to the design's "Equivalent Paints" section
-- Export triggers a `.md` file download (matching existing `markdownExport.ts` behaviour) rather than clipboard copy
+- Export triggers a `.md` file download (matching existing `markdownExport.ts` behavior) rather than clipboard copy
 - The delete list button is disabled (opacity 0.3, pointer-events none) when only 1 list exists
 
 ## Deferred items

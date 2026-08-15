@@ -67,7 +67,7 @@ shows its swatch, its hex value, and the equivalents in the other two ranges
 with a delta score for each — so you can tell a near-perfect substitute from a
 rough one at a glance.
 
-MIX AND MATCH IN THE COLOUR LAB
+MIX AND MATCH IN THE COLOR LAB
 
 Pick two paints and see the blend between them in twenty per cent steps, or
 pick one and get its complementary, its highlight and its shade. Every colour
@@ -141,7 +141,7 @@ Still entirely offline. No account, no ads, no tracking.
 **What's New 1.2.0** (4000 char limit) — the same copy as Play's release notes, for the same reason
 
 ```
-THE COLOUR LAB
+THE COLOR LAB
 
 A second screen. Pick two paints and see the blend between them in 20% steps,
 or pick one and get its complementary, its highlight and its shade. Every
@@ -325,10 +325,10 @@ LIST
 COLLAB
 
 6. Mixing tab: tap Select Paint A, then Select Paint B; each opens a picker
-   offering My Lists and Search Catalogue. The Mix Preview strip shows the blend
+   offering My Lists and Search Catalog. The Mix Preview strip shows the blend
    in 20% steps, each resolved to the nearest real paint.
 7. Matching tab: pick a base paint to get its complementary, highlight and
-   shade under Colour Theory, each likewise resolved to a real paint.
+   shade under Color Theory, each likewise resolved to a real paint.
 8. The gold "+" on any of those cards adds that paint to the current list.
 
 EXTERNAL SERVICES
@@ -441,7 +441,7 @@ seconds at a pace that can be read:
 3. **Mix two colours** — the Mixing tab, both slots filled, the Mix Preview
    strip resolving each step to a real paint.
 4. **Match one colour** — the Matching tab, a base paint, complementary,
-   highlight and shade under Colour Theory.
+   highlight and shade under Color Theory.
 
 Two conditions on the recording rather than steps in it:
 
@@ -511,7 +511,7 @@ iPhone. Older display sizes are only worth uploading to show a genuinely
 different layout, and there is not one here.
 
 **One shot per section of the description**, since 1.2.0: the list, the
-catalogue with its equivalents, and the Colour Lab's two halves. Before that all
+catalogue with its equivalents, and the Color Lab's two halves. Before that all
 four were List screens. That matters more here than on Play — this listing is
 attached to a submission already returned once for an incomplete account of
 what the app is, and four pictures of a list under a description of a colour

@@ -44,7 +44,7 @@ shows its swatch, its hex value, and the equivalents in the other two ranges
 with a delta score for each — so you can tell a near-perfect substitute from a
 rough one at a glance.
 
-MIX AND MATCH IN THE COLOUR LAB
+MIX AND MATCH IN THE COLOR LAB
 
 Pick two paints and see the blend between them in twenty per cent steps, or
 pick one and get its complementary, its highlight and its shade. Every colour
@@ -116,7 +116,7 @@ Still entirely offline. No account, no ads, no tracking.
 **Release notes 1.2.0** (500 char limit) — the "What's new" text for version 1.2.0
 
 ```
-THE COLOUR LAB
+THE COLOR LAB
 
 A second screen. Pick two paints and see the blend between them in 20% steps,
 or pick one and get its complementary, its highlight and its shade. Every
@@ -262,7 +262,7 @@ Screenshot list names are invented on purpose — see the comment in
 `tools/store/screenshots.mjs`.
 
 **One shot per section of the description**, since 1.2.0: the list, the
-catalogue with its equivalents, and the Colour Lab's two halves. Before that all
+catalogue with its equivalents, and the Color Lab's two halves. Before that all
 four were List screens, which was survivable while the copy only described
 lists and stopped being so the moment it described a colour laboratory. A
 reviewer reads the images against the words.
