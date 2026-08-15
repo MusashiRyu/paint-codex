@@ -43,6 +43,23 @@ describe('AndroidManifest.xml', () => {
       expect(configChanges).toContain(change);
     }
   });
+
+  /**
+   * The keyboard's height has to come out of the web view exactly once, and
+   * Capacitor's `SystemBars` plugin is what takes it — it pads the web view's
+   * parent by the IME inset. The platform default, `adjustResize`, takes it
+   * again by shrinking the window underneath that padding, which is invisible
+   * on Android 15+ (edge-to-edge windows are not resized for the keyboard) and
+   * collapses the web view to a ~34px strip on an Android 10 phone. A black
+   * screen with the sheet header at the top of it, found on a Galaxy S9 while
+   * every newer device was fine.
+   *
+   * Asserted rather than left to the default because it is one word in a file
+   * Android Studio also edits, and nothing between here and a phone reads it.
+   */
+  it('leaves the window unresized when the soft keyboard opens', () => {
+    expect(manifest).toMatch(/android:windowSoftInputMode="adjustNothing"/);
+  });
 });
 
 describe('index.html', () => {
