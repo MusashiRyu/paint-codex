@@ -10,7 +10,7 @@ what came out.
 
 `tools/icons/source/icon.svg` — a paint drop above an open codex, filled with
 the app's own gold ramp (`#e4c98a` → `#c9a86a` → `#b3903f`, the `--gold-bright`
-/ `--gold` / `--gold-deep` tokens). Square viewBox, transparent ground, centred
+/ `--gold` / `--gold-deep` tokens). Square viewBox, transparent ground, centered
 on x=256, and close to edge-to-edge vertically, which is what the generator
 wants — it adds each target's padding itself.
 
@@ -20,7 +20,7 @@ and the book still read as two distinct shapes.
 ### 2. 29 assets generated, and looked at
 
 `npm run icons` wrote five density buckets across three shapes, eleven splash
-canvases, the 512px Play icon, `public/favicon.svg` and the ground colour
+canvases, the 512px Play icon, `public/favicon.svg` and the ground color
 resource.
 
 Checked rather than assumed, because each of these fails differently:
@@ -28,7 +28,7 @@ Checked rather than assumed, because each of these fails differently:
 - **512px Play icon** — flattened onto `#050409`, no alpha, as Play requires.
 - **Adaptive foreground** — transparent, mark comfortably inside the 66dp safe
   zone, so no launcher mask clips it.
-- **Splash** — the app's near-black with the mark centred. The white Capacitor
+- **Splash** — the app's near-black with the mark centered. The white Capacitor
   splash is gone, which was the other half of this item.
 - **Inside the bundle** — `mipmap-xxxhdpi/ic_launcher.png` went from
   Capacitor's 2786 bytes to 3015, confirming the AAB carries the new art rather

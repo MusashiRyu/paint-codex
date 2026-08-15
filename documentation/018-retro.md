@@ -96,15 +96,15 @@ were opened and checked against the current app:
 | Shot | What confirms it is current |
 | --- | --- |
 | `01-list` | Category headings read `BASE · AIR`, and rows read `CITADEL · Base · Air` — the range merge from 014 |
-| `02-search` | Equivalent tiles name brand *and* range (`Army Painter · Warpaints Fanatic`); `FOUND 228 PAINT(S)` against the 2,279 catalogue; tiles fill the card, the 016 grid fix |
+| `02-search` | Equivalent tiles name brand *and* range (`Army Painter · Warpaints Fanatic`); `FOUND 228 PAINT(S)` against the 2,279 catalog; tiles fill the card, the 016 grid fix |
 | `03-second-list` | Rendered at all — it requires the `?.click()` tab switch to have landed |
-| `04-new-list` | Requires the second `?.click()`; shows all 8 emblems and 5 banner colours |
+| `04-new-list` | Requires the second `?.click()`; shows all 8 emblems and 5 banner colors |
 
 All four are 1080×1920.
 
 The fallback path was tested rather than assumed: `CHROME_PATH` pointed at
 `package.json` (a file that exists and is not a browser) still produced
-screenshots, falling through to the Playwright Chromium — the exact behaviour
+screenshots, falling through to the Playwright Chromium — the exact behavior
 the old code lacked. Forcing every candidate to fail produced the rejection
 report above.
 

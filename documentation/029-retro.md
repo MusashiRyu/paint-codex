@@ -79,7 +79,7 @@ updated secrets.
 Diagnosis stalled twice, not on difficulty but on visibility. `xcodebuild`
 interleaves the output of parallel tasks, so the line explaining a failure lands
 hundreds of lines from `** ARCHIVE FAILED **`, and the Actions log viewer offers
-no way to see them together. Two attempts at reading the asset catalogue failure
+no way to see them together. Two attempts at reading the asset catalog failure
 found the banner, the list of failed commands and the compiler invocation — and
 never the error itself.
 

@@ -11,7 +11,7 @@ would have eaten the Mac session itself.
 
 Decisions taken at the top, because they shaped everything after: **iPhone
 only** for 1.0, and the Apple Developer Program is **not yet enrolled**, so the
-checklist starts at enrolment rather than at App Store Connect.
+checklist starts at enrollment rather than at App Store Connect.
 
 ## The bug: `Package.swift` could never have compiled
 
@@ -150,8 +150,8 @@ a selector stopped matching.
 
 ### The checklist
 
-`documentation/ios-release-checklist.md`, starting from enrolment: the $99/yr
-recurring fee, individual vs organisation and the D-U-N-S delay, the bundle ID,
+`documentation/ios-release-checklist.md`, starting from enrollment: the $99/yr
+recurring fee, individual vs organization and the D-U-N-S delay, the bundle ID,
 the App Store Connect record, the Mac session, TestFlight, submission. Plus the
 macOS-CI-runner option, which is the one that stops releases depending on
 somebody being available.
@@ -208,10 +208,10 @@ be worse than the gap.
 - **One screenshot size is enough.** Apple scales the 6.9" set down for smaller
   iPhones. A second set only earns its place if the layout genuinely differs,
   and between 6.9" and 6.1" it does not.
-- **Individual enrolment.** The checklist recommends it and flags what it costs
+- **Individual enrollment.** The checklist recommends it and flags what it costs
   — the seller name on the listing is a personal legal name. If a company name
   matters, the D-U-N-S request is the first thing to start and nothing here
-  changes except the enrolment path.
+  changes except the enrollment path.
 - **`iosProject.test.ts` guards the right things.** It asserts what would
   regress silently and be expensive to discover: the SPM paths, the two plist
   keys, the device family, the privacy manifest's presence in the build. It

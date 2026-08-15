@@ -82,7 +82,7 @@ both ways, and did — the first version of this block described one screen,
 because `0a7914f` has one. `feat/color-lab` merges before the resubmission, so
 the block now describes two, and the flow gained a Collab section covering the
 Mixing and Matching tabs, the My Lists / Search Catalog picker, and the fact
-that every mixed colour resolves back to a real paint.
+that every mixed color resolves back to a real paint.
 
 That last point is worth more to a reviewer than its length suggests. An app
 that is only List reads plausibly as a lookup table with saved items; the Mix
@@ -101,7 +101,7 @@ recording. The premise was that the reviewer would end up on the About screen.
 They will not, because nothing sends them there. **Apple asked for "the typical
 user flow through its core features"**, and About is not a core feature — the
 four things a user actually does here are create a list, add a paint to it, mix
-two colours, and match one. A version number and a credits list are not a flow,
+two colors, and match one. A version number and a credits list are not a flow,
 and a recording that detours into one is answering a question nobody asked.
 
 ### Plain ASCII, deliberately

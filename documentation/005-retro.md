@@ -47,7 +47,7 @@ it, sorted closest-first and capped at `CLOSE_DELTA_MAX`.
 
 The chips were a literal `['All', 'Citadel', 'Vallejo', 'Army Painter']`
 union type. A fourth brand in the snapshot would have been silently
-unfilterable. They now derive from the catalogue via `getUniqueBrands`.
+unfilterable. They now derive from the catalog via `getUniqueBrands`.
 
 ### 5. TypeScript strict mode, and typechecking the tests
 
@@ -63,10 +63,10 @@ and `color` fields added by the 003 migration.
 
 ### 6. Accessibility and desktop dismissal
 
-Both sheets were plain `div`s with unlabelled `×` buttons, and Escape did
+Both sheets were plain `div`s with unlabeled `×` buttons, and Escape did
 nothing — the Android back gesture was the only way out. Added
 `useDismissOnEscape` as the desktop counterpart to `useBackDismiss`, plus
-`role="dialog"`, `aria-modal="true"` and labelled close buttons.
+`role="dialog"`, `aria-modal="true"` and labeled close buttons.
 
 ### 7. Export download revoke race
 
@@ -98,7 +98,7 @@ Deferred to a macrotask.
 - `src/test/searchUtils.test.ts`, `src/test/markdownExport.test.ts`
 
 Test count moved 75 → 66: 25 dead component tests removed, 16 added for
-behaviour that had none — including both persist migration paths.
+behavior that had none — including both persist migration paths.
 
 ## Measured, and found not to be a problem
 
@@ -107,7 +107,7 @@ Recorded so they are not re-raised:
 - **Fuse.js index rebuilt on every keystroke.** Real, but the index build
   is 0.28 ms against 310 paints — cheaper than the 0.97 ms search it
   enables. Not worth memoising.
-- **Denormalised paint copies in localStorage.** A 50-paint list is 16.7 KB
+- **Denormalized paint copies in localStorage.** A 50-paint list is 16.7 KB
   versus 1.3 KB stored as ids. Irrelevant against the quota — the id
   refactor below was done for staleness, not for size.
 - **Injection surface.** No `dangerouslySetInnerHTML`, `innerHTML`, `eval`
@@ -136,9 +136,9 @@ makes no network request of its own.
 ### 9. Lists store ids, not paint copies
 
 `PaintList.paints: Paint[]` became `paintIds: string[]`, resolved through
-`resolvePaints` against a memoised catalogue index. Persist moved to version
+`resolvePaints` against a memoised catalog index. Persist moved to version
 2 with a cumulative `migrate`, so a store still on version 0 picks up the
-icon/colour defaults and the id conversion in one pass; both paths are
+icon/color defaults and the id conversion in one pass; both paths are
 tested. `markdownExport` now takes an `ExportableList` rather than a
 `PaintList`, which also removes its dependency on the store.
 

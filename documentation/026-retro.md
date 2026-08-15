@@ -1,7 +1,7 @@
 # Retro 026 — A paint you own is one tap from its equivalents
 
 Paco is kept as a personal inventory. The question a painter actually asks of it
-is "what else is close to this colour I already have?" — and until now the app
+is "what else is close to this color I already have?" — and until now the app
 answered that only from the other end: tap the FAB, open the search sheet, type
 the name of a paint that was already on screen, find its card, read the grid.
 
@@ -22,16 +22,16 @@ already existed.
 
 `jumpToMatch` (SearchSheet, lines 91–95) writes three pieces of state: the
 query, the brand filter, and the pinned id. `focusPaintId` seeds exactly those
-three at mount, so a focused open **is** a jump — one behaviour to maintain,
+three at mount, so a focused open **is** a jump — one behavior to maintain,
 not two, and everything downstream came free: the `results` memo already pins a
 target the fuzzy search misses, and the effect that scrolls and focuses the
 pinned card already keys off the pin.
 
-**`useState` initialisers, not an effect.** An effect would need `paintCatalog`
+**`useState` initializers, not an effect.** An effect would need `paintCatalog`
 in its deps, and that array changes identity every time the background refresh
 lands — so a refresh mid-session would wipe a half-typed query and re-pin the
 paint the user had deliberately searched away from. There is a test for this
-exact case (`does not re-seed when the background refresh swaps the catalogue`),
+exact case (`does not re-seed when the background refresh swaps the catalog`),
 because it is the kind of bug that only shows up on someone else's phone.
 
 `autoFocus` on the search input is suppressed for a focused open. Left on, the
@@ -111,7 +111,7 @@ including 320px, where the row is tightest.
   row without it is a row with a dead button.
 - **The seeded brand filter persists.** Arriving on a paint leaves its brand
   chip selected, so the user's *next* typed query is scoped to that brand until
-  they tap "All". That is pre-existing jump behaviour, now reachable from the
+  they tap "All". That is pre-existing jump behavior, now reachable from the
   list — one tap to clear, and it also clears the pin.
 
 Open work: [OPEN-ITEMS.md](OPEN-ITEMS.md).

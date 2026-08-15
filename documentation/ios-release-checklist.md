@@ -84,12 +84,12 @@ membership lapses the app is removed from sale.
 Enrol at [developer.apple.com/programs](https://developer.apple.com/programs/)
 or through the Apple Developer app on an iPhone or iPad.
 
-- **Two-factor authentication is required** on the Apple ID before enrolment
+- **Two-factor authentication is required** on the Apple ID before enrollment
   will proceed. Turn it on first.
 - **Individual or Organization.** Individual is the fast path: no company
   paperwork, approved in roughly a day or two. The cost is that the seller name
   shown publicly on the listing is the enrolling person's legal name. An
-  Organization enrolment shows a company name instead but requires a legal
+  Organization enrollment shows a company name instead but requires a legal
   entity and a **D-U-N-S number**, which is free but can take a week or more to
   obtain and verify. If a company name on the listing matters, start the D-U-N-S
   request before anything else in this document.
@@ -152,7 +152,7 @@ finished listing:
 
 - **Platforms.** iOS only. Leave macOS, tvOS and visionOS unticked —
   `TARGETED_DEVICE_FAMILY` is `1` and there is no build for any of them.
-- **User Access.** **Full Access.** Limited Access is for an organisation
+- **User Access.** **Full Access.** Limited Access is for an organization
   hiding some of its apps from some of its people; on a one-person account it
   can only produce an allowlist to maintain for a team that does not exist.
   Admin, Finance and Reports roles ignore app-level limits regardless. Unlike
@@ -223,7 +223,7 @@ revoke it — so it names the system holding it, the project, and the workflow
 file, rather than a person or a date.
 
 > **The team has to have API access switched on first, and only the Account
-> Holder can do it.** Until then the page offers a greyed-out *Request Access*
+> Holder can do it.** Until then the page offers a grayed-out *Request Access*
 > button and nothing else, to Admins included — so this is not something a
 > sufficiently privileged user can work around, and it is worth asking for
 > before planning a release around CI. The Account Holder clicks **Request
@@ -301,7 +301,7 @@ because none of them is discoverable from the error it produces.
 - **Turns off on-demand resources.** On by default, and `actool` consults the
   *simulator* runtime list while processing them even when compiling for
   device. Runner simulator runtimes are newer than the Xcode SDK build, so the
-  lookup fails and the asset catalogue is blamed for it. This app tags no
+  lookup fails and the asset catalog is blamed for it. This app tags no
   assets for on-demand delivery.
 - **Uses a shared scheme.** Xcode keeps schemes under `xcuserdata` until
   explicitly shared, and that is not committed, so `xcodebuild -scheme App` on
@@ -389,7 +389,7 @@ commit the `DEVELOPMENT_TEAM` value** if the repo is public — and this one is.
 
 ### 5. Archive, validate, upload
 
-1. Set the run destination to **Any iOS Device (arm64)**. Archive is greyed out
+1. Set the run destination to **Any iOS Device (arm64)**. Archive is grayed out
    while a simulator is selected, which is the most common five minutes lost in
    this whole process.
 2. **Product → Archive.**
@@ -435,7 +435,7 @@ Worth checking specifically on a device, because none of it can be checked here:
 - The launch image is the app's own black rather than a white flash.
 - Safe-area insets on a notched device — the header and the floating add button
   are the two things that would collide with system chrome.
-- The catalogue loads with the device in aeroplane mode.
+- The catalog loads with the device in airplane mode.
 - Outbound links open in Safari rather than inside the app.
 
 ### 7. Submit for review

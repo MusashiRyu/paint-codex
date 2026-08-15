@@ -172,7 +172,7 @@ asked for is the one whose
 A device verifies an update against the key that signed the *installed* app.
 Under Play App Signing that is Google's app signing key, so an update carrying
 only the upload key's signature is refused. The app signing key does not exist
-until enrolment at step 3.
+until enrollment at step 3.
 
 Prefer to leave the package in Draft, finish steps 2–6, then read the app
 signing key's fingerprint from the App signing page and register it here. If
@@ -228,7 +228,7 @@ take it from a signed artefact:
 | Default language | English (United States) |
 | App or game | **App** |
 | Free or paid | **Free** — irreversible; a free app can never be made paid |
-| Declarations | Developer Programme Policies, US export laws |
+| Declarations | Developer Program Policies, US export laws |
 
 ### 3. Enrol in Play App Signing
 
@@ -291,7 +291,7 @@ The track page has three tabs, and the first release only fills in one of them:
   from an international community and leaving this at the default is a way to
   lose a week to a setting. **Widened to worldwide on 2026-08-10**, which is the
   right default for an app that is free, collects nothing and ships its whole
-  catalogue offline.
+  catalog offline.
 - **Testers** — the email list, and the opt-in URL that goes to testers. The
   link only appears once a list is attached to the track.
 
@@ -455,7 +455,7 @@ Worth actually looking at, because these only misbehave in a packaged build:
   first painted frame.
 - The back gesture closing an open sheet rather than the app — including the
   About sheet, which is the third layer registered with `useBackDismiss`.
-- The app working with the radio off — the catalogue refresh must fail quietly.
+- The app working with the radio off — the catalog refresh must fail quietly.
 - **Every link in the About sheet opening the system browser**, and each one
   landing on its real destination. The handoff relies on Capacitor's WebView
   intercepting a `target="_blank"` navigation, and the two failure modes are
@@ -465,7 +465,7 @@ Worth actually looking at, because these only misbehave in a packaged build:
   item 1.
 
   **Confirmed working on hardware, 2026-08-10, on the 1.0.0 release APK.** Kept
-  on this list because it is a WebView behaviour rather than app code: a
+  on this list because it is a WebView behavior rather than app code: a
   Capacitor or System WebView upgrade can take it away without anything in this
   repo changing. If it ever regresses, the fix is `@capacitor/browser`, which
   makes it the app's fifth runtime dependency and invalidates the "four runtime

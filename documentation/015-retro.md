@@ -71,7 +71,7 @@ exclusive, because a control that leaves the app has nothing to disable and no
 handler to run.
 
 Its stylesheet now states `display`, `text-align` and `text-decoration`
-explicitly. A `<button>` already centres its label, sits inline-block and has no
+explicitly. A `<button>` already centers its label, sits inline-block and has no
 underline; an `<a>` does none of the three, and without those the two renderings
 would have been *nearly* identical, which is the worst kind.
 
@@ -108,7 +108,7 @@ Bumping `versionName` for a release now fails CI until the constant follows.
 ## Decisions taken
 
 - **Affiliate links deferred**, as OPEN-ITEMS item 6. They are blocked on
-  choosing a retailer that actually runs a programme — vliegeruit.com has no
+  choosing a retailer that actually runs a program — vliegeruit.com has no
   known one, so the existing 186 links earn nothing however complete they get.
 - **No new runtime dependency.** Still four, which is what `listing.md`'s Data
   safety reasoning is built on. If the device test forces `@capacitor/browser`,

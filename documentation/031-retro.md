@@ -16,15 +16,15 @@ than the one in the file.
 - **Mixing.** Two slots; a six-block strip from A to B in 20% steps; a card per
   intermediate step naming the closest real paint.
 - **Matching.** One slot; complementary, highlight and shade, each under its own
-  sub-heading with the derived colour, then a card naming the closest real paint.
-- **A paint picker.** My Lists, or the List screen's own catalogue search.
+  sub-heading with the derived color, then a card naming the closest real paint.
+- **A paint picker.** My Lists, or the List screen's own catalog search.
 - **Add to list from either tab**, with the destination named.
 
 Three commits: the extractions, the maths, the screen.
 
 ## Three places the mock was wrong, and one where it was right
 
-### 1. It measured colour in RGB
+### 1. It measured color in RGB
 
 The mock's script computes nearest-paint as a Euclidean distance in sRGB, over
 a 32-paint array, and grades the result against thresholds of 40 and 90.
@@ -44,7 +44,7 @@ the same two decimals, and classified through the same three functions.
 What it does **not** share with `getTopMatches` is the brand exclusion, and
 that difference is worth its doc comment. Equivalents skip same-brand paints
 because "what do I buy instead of this Citadel paint" is not answered by another
-Citadel paint. "What is closest to this colour" has no brand to exclude, and
+Citadel paint. "What is closest to this color" has no brand to exclude, and
 excluding one would hide the answer.
 
 ### 2. It drew the picker's search itself
@@ -78,7 +78,7 @@ where the control belongs reads as one that has been taken away.
 Reusing the card kept its *interaction* too, and that turned out to be the one
 thing that should not have been reused. On the List screen a card is something
 you read, with a small gold `+` as the thing that acts on it — the card itself
-has nowhere to go. In a picker every colour on screen is a candidate, so tapping
+has nowhere to go. In a picker every color on screen is a candidate, so tapping
 one has an obvious meaning, and the first thing anyone does is tap the swatch.
 
 Reported straight off the running app: *"I didn't think of being able to select
@@ -90,7 +90,7 @@ walk through, and the row now carries the affordance. The equivalent tiles moved
 with it: they select the paint they name rather than jumping the list to it.
 Jumping is browsing, which is the right verb when you are filling a list and the
 wrong one when you are filling a slot. The perceptual browse order is still
-there to scroll if what you want is the colours nearby.
+there to scroll if what you want is the colors nearby.
 
 `PaintSummary` grew an `onSelect` for it, and the slot's children move *beside*
 that button rather than inside — `PaintItem` had already solved the same problem
@@ -113,12 +113,12 @@ share. Nothing in a test would have said so. Somebody opening the app did.
 The mock puts complementary, highlight and shade in three compact cards, each
 ending in a line of small text naming the nearest paint. The user asked for
 something else, and it is better: a `COLOR THEORY` heading, then a sub-heading
-per colour, then a card built like a search result — the ΔE, and either IN LIST
+per color, then a card built like a search result — the ΔE, and either IN LIST
 or the gold `+`.
 
 That request is what turned `ResultCard`'s summary row into `PaintSummary`.
 Once the Lab needed the same row without the equivalents grid, the row was the
-shared thing and the grid was the specialisation. Both moves kept every class
+shared thing and the grid was the specialization. Both moves kept every class
 name, because the tests and `check-layout.mjs` select on `[class*="paintName"]`
 and `cardMetrics.ts` measures `.paintRow` from another feature's folder.
 
@@ -146,7 +146,7 @@ which is fine over the flat ground a mock has. Over the card's background image
 6% is enough for a paint name scrolling underneath to read clearly through the
 bar and compete with the labels on it — "CRIMSON / VALLEJO / Nocturne Models"
 was legible behind `LIST`. It is now `#0a080d`, which is `--scrim-card-bottom`
-with the alpha taken off, so the bar and the card bottom are the same colour and
+with the alpha taken off, so the bar and the card bottom are the same color and
 the join is the gold hairline rather than a step.
 
 `npm run check:layout` passed all 56 combinations with the translucent bar,
@@ -195,10 +195,10 @@ the `" by "`, and that is now written down next to the `Go to` note.
   would be a third value. Nothing here has a URL, a back stack of screens or a
   deep link, and the Android back gesture is already spoken for by
   `useBackDismiss`.
-- **No persist bump.** Lists still hold catalogue paint ids. A mixed colour is
+- **No persist bump.** Lists still hold catalog paint ids. A mixed color is
   not a paint and never becomes a list entry — what gets added is always the
   real paint nearest it.
-- **No fifth runtime dependency.** The colour maths is 150 lines of arithmetic
+- **No fifth runtime dependency.** The color maths is 150 lines of arithmetic
   in `domain/colorLab.ts`.
 
 ## The one number that is not measured in Lab

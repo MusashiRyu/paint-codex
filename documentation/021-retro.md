@@ -23,10 +23,10 @@ already listed.
 ### Where the badge goes: the swatch is square again
 
 There was no room for it. The tile's swatch was `size="block"` — a 34px bar
-across the full column — so the tile's first row was entirely colour.
+across the full column — so the tile's first row was entirely color.
 
 The swatch is now `size="tile"`: a `--control-lg` square, same 34px height, so
-the tile's height is unchanged and only the colour gives ground. The badge sits
+the tile's height is unchanged and only the color gives ground. The badge sits
 in what it gave up. The tile keeps its width — the grid is still
 `minmax(104px, 1fr)`, unchanged from 019 — because the point was never a
 narrower tile, it was a first row with two things in it.
@@ -53,7 +53,7 @@ The badge is inside the button, and a button with `aria-label` exposes that
 label *instead of* its content — so adding the badge told a screen reader
 nothing. The label now carries it: `Go to Gory Red by Vallejo, already in list`.
 
-That is a behaviour change to an accessible name the tests match on exactly,
+That is a behavior change to an accessible name the tests match on exactly,
 which is the reason it is spelled out here: a future assertion on
 `Go to X by Y` will miss a listed paint, and should.
 

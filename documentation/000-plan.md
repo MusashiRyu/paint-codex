@@ -3,7 +3,7 @@
 > This is the pre-build plan, written before there was an app. It sat at the
 > repo root until retro 017, where a reader landing on it would have taken it
 > for current documentation, and several of its statements now read as false:
-> the runtime catalogue refresh it defers has shipped, the
+> the runtime catalog refresh it defers has shipped, the
 > `features/browse/*` components it lists were deleted in retro 005,
 > `useDarkMode.ts` and `hexToHSL` were never built, and CI exists.
 >

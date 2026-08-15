@@ -1,8 +1,8 @@
-# Retro 006 — Hardening the Runtime Catalogue
+# Retro 006 — Hardening the Runtime Catalog
 
-Follow-up to the 005 audit, after the runtime catalogue refresh landed. The
+Follow-up to the 005 audit, after the runtime catalog refresh landed. The
 refresh changed two things the earlier findings assumed: the app now makes a
-network request, and the catalogue is now parsed from a third party at runtime
+network request, and the catalog is now parsed from a third party at runtime
 rather than only at build time. Everything here follows from those two facts.
 
 ## What was done
@@ -13,11 +13,11 @@ rather than only at build time. Everything here follows from those two facts.
 developer's machine, where a bad parse shows up immediately. It now runs on
 users' phones against whatever upstream happens to serve.
 
-Two gaps, both latent rather than live — every one of the 1296 colours in the
+Two gaps, both latent rather than live — every one of the 1296 colors in the
 current snapshot is a well-formed six-digit hex:
 
 - The hex pattern accepted `{3,6}` digits and passed them through unchanged. A
-  four- or five-digit value is not a colour any browser renders, so the swatch
+  four- or five-digit value is not a color any browser renders, so the swatch
   would come out invisible, and `hexToHSL` slices six digits unconditionally
   and would have answered `NaN`. Three-digit values now expand to six, anything
   else is dropped, and the digit run is bounded so a longer value is refused
@@ -65,7 +65,7 @@ and on any change to the parser, the snapshot or the scraper — so a parser edi
 is checked against the real page and not only against synthetic fixtures.
 
 It fails on a fetch error, a parser throw, a count under the floor, or an
-unusable colour. A snapshot that has merely fallen behind upstream is reported
+unusable color. A snapshot that has merely fallen behind upstream is reported
 rather than failed: the runtime refresh already covers that, and it only means
 new installs ship slightly older data.
 
@@ -98,7 +98,7 @@ renaming upstream's `<strong>` tags drops the parse to 0 and exits non-zero.
 
 ## Measured — don't chase these
 
-- **Reading the cached catalogue at import.** Synchronous `localStorage` +
+- **Reading the cached catalog at import.** Synchronous `localStorage` +
   `JSON.parse` + a signature comparison at module scope looks like a startup
   risk. It is **0.7 ms** on a 105 KB entry. Fine even at ten times that on a
   slow phone.

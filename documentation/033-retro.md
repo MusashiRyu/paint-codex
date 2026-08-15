@@ -1,10 +1,10 @@
 # Retro 033 — A scroll that did not land where it was asked
 
-Opening the catalogue on a paint — tapping a row to see what sits near it —
+Opening the catalog on a paint — tapping a row to see what sits near it —
 sometimes showed an empty sheet on iOS. Title, search box, brand chips, and
 then nothing: no cards, and not even the "Found 2,279 paint(s)" line above
 them. One finger-scroll and the right paint was there, at the right position,
-in the right colour.
+in the right color.
 
 That last detail is the whole diagnosis. The scroller was where it was supposed
 to be. The cards were not.

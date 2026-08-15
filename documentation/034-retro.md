@@ -27,12 +27,12 @@ thoroughly as a released one.
 
 The build was mechanical. What actually needed deciding was the store copy, and
 open item 11 had been sitting on it since 031 with the reasoning already
-written: **a listing that describes a colour laboratory and shows four pictures
+written: **a listing that describes a color laboratory and shows four pictures
 of a list is worse than one that never mentions it.** The description had been
 updated when Collab shipped. The screenshots had not.
 
 So the shot list is now one per section of the description — the list, the
-catalogue with its equivalents, and the Color Lab's two halves. The
+catalog with its equivalents, and the Color Lab's two halves. The
 second-list and new-list shots are what gave way, and they were the two showing
 a screen the set already had.
 
@@ -52,7 +52,7 @@ gradient at a glance.
 Neither is wrong, and both were left alone rather than tuned away:
 
 - The Matching shot's shade match is **Chaos Black, "Foundation
-  (discontinued)"**. It is an accurate match at Δ4.16 out of a catalogue that
+  (discontinued)"**. It is an accurate match at Δ4.16 out of a catalog that
   includes discontinued ranges, which is a feature — a conversion table that
   hid them would be less useful to someone holding an old pot. It does read
   oddly on a product page.

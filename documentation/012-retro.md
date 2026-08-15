@@ -21,7 +21,7 @@ Light by default, dark when the reader prefers it, rather than the app's
 near-black in both. This is the page someone might print, read on a borrowed
 phone, or be sent by a reviewer; legibility beats brand. Verified by rendering
 it — no horizontal scroll at either 360px or 820px, which is where the long
-catalogue URL would otherwise push the layout sideways.
+catalog URL would otherwise push the layout sideways.
 
 ### 2. Two Console fields nobody had written down
 
@@ -51,9 +51,9 @@ therefore never run.** `ci.yml` has never verified a commit. `upstream-check.yml
 — which `0.1-architecture.md` calls *the alarm for the silent refresh* — has
 never armed.
 
-That second one gets worse, not better, at launch. The catalogue refresh is
+That second one gets worse, not better, at launch. The catalog refresh is
 silent by design: no spinner, no toast, no error surface. It degrades to "no
-change" rather than to a broken screen, which is the right behaviour and also
+change" rather than to a broken screen, which is the right behavior and also
 means a markup change upstream would strand every install on its bundled
 snapshot with nothing to notice it. The workflow is the only thing that would
 tell anyone. Recorded in the release checklist, since pushing to GitHub would

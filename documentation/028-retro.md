@@ -1,14 +1,14 @@
-# Retro 028 — The catalogue in colour order, and only nine cards of it
+# Retro 028 — The catalog in color order, and only nine cards of it
 
 Retro 026 gave a list row a one-tap route to its equivalents: it opened the
 search sheet *focused* on that paint — name in the box, brand chip selected, one
 result card. Testing it found the flaw. The question a painter actually asks is
-"what can I use instead of this?", and when the catalogue holds no close
+"what can I use instead of this?", and when the catalog holds no close
 equivalent, a one-result search is the one view that cannot answer it.
 
-So the row now opens the **whole catalogue**, ordered so that neighbours are
-neighbouring colours, parked at the paint you tapped. Scroll up or down and you
-are walking through the colours nearest to it.
+So the row now opens the **whole catalog**, ordered so that neighbours are
+neighbouring colors, parked at the paint you tapped. Scroll up or down and you
+are walking through the colors nearest to it.
 
 That makes 2,279 cards the default view. Rendered whole that is ~84,000 DOM
 elements and 8,722 focusable buttons — which the focus trap re-queries on every
@@ -19,15 +19,15 @@ Tab. So the list had to stop rendering what nobody is looking at.
 ### The order is measured, not asserted
 
 "Sorted by hex" was the ask. Raw hex sorts by red channel first, so `#FF0000`
-and `#FF00FF` land adjacent while two near-identical greys separate. What the
-feature needs is that the card below the one you are reading is a colour you
+and `#FF00FF` land adjacent while two near-identical grays separate. What the
+feature needs is that the card below the one you are reading is a color you
 could actually substitute — so the ordering was chosen by measuring exactly
 that, as the median CIE76 gap between neighbouring entries over the shipped
 snapshot:
 
 | ordering | median ΔE | p90 | adjacent pairs under ΔE 7 |
 | --- | --- | --- | --- |
-| catalogue order (brand blocks) | 36.95 | 79.38 | 121 |
+| catalog order (brand blocks) | 36.95 | 79.38 | 121 |
 | raw hex string | 23.02 | 67.30 | 411 |
 | hue band → lightness | 9.25 | 33.98 | 866 |
 | **hue band → lightness band → chroma** | **5.91** | **15.58** | **1,370** |
@@ -40,17 +40,17 @@ Two details carry the result:
 
 - **The banding is what makes the later keys fire.** No two of 2,279 hue angles
   are ever equal, so an unbanded "hue, then lightness" sort never reaches its
-  second key and orders the catalogue by a float nobody can see. That ordering
+  second key and orders the catalog by a float nobody can see. That ordering
   scores 9.25 — better than hex, and nowhere near what banding gets.
 - **The near-neutrals lead, as one black-to-white ramp.** Below chroma 10 a hue
-  angle is arithmetic rather than colour: Adeptus Battlegrey (`#4A4C58`)
-  computes a hue of 285° and would file under purple. It is a grey. 541 of the
+  angle is arithmetic rather than color: Adeptus Battlegray (`#4A4C58`)
+  computes a hue of 285° and would file under purple. It is a gray. 541 of the
   2,279 paints are in that band.
 
 The sort cost — the question that was asked — is a non-issue in the direction
 nobody expects: **raw hex 6.92 ms, perceptual 2.29 ms** including all 2,279 Lab
 conversions, because numeric comparison beats `localeCompare`. It is memoised
-against the catalogue array, on the same contract as the id index.
+against the catalog array, on the same contract as the id index.
 
 `hexToLab` was already in `paintCatalogSource.ts` and is now exported rather
 than moved: that module is loaded by the scraper through type stripping and must
@@ -173,8 +173,8 @@ width.
 - **`getTopMatches` per rendered card.** It was never the cost: six map lookups
   and a six-element sort. At nine mounted cards it is tens of microseconds. The
   84,000 DOM elements were the cost.
-- **The sort on every open.** Memoised against the catalogue array, so it runs
-  once per catalogue and not once per sheet.
+- **The sort on every open.** Memoised against the catalog array, so it runs
+  once per catalog and not once per sheet.
 - **The bundle.** No new dependency; ~4 kB of code against 160 kB of headroom
   under the warning limit. Both store listings' "four runtime dependencies"
   sentence stands, and neither privacy form is re-answered.
@@ -182,7 +182,7 @@ width.
 ## Assumptions made
 
 - **Search results are not re-ordered.** Typing still gives Fuse's relevance
-  ranking; the colour order survives only as the tiebreak between equal scores,
+  ranking; the color order survives only as the tiebreak between equal scores,
   which is an improvement on brand order and invisible otherwise.
 - **A tile tap leaves search mode.** It clears the query and any brand filter,
   because those are the two things that can hide what sits next to the paint it

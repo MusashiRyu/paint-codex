@@ -92,7 +92,7 @@ This closes the "Rename list functionality" item deferred in retro 003.
 - Removing `editMode` entirely was preferred over relocating it to another
   control, since the always-visible "×" already covers paint removal.
 - Back exiting the app when no overlay is open is correct — it matches Android's
-  default behaviour from a root activity.
+  default behavior from a root activity.
 - An empty or whitespace-only rename is a no-op that keeps the previous name;
   this falls out of the existing `renameList` store guard.
 

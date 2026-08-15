@@ -49,9 +49,9 @@ Two things the tests caught that the implementation got wrong first:
 - **The trigger must be captured during render, not in an effect.** React
   applies `autoFocus` while committing, so by the time an effect runs the focus
   is already on the sheet's input and the real trigger is lost. Captured in a
-  `useState` initialiser instead.
+  `useState` initializer instead.
 
-### 4. Dead colour helpers removed
+### 4. Dead color helpers removed
 
 `filterPaintsByColor` was unused and kept only because it was tested. Removing
 it left `hexToHSL` with no callers, so that went too.

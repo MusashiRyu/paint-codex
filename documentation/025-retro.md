@@ -37,7 +37,7 @@ are from you", and a device verifies an update against the key that signed the
 *installed* app. Under Play App Signing that is Google's app signing key. An
 update carrying only the upload key's signature is refused.
 
-That key does not exist until Play App Signing enrolment, which happens at the
+That key does not exist until Play App Signing enrollment, which happens at the
 first release. So the correct order is: leave the package name in Draft, do
 everything else, then read the fingerprint from **Release → Setup → App
 signing**.
@@ -116,7 +116,7 @@ own fix and taking it would trade release-only breakage for a few hundred KB.
   tests across 13 files.
 - **All five hardware checks in release-checklist step 5 passed** on the 1.0.0
   release APK: launcher icon, splash with no white flash, back gesture closing
-  each sheet including the About layer, the catalogue refresh failing quietly
+  each sheet including the About layer, the catalog refresh failing quietly
   with the radio off, and the About sheet's outbound links.
 
   The last of those had never been proven on a device since the About sheet

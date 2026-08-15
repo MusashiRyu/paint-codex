@@ -73,7 +73,7 @@ So four consumers spend the inset individually: the header's top padding, the
 FAB's `bottom` offset, the list's bottom padding (the FAB's landing zone, which
 has to rise with it or the button lands back on the last paint), and the
 sheets' bottom padding. The sheets keep their *ground* at `bottom: 0` on
-purpose — the sheet colour should still run under the home indicator; only the
+purpose — the sheet color should still run under the home indicator; only the
 content inside it should not.
 
 ### The orientation lock was two lines that had never been written

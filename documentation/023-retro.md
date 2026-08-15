@@ -65,7 +65,7 @@ It drives the built app the way the store screenshots do — seeded
 | `surface-overflow` | nothing spills sideways out of its sheet or card — anything inside a deliberate horizontal scroller is exempt, checked by walking the ancestor chain rather than the parent, since a chip's text sits two levels below the scroller |
 | `text-clipped` | `scrollWidth > clientWidth` on any label |
 
-It asserts geometry, never pixels: no screenshot to re-approve when a colour
+It asserts geometry, never pixels: no screenshot to re-approve when a color
 changes, and a failure prints the element and the two numbers that disagree.
 
 **It was verified by failing.** Reverting the grid to `104px` and re-running

@@ -16,7 +16,7 @@ been scrolling past for long enough to stop registering.
 advice attached to it — split the big chunk out with a dynamic `import()` — is
 the one thing this app must not do. `paintRepository` resolves
 cache-then-bundled *at module import* so every read is synchronous and there is
-never a paintless first render; making the catalogue arrive asynchronously
+never a paintless first render; making the catalog arrive asynchronously
 would make the one thing the app is for the one thing it has to wait for. In a
 packaged app the payload is on local disk and costs no round trip.
 
@@ -31,7 +31,7 @@ reason recorded, not ignored every day forever.
 The pre-build plan sat in the root directory, next to `README.md`, where it read
 as current documentation. It is not:
 
-- it defers the runtime catalogue refresh, which shipped in 013;
+- it defers the runtime catalog refresh, which shipped in 013;
 - it lists `src/features/browse/*` — `BrandFilter`, `PaintCard`, `ResultsGrid` —
   deleted in 005;
 - it lists `useDarkMode.ts` and `hexToHSL`, which were never built;
@@ -60,7 +60,7 @@ Everything below that point was already this project's own and stayed.
 - **`initializeSearchIndex`** was exported but only ever used inside its own
   module. It is now a `FUSE_OPTIONS` constant and a `new Fuse(...)` at the call
   site — which also made it worth writing down *why* the index is rebuilt per
-  call rather than memoised: the catalogue can be swapped underneath by the
+  call rather than memoised: the catalog can be swapped underneath by the
   background refresh, and a cached index would go on answering with paints that
   have left it.
 - **`src/assets/`** — `react.svg`, `vite.svg` and `hero.png`, unreferenced from
@@ -90,7 +90,7 @@ rules off and the reason for each written beside it in `.oxlintrc.json`
 | `no-autofocus` | A sheet opens because someone asked for it; the field it exists to fill is the point. The rule is about autofocus on page load. |
 | `click-events-have-key-events` | The backdrop click is a convenience on top of Escape and the Android back gesture, both already wired. |
 | `no-static-element-interactions` | Same backdrop. Giving a decorative div a key handler would announce it as a control. |
-| `prefer-tag-over-role` | `<dialog>` brings a top layer, a `::backdrop` and its own focus and Escape behaviour, all of which `Sheet` would have to fight rather than use. |
+| `prefer-tag-over-role` | `<dialog>` brings a top layer, a `::backdrop` and its own focus and Escape behavior, all of which `Sheet` would have to fight rather than use. |
 
 Verified live by probing it with an `<img>` missing an `alt` — it fires.
 
@@ -110,7 +110,7 @@ Verified live by probing it with an `<img>` missing an `alt` — it fires.
   component table did not cover — and its test count moved from 120 to 124.
 - `shopLinkRepository.ts` had a one-line doc comment and no trailing newline. It
   now says what it is: no refresh and no cache layer, unlike the paint
-  catalogue, because it is a build-time crawl behind a flag that is off.
+  catalog, because it is a build-time crawl behind a flag that is off.
 
 ### The release checklist contradicted the open items
 
@@ -178,7 +178,7 @@ than debugging that.
 
 ## Assumptions made
 
-- The bundle stays one chunk. If the catalogue ever needs to load
+- The bundle stays one chunk. If the catalog ever needs to load
   asynchronously, that is an architecture change with a retro of its own, not a
   build-config tweak.
 - `ExternalLink` belongs in the barrel because the barrel's own comment says it

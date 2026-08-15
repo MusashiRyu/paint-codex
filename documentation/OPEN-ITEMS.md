@@ -29,7 +29,7 @@ write the file and `@capacitor/share` to hand it off. Decision taken
 **Raised:** 014 · **Dormant while the export flag is off**
 
 `shopLinks.snapshot.json` was remapped through the id migration rather than
-re-crawled, so it still only covers what the 310-paint catalogue had. Re-running
+re-crawled, so it still only covers what the 310-paint catalog had. Re-running
 `npm run scrape:shoplinks` would crawl vliegeruit.com for 2,279 paints with a
 per-paint search fallback — a much heavier crawl than the one that produced the
 current file, and worth pacing deliberately.
@@ -37,14 +37,14 @@ current file, and worth pacing deliberately.
 Only `features/export/markdownExport.ts` reads it, and that is behind
 `appConfig.featureFlags.markdownExport`, which is `false`.
 
-### 3. The cached catalogue is ~2.2 MB of localStorage
+### 3. The cached catalog is ~2.2 MB of localStorage
 **Raised:** 014 · **Watch, not fix**
 
 The snapshot is 1.14 MB of JSON, which localStorage stores as UTF-16 — about
 2.2 MB against a quota that is typically 5 MB. It fits, and a write failure is
 already handled (the refresh applies for the session and simply does not
 persist). Worth remembering before anything else large is persisted, and before
-the catalogue grows by another brand.
+the catalog grows by another brand.
 
 ### 5. The shop links earn nothing, and could
 **Raised:** 015 · **Blocked on a commercial decision, not on code**
@@ -61,9 +61,9 @@ trade to an ad.
 
 Four things gate it, in order:
 
-1. **A retailer with an affiliate programme.** vliegeruit.com has no known one,
+1. **A retailer with an affiliate program.** vliegeruit.com has no known one,
    so the current snapshot points somewhere that pays nothing no matter how
-   complete it gets. Element Games, Wayland Games and Amazon all run programmes.
+   complete it gets. Element Games, Wayland Games and Amazon all run programs.
    Choosing one is the decision everything else waits on — and it interacts with
    item 2, since switching retailer means re-crawling anyway.
 2. **Retargeting the snapshot and the scraper** at that retailer's URL scheme,
@@ -155,6 +155,36 @@ certainly wrong:
   only way to a screenshot with real insets in it is a device capture, which is
   the same session as the recording in step 6.
 
+### 14. `store/` is still British English, and the listing says so
+**Raised:** 035 · **Deliberately deferred until review is answered**
+
+The repo is American English now — the rule and its exceptions are in the
+README. `documentation/` and `README.md` were converted; `store/` was not, and
+neither was the published privacy policy.
+
+That is a decision rather than an unfinished sweep. The copy in `store/` is in
+front of a reviewer right now, and the listing's primary language is registered
+**English (U.K.)**, which is what makes British correct there today. Editing the
+description mid-review is churn on a live artifact for no review benefit, and
+the privacy policy has a public URL that would need regenerating and
+republishing to match.
+
+When the current submission is resolved, three things move together or not at
+all:
+
+1. `store/listing.md`, `store/listing-appstore.md`, `store/privacy-policy.md`.
+2. The published privacy page — `npm run privacy`, then push to GitHub Pages.
+3. The App Store primary language, **English (U.K.) → English (U.S.)**.
+
+Doing 1 without 3 is worse than doing neither: it leaves American copy under a
+listing that declares itself British, which is the same inconsistency this rule
+exists to remove, only now visible to users.
+
+Two things that do **not** change whenever this happens. Paint names are data —
+Administratum Grey stays. And the App Store keyword field keeps both `colour`
+and `color`, because it is an index rather than a sentence and people search
+both spellings.
+
 ### 6. `npm audit` reports three moderate advisories, all dev-only
 **Raised:** 017 · **Watch, not fix**
 
@@ -229,7 +259,7 @@ reports zero to the CSS by design and should look exactly as it did before.
 ### 13. The anchor-scroll fix is unverified on WebKit
 **Raised:** 033 · **Same session as item 10 · Waiting on the next TestFlight build**
 
-Opening the catalogue on a paint showed an empty sheet on iOS. The cause is
+Opening the catalog on a paint showed an empty sheet on iOS. The cause is
 established and the fix is asserted, but the assertion runs on a Chromium whose
 scrolling has been broken on purpose — there is no WebKit on the development
 machine, so *why* WebKit lands a jump short is inference. That a short landing
@@ -239,9 +269,9 @@ wherever it stops, is not.
 Check on the same device pass as item 10, on the iPhone 15 Pro Max:
 
 1. Open a list paint's equivalents — the card is on screen, ringed, at the top.
-2. Do it for a paint at each end of the colour order. **Pure Black** is the one
+2. Do it for a paint at each end of the color order. **Pure Black** is the one
    that was reported (browse position 8, near the start); a white or a pale
-   grey is the other end.
+   gray is the other end.
 3. Do it twice in a row without closing the sheet, via an equivalent tile — that
    is the path that re-anchors an already-scrolled list rather than a fresh one.
 4. Scroll *up* through cards nobody has measured and watch for the content
@@ -265,7 +295,7 @@ Prune this section once it stops being useful.
 | Rename a list | 003 | 004 |
 | Dead browse UI (BrandFilter / PaintCard / ResultsGrid / SearchBar / ExportPanel) | 003, 004 | 005 |
 | Google Fonts loaded from a CDN | 005 | 005 |
-| Saved lists went stale against the catalogue | 005 | 005 |
+| Saved lists went stale against the catalog | 005 | 005 |
 | No CI | 005 | 005 |
 | Back gesture unverified on hardware | 004 | Confirmed working on device, 2026-08-08 |
 | About sheet's outbound links unproven on hardware — the WebView `target="_blank"` handoff | 015 | 025 — confirmed on the 1.0.0 release APK, 2026-08-10 |
@@ -279,12 +309,12 @@ Prune this section once it stops being useful.
 | Privacy policy had no public URL | 008 | 013 — published to GitHub Pages |
 | Repo had no remote, so CI and the upstream alarm had never run | 012 | 013 — pushed to github.com/MusashiRyu/paint-codex |
 | Sheet chrome duplicated across the two overlays | 009 | 009 — extracted into `shared/ui/` primitives |
-| Store screenshots stale after the catalogue change | 014 | 018 — regenerated; the browser was never the problem |
+| Store screenshots stale after the catalog change | 014 | 018 — regenerated; the browser was never the problem |
 | A build still fell over on `JAVA_HOME` — set persistently in 007, absent from any shell older than that change | 004, 022 | 022 — `tools/android/gradle.mjs` resolves the JDK per build, so no shell has to be right |
 | iOS app icon and splash were Capacitor's placeholder | 001 | 024 — `npm run icons` writes both from the same source mark |
 | `CapApp-SPM/Package.swift` was committed with Windows path separators, which are invalid Swift escape sequences | 024 | 024 — `tools/ios/fix-spm-paths.mjs` runs after every `cap:sync`, asserted by `iosProject.test.ts` |
 | iOS signing and archive needed a Mac nobody here has — the only one is a 2015 model, permanently below the Xcode 26 floor | 001 | 029 — `ios-release.yml` archives and uploads from a hosted runner; a release is one button from Windows |
-| Both stores showed one screen out of two — four List screenshots per store under a description of a colour laboratory, and no release notes for the version carrying it | 031 | 034 — one shot per section of the description, and a 1.2.0 block in both listing files |
+| Both stores showed one screen out of two — four List screenshots per store under a description of a color laboratory, and no release notes for the version carrying it | 031 | 034 — one shot per section of the description, and a 1.2.0 block in both listing files |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
 removals in the redesign rather than pending work, and are not tracked.

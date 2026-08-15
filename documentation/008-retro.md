@@ -29,17 +29,17 @@ Verified end to end: `jarsigner -verify` reports `jar verified` and
 
 `tools/icons/generate-icons.mjs` takes a single square SVG or PNG and writes
 five density buckets × three shapes, eleven splash canvases, the 512px Play
-icon, `public/favicon.svg`, and the ground colour as an XML resource.
+icon, `public/favicon.svg`, and the ground color as an XML resource.
 
 Three things it gets right that hand-exporting usually does not:
 
 - **The adaptive foreground is transparent and inset to 66dp.** The launcher
-  masks a 108dp canvas down to roughly its centre; artwork with its own baked
+  masks a 108dp canvas down to roughly its center; artwork with its own baked
   background shows as a square inside a circle, and artwork drawn full-bleed
   gets its edges clipped.
 - **The legacy icon carries its own ground.** `minSdkVersion` is 24, so API
   24–25 launchers still draw a flat bitmap with no layers to composite.
-- **The ground colour is written, not typed twice.** The PNGs and the XML come
+- **The ground color is written, not typed twice.** The PNGs and the XML come
   from one constant, so they cannot disagree.
 
 It refuses to run without a source rather than emitting placeholder art.
@@ -83,7 +83,7 @@ heading in `store/listing.md` and checks the copy against it.
 
 ### 6. Screenshot list names are invented
 
-The first capture used real faction names. The catalogue naming paint brands is
+The first capture used real faction names. The catalog naming paint brands is
 nominative use — a conversion table has to say "Citadel" to be a conversion
 table — but a public listing whose screenshots are covered in another company's
 faction trademarks is a different thing, and draws complaints against the

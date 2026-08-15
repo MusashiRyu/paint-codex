@@ -22,14 +22,14 @@ The jump does three things:
 - **Highlights and focuses the row it landed on**, so the jump is visible on a
   long result list and the next Tab reaches that row's add button.
 
-An equivalent that names a paint the catalogue does not carry renders as a
+An equivalent that names a paint the catalog does not carry renders as a
 disabled tile rather than a link to nowhere. In practice the inverted snapshot
 promotes every equivalent to a paint of its own, so this is a guard, not a
 common case.
 
 Resolving a tile to a paint needed a new lookup: a `Match` carries brand, name,
 hex and delta, but no id. `indexPaintsByName` builds that map once per
-catalogue rather than scanning the catalogue per tile — with the full catalogue
+catalog rather than scanning the catalog per tile — with the full catalog
 on screen there are six tiles per result across a thousand results.
 
 ## Files changed
@@ -58,7 +58,7 @@ Lint clean, typecheck clean, 95 tests pass.
 - **The tile is a button, not a second add control.** Adding the equivalent
   straight from the tile would be one tap fewer, but it hides which paint was
   added and gives no chance to look at the row first. The ask was to get *to*
-  the colour quickly, not to add it blind.
+  the color quickly, not to add it blind.
 - **Tile contents became spans.** A `<button>` may only hold phrasing content;
   the swatch, name, brand and pill were `div`s.
 

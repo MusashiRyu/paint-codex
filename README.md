@@ -2,19 +2,19 @@
 
 A paint conversion table and list keeper for miniature painters. Look up a
 paint and Paco shows the closest equivalents in the other brands, ranked by a
-measured colour distance rather than by a guess; keep the results in named
+measured color distance rather than by a guess; keep the results in named
 lists you build yourself.
 
-Two screens. **List** is the lists and the catalogue. **Collab** — the colour
+Two screens. **List** is the lists and the catalog. **Collab** — the color
 laboratory — answers the question you have at the table rather than at the
 shop: blend two paints and see the ramp between them in 20% steps, or take one
-paint and get its complementary, its highlight and its shade. Every colour it
-computes is resolved back to the nearest real paint in the catalogue, with the
+paint and get its complementary, its highlight and its shade. Every color it
+computes is resolved back to the nearest real paint in the catalog, with the
 ΔE it costs you, so the answer is always something you can buy or already own.
 
 2,279 paints across every range Citadel, Vallejo and The Army Painter sell. The
-whole catalogue ships in the app, so it works with the radio off — the only
-network request it ever makes is a silent check for a newer catalogue at
+whole catalog ships in the app, so it works with the radio off — the only
+network request it ever makes is a silent check for a newer catalog at
 launch, and failing that check changes nothing a user can see.
 
 React 19 + TypeScript + Vite, wrapped for Android and iOS with Capacitor.
@@ -35,7 +35,7 @@ npm run check:layout # layout invariants at 7 phone widths × 8 surfaces
 `check:layout` needs `npm run build` first — it drives `dist/` in a real
 browser. It exists because jsdom has no layout engine, and it has now caught two
 bugs no unit test could: the IN LIST badge wrapping onto its own line at 412px
-but not at 390px, and the windowed catalogue anchoring 92,000px away from the
+but not at 390px, and the windowed catalog anchoring 92,000px away from the
 card it had scrolled to. See
 [tools/layout/check-layout.mjs](tools/layout/check-layout.mjs).
 
@@ -73,7 +73,7 @@ A linter that has to be ignored is not a linter.
 Two `no-restricted-imports` rules in the same file enforce the one structural
 boundary that matters: `tools/` may not import app code and `src/` may not
 import build tooling, with a single sanctioned exception for the shared
-catalogue parser.
+catalog parser.
 
 ## Feature Flags
 
@@ -98,14 +98,14 @@ extraction of it, not an invention.
 
 Paint data comes from
 [Arcturus5404/miniature-paints](https://github.com/Arcturus5404/miniature-paints)
-(MIT), the colour database scraped and published by the
+(MIT), the color database scraped and published by the
 [Miniature Painter Pro](https://miniaturepainterpro.app/) team. Paco reads the
 Citadel, Vallejo and Army Painter tables — 2,279 paints across every range each
-brand sells. One colour sold under several range names is one entry listing all
+brand sells. One color sold under several range names is one entry listing all
 of them, not one entry per label.
 
 Equivalents are computed here rather than taken from upstream, which ships
-colour only. See [documentation/0.1-architecture.md](documentation/0.1-architecture.md#paint-catalogue)
+color only. See [documentation/0.1-architecture.md](documentation/0.1-architecture.md#paint-catalog)
 for how, and why the ΔE metric is the one it is.
 
 Earlier releases used [redgrimm](https://github.com/redgrimm/paint-conversion)'s
@@ -113,7 +113,7 @@ conversion table, which carried 310 paints.
 
 ## Design system
 
-Every colour, radius, type size, tracking and shadow lives in
+Every color, radius, type size, tracking and shadow lives in
 [src/shared/styles/tokens.css](src/shared/styles/tokens.css). The rule: a raw
 value may appear in a component stylesheet only if it is used exactly once —
 the moment it turns up in a second file it becomes a token.
@@ -123,8 +123,32 @@ The shared UI primitives — `Sheet`, `Pill`, `Badge`, `IconButton`,
 [src/shared/ui/](src/shared/ui/). Chrome belongs there, never in a feature
 stylesheet.
 
-The full system, including what is deliberately *not* tokenised, is in
+The full system, including what is deliberately *not* tokenized, is in
 [documentation/0.2-design-system.md](documentation/0.2-design-system.md).
+
+## Language
+
+**American English**, in prose and in code alike: color, catalog, gray,
+centered. The codebase was written in British English and drifted, so this is a
+rule to hold rather than a description of what was always true.
+
+It settles a question that used to be answered per file. Identifiers were always
+American — CSS's own property is `color`, so `colorLab.ts` and `--gold-color`
+were never going to be anything else — while the prose around them was British,
+which meant `shared/lib/color.ts` being described as "colour utilities" two
+words later.
+
+Three deliberate exceptions:
+
+- **Paint names are data, not prose.** Administratum Grey is a product; 179
+  paints in the catalog spell it that way and none of them are ours to respell.
+- **Other people's proper nouns** keep their own spelling — Google's Developer
+  Program Policies, Apple's Organization enrollment type.
+- **`store/` is still British**, along with the published privacy policy. That
+  copy is in front of an App Store reviewer right now and the listing's primary
+  language is registered English (U.K.). Convert it, and switch that setting,
+  once the current submission is resolved — see
+  [OPEN-ITEMS](documentation/OPEN-ITEMS.md).
 
 ## Fonts
 
@@ -297,7 +321,7 @@ find it, and the listing copy and 1290×2796 screenshots are in [store/](store/)
 `src/test/iosProject.test.ts` asserts the ones that would otherwise regress
 unnoticed, since nothing compiles Swift until a release runs.
 
-The full submission path — Apple Developer enrolment, the bundle ID, App Store
+The full submission path — Apple Developer enrollment, the bundle ID, App Store
 Connect, TestFlight, and the settings that are deliberate rather than
 accidental — is in
 [documentation/ios-release-checklist.md](documentation/ios-release-checklist.md).
