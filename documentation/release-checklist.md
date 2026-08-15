@@ -532,6 +532,34 @@ That instruction is version-specific and goes stale silently, since a wrong
 paste is a plausible-looking release note rather than an error. It is stated
 once here and once at the top of this file, and both are updated with the cut.
 
+### 7. Tag the cut
+
+```
+git tag -a vX.Y.Z -F <message-file> <cut-commit>
+git push origin vX.Y.Z
+```
+
+One annotated tag per marketing version, on the commit the signed artifacts
+were built from, created when the version is cut. The annotation is a ledger:
+what each store received, when, and the fate of the build numbers. If the cut
+is later superseded without shipping, the tag stays and the annotation of the
+*next* tag says so — a tag records what a number meant, not whether it
+succeeded.
+
+This exists because of 2026-08-15 (retro 039): three numbers were spent in an
+afternoon, the stores briefly disagreed about what "1.2.2" meant, and the
+question "which commit is on the phone" took CI-log forensics to answer. A tag
+answers it with `git tag -n1`. Versions 1.1.0 through 1.2.3 were tagged
+retroactively from those forensics; **1.0.0 is deliberately untagged** — its
+build commit was never recorded, the 2026-08-10 upload sits among docs-only
+commits, and a guessed tag would lie with confidence.
+
+The iOS release needs no separate tag: both stores build from the same cut,
+which is the point of the shared version numbers — see "Every release" in
+[ios-release-checklist.md](./ios-release-checklist.md). When an iOS build ever
+uses the workflow's build-number override, that stays within the same tag; the
+override exists for burned numbers, not new versions.
+
 ---
 
 ## Deliberate settings, so nobody "fixes" them later

@@ -520,6 +520,12 @@ Then push, and **Actions → iOS release → Run workflow**. The workflow runs
 `cap:build` itself, so there is nothing to build locally and nothing to carry
 to another machine.
 
+The version tag is shared with Android and created once per cut, not per
+store — step 7 of [release-checklist.md](./release-checklist.md#7-tag-the-cut)
+is the policy. Before debugging any device report, `git tag -n9 vX.Y.Z` says
+what that version actually contains, and the About sheet says which version
+the device is running; retro 039 is what happens when neither is checked.
+
 One iOS-specific trap. `CFBundleVersion` (`CURRENT_PROJECT_VERSION`) must
 **increase on every upload to App Store Connect**, not merely on every release.
 A build that is uploaded and then withdrawn burns its number permanently. Since
