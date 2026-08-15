@@ -81,7 +81,7 @@ export function NearestPaintCard({
           </PaintSummary>
         </div>
       ) : (
-        <div className={styles.none}>No paint in the catalogue to compare.</div>
+        <div className={styles.none}>No paint in the catalog to compare.</div>
       )}
     </section>
   );

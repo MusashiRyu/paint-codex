@@ -111,7 +111,7 @@ describe('SearchSheet equivalents', () => {
     renderSheet();
 
     expect(
-      within(cardFor('Abyssal Black')).getByText('No close equivalents catalogued.')
+      within(cardFor('Abyssal Black')).getByText('No close equivalents cataloged.')
     ).toBeInTheDocument();
   });
 

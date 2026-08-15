@@ -174,7 +174,7 @@ function ResultCardImpl({
             })}
           </div>
         ) : (
-          <div className={styles.noEquiv}>No close equivalents catalogued.</div>
+          <div className={styles.noEquiv}>No close equivalents cataloged.</div>
         )}
       </div>
     </div>
