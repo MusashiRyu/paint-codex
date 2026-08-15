@@ -31,8 +31,37 @@ title, not by number.
 
 ## Open
 
+### 17. The tile-jump landing is unverified on WebKit
+**Raised:** 038 · **Same device session as item 16**
+
+Searching for a color and tapping an equivalent tile landed among the blacks at
+the top of the browse order instead of on the paint. The retry that was supposed
+to catch a short landing could only ever run once — see retro 038 — and now
+runs on a frame with the anchor put back in the window first.
+
+Reproduced and asserted in Chromium with the landing clamped, and the new
+`checkAnchorLanding` fails on the pre-fix build and passes after. What is
+inference is the **clamp model**: `lifting` — clamp the write, let the limit
+catch up a frame later — is a hypothesis about what iOS WebKit does, because
+there is no WebKit on this machine to ask. The same standing gap as item 13.
+
+Check on the iPhone 15 Pro Max, in the same pass as item 16:
+
+1. Search `green`, open a Vallejo Game Color green, tap **Warpstone Glow**. The
+   ringed card is Warpstone Glow and it is at the top of the list.
+2. The same from a *browse* rather than a search, which does not change the
+   list's length under the jump.
+3. Chain two tile jumps without closing the sheet.
+4. Jump to a paint at each end of the color order — a black and a white — since
+   the distance travelled is what the clamp bites on.
+5. Watch for a visible settle. The jump now takes up to four frames, so a late
+   arrival is expected behavior and a *wrong* arrival is not.
+
+If it still lands short, the next thing to reach for is the one item 13 named
+and this fix did not take: the scroller's ~950,000px extent itself.
+
 ### 16. The zoom lock is unverified on hardware
-**Raised:** 036 · **The only unverified fix left**
+**Raised:** 036 · **Same device session as item 17**
 
 Opening the search sheet on iOS left the whole app zoomed in and pannable after
 it closed — iOS's focus zoom on a sub-16px input, which never reverses on blur.
@@ -43,7 +72,8 @@ this machine can observe it: a desktop Chromium has no soft keyboard, so
 
 The safe-area and anchor-scroll fixes it used to be grouped with were both
 confirmed on device on 2026-08-15. This one could not be checked in that pass
-because the fix landed after the build under test; it needs the next one.
+because the fix landed after the build under test; it needs the next one — the
+same build item 17 needs.
 
 Check on the iPhone 15 Pro Max:
 

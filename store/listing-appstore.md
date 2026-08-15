@@ -167,16 +167,36 @@ portrait, opening a paint's equivalents no longer lands on a blank list, and
 opening search no longer leaves the app zoomed in.
 ```
 
-**1.2.1 is what the App Store will see first, and it carries 1.2.0's notes.**
+**What's New 1.2.2** (4000 char limit) — supersedes 1.2.1; this is the one to paste
+
+```
+THE COLOR LAB
+
+A second screen. Pick two paints and see the blend between them in 20% steps,
+or pick one and get its complementary, its highlight and its shade. Every
+color Paco works out is matched back to the nearest real paint, with the same
+delta score the equivalents use, and goes straight into a list.
+
+Also fixed: the title no longer sits behind the status bar, the app stays in
+portrait, opening search no longer leaves the app zoomed in, and jumping to an
+equivalent paint now lands on that paint rather than somewhere else in the
+catalog.
+```
+
+**1.2.2 is what the App Store will see first, and it carries 1.2.0's notes.**
 Nothing has shipped there: the 1.1.0 archive was rejected on Guideline 2.1
 before review reached the app. Apple shows the description rather than the notes
 for a first release, so every block above this one is house style and history —
-but 1.2.1's text is the Color Lab announcement rather than a bugfix line,
-because for an App Store user the Color Lab *is* new.
+but this text is the Color Lab announcement rather than a bugfix line, because
+for an App Store user the Color Lab *is* new.
 
-That is the opposite of Play's 1.2.1 note, which says almost nothing, and the
-two are right for the same reason: Play met the Color Lab at 1.2.0 and never met
-the zoom bug, while Apple has met neither.
+That is the opposite of Play's notes for the same versions, which say almost
+nothing, and the two are right for the same reason: Play met the Color Lab at
+1.2.0 and has never met either scrolling bug, while Apple has met none of it.
+
+The 1.2.1 block is kept above rather than edited, because 1.2.1 was built and
+signed before this fix existed. A block that quietly grew a line would make the
+artifact and its notes disagree.
 
 The last line is deliberate. Naming the fixes answers, in one sentence and
 without drawing attention to it, the "what changed since the build you rejected"

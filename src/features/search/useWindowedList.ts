@@ -37,11 +37,16 @@ const FALLBACK_VIEWPORT = 800;
  *
  * Writing `scrollTop` is a request, not a result: the engine clamps it to the
  * scroll extent it currently believes in, and on a scroller nearly a million
- * pixels tall that belief can lag the spacers already in the DOM. Each retry
- * costs one commit, and the range is taken to wherever the scroll actually
+ * pixels tall that belief can lag the spacers already in the DOM.
+ *
+ * Each retry costs a **frame**, not a commit — see the anchor block for why a
+ * commit buys nothing — and the range is taken to wherever the scroll actually
  * landed either way, so a run of failures is slightly-wrong rather than blank.
+ * Four frames is about 65ms, which is a jump that settles visibly late rather
+ * than one that reads as broken; the cost of raising it is paid on the jumps
+ * that were never going to land.
  */
-const ANCHOR_TRIES = 3;
+const ANCHOR_TRIES = 4;
 
 export interface WindowedList {
   /** The scroll container. */
@@ -102,6 +107,8 @@ export function useWindowedList(
   const pendingScrollId = useRef<string | null>(anchorId);
   /** Landings left to attempt for `pendingScrollId`; see the anchor block. */
   const scrollTries = useRef(ANCHOR_TRIES);
+  /** The frame a short landing has queued its retry on, so it can be cancelled. */
+  const retryFrame = useRef(0);
   /**
    * The same id again, tracked apart because moving focus is not a geometric
    * operation. The scroll has to wait for the card to have a box; focus does
@@ -333,16 +340,67 @@ export function useWindowedList(
          * has usually caught up, and then settled for either way.
          */
         const landed = Math.abs(el.scrollTop - want) <= 1;
-        if (landed || --scrollTries.current <= 0) pendingScrollId.current = null;
-        else bumpVersion();
+        if (landed || --scrollTries.current <= 0) {
+          pendingScrollId.current = null;
+        } else {
+          /*
+           * A short landing with a try left — but not in this frame, and not
+           * with this window.
+           *
+           * Two things defeated the retry this replaces, and the second hid the
+           * first. `syncRange` below re-derives the window from wherever the
+           * scroller actually stopped, which unmounts the anchor's card; the
+           * next pass then finds no card, skips this whole block, and the
+           * remaining tries are never spent. Only the first attempt ever ran.
+           * So a retry has to put the anchor back in the DOM before asking
+           * again.
+           *
+           * And it asks on a frame rather than on a commit. React flushes a
+           * layout-effect `setState` synchronously before paint, so a
+           * `bumpVersion` retry re-asks an engine that has not re-laid-out
+           * since the write that just fell short, and gets the identical clamp
+           * back. Three tries in one frame are one try. What lifts the clamp is
+           * a frame, so that is what a try now costs.
+           *
+           * Reported as: search for a color, tap an equivalent tile, and the
+           * list lands among the blacks at the top of the browse order instead
+           * of on the paint — which is where a jump of 680,000px stops when it
+           * stops short.
+           */
+          cancelAnimationFrame(retryFrame.current);
+          retryFrame.current = requestAnimationFrame(() => {
+            retryFrame.current = 0;
+            if (pendingScrollId.current !== pending) return;
+            setRange(initialRange(list.length, anchorIndex, windowed));
+            bumpVersion();
+          });
+        }
         // Whatever happened above, mount what the scroller is now looking at.
+        // A pending retry does not get to leave the viewport inside a spacer:
+        // the anchor comes back on the retry frame, not by holding a blank
+        // screen until then.
         syncRange(el);
       }
     }
     // Every commit that can change a card's height is in this list: a new list,
     // cards entering or leaving the window, and a re-measure. It converges,
     // because a pass that moves nothing does not bump the version.
-  }, [bumpVersion, heightOf, indexAt, items, range.start, range.end, syncRange, version]);
+  }, [
+    anchorIndex,
+    bumpVersion,
+    heightOf,
+    indexAt,
+    items,
+    list.length,
+    range.start,
+    range.end,
+    syncRange,
+    version,
+    windowed,
+  ]);
+
+  // A queued retry must not outlive the sheet that asked for it.
+  useLayoutEffect(() => () => cancelAnimationFrame(retryFrame.current), []);
 
   // Rotation changes the column count and so every card's height, and React has
   // no reason to re-render for it. Width only: the Android soft keyboard

@@ -455,10 +455,21 @@ async function checkSafeArea(browser, origin) {
  */
 const LANDING_CAP = 2000;
 
-async function checkScrollLanding(browser, origin) {
-  const page = await openApp(browser, origin, 390, (p) =>
-    p.evaluateOnNewDocument((cap) => {
+/**
+ * Break the landing on purpose, in one of two ways.
+ *
+ * `hard` never lifts: nothing can satisfy it, so it can only ask "is anything
+ * drawn where we stopped". `lifting` is the truer model of WebKit — a write
+ * into a region the engine has not laid out is clamped, and the engine lays it
+ * out *after* the write returns, so the same write a frame later succeeds. That
+ * distinction is the whole reason a retry exists, and only `lifting` can tell a
+ * retry that works from one that does not.
+ */
+function clampScrollTop(page, cap, mode) {
+  return page.evaluateOnNewDocument(
+    (c, m) => {
       const desc = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollTop');
+      let limit = c;
       Object.defineProperty(Element.prototype, 'scrollTop', {
         configurable: true,
         enumerable: desc.enumerable,
@@ -466,16 +477,30 @@ async function checkScrollLanding(browser, origin) {
           return desc.get.call(this);
         },
         set(v) {
-          desc.set.call(this, Math.min(Number(v), cap));
+          const asked = Number(v);
+          desc.set.call(this, Math.min(asked, limit));
+          if (m === 'lifting' && asked > limit) {
+            requestAnimationFrame(() => {
+              limit = Math.max(limit, asked);
+            });
+          }
         },
       });
-    }, LANDING_CAP)
+    },
+    cap,
+    mode
+  );
+}
+
+async function checkScrollLanding(browser, origin) {
+  const page = await openApp(browser, origin, 390, (p) =>
+    clampScrollTop(p, LANDING_CAP, 'hard')
   );
 
   await page.click('button[aria-label^="Show equivalents for Mephiston Red"]');
   await page.waitForSelector('[class*="resultCard"]');
   await page.evaluate(() => document.fonts.ready);
-  // The landing is retried across a few commits before it settles.
+  // The landing is retried across a few frames before it settles.
   await new Promise((r) => setTimeout(r, 500));
 
   const state = await page.evaluate(() => {
@@ -502,6 +527,89 @@ async function checkScrollLanding(browser, origin) {
       detail:
         `scroller stopped at ${state.scrollTop}px with cards ` +
         `${state.mounted[0]}-${state.mounted[1]} mounted; nothing is drawn in the results area`,
+    },
+  ];
+}
+
+/**
+ * A jump asked for from *inside* an open sheet has to arrive, not merely draw.
+ *
+ * The check above settles for "something is drawn", which is all a clamp that
+ * never lifts allows. That turned out to be too weak a rule: it passed while
+ * the reported bug was live, because landing at the top of the browse order
+ * draws cards perfectly well — they are simply the wrong ones. Reported as
+ * "search for green, tap the Warpstone Glow equivalent, and it jumps to a black
+ * color".
+ *
+ * This is the path the report names and the one the check above does not take.
+ * Opening on a paint from a list row mounts a fresh sheet against a scroller at
+ * zero; tapping an equivalent tile swaps a 270-result search for the whole
+ * 2,279-paint catalog under a scroller that is already laid out for the short
+ * list, and then asks it to jump 680,000px. That is where the clamp bites.
+ *
+ * `lifting` rather than `hard`, because the rule here is that the retry
+ * *converges*, and a clamp that never lifts has no convergent answer to assert.
+ */
+async function checkAnchorLanding(browser, origin) {
+  const page = await openApp(browser, origin, 390, (p) =>
+    clampScrollTop(p, LANDING_CAP, 'lifting')
+  );
+
+  await page.click('button[aria-label="Add paint"]');
+  await page.waitForSelector('input[type="text"]');
+  await page.type('input[type="text"]', 'green');
+  await page.waitForSelector('[class*="resultCard"]');
+  await page.evaluate(() => document.fonts.ready);
+  await new Promise((r) => setTimeout(r, 400));
+
+  const tile = 'button[aria-label^="Go to Warpstone Glow"]';
+  const tapped = await page.evaluate((sel) => {
+    const btn = document.querySelector(sel);
+    if (!btn) return false;
+    btn.click();
+    return true;
+  }, tile);
+  if (!tapped) {
+    await page.close();
+    return [
+      {
+        rule: 'anchor-tile-missing',
+        detail:
+          'no "Go to Warpstone Glow" tile among the results for "green" — the ' +
+          'catalog or the equivalents changed, so this check needs a new pair',
+      },
+    ];
+  }
+
+  await new Promise((r) => setTimeout(r, 900));
+
+  const state = await page.evaluate(() => {
+    const scroller = document.querySelector('[class*="results"]');
+    const box = scroller.getBoundingClientRect();
+    const onScreen = (el) => {
+      const b = el.getBoundingClientRect();
+      return b.bottom > box.top + 1 && b.top < box.bottom - 1;
+    };
+    const cards = [...document.querySelectorAll('[class*="resultCard"]')];
+    const ringed = cards.find((c) => /resultCardJumped/.test(c.className));
+    const name = (el) => el?.querySelector('[class*="paintName"]')?.textContent ?? null;
+    return {
+      scrollTop: Math.round(scroller.scrollTop),
+      ringedOnScreen: Boolean(ringed && onScreen(ringed)),
+      ringed: name(ringed),
+      showing: cards.filter(onScreen).map(name),
+    };
+  });
+  await page.close();
+
+  if (state.ringedOnScreen) return [];
+  return [
+    {
+      rule: 'anchor-not-reached',
+      detail:
+        `scroller stopped at ${state.scrollTop}px; the anchored card is ` +
+        `${state.ringed ? 'off screen' : 'not even mounted'} and the list is ` +
+        `showing ${state.showing.slice(0, 3).join(', ') || 'nothing'}`,
     },
   ];
 }
@@ -598,6 +706,17 @@ async function main() {
     } else {
       console.error('Scroll landing: FAIL');
       for (const v of landingViolations) console.error(`         ${v.rule}: ${v.detail}`);
+      process.exitCode = 1;
+    }
+
+    // The stronger half of the same question: not "is anything drawn" but "did
+    // the jump arrive". Separate page, separate clamp — see the doc comment.
+    const anchorViolations = await checkAnchorLanding(browser, origin);
+    if (anchorViolations.length === 0) {
+      console.log('Anchor landing: a tile jump from a search reaches the paint it names.');
+    } else {
+      console.error('Anchor landing: FAIL');
+      for (const v of anchorViolations) console.error(`         ${v.rule}: ${v.detail}`);
       process.exitCode = 1;
     }
   } finally {

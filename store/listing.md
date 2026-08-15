@@ -157,15 +157,31 @@ Android is unaffected by that bug, so this release changes nothing you will
 notice. It exists because both stores ship the same version number.
 ```
 
+**Release notes 1.2.2** (500 char limit) — the "What's new" text for version 1.2.2
+
+```
+Fixed: on iPhone, tapping an equivalent paint could scroll the catalog to the
+wrong place instead of to that paint.
+
+As with 1.2.1, Android is unaffected and this release changes nothing you will
+notice. Both stores ship the same version number.
+```
+
 Play keeps release notes per language and per release, so each version keeps its
 own block here rather than overwriting the last. Reuse the 1.0.0 wording for a
 first release on any track.
 
-**1.2.1 is an iOS fix that Android has to carry.** The zoom bug is WKWebView's
-focus-zoom behavior and has no Android counterpart, but `versionName` is one
-string for both stores — so Play gets a release whose notes honestly say
-nothing changed for its users. The alternative is letting the two platforms
-drift to different version numbers, which costs more than a dull release note.
+**1.2.1 and 1.2.2 are both iOS fixes that Android has to carry.** The zoom bug
+is WKWebView's focus-zoom behavior; the landing bug is WebKit clamping a scroll
+into a region it has not laid out, and Chromium lands those writes exactly.
+Neither has an Android counterpart, but `versionName` is one string for both
+stores — so Play gets two consecutive releases whose notes honestly say nothing
+changed for its users. The alternative is letting the two platforms drift to
+different version numbers, which costs more than a dull release note.
+
+Two in a row is worth a glance rather than a shrug: if it becomes a habit, the
+pin between `CURRENT_PROJECT_VERSION` and `versionCode` is the thing to
+reconsider, and the iOS checklist's "Every release" section says how.
 
 ---
 

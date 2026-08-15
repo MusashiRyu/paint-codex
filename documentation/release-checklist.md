@@ -24,26 +24,33 @@ first build from merged `master` and carried the Color Lab (retro 031), the
 status bar overlap and portrait lock (retro 030), and the blank sheet when
 opening a paint's equivalents (retro 033).
 
-**1.2.1 (`versionCode` 5) was built on 2026-08-15 and is the one to upload.**
-It carries exactly one change: the search sheet no longer leaves the app zoomed
-in (retro 036).
+**1.2.1 (`versionCode` 5) was built on 2026-08-15 and superseded the same day.**
+It carried the zoom fix (retro 036) and nothing else. Do not upload it.
 
-**That fix is iOS-only, and Android is shipping it anyway.** The bug is
-WKWebView's focus-zoom on a sub-16px input and has no Android counterpart, so
-Play users get a release that changes nothing they can see. It goes out because
+**1.2.2 (`versionCode` 6) is the one to upload.** It carries the zoom fix plus
+retro 038: tapping an equivalent paint after a search landed among the blacks at
+the top of the browse order instead of on the paint.
+
+**Both fixes are iOS-only, and Android is shipping them anyway.** The zoom bug
+is WKWebView's focus-zoom on a sub-16px input; the landing bug is WebKit
+clamping a scroll into a region it has not laid out, and Chromium lands those
+writes exactly. Neither has an Android counterpart, so Play users get two
+consecutive releases that change nothing they can see. They go out because
 `versionName` is one string for both stores — and the alternative, letting the
 platforms drift to different numbers, costs more than a dull release note. The
-1.2.1 block in `store/listing.md` says so plainly rather than inventing a
+1.2.2 block in `store/listing.md` says so plainly rather than inventing a
 benefit.
 
-The number is not a free choice in either direction. 1.2.0 is live, so the fix
-cannot reuse it; and `versionCode` 5 is forced independently, because 4 went to
-TestFlight to verify the safe-area and anchor-scroll fixes and an uploaded build
-number is spent whatever becomes of it.
+The number is not a free choice. 1.2.0 is live so a fix cannot reuse it, and 5
+was spent on an artifact that was built and signed before 038 existed —
+rebuilding under the same number would leave a signed `.aab` and its release
+notes describing different code.
 
 The `.aab` is signed with the `PACO-UPL` upload key, and the matching release
-APK is built for the hardware smoke test — though the fix it carries cannot be
-observed on Android hardware. It needs the iPhone; see OPEN-ITEMS 16.
+APK is built for the hardware smoke test — though neither fix it carries can be
+observed on Android hardware. Both need the iPhone; see "The zoom lock is
+unverified on hardware" and "The tile-jump landing is unverified on WebKit" in
+[OPEN-ITEMS.md](./OPEN-ITEMS.md).
 
 **The listing did not change this time.** The screenshots are the ones uploaded
 with 1.2.0 and need no re-upload; only the release-notes block is new.
@@ -510,7 +517,7 @@ notes → review → roll out. Start at a staged percentage on production.
 The release notes live in `store/listing.md`, one block per version — Play keeps
 them per release, so each version's text stays alongside the last rather than
 replacing it. `npm run listing:check` measures every block against the 500-char
-limit. For this upload, paste **Release notes 1.2.1**.
+limit. For this upload, paste **Release notes 1.2.2**.
 
 That instruction is version-specific and goes stale silently, since a wrong
 paste is a plausible-looking release note rather than an error. It is stated
