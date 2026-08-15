@@ -28,8 +28,14 @@ opening a paint's equivalents (retro 033).
 It carried the zoom fix (retro 036) and nothing else. Do not upload it.
 
 **1.2.2 (`versionCode` 6) is the one to upload.** It carries the zoom fix plus
-retro 038: tapping an equivalent paint after a search landed among the blacks at
-the top of the browse order instead of on the paint.
+retros 038/039: tapping an equivalent paint after a search landed among the
+blacks at the top of the browse order instead of on the paint. 039 replaced
+038's mechanism entirely — the 038 build was reported still-broken from a
+device that turned out to be running 1.2.1, but the mechanism was wrong anyway;
+039 has the account. On iOS, note **build number 5 was uploaded twice** on
+2026-08-15 (neither run used the override; the second upload will fail
+asynchronous processing as a duplicate — the email about it is expected and
+ignorable). Build 6 is unburned.
 
 **Both fixes are iOS-only, and Android is shipping them anyway.** The zoom bug
 is WKWebView's focus-zoom on a sub-16px input; the landing bug is WebKit

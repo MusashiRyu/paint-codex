@@ -32,33 +32,50 @@ title, not by number.
 ## Open
 
 ### 17. The tile-jump landing is unverified on WebKit
-**Raised:** 038 · **Same device session as item 16**
+**Raised:** 038 · **Reworked in 039 — the 038 fix was never on a device, and was wrong anyway**
 
 Searching for a color and tapping an equivalent tile landed among the blacks at
-the top of the browse order instead of on the paint. The retry that was supposed
-to catch a short landing could only ever run once — see retro 038 — and now
-runs on a frame with the anchor put back in the window first.
+the top of the browse order instead of on the paint.
 
-Reproduced and asserted in Chromium with the landing clamped, and the new
-`checkAnchorLanding` fails on the pre-fix build and passes after. What is
-inference is the **clamp model**: `lifting` — clamp the write, let the limit
-catch up a frame later — is a hypothesis about what iOS WebKit does, because
-there is no WebKit on this machine to ask. The same standing gap as item 13.
+**The "fix didn't fix it" report against 038 was made from a build that predates
+the fix** — the commit was never pushed, and both iOS release runs that day
+built from the 1.2.1 cut. Before concluding any future fix failed on device:
+the About sheet must say **1.2.2 or later**, and
+`gh run list --workflow=ios-release.yml --json headSha` says what a build
+actually contains.
 
-Check on the iPhone 15 Pro Max, in the same pass as item 16:
+The 038 mechanism was replaced regardless, because research showed its premise
+wrong: WebKit's `setScrollTop` clamps against *fresh* layout, so the write is
+accepted and read back truthfully — the read-back-keyed retry never fires. The
+real failure is the compositor reverting the position afterwards (WebKit bug
+195584: the UIScrollView adopting a new contentSize resets its offset to
+(0,0)). Retro 039 has the full account. The landing is now a geometry-judged
+feedback loop with the anchor's window held mounted throughout, a post-arrival
+guard against the revert, and user gestures cancelling everything. Asserted
+under four engine models in `check-layout.mjs`; the 038 code fails three of
+them.
+
+Check on the iPhone 15 Pro Max, in the same pass as item 16, **after
+confirming the About sheet says 1.2.2**:
 
 1. Search `green`, open a Vallejo Game Color green, tap **Warpstone Glow**. The
-   ringed card is Warpstone Glow and it is at the top of the list.
-2. The same from a *browse* rather than a search, which does not change the
-   list's length under the jump.
+   ringed card is Warpstone Glow, at the top of the list, and it *stays* there —
+   watch a full second, since the engine's revert arrives late.
+2. The same with the keyboard still up (tap the tile straight after typing) —
+   the keyboard-dismiss animation is the likeliest source of the late revert.
 3. Chain two tile jumps without closing the sheet.
-4. Jump to a paint at each end of the color order — a black and a white — since
-   the distance travelled is what the clamp bites on.
-5. Watch for a visible settle. The jump now takes up to four frames, so a late
-   arrival is expected behavior and a *wrong* arrival is not.
+4. Jump to a paint at each end of the color order — a black and a white. The
+   white end also exercises the bottom-of-list landing, which counts the
+   fully-scrolled position as arrived.
+5. Flick the list *during* a jump. The jump must yield instantly — the loop
+   cancels on touch — and the list must scroll normally afterwards.
+6. After a successful jump, scroll away normally within the first second. The
+   guard must not yank the list back.
 
-If it still lands short, the next thing to reach for is the one item 13 named
-and this fix did not take: the scroller's ~950,000px extent itself.
+If it still lands at the top, the next thing to reach for is the one item 13
+named and neither fix took: the scroller's ~950,000px extent itself — anchor
+the window near the top and grow the spacers as the user scrolls, so no jump
+is ever large enough to race the compositor.
 
 ### 16. The zoom lock is unverified on hardware
 **Raised:** 036 · **Same device session as item 17**

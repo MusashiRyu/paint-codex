@@ -143,6 +143,26 @@ describe('SearchSheet windowed list', () => {
     expect(names).not.toContain(order[0].name);
   });
 
+  it('keeps a pending anchor mounted wherever the scroll goes', () => {
+    /*
+     * The two-segment guarantee behind retro 038/039: while an anchor scroll
+     * is pending, a scroll event moving the window elsewhere must not unmount
+     * the anchor — on iOS the compositor can drag the scroller to the top
+     * mid-landing, and the landing loop needs the card to still exist to
+     * steer back. Under jsdom no card ever gets a box, so the landing stays
+     * pending forever, which is exactly the state this asserts.
+     */
+    const anchor = order[120];
+    const { scroller } = renderBrowse(catalog, anchor.id);
+
+    scroller.scrollTop = 0;
+    fireEvent.scroll(scroller);
+
+    const names = mountedNames();
+    expect(names).toContain(anchor.name); // the pinned segment
+    expect(names).toContain(order[0].name); // the scroll-derived segment
+  });
+
   it('rings the paint it opened on', () => {
     const anchor = order[120];
     renderBrowse(catalog, anchor.id);

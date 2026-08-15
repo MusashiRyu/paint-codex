@@ -456,34 +456,119 @@ async function checkSafeArea(browser, origin) {
 const LANDING_CAP = 2000;
 
 /**
- * Break the landing on purpose, in one of two ways.
+ * Break the landing on purpose, in one of several ways.
  *
- * `hard` never lifts: nothing can satisfy it, so it can only ask "is anything
- * drawn where we stopped". `lifting` is the truer model of WebKit — a write
- * into a region the engine has not laid out is clamped, and the engine lays it
- * out *after* the write returns, so the same write a frame later succeeds. That
- * distinction is the whole reason a retry exists, and only `lifting` can tell a
- * retry that works from one that does not.
+ * Each mode is a model of a real engine failure, and the set exists because
+ * the first model shipped a fix that could not work. `lifting` — clamp the
+ * write, lift the limit a frame later — validated a retry keyed on scrollTop
+ * read-back, and the device never takes that path: WebKit's setter forces
+ * layout and clamps against *fresh* layout, so the main thread accepts the
+ * jump and reads it back truthfully, and the collapse arrives later, from the
+ * compositor (WebKit bug 195584: the UIScrollView adopting a new contentSize
+ * resets its offset to (0,0) and pushes that back as scroll events). Retro
+ * 039 is the full account.
+ *
+ *  'hard'          Never lifts. Nothing can land, so the only assertable rule
+ *                  is "something is drawn wherever the scroller stops".
+ *  'lifting'       Lifts one frame after a write. The gentlest real model; an
+ *                  implementation that retries once passes.
+ *  'slow-lift'     Lifts only after LIFT_FRAMES rAFs, and retries do not
+ *                  hurry it — layout catches up on its own schedule. Catches
+ *                  retry budgets counted in commits or in too few frames.
+ *  'relapse'       The device model. Writes are accepted — read-back and
+ *                  paint agree — and two frames later the engine snaps the
+ *                  scroller back to the top once, through the native setter,
+ *                  so a genuine scroll event announces it. After the snap the
+ *                  extent is adopted and re-writes stick. Catches "declare
+ *                  victory on read-back and stop watching".
+ *  'read-back-lie' Writes clamp like 'lifting', but reads on a clamped
+ *                  element return the value that was asked for. Catches any
+ *                  verification that consults scrollTop instead of geometry.
+ *
+ * `window.__scrollProbe` records whether any write ever crossed the cap and
+ * exposes the native getter, so checks can read the true position past a
+ * lying getter — and can fail loudly if the app stops scrolling via the
+ * scrollTop property at all (scrollTo() and friends bypass the interceptor).
  */
 function clampScrollTop(page, cap, mode) {
   return page.evaluateOnNewDocument(
     (c, m) => {
       const desc = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollTop');
+      const nativeGet = desc.get;
+      const nativeSet = desc.set;
+      const LIFT_FRAMES = 6;
+      const RELAPSE_FRAMES = 2;
+
+      const probe = (window.__scrollProbe = {
+        bigWrites: 0,
+        native: (el) => nativeGet.call(el),
+      });
+
       let limit = c;
+      let liftPending = false;
+      let liftTarget = 0;
+      let relapsed = false;
+      // One lying element at a time — only one scroller ever crosses the cap.
+      // The lie heals when the limit lifts: a real engine is only transiently
+      // inconsistent, and a lie that outlives the layout it modeled would
+      // poison every later read for as long as the page lives, which no
+      // engine does and no app could survive.
+      let liedEl = null;
+      let liedVal = 0;
+
       Object.defineProperty(Element.prototype, 'scrollTop', {
         configurable: true,
         enumerable: desc.enumerable,
         get() {
-          return desc.get.call(this);
+          if (m === 'read-back-lie' && liedEl === this) return liedVal;
+          return nativeGet.call(this);
         },
         set(v) {
           const asked = Number(v);
-          desc.set.call(this, Math.min(asked, limit));
-          if (m === 'lifting' && asked > limit) {
-            requestAnimationFrame(() => {
-              limit = Math.max(limit, asked);
-            });
+
+          if (m === 'relapse') {
+            nativeSet.call(this, asked);
+            if (asked > c && !relapsed) {
+              probe.bigWrites += 1;
+              relapsed = true;
+              let n = RELAPSE_FRAMES;
+              const el = this;
+              const tick = () => {
+                if ((n -= 1) > 0) return requestAnimationFrame(tick);
+                // The native setter, so the snap fires a real, trusted,
+                // asynchronously-delivered scroll event — exactly the shape
+                // the compositor's revert arrives in. A synthetic
+                // dispatchEvent would be synchronous and isTrusted:false,
+                // and an app could rightly ignore it.
+                nativeSet.call(el, 0);
+              };
+              requestAnimationFrame(tick);
+            }
+            return;
           }
+
+          nativeSet.call(this, Math.min(asked, limit));
+          if (asked <= limit) {
+            if (liedEl === this) liedEl = null; // an in-extent write really lands
+            return;
+          }
+          probe.bigWrites += 1;
+          if (m === 'hard') return;
+          if (m === 'read-back-lie') {
+            liedEl = this;
+            liedVal = asked;
+          }
+          liftTarget = Math.max(liftTarget, asked);
+          if (liftPending) return; // retries do not hurry layout along
+          liftPending = true;
+          let n = m === 'slow-lift' ? LIFT_FRAMES : 1;
+          const tick = () => {
+            if ((n -= 1) > 0) return requestAnimationFrame(tick);
+            limit = Math.max(limit, liftTarget);
+            liftPending = false;
+            liedEl = null; // layout caught up; reads are honest again
+          };
+          requestAnimationFrame(tick);
         },
       });
     },
@@ -545,15 +630,22 @@ async function checkScrollLanding(browser, origin) {
  * Opening on a paint from a list row mounts a fresh sheet against a scroller at
  * zero; tapping an equivalent tile swaps a 270-result search for the whole
  * 2,279-paint catalog under a scroller that is already laid out for the short
- * list, and then asks it to jump 680,000px. That is where the clamp bites.
+ * list, and then asks it to travel 680,000px. That is where every model bites.
  *
- * `lifting` rather than `hard`, because the rule here is that the retry
- * *converges*, and a clamp that never lifts has no convergent answer to assert.
+ * Runs once per model in ANCHOR_MODES, because each mode catches a different
+ * wrong implementation — see clampScrollTop. The assertion is frame-counted
+ * rather than a wall-clock nap: the ringed card must hold the screen for
+ * SETTLE_FRAMES consecutive frames, so a landing that is reverted two frames
+ * later cannot pass by being sampled in between ('relapse' exists precisely
+ * because a single 900ms sample passed or failed by luck). The true position
+ * is read through the probe's native getter, because under 'read-back-lie'
+ * `scrollTop` itself is part of the test.
  */
-async function checkAnchorLanding(browser, origin) {
-  const page = await openApp(browser, origin, 390, (p) =>
-    clampScrollTop(p, LANDING_CAP, 'lifting')
-  );
+const ANCHOR_MODES = ['lifting', 'slow-lift', 'relapse', 'read-back-lie'];
+const SETTLE_FRAMES = 10;
+
+async function checkAnchorLanding(browser, origin, mode) {
+  const page = await openApp(browser, origin, 390, (p) => clampScrollTop(p, LANDING_CAP, mode));
 
   await page.click('button[aria-label="Add paint"]');
   await page.waitForSelector('input[type="text"]');
@@ -581,7 +673,22 @@ async function checkAnchorLanding(browser, origin) {
     ];
   }
 
-  await new Promise((r) => setTimeout(r, 900));
+  const settled = await page
+    .waitForFunction(
+      (need) => {
+        const scroller = document.querySelector('[class*="results"]');
+        const ringed = document.querySelector('[class*="resultCardJumped"]');
+        const box = scroller?.getBoundingClientRect();
+        const b = ringed?.getBoundingClientRect();
+        const on = Boolean(box && b && b.height > 0 && b.bottom > box.top + 1 && b.top < box.bottom - 1);
+        window.__stableFrames = on ? (window.__stableFrames ?? 0) + 1 : 0;
+        return window.__stableFrames >= need;
+      },
+      { polling: 'raf', timeout: 5000 },
+      SETTLE_FRAMES
+    )
+    .then(() => true)
+    .catch(() => false);
 
   const state = await page.evaluate(() => {
     const scroller = document.querySelector('[class*="results"]');
@@ -591,25 +698,33 @@ async function checkAnchorLanding(browser, origin) {
       return b.bottom > box.top + 1 && b.top < box.bottom - 1;
     };
     const cards = [...document.querySelectorAll('[class*="resultCard"]')];
-    const ringed = cards.find((c) => /resultCardJumped/.test(c.className));
     const name = (el) => el?.querySelector('[class*="paintName"]')?.textContent ?? null;
     return {
-      scrollTop: Math.round(scroller.scrollTop),
-      ringedOnScreen: Boolean(ringed && onScreen(ringed)),
-      ringed: name(ringed),
+      bigWrites: window.__scrollProbe.bigWrites,
+      nativeTop: Math.round(window.__scrollProbe.native(scroller)),
+      claimedTop: Math.round(scroller.scrollTop),
       showing: cards.filter(onScreen).map(name),
     };
   });
   await page.close();
 
-  if (state.ringedOnScreen) return [];
+  if (state.bigWrites === 0) {
+    return [
+      {
+        rule: 'clamp-not-exercised',
+        detail:
+          'no scrollTop write ever crossed the cap — the app scrolls some other ' +
+          'way now (scrollTo? scrollIntoView?) and this mode proved nothing',
+      },
+    ];
+  }
+  if (settled && state.nativeTop > LANDING_CAP) return [];
   return [
     {
-      rule: 'anchor-not-reached',
+      rule: `anchor-lost-under-${mode}`,
       detail:
-        `scroller stopped at ${state.scrollTop}px; the anchored card is ` +
-        `${state.ringed ? 'off screen' : 'not even mounted'} and the list is ` +
-        `showing ${state.showing.slice(0, 3).join(', ') || 'nothing'}`,
+        `real position ${state.nativeTop}px (scrollTop claims ${state.claimedTop}px); ` +
+        `the list is showing ${state.showing.slice(0, 3).join(', ') || 'nothing'}`,
     },
   ];
 }
@@ -710,14 +825,17 @@ async function main() {
     }
 
     // The stronger half of the same question: not "is anything drawn" but "did
-    // the jump arrive". Separate page, separate clamp — see the doc comment.
-    const anchorViolations = await checkAnchorLanding(browser, origin);
-    if (anchorViolations.length === 0) {
-      console.log('Anchor landing: a tile jump from a search reaches the paint it names.');
-    } else {
-      console.error('Anchor landing: FAIL');
-      for (const v of anchorViolations) console.error(`         ${v.rule}: ${v.detail}`);
-      process.exitCode = 1;
+    // the jump arrive" — once per engine model, because each model catches a
+    // different wrong implementation. See clampScrollTop.
+    for (const mode of ANCHOR_MODES) {
+      const anchorViolations = await checkAnchorLanding(browser, origin, mode);
+      if (anchorViolations.length === 0) {
+        console.log(`Anchor landing (${mode}): the tile jump reaches the paint it names.`);
+      } else {
+        console.error(`Anchor landing (${mode}): FAIL`);
+        for (const v of anchorViolations) console.error(`         ${v.rule}: ${v.detail}`);
+        process.exitCode = 1;
+      }
     }
   } finally {
     preview?.child.kill();

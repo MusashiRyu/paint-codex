@@ -165,31 +165,39 @@ export function PaintSearch({
         {results !== null && (
           <>
             <div className={styles.resultCount}>Found {results.length} paint(s)</div>
-            {/* The window: two spacers standing in for the cards outside it, and
-             * a list role, so a screen reader is told 2,279 rather than the nine
-             * that happen to be mounted. */}
+            {/* The window: spacers standing in for the cards outside it, and a
+             * list role, so a screen reader is told 2,279 rather than the nine
+             * that happen to be mounted. Usually one run of cards between two
+             * spacers; during an anchor landing there are two runs, so the
+             * jump's target stays mounted while the scroller is still en
+             * route. The cards are keyed by paint id at this level — not
+             * wrapped per-segment — so a segment boundary moving across a card
+             * does not remount it. */}
             <div className={styles.window} ref={list.windowRef} role="list">
-              <div className={styles.spacer} style={{ height: list.topPad }} aria-hidden="true" />
-              {results.slice(list.start, list.end).map((paint, at) => (
-                <ResultCard
-                  key={paint.id}
-                  paint={paint}
-                  paintsById={paintsById}
-                  activeIds={activeIds}
-                  action={action}
-                  anchored={paint.id === anchorId}
-                  position={list.start + at + 1}
-                  total={results.length}
-                  onAdd={handlePick}
-                  onJump={jumpToMatch}
-                  registerCard={list.registerCard}
-                />
-              ))}
-              <div
-                className={styles.spacer}
-                style={{ height: list.bottomPad }}
-                aria-hidden="true"
-              />
+              {list.segments.flatMap((seg) => [
+                <div
+                  key={`spacer-${seg.start}`}
+                  className={styles.spacer}
+                  style={{ height: seg.pad }}
+                  aria-hidden="true"
+                />,
+                ...results.slice(seg.start, seg.end).map((paint, at) => (
+                  <ResultCard
+                    key={paint.id}
+                    paint={paint}
+                    paintsById={paintsById}
+                    activeIds={activeIds}
+                    action={action}
+                    anchored={paint.id === anchorId}
+                    position={seg.start + at + 1}
+                    total={results.length}
+                    onAdd={handlePick}
+                    onJump={jumpToMatch}
+                    registerCard={list.registerCard}
+                  />
+                )),
+              ])}
+              <div className={styles.spacer} style={{ height: list.endPad }} aria-hidden="true" />
             </div>
           </>
         )}
