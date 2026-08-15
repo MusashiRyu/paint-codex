@@ -11,11 +11,11 @@ no accounts, no analytics, no advertising and no crash reporting.
 
 ## What Paco stores, and where
 
-Your paint lists — their names, emblems, banner colours, and which paints are
+Your paint lists — their names, emblems, banner colors, and which paints are
 in them — are stored **on your device only**, in the app's local storage. They
 are never uploaded, never synced to a server, and no one but you can read them.
 
-Paco also caches a copy of the paint catalogue on your device so it works
+Paco also caches a copy of the paint catalog on your device so it works
 offline.
 
 Deleting the app deletes all of it.
@@ -26,13 +26,13 @@ Paco contacts exactly one host — `raw.githubusercontent.com` — once per laun
 for three public files:
 
 ```
-https://raw.githubusercontent.com/Arcturus5404/miniature-paints/main/paints/Citadel_Colour.md
+https://raw.githubusercontent.com/Arcturus5404/miniature-paints/main/paints/Citadel_Color.md
 https://raw.githubusercontent.com/Arcturus5404/miniature-paints/main/paints/Vallejo.md
 https://raw.githubusercontent.com/Arcturus5404/miniature-paints/main/paints/Army_Painter.md
 ```
 
-These are public paint colour tables hosted on GitHub. Paco downloads them to
-keep the catalogue current between app releases. The requests send **no
+These are public paint color tables hosted on GitHub. Paco downloads them to
+keep the catalog current between app releases. The requests send **no
 identifiers, no account information and nothing about your lists** — they are
 anonymous requests for public files, the same ones your browser would make if
 you opened those links.
@@ -43,8 +43,8 @@ by us, under [GitHub's Privacy
 Statement](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement).
 We never see it.
 
-If the requests fail — no signal, aeroplane mode, GitHub down — Paco carries on
-with the catalogue it already has. The app is fully usable offline.
+If the requests fail — no signal, airplane mode, GitHub down — Paco carries on
+with the catalog it already has. The app is fully usable offline.
 
 ## Links that leave the app
 
@@ -75,7 +75,7 @@ Paco requests one Android permission:
 
 | Permission | Why |
 | --- | --- |
-| `INTERNET` | The catalogue requests described above. Nothing else. |
+| `INTERNET` | The catalog requests described above. Nothing else. |
 
 Paco does not request access to your location, camera, microphone, contacts,
 photos, files, or any other device data.
@@ -88,7 +88,7 @@ nothing in the app directed at children and nothing that identifies any user.
 ## Third parties
 
 There are none inside the app. No SDKs, no trackers, no ad networks, no
-analytics providers. The paint catalogue's host (GitHub) is described above and
+analytics providers. The paint catalog's host (GitHub) is described above and
 receives nothing but ordinary anonymous requests for public files.
 
 The sites behind the About screen's links are third parties in the ordinary

@@ -34,18 +34,18 @@ Paco is a paint conversion table and list keeper for miniature painters.
 
 Found a recipe that calls for a paint you do not own? Paco shows you the
 closest equivalents across Citadel, Vallejo and The Army Painter, ranked by how
-close the match actually is — not by a guess, but by a measured colour distance
+close the match actually is — not by a guess, but by a measured color distance
 between the two paints.
 
 BUILD YOUR LISTS
 
 Keep a list per army, per project, or per shelf. Give each one a name, an
-emblem and a banner colour, and add paints to it as you go. Lists are grouped
+emblem and a banner color, and add paints to it as you go. Lists are grouped
 by paint category so a long one stays readable.
 
-SEARCH THE CATALOGUE
+SEARCH THE CATALOG
 
-Fuzzy search across every paint in the catalogue by name or brand. Filter to a
+Fuzzy search across every paint in the catalog by name or brand. Filter to a
 single brand when you already know what you are shopping for. Every result
 shows its swatch, its hex value, and the equivalents in the other two ranges
 with a delta score for each — so you can tell a near-perfect substitute from a
@@ -53,17 +53,17 @@ rough one at a glance.
 
 MIX AND MATCH IN THE COLOR LAB
 
-Pick two paints and see the blend between them in twenty per cent steps, or
-pick one and get its complementary, its highlight and its shade. Every colour
-Paco works out is matched back to the nearest real paint in the catalogue, with
+Pick two paints and see the blend between them in twenty percent steps, or
+pick one and get its complementary, its highlight and its shade. Every color
+Paco works out is matched back to the nearest real paint in the catalog, with
 the same delta score the equivalents use — so a mix you cannot buy still ends
 at one you can, and it goes straight into a list.
 
 WORKS WITH THE RADIO OFF
 
-Paco ships the whole catalogue inside the app. There is no loading screen, no
+Paco ships the whole catalog inside the app. There is no loading screen, no
 sign-in and no "you appear to be offline". It quietly checks for an updated
-catalogue when you open it, and if that check fails — no signal, aeroplane
+catalog when you open it, and if that check fails — no signal, airplane
 mode, hobby shop basement — nothing about the app changes.
 
 NO ACCOUNTS, NO ADS, NO TRACKING
@@ -71,7 +71,7 @@ NO ACCOUNTS, NO ADS, NO TRACKING
 There is no sign-up, because there is nothing to sign up to. Paco has no
 analytics, no advertising and no crash reporting. Your lists live on your
 device and are never uploaded. The app talks to exactly one host, for the
-public paint colour tables it is built on, and it sends nothing about you with
+public paint color tables it is built on, and it sends nothing about you with
 it.
 
 Paco is free, and every part of it is. There is a tip jar on the About screen
@@ -82,7 +82,7 @@ feature is locked, limited or nagged about.
 
 The Paint Codex design is by Lukas Stordeur (github.com/LukasStordeur).
 
-Paint data is derived from the open colour database at
+Paint data is derived from the open color database at
 github.com/Arcturus5404/miniature-paints (MIT), published by the Miniature
 Painter Pro team.
 
@@ -99,8 +99,8 @@ converts between.
 First release.
 
 Paint conversion across Citadel, Vallejo and The Army Painter, with a measured
-colour distance for every match rather than a guess. Build a list per army or
-project, search the whole catalogue by name or brand, and see the closest
+color distance for every match rather than a guess. Build a list per army or
+project, search the whole catalog by name or brand, and see the closest
 equivalents side by side.
 
 Works entirely offline. No account, no ads, no tracking.
@@ -109,8 +109,8 @@ Works entirely offline. No account, no ads, no tracking.
 **Release notes 1.1.0** (500 char limit) — the "What's new" text for version 1.1.0
 
 ```
-Tap a paint in one of your lists to open it in the full catalogue, now ordered
-by colour: the paints above and below it are the nearest colours across all
+Tap a paint in one of your lists to open it in the full catalog, now ordered
+by color: the paints above and below it are the nearest colors across all
 three brands. When nothing is an exact equivalent, scroll a little either way
 and take the closest thing.
 
@@ -127,7 +127,7 @@ THE COLOR LAB
 
 A second screen. Pick two paints and see the blend between them in 20% steps,
 or pick one and get its complementary, its highlight and its shade. Every
-colour Paco works out is matched back to the nearest real paint, with the same
+color Paco works out is matched back to the nearest real paint, with the same
 delta score the equivalents use, and goes straight into a list.
 
 Also fixed: the title no longer sits behind the status bar, the app stays in
@@ -151,7 +151,7 @@ first release on any track.
 
 ---
 
-## Categorisation
+## Categorization
 
 | Field | Value | Why |
 | --- | --- | --- |
@@ -215,7 +215,7 @@ section records *why* it is the honest answer, because the form's definition of
 | Is data encrypted in transit? | N/A | Nothing is transmitted. The one outbound request is an HTTPS `GET` for a public file and carries no user data. |
 | Can users request deletion? | N/A | Uninstalling removes everything. Nothing is held anywhere else. |
 
-**On the catalogue request.** Fetching a public URL means GitHub's servers see
+**On the catalog request.** Fetching a public URL means GitHub's servers see
 an IP address, as any HTTP request does. Google's guidance is explicit that
 this is not "collection" by the developer — we neither receive nor store it.
 It is disclosed in the privacy policy regardless, because a user reading
@@ -269,7 +269,7 @@ Screenshot list names are invented on purpose — see the comment in
 `tools/store/screenshots.mjs`.
 
 **One shot per section of the description**, since 1.2.0: the list, the
-catalogue with its equivalents, and the Color Lab's two halves. Before that all
+catalog with its equivalents, and the Color Lab's two halves. Before that all
 four were List screens, which was survivable while the copy only described
-lists and stopped being so the moment it described a colour laboratory. A
+lists and stopped being so the moment it described a color laboratory. A
 reviewer reads the images against the words.

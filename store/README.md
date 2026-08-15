@@ -5,7 +5,7 @@ than code.
 
 | File | What it is |
 | --- | --- |
-| [`listing.md`](./listing.md) | **Play.** App name, descriptions, release notes, contact details, categorisation, target audience, App access, and every Data safety answer with its reasoning. |
+| [`listing.md`](./listing.md) | **Play.** App name, descriptions, release notes, contact details, categorization, target audience, App access, and every Data safety answer with its reasoning. |
 | [`listing-appstore.md`](./listing-appstore.md) | **App Store.** Name, subtitle, keywords, promotional text, description, App Privacy answers, age rating, and the reviewer notes. |
 | [`privacy-policy.md`](./privacy-policy.md) | The privacy policy, shared by both. **The source** — edit this one. |
 | `docs/privacy.html` | Generated from the markdown. Self-contained: no external stylesheet, font or script, so it can be dropped on any host. Live at `https://musashiryu.github.io/paint-codex/privacy.html`. |

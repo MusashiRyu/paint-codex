@@ -87,7 +87,7 @@ const CSS = `
     border-radius: 4px;
   }
   code { padding: .15em .35em; }
-  /* The catalogue URL is long and must not force the page to scroll sideways
+  /* The catalog URL is long and must not force the page to scroll sideways
      on a phone, which is where most people will open this. */
   pre {
     padding: .9rem 1rem;
@@ -153,7 +153,7 @@ const index = `<!doctype html>
 <h1>Paco &mdash; Paint Codex</h1>
 <p>A paint conversion table and list keeper for miniature painters. Find
 equivalents across Citadel, Vallejo and The Army Painter, ranked by measured
-colour distance.</p>
+color distance.</p>
 <p><a href="./privacy.html">Privacy policy</a></p>
 <footer>
   An independent app. Not affiliated with Games Workshop Limited,

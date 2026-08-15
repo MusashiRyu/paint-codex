@@ -50,18 +50,18 @@ Paco is a paint conversion table and list keeper for miniature painters.
 
 Found a recipe that calls for a paint you do not own? Paco shows you the
 closest equivalents across Citadel, Vallejo and The Army Painter, ranked by how
-close the match actually is — not by a guess, but by a measured colour distance
+close the match actually is — not by a guess, but by a measured color distance
 between the two paints.
 
 BUILD YOUR LISTS
 
 Keep a list per army, per project, or per shelf. Give each one a name, an
-emblem and a banner colour, and add paints to it as you go. Lists are grouped
+emblem and a banner color, and add paints to it as you go. Lists are grouped
 by paint category so a long one stays readable.
 
-SEARCH THE CATALOGUE
+SEARCH THE CATALOG
 
-Fuzzy search across every paint in the catalogue by name or brand. Filter to a
+Fuzzy search across every paint in the catalog by name or brand. Filter to a
 single brand when you already know what you are shopping for. Every result
 shows its swatch, its hex value, and the equivalents in the other two ranges
 with a delta score for each — so you can tell a near-perfect substitute from a
@@ -69,17 +69,17 @@ rough one at a glance.
 
 MIX AND MATCH IN THE COLOR LAB
 
-Pick two paints and see the blend between them in twenty per cent steps, or
-pick one and get its complementary, its highlight and its shade. Every colour
-Paco works out is matched back to the nearest real paint in the catalogue, with
+Pick two paints and see the blend between them in twenty percent steps, or
+pick one and get its complementary, its highlight and its shade. Every color
+Paco works out is matched back to the nearest real paint in the catalog, with
 the same delta score the equivalents use — so a mix you cannot buy still ends
 at one you can, and it goes straight into a list.
 
 WORKS WITH THE RADIO OFF
 
-Paco ships the whole catalogue inside the app. There is no loading screen, no
+Paco ships the whole catalog inside the app. There is no loading screen, no
 sign-in and no "you appear to be offline". It quietly checks for an updated
-catalogue when you open it, and if that check fails — no signal, aeroplane
+catalog when you open it, and if that check fails — no signal, airplane
 mode, hobby shop basement — nothing about the app changes.
 
 NO ACCOUNTS, NO ADS, NO TRACKING
@@ -87,7 +87,7 @@ NO ACCOUNTS, NO ADS, NO TRACKING
 There is no sign-up, because there is nothing to sign up to. Paco has no
 analytics, no advertising and no crash reporting. Your lists live on your
 device and are never uploaded. The app talks to exactly one host, for the
-public paint colour tables it is built on, and it sends nothing about you with
+public paint color tables it is built on, and it sends nothing about you with
 it.
 
 Paco is free, and every part of it is. No feature is locked, limited or nagged
@@ -97,7 +97,7 @@ about.
 
 The Paint Codex design is by Lukas Stordeur (github.com/LukasStordeur).
 
-Paint data is derived from the open colour database at
+Paint data is derived from the open color database at
 github.com/Arcturus5404/miniature-paints (MIT), published by the Miniature
 Painter Pro team.
 
@@ -117,8 +117,8 @@ closing paragraph, which is Play-specific copy with no App Store equivalent.
 First release.
 
 Paint conversion across Citadel, Vallejo and The Army Painter, with a measured
-colour distance for every match rather than a guess. Build a list per army or
-project, search the whole catalogue by name or brand, and see the closest
+color distance for every match rather than a guess. Build a list per army or
+project, search the whole catalog by name or brand, and see the closest
 equivalents side by side.
 
 Works entirely offline. No account, no ads, no tracking.
@@ -127,8 +127,8 @@ Works entirely offline. No account, no ads, no tracking.
 **What's New 1.1.0** (4000 char limit) — the same copy as Play's release notes; the two stores ship the same app and there is nothing iOS-specific to say
 
 ```
-Tap a paint in one of your lists to open it in the full catalogue, now ordered
-by colour: the paints above and below it are the nearest colours across all
+Tap a paint in one of your lists to open it in the full catalog, now ordered
+by color: the paints above and below it are the nearest colors across all
 three brands. When nothing is an exact equivalent, scroll a little either way
 and take the closest thing.
 
@@ -145,7 +145,7 @@ THE COLOR LAB
 
 A second screen. Pick two paints and see the blend between them in 20% steps,
 or pick one and get its complementary, its highlight and its shade. Every
-colour Paco works out is matched back to the nearest real paint, with the same
+color Paco works out is matched back to the nearest real paint, with the same
 delta score the equivalents use, and goes straight into a list.
 
 Also fixed: the title no longer sits behind the status bar, the app stays in
@@ -188,11 +188,11 @@ keyword field is a metadata edit that needs no build and no review.
 | --- | --- | --- |
 | Bundle ID | `com.musashi.paco` | Must be registered in the Developer portal before an App Store Connect record can be created. Matches Android's `applicationId`, which is not required but is one less thing to get wrong. |
 | SKU | `paco-ios-001` | Internal only, never shown to anyone, and permanent — it cannot be changed after the record is created. The `-001` is not decoration: SKUs are unique per account and are never released, so a deleted app record spends its SKU for good. The case that bites is a bundle ID that turns out wrong after a build has been uploaded against it, which freezes it and forces a new record. A numbered SKU makes the successor obvious (`paco-ios-002`) instead of improvised, and zero-padding sorts correctly in the sales and financial reports the field appears in. |
-| Primary language | English (U.K.) | The copy is written in British English: "colour" throughout. |
-| Primary category | **Graphics & Design** | The App Store's nearest equivalent to Play's Art & Design, and where hobby colour tools sit. |
+| Primary language | English (U.K.) | The copy is written in British English: "color" throughout. |
+| Primary category | **Graphics & Design** | The App Store's nearest equivalent to Play's Art & Design, and where hobby color tools sit. |
 | Secondary category | **Reference** | It is a lookup table before it is anything else. |
-| Copyright | `2026 Musashi Ryu` | The **rights holder**, which here is a person and not the account: the rights are held personally and Future Fox is only the publishing account. So this deliberately does *not* match the seller name Apple derives from the enrolment, and the mismatch is correct rather than an oversight to tidy up. No `©` — Apple renders it, and typing one gives two. The year is when the rights were obtained. Editable at any time, including after release. |
-| Content rights | **No third-party content** | The question targets media the app streams or displays under licence. The paint data is openly licensed (MIT) reference data that the app derives its own values from, and the credit is in the description regardless. |
+| Copyright | `2026 Musashi Ryu` | The **rights holder**, which here is a person and not the account: the rights are held personally and Future Fox is only the publishing account. So this deliberately does *not* match the seller name Apple derives from the enrollment, and the mismatch is correct rather than an oversight to tidy up. No `©` — Apple renders it, and typing one gives two. The year is when the rights were obtained. Editable at any time, including after release. |
+| Content rights | **No third-party content** | The question targets media the app streams or displays under license. The paint data is openly licensed (MIT) reference data that the app derives its own values from, and the credit is in the description regardless. |
 | Age rating | **4+** | Every question in the questionnaire answers "None". No violence, no unrestricted web access — the only outbound links are fixed URLs handed to Safari. |
 | Price | **Free** | |
 | In-app purchases | **None** | No StoreKit integration exists. |
@@ -237,7 +237,7 @@ answers typed into App Store Connect is a question you get asked during review.
 | Tracking, as Apple defines it? | No | No advertising identifier, no data shared with a data broker, no cross-app linkage. The app never presents an App Tracking Transparency prompt because it has nothing to ask for. |
 | Data linked to the user? | N/A | Nothing collected, so nothing to link. |
 
-**On the catalogue request.** One HTTPS `GET` for a public file goes to
+**On the catalog request.** One HTTPS `GET` for a public file goes to
 `raw.githubusercontent.com` at launch. GitHub's servers see an IP address, as
 any HTTP request does. That is not developer collection under either store's
 definition — we neither receive nor store it — and it carries no user data. It
@@ -263,7 +263,7 @@ collecting anything.
 
 Submission `7fce4ac9-c042-4e78-8187-a3397c78dd81`, 14 August 2026, came back
 under **Guideline 2.1 — Information Needed**. Not a bug report and not a
-judgement about the app: Apple asked seven questions and requested a screen
+judgment about the app: Apple asked seven questions and requested a screen
 recording, because the Notes field carried three paragraphs where it needed to
 answer all of them.
 
@@ -300,30 +300,30 @@ than here — see "Do not paste this by hand" below the block.
 WHAT THE APP DOES, AND FOR WHOM
 
 Paco is an offline paint-conversion reference for miniature painters -
-hobbyists who paint tabletop miniatures. It ships a catalogue of 2,279 paints
+hobbyists who paint tabletop miniatures. It ships a catalog of 2,279 paints
 from Citadel, Vallejo and The Army Painter and, for each, shows the nearest
-match in the other two brands, ranked by a measured CIE colour distance rather
+match in the other two brands, ranked by a measured CIE color distance rather
 than a guess. Two screens, from the bottom bar: List keeps saved paints and
-searches the catalogue; Collab is a colour laboratory that blends or derives a
-colour and names the closest real paint.
+searches the catalog; Collab is a color laboratory that blends or derives a
+color and names the closest real paint.
 
 ACCESS - NO LOGIN, NOTHING GATED
 
 No account, sign-in, demo credentials or sample files. Everything is available
 on first launch and works offline; the app can be reviewed end to end in
-aeroplane mode. It opens with no lists, so step 1 creates one.
+airplane mode. It opens with no lists, so step 1 creates one.
 
 LIST
 
 1. Tap "+ New" in the tab bar. Give the list a name, an emblem and a banner
-   colour, then create it.
-2. Tap the gold "+", bottom right, to open the catalogue.
+   color, then create it.
+2. Tap the gold "+", bottom right, to open the catalog.
 3. Search by name ("Abaddon") or brand ("Vallejo"), or filter to one brand.
    Each result shows a swatch, brand, category and hex, plus its closest
    equivalents in the other two brands, each with a delta score.
 4. Tap the gold "+" on a result to add it; it then reads IN LIST.
-5. Tap a paint in the list to reopen the catalogue anchored on it, ordered by
-   colour; tap any equivalent tile to jump to that paint.
+5. Tap a paint in the list to reopen the catalog anchored on it, ordered by
+   color; tap any equivalent tile to jump to that paint.
 
 COLLAB
 
@@ -338,14 +338,14 @@ EXTERNAL SERVICES
 
 One, and it is optional. At launch the app makes three anonymous HTTPS GET
 requests to raw.githubusercontent.com for the public, MIT-licensed paint tables
-at github.com/Arcturus5404/miniature-paints, refreshing the bundled catalogue
+at github.com/Arcturus5404/miniature-paints, refreshing the bundled catalog
 between releases. No user data, identifiers or cookies are sent; if they fail,
-the bundled catalogue is used and nothing observable changes.
+the bundled catalog is used and nothing observable changes.
 
 Nothing else: no server of our own, no authentication, analytics, crash
 reporting, advertising SDK, AI or ML service, payment processor, or third-party
 data collection. Runtime dependencies are React, Zustand, Fuse.js and
-Capacitor. All colour maths runs on the device.
+Capacitor. All color math runs on the device.
 
 PERMISSIONS
 
@@ -367,12 +367,12 @@ nothing to report or block.
 
 REGIONAL DIFFERENCES
 
-None. Identical catalogue, features and content in every region: no geo-gating,
+None. Identical catalog, features and content in every region: no geo-gating,
 no regional pricing (free everywhere). English (U.K.) only.
 
 REGULATED INDUSTRY AND THIRD-PARTY MATERIAL
 
-Neither applies. The colour data derives from the openly licensed (MIT) public
+Neither applies. The color data derives from the openly licensed (MIT) public
 database credited above and in the app. The three brands are named only as a
 nominative reference to the ranges the app converts between; Paco is not
 affiliated with, endorsed by or sponsored by Games Workshop, Acrylicos Vallejo
@@ -408,7 +408,7 @@ over-length field through.
 ### The screen recording
 
 Apple wants it captured on a physical device on the latest OS, starting from
-launch. iOS Screen Recording (Settings → Control Centre → Screen Recording) is
+launch. iOS Screen Recording (Settings → Control Center → Screen Recording) is
 the tool.
 
 **It writes a `.MOV`, not an `.mp4`.** An earlier version of this line said
@@ -436,14 +436,14 @@ find out on the submission that has already been returned once.
 Before starting the capture:
 
 - **Focus on.** A notification banner landing mid-flow means recording all
-  ninety seconds again. Aeroplane mode, required below for its own reasons,
+  ninety seconds again. Airplane mode, required below for its own reasons,
   stops most of them but not all.
 - **Microphone off.** Long-press the record button to confirm. It defaults off
   and stays on once it has ever been switched on.
-- **Trim the Control Centre swipe** off the front afterwards, in Photos.
+- **Trim the Control Center swipe** off the front afterwards, in Photos.
 
 The status bar is captured, which is wanted here: it is what visibly proves
-aeroplane mode is on.
+airplane mode is on.
 
 **Record the build that is actually under review.** A recording of a newer
 local build is a description of an app Apple does not have, and the differences
@@ -453,19 +453,19 @@ are exactly what a reviewer is looking at.
 Apple asked for the typical path through them. In order, roughly 90 to 120
 seconds at a pace that can be read:
 
-1. **Create a new list** — name, emblem, banner colour. It is also the app's
+1. **Create a new list** — name, emblem, banner color. It is also the app's
    genuine first-run state, so the recording starts where a real user does
    rather than in a populated app that has to be explained.
 2. **Add a paint to it** — search, read the equivalents, tap the gold "+" and
    watch the result turn to IN LIST.
-3. **Mix two colours** — the Mixing tab, both slots filled, the Mix Preview
+3. **Mix two colors** — the Mixing tab, both slots filled, the Mix Preview
    strip resolving each step to a real paint.
-4. **Match one colour** — the Matching tab, a base paint, complementary,
+4. **Match one color** — the Matching tab, a base paint, complementary,
    highlight and shade under Color Theory.
 
 Two conditions on the recording rather than steps in it:
 
-- **Aeroplane mode on before launch.** It demonstrates the central claim in one
+- **Airplane mode on before launch.** It demonstrates the central claim in one
   gesture, and removes any question about what the network request is doing.
 - **Search something with a near-miss**, so a delta score is visibly doing work
   rather than reading 0.00 on an exact match.
@@ -531,8 +531,8 @@ iPhone. Older display sizes are only worth uploading to show a genuinely
 different layout, and there is not one here.
 
 **One shot per section of the description**, since 1.2.0: the list, the
-catalogue with its equivalents, and the Color Lab's two halves. Before that all
+catalog with its equivalents, and the Color Lab's two halves. Before that all
 four were List screens. That matters more here than on Play — this listing is
 attached to a submission already returned once for an incomplete account of
-what the app is, and four pictures of a list under a description of a colour
+what the app is, and four pictures of a list under a description of a color
 laboratory is the same failure in a second medium.
