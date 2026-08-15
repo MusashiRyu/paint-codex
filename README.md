@@ -156,10 +156,17 @@ Both halves moved together in retro 035, which is the only way that switch is
 safe to make — American copy under a listing that declares itself British is the
 same inconsistency, only visible to users.
 
-**Not yet converted:** comments in `src/` and `tools/`, roughly 300 of them.
-They reach nobody and the diff would be large, so they are being left to be
-corrected in passing rather than swept. The rule above still governs anything
-newly written.
+`src/` and `tools/` were swept in the same session — 340 replacements across 82
+files, comments and identifiers alike. `documentation/` and this file are
+excluded from any such sweep by hand, because their Language sections *quote*
+the British forms: a pass over them turns "`colour` → `color`" into "`color` →
+`color`" and the sentence stops meaning anything.
+
+Two ordering traps, if it is ever run again. `catalogue(s?)` ahead of
+`catalogued` leaves `catalogd`, and `centre(s?)` ahead of `centred` leaves
+`centerd` — longest form first. And `grey` has to be matched case-sensitively
+so `Administratum Grey` survives, with `battlegrey` and `administratum-grey`
+skipped by line, since those are a paint name and two paint ids.
 
 ## Fonts
 

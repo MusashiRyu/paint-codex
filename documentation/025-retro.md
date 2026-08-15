@@ -140,7 +140,7 @@ own fix and taking it would trade release-only breakage for a few hundred KB.
 - **The build went to testers before the hardware check, not after.** Deliberate
   — the fourteen-day clock only runs on the closed track, so starting it was
   worth more than the ordering. The check then passed on all five points, but
-  that was luck confirming a judgement call rather than the judgement being
+  that was luck confirming a judgment call rather than the judgment being
   safe. A failure on the links would have meant a new dependency and a corrected
   Data safety answer with the build already distributed.
 

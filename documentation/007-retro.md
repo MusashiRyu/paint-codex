@@ -91,7 +91,7 @@ the value reaches new shells only.
 
 ## Decisions taken, not fixed
 
-Recorded here because they were judgement calls rather than oversights:
+Recorded here because they were judgment calls rather than oversights:
 
 - **Android release signing** — deferred until we are ready to ship.
 - **Markdown export on Android** — left as is; dormant while the feature flag
