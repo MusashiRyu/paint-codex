@@ -24,9 +24,23 @@ first build from merged `master` and carried the Color Lab (retro 031), the
 status bar overlap and portrait lock (retro 030), and the blank sheet when
 opening a paint's equivalents (retro 033).
 
-**1.2.3 (`versionCode` 7) is the one to upload, to both stores.** It carries
-the zoom fix (036) plus the reworked tile-jump landing (039, which replaced
-038's mechanism entirely — retro 039 has the account).
+**1.2.3 (`versionCode` 7) was uploaded to both stores on 2026-08-15.** It
+carried the zoom fix (036) plus the reworked tile-jump landing (039, which
+replaced 038's mechanism entirely — retro 039 has the account), and both were
+confirmed on the iPhone against it.
+
+**1.2.3 (`versionCode` 8) is the one to upload now.** Same `versionName`, one
+higher build number: it carries the soft-keyboard fix from retro 040, which is
+a manifest attribute and nothing else. The number moves and the name does not
+because the *name* is what users and the store listing mean by a release, and
+nothing user-facing changed for the store's purposes — while `versionCode`
+must increase on every upload or Play rejects the file. This is the first
+Android-only fix the project has shipped; every release before it was an iOS
+fix that Android carried.
+
+Keeping the two stores' numbers pinned means iOS build 8 is spent on this bump
+as well, whether or not a workflow ever archives it. That is the cost of one
+number to bump, and it is the arrangement `appVersion.test.ts` enforces.
 
 **How the stores briefly diverged on 2026-08-15, and how 1.2.3 reconverges
 them.** The day spent three numbers in an afternoon, and for a few hours the
@@ -36,7 +50,8 @@ two stores genuinely disagreed about what "1.2.2" meant:
 | --- | --- | --- |
 | 5 | never uploaded (superseded same day) | 1.2.1, uploaded **twice** — the duplicate fails processing; the email is ignorable |
 | 6 | **1.2.2 with the superseded 038 fix** — uploaded before 039 replaced it | reported as a 1.2.1 build 6 in the console; no workflow log accounts for it, so treat 6 as spent |
-| 7 | 1.2.3, this build | 1.2.3, from the next workflow run |
+| 7 | 1.2.3, uploaded 2026-08-15 | 1.2.3, uploaded 2026-08-15 |
+| 8 | **1.2.3 again, with the keyboard fix — this build** | reserved by the pin; unused unless a workflow runs |
 
 The rule that resolves it: a number either store has *accepted* is spent
 everywhere, whatever it contains — reusing it would put two different binaries
@@ -56,9 +71,12 @@ for. The 1.2.3 block in `store/listing.md` says so plainly rather than
 inventing a benefit.
 
 The `.aab` is signed with the `PACO-UPL` upload key, and the matching release
-APK is built for the hardware smoke test — though neither fix it carries can be
-observed on Android hardware. Both were confirmed on the iPhone 15 Pro Max
-against 1.2.3 on 2026-08-15, which closed the last of the unverified-fix items.
+APK is built for the hardware smoke test. For `versionCode` 8 that smoke test
+finally has something Android-visible to look at: open search on a phone below
+Android 15 and type. See the soft-keyboard item in
+[OPEN-ITEMS.md](./OPEN-ITEMS.md) for what confirms it. The two fixes in
+`versionCode` 7 were iOS-only and were confirmed on the iPhone 15 Pro Max on
+2026-08-15, which closed the last of the unverified-fix items.
 
 **The listing did not change this time.** The screenshots are the ones uploaded
 with 1.2.0 and need no re-upload; only the release-notes block is new.

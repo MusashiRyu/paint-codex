@@ -177,6 +177,19 @@ As before, Android is unaffected and this release changes nothing you will
 notice. Both stores ship the same version number.
 ```
 
+**Release notes 1.2.3, `versionCode` 8** (500 char limit) — for the re-upload of
+1.2.3 carrying the keyboard fix
+
+```
+Fixed: on older Android phones, opening the keyboard could leave most of the
+screen black until you closed it again. Search behaves the same as it does on
+newer phones now.
+```
+
+The first release notes here that Android users can actually check. The
+`versionName` is unchanged because the release is the same one; only the build
+number moves, which is the number Play requires to increase.
+
 Play keeps release notes per language and per release, so each version keeps its
 own block here rather than overwriting the last. Reuse the 1.0.0 wording for a
 first release on any track.
