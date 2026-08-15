@@ -14,12 +14,29 @@ content answers are all filled in, so the one-time setup below is history
 rather than instructions — it is kept because a second app, or a Console
 redesign, makes it worth having.
 
-**1.1.0 (`versionCode` 2) was built on 2026-08-11 and is waiting to be
-uploaded.** It carries the equivalents work from retros 021–026: the IN LIST
-badge on equivalent tiles, and a paint's row opening its own equivalents. The
-`.aab` is signed and verified; the matching release APK is built for the
-hardware smoke test. Nothing else about the listing changed, so this is step 6
-onward only.
+**1.1.0 (`versionCode` 2) was built on 2026-08-11 and never uploaded.** It
+carries the equivalents work from retros 021–026. `versionCode` 3 was cut from
+the same `versionName` for the App Store, which rejected it before review
+reached the app. Both are superseded; neither is worth uploading now.
+
+**1.2.0 (`versionCode` 4) was built on 2026-08-15 and is the one to upload.**
+It is the first build from merged `master` and carries everything the two
+stores have been waiting on:
+
+- **The Color Lab** (retro 031) — a second screen, and the reason for the minor
+  bump rather than a patch one.
+- **The status bar overlap and the portrait lock** (retro 030), neither of
+  which is in any build either store currently holds.
+- **The blank sheet when opening a paint's equivalents** (retro 033).
+
+The `.aab` is signed and `jarsigner`-verified as `CN=Paco, O=Musashi, C=NL`;
+`aapt2 dump badging` confirms `versionCode='4' versionName='1.2.0'` in the
+matching release APK, which is built for the hardware smoke test.
+
+**The listing changed this time**, so this is not step 6 onward. The four
+screenshots per store were all List screens and are now one per section of the
+description, and both files carry a 1.2.0 release-notes block. Re-upload the
+screenshot set with the release.
 
 The package name registration is **done** — confirmed 2026-08-10, with the app
 signing key's fingerprint already attached to `com.musashi.paco`. Earlier

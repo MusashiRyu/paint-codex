@@ -100,33 +100,6 @@ The hardware smoke test is done — all five checks in release-checklist step 5
 passed on the 1.0.0 release APK on 2026-08-10, including the About sheet's
 outbound links, which had never been proven on a device before.
 
-### 11. Both stores show one screen out of two
-**Raised:** 031 · **Now blocking, via item 12**
-
-> The release that carries this is the App Store resubmission, so "release-time
-> work" has arrived. The reviewer will be reading the description and the
-> screenshots against a build that has Collab in it, having already rejected
-> this app once for an incomplete account of what it is. A listing that
-> describes a colour laboratory and shows four pictures of a list is exactly the
-> kind of mismatch that earns a second look.
-
-Collab shipped in 031 and the descriptions in `store/listing.md` and
-`store/listing-appstore.md` now mention it. Two things trail that and are
-deliberately not done yet, because both belong to whatever release carries the
-feature rather than to the branch that built it:
-
-1. **The screenshots are stale.** `npm run screenshots` captures four per store
-   and every one of them is a List screen. A second screen that the listing
-   describes and the images never show is a worse listing than one that does
-   not mention it. Re-run the generator and decide which four — the mix strip
-   is the most legible single image the app has.
-2. **No release notes.** `APP_VERSION` is still 1.1.0. Whichever version ships
-   this needs a "What's new" block in both files, and `check-listing.mjs`
-   checks the field against its limit once it exists.
-
-Neither is blocked on anything. They are just the wrong side of the line
-between building a feature and shipping one.
-
 ### 12. The App Store submission needs a new build before it can be answered
 **Raised:** 032 · **Blocking the resubmission**
 
@@ -145,21 +118,28 @@ Guideline 2.1 *bugs and crashes* rejection to go with the information one.
 
 So the order is fixed, and it is not the order the email implies:
 
-1. Merge `feat/color-lab`. The resubmission ships Collab, which is why the Notes
-   block and the recording shot list both cover two screens.
-2. Close item 11 — the description on master does not mention Collab, and all
-   four screenshots per store are List screens. Both are now release blockers
-   rather than trailing work, because the listing would otherwise describe an
-   app the images do not show.
-3. Bump `versionCode` / `versionName` in `android/app/build.gradle`.
-4. Run **Actions → iOS release** on master, which then carries both fixes and
-   the new screen.
+1. ~~Merge `feat/color-lab`.~~ **Done 2026-08-15**, fast-forward, `b5f1a22`.
+2. ~~Close item 11.~~ **Done 2026-08-15.** Four screenshots per store, one per
+   section of the description; 1.2.0 release notes in both listing files.
+3. ~~Bump `versionCode` / `versionName`.~~ **Done 2026-08-15**: 1.2.0,
+   `versionCode` 4. The Play `.aab` and the smoke-test APK are built, signed and
+   verified.
+4. **Push master**, then run **Actions → iOS release**. The workflow builds from
+   the pushed commit, so nothing before this point is visible to it. Expect 15
+   to 45 minutes. ← **next**
 5. Attach the new build to the version record.
-6. Record the flow on the iPhone 15 Pro Max against *that* build.
+6. Record the flow on the iPhone 15 Pro Max against *that* build. The shot list
+   has to cover items 10 and 13 as well; that is the same session.
 7. Paste the Notes block, attach the recording, reply.
 
-Steps 1 and 2 are the ones with real work in them. Everything from 3 down is
-mechanical, and step 6 cannot start until 5 has finished processing.
+Everything from 4 down is mechanical, and step 6 cannot start until 5 has
+finished processing.
+
+`CURRENT_PROJECT_VERSION` is 4 and the rejected upload burned 3, so the number
+increases as App Store Connect requires. If step 4's run fails *after* uploading,
+4 is burned too and the next attempt needs 5 — via the workflow's build-number
+override, or by bumping `versionCode` again and shipping a Play version that
+differs from this one by nothing.
 
 Two smaller things to check while in App Store Connect, neither of them
 certainly wrong:
@@ -168,9 +148,12 @@ certainly wrong:
   `1.1.0`.** The version record and the build may have been allowed to disagree.
   Worth looking at, because checklist step 7.1 assumes App Store Connect
   prevents exactly this.
-- **The screenshots predate the safe-area fix**, since they are captured in
-  desktop Chromium where the insets are always zero. They are not wrong, but
-  they are not the new build either.
+- **The screenshots still predate the safe-area fix**, and regenerating them for
+  1.2.0 did not change that: they are captured in desktop Chromium, where the
+  insets are always zero, so no screenshot this repo can produce has ever shown
+  a status bar. They are not wrong, and they are not the new build either. The
+  only way to a screenshot with real insets in it is a device capture, which is
+  the same session as the recording in step 6.
 
 ### 6. `npm audit` reports three moderate advisories, all dev-only
 **Raised:** 017 · **Watch, not fix**
@@ -301,6 +284,7 @@ Prune this section once it stops being useful.
 | iOS app icon and splash were Capacitor's placeholder | 001 | 024 — `npm run icons` writes both from the same source mark |
 | `CapApp-SPM/Package.swift` was committed with Windows path separators, which are invalid Swift escape sequences | 024 | 024 — `tools/ios/fix-spm-paths.mjs` runs after every `cap:sync`, asserted by `iosProject.test.ts` |
 | iOS signing and archive needed a Mac nobody here has — the only one is a 2015 model, permanently below the Xcode 26 floor | 001 | 029 — `ios-release.yml` archives and uploads from a hosted runner; a release is one button from Windows |
+| Both stores showed one screen out of two — four List screenshots per store under a description of a colour laboratory, and no release notes for the version carrying it | 031 | 034 — one shot per section of the description, and a 1.2.0 block in both listing files |
 
 Two items from 003 — "unselect list" and a dark-mode toggle — were deliberate
 removals in the redesign rather than pending work, and are not tracked.
