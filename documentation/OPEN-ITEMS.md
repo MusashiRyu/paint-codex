@@ -31,34 +31,13 @@ title, not by number.
 
 ## Open
 
-The backlog that closed on the iPhone on 2026-08-15 — the safe area, the anchor
-scroll, the zoom lock and the tile-jump landing — is not carried here any more.
-What is left is one Android fix waiting on the phone that reported the bug and
-one question about a store account that was closed too early.
-
-### 18. The soft-keyboard fix is unverified on hardware
-**Raised:** 040 · **Fix shipped in 040, needs the Galaxy S9**
-
-Opening the keyboard on the Galaxy S9 collapsed the web view to a ~34px strip —
-the search sheet's header under the status bar and black for the rest of the
-screen. Every Android below 15 resizes the window for the keyboard *and* gets
-padded for it by Capacitor's `SystemBars` plugin, so the keyboard's height came
-out of the layout twice. `android:windowSoftInputMode="adjustNothing"` stops
-the window resize so the plugin's padding stands alone. Retro 040 has the
-arithmetic and the upstream report.
-
-**The check is the phone, and it is unambiguous:** open search on the S9 and
-type. The sheet should shrink to sit above the keyboard, exactly as it does on
-the S22.
-
-Two outcomes close this. If the sheet resizes, the fix is confirmed. If the
-sheet instead stays full height with the keyboard covering its lower half, the
-black screen is gone but API 29 is not reporting an inset for a window that was
-never resized — the one part of the fix that is inference rather than
-established. That is worth recording rather than re-fixing blind; the search
-field stays visible either way.
-
-Nothing to check on Android 15+ or iOS. Neither one's behaviour changes.
+Every unverified-fix item is now closed. The backlog that closed on the iPhone
+on 2026-08-15 — the safe area, the anchor scroll, the zoom lock and the
+tile-jump landing — is not carried here any more, and the soft-keyboard fix
+closed on the Galaxy S9 on 2026-08-16 with the black screen gone and a
+smaller thing left behind, which is a raised concern below rather than open
+work. What is left here is one question about a store account that was closed
+too early.
 
 ### 8. Does the twelve-tester gate survive an app transfer?
 **Raised:** 025 · **Reopened 2026-08-15 · Play support ticket open, awaiting reply**
@@ -176,6 +155,40 @@ release, in exchange for nothing that reaches a user. Wait for Capacitor to
 bump its own dependency. Re-check with `npm audit --omit=dev` before each
 release — that is the number that matters.
 
+### 19. The keyboard covers the sheet's lower half on Android 10
+**Raised:** 041 · **Left alone — the black screen is gone and the rest is one legacy phone**
+
+The `adjustNothing` fix from 040 landed on the second of the two outcomes that
+item predicted. On the Galaxy S9 the web view no longer collapses — the sheet
+is drawn full height, the app is visible, nothing is black — but it does not
+shrink for the keyboard either, so the keyboard covers its lower half.
+
+**That settles the one part of 040 that was inference.** Below API 30 there are
+no real IME insets, and 040 reasoned that androidx's fallback to the root
+view's *visible* insets would still yield the keyboard's height once the window
+stopped resizing. It does not. With the window frozen the plugin pads by zero
+and nothing adjusts. The mechanism above API 29 is unaffected and was never in
+doubt: API 30+ dispatches IME insets for real whatever the adjust mode, which
+is every Android device newer than this one.
+
+What it costs is bounded and was priced before the fix shipped. The search
+field sits at the top of a `tall` sheet and stays visible, typing works, and
+the results scroll — the lower half of the list is behind the keyboard until it
+is dismissed. That is a worse keyboard on one legacy device, against a black
+screen on every device below Android 15 before it.
+
+**Left alone rather than fixed, for three reasons.** It affects API 29 and
+below only. The only real fix left is `@capacitor/keyboard` plus a CSS
+variable, which 040 rejected as a new dependency and a timing heuristic — the
+timing half of that objection is gone now that nothing resizes underneath it,
+but the dependency half is not, and both store listings answer their privacy
+forms on this app's dependency count. And it is upstream as
+[capacitor#8466](https://github.com/ionic-team/capacitor/issues/8466), where a
+plugin-side fix would cost this repo nothing.
+
+Promote it if an Android 10 device becomes something this app is aimed at, or
+if a second report arrives from a phone that is not the S9.
+
 ### 9. Nothing compiles Swift until a release runs
 **Raised:** 029 · **Deferred on cost, not difficulty**
 
@@ -236,6 +249,7 @@ Prune this section once it stops being useful.
 | The anchor-scroll fix was unverified on WebKit — opening the catalog on a paint showed an empty sheet on iOS | 033 | 037 — confirmed working on the iPhone 15 Pro Max, 2026-08-15. The ~950,000px scroller redesign the item held in reserve is not needed |
 | The zoom lock was unverified on hardware — opening search left the whole app zoomed in and pannable | 036 | 039 — confirmed on the iPhone 15 Pro Max against 1.2.3, 2026-08-15. The `TextField` 16px-floor fallback is not needed |
 | The tile-jump landing was unverified on WebKit — searching, then tapping an equivalent tile, landed among the blacks at the top of the browse order | 038 | 039 — confirmed on the iPhone 15 Pro Max against 1.2.3, 2026-08-15, against all six checks including the late-revert watch and the mid-jump flick. The scroller-extent redesign held in reserve since 033 is **not needed** |
+| The soft-keyboard fix was unverified on hardware — the web view collapsed to a ~34px black strip when the keyboard opened | 040 | 041 — tested on the Galaxy S9 against `versionCode` 8, 2026-08-16. **The black screen is gone.** The API 29 half of the fix was inference and it was wrong: the sheet stays full height and the keyboard covers its lower half. That is 040's own predicted failure mode, priced before it shipped, and it is the raised concern above rather than a reopened fix |
 | Play production access needed twelve testers for fourteen continuous days — carried since 025 as the longest pole to release | 025 | 037 — closed as moot on the organization-account exemption, then **reopened the same day**: the Play Console still shows the requirement. Back in the Open section above. The package-name half of the item was genuinely stale and stays closed: `release-checklist.md` recorded it done on 2026-08-10 and OPEN-ITEMS never caught up |
 | App Store primary language declared English (U.K.) while the copy was American | 035 | 037 — changed to English (U.S.) in App Store Connect, 2026-08-15. The pair item 14 described is now consistent on both halves |
 

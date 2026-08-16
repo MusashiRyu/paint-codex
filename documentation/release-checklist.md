@@ -71,12 +71,15 @@ for. The 1.2.3 block in `store/listing.md` says so plainly rather than
 inventing a benefit.
 
 The `.aab` is signed with the `PACO-UPL` upload key, and the matching release
-APK is built for the hardware smoke test. For `versionCode` 8 that smoke test
-finally has something Android-visible to look at: open search on a phone below
-Android 15 and type. See the soft-keyboard item in
-[OPEN-ITEMS.md](./OPEN-ITEMS.md) for what confirms it. The two fixes in
-`versionCode` 7 were iOS-only and were confirmed on the iPhone 15 Pro Max on
-2026-08-15, which closed the last of the unverified-fix items.
+APK is built for the hardware smoke test. **`versionCode` 8 has had it** — the
+first Android-visible one this project has run — on the Galaxy S9 on
+2026-08-16. The black screen is gone; the sheet is drawn in full and the
+keyboard covers its lower half, because API 29 reports no IME inset once the
+window stops resizing. Retro 041 has the outcome, and the residue is a raised
+concern in [OPEN-ITEMS.md](./OPEN-ITEMS.md) rather than something holding the
+upload. The two fixes in `versionCode` 7 were iOS-only and were confirmed on
+the iPhone 15 Pro Max on 2026-08-15; between them there is no unverified fix
+left in the repo.
 
 **The listing did not change this time.** The screenshots are the ones uploaded
 with 1.2.0 and need no re-upload; only the release-notes block is new.

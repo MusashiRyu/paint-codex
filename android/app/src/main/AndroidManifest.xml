@@ -39,11 +39,16 @@
              Upstream as ionic-team/capacitor#8466.
 
              `adjustNothing` leaves the window alone on every version, so the
-             plugin's padding is the single adjustment everywhere and old and
-             new devices behave alike. The plugin still gets its inset: real on
-             API 30+, where the IME insets are dispatched whatever the adjust
-             mode, and on API 29 derived by androidx from the root view's
-             visible insets, which track the keyboard whatever the mode. -->
+             plugin's padding is the single adjustment everywhere and the web
+             view is the size of the window on all of them.
+
+             The inset reaches the plugin from API 30 up, where IME insets are
+             dispatched whatever the adjust mode — every device newer than the
+             S9. It does not on API 29: there are no real IME insets there, and
+             androidx's fallback to the root view's visible insets reads the
+             window frame that this attribute has just frozen. Tested on the S9
+             (retro 041). The sheet is drawn in full and the keyboard covers its
+             lower half, which is the accepted cost of not being black. -->
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode|navigation|density"
             android:windowSoftInputMode="adjustNothing"
