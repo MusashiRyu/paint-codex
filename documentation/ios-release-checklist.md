@@ -544,7 +544,7 @@ numbering — a few failed uploads in a row will do it — unpin
 
 | Setting | Value | Why |
 | --- | --- | --- |
-| `TARGETED_DEVICE_FAMILY` | `1` | iPhone only. The app is a single-column phone layout and `check-layout.mjs` only asserts phone widths. Restoring iPad makes a 13" screenshot set mandatory and puts a stretched layout in front of a reviewer under Guideline 4.0. Asserted by `iosProject.test.ts`. |
+| `TARGETED_DEVICE_FAMILY` | `1` | iPhone only. The app is a single-column phone layout and `check-layout.mjs` only asserts phone widths. Restoring iPad makes a 13" screenshot set mandatory and puts a stretched layout in front of a reviewer under Guideline 4.0. Asserted by `iosProject.test.ts`. **It does not stop an iPad installing the app** — see below; nothing does. |
 | `IPHONEOS_DEPLOYMENT_TARGET` | `15.0` | Capacitor 8's floor, and what `CapApp-SPM/Package.swift` declares. Raising it drops devices for nothing; lowering it is not possible. |
 | `UIRequiredDeviceCapabilities` | `arm64` | Capacitor's template says `armv7`, which is 32-bit and cannot coexist with an iOS 15 target. |
 | `ITSAppUsesNonExemptEncryption` | `false` | HTTPS-only use is exempt and the app implements no cryptography. Answered in the plist so no upload stops to ask. |
@@ -552,6 +552,32 @@ numbering — a few failed uploads in a row will do it — unpin
 | No `~ipad` orientation key | — | Never read while the device family is `1`. It comes back with iPad support, not before. |
 | Swift Package Manager, not CocoaPods | — | Capacitor's current default. `ios/App/Pods` is gitignored only because the template ships that ignore rule; there is no Podfile. |
 | `PrivacyInfo.xcprivacy` | all four values empty | An explicit "nothing" rather than an absent file. Must agree with the App Privacy answers in App Store Connect. |
+
+### "iPhone only" is not the same as "not on iPad"
+
+Worth stating because the setting's name suggests otherwise, and because it is
+the obvious thing to reach for when the answer to iPad is *not yet*.
+
+`TARGETED_DEVICE_FAMILY = 1` controls how the app is **listed and reviewed**:
+it is not an iPad app, App Store Connect does not demand the 13" screenshot
+set, and the reviewer tests it on a phone. What it does not control is what an
+iPad owner can install. The iPad App Store still surfaces iPhone-only apps
+behind its own filter, and one installed that way runs letterboxed in an
+iPhone-sized window on the iPad's screen.
+
+**There is no switch that prevents that**, in the project or in App Store
+Connect. `UIRequiredDeviceCapabilities` is the only mechanism that gates
+installation at all, and it gates on hardware — there is no "not a tablet"
+capability to declare. `telephony` is the trick that gets suggested; it does
+not work and should not be tried. It would exclude cellular iPads unevenly and
+every iPod-touch-class device with it, and it is a claim that this app needs
+the Core Telephony framework, which it does not. Declaring a capability an app
+does not use is its own rejection.
+
+So the honest position is the one already taken: the app does not *support*
+iPad, does not claim to, and shows nobody an iPad screenshot. An iPad user who
+goes looking gets a scaled phone app, which is the outcome Apple designed and
+not a gap in this configuration.
 
 ---
 
