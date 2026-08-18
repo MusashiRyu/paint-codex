@@ -38,90 +38,75 @@ closed on the Galaxy S9 on 2026-08-16 with the black screen gone and a
 smaller thing left behind, which is a raised concern below rather than open
 work. The App Store release went live on 2026-08-18.
 
-**One item is left, and it is the Play one.** Not a defect and not a decision
-this repo can take — a question about an account, waiting on somebody at
-Google.
+**One item is left, and it is the Play one.** No longer a question — Google
+support answered it on 2026-08-18 and the gate applies. What remains is
+recruiting six more testers and waiting out fourteen days, which is work
+nothing in this repository can do.
 
-### 8. Does the twelve-tester gate survive an app transfer?
-**Raised:** 025 · **Reopened 2026-08-15 · Play support ticket open, awaiting reply**
+### 8. Six more testers, then fourteen continuous days
+**Raised:** 025 · **Answered by Google support 2026-08-18 · Recruitment is the whole remaining task**
 
-Play production access is gated, for personal developer accounts registered
-after 2023-11-13, on a closed test holding **twelve testers opted in for
-fourteen continuous days**. Organization accounts are exempt.
+**The gate survives an app transfer. It is settled, and it applies here.**
+Google support replied to the ticket opened on 2026-08-15: they cannot lift it,
+and the only route around it they offered is republishing the app under a
+**different bundle ID**. That has been declined — see below.
 
-**The history matters and was misrecorded twice.** Paco was published under a
-*personal* developer account, registered in 2026 and therefore subject to the
-rule. It was later moved to the company's organization account by Google's
-**app transfer** process, which is complete; closed-test binaries have shipped
-under the new owner since. That is not the same thing as a converted account —
-Google does not convert accounts, and retro 037's closure and the first version
-of this reopened item both described one.
+**Which question that answers, since this item asked.** The requirement is
+evaluated against **the account of original publication, not the current
+owner.** Support's own workaround is the proof: a *new* app record created
+under the organization account is exempt, while *this* app record is not, and
+the only difference between them is where each was first published. Paco was
+published under a personal account registered in 2026 and moved to the
+company's organization account by app transfer; the transfer moved the app and
+left the obligation attached to it.
 
-**The Play Console still shows the requirement after the transfer.** That is
-the observable this repo said to trust over the rule, and 037 closed the item
-without looking at it.
+So Google's
+[official page](https://support.google.com/googleplay/android-developer/answer/14151465)
+describing the requirement as a property of the *account* is, for transferred
+apps, misleading — and the forum threads titled for this exact symptom were
+right. The console was right too, which is the third time on this item that
+**trusting the observable over the rule** would have got there first. That is
+the lesson worth keeping.
 
-What is established:
+**Rebuilding under a new bundle ID is declined, and this is a decision rather
+than a deferral.** The strongest reason is not the rework, though there is
+plenty — new package name, new upload key, new signing, new listing, new store
+presence, and six testers asked to opt in again to what is visibly a different
+app. It is that `applicationId` is `com.musashi.paco` and so is the **iOS
+bundle ID of a listing that is already live on the App Store**. That identity
+cannot follow a Play rename. Changing it buys a fortnight and pays for it with
+permanent divergence between the two stores, forever, on every document and
+every future release. A fortnight of recruitment is cheaper than that on any
+horizon longer than a fortnight.
 
-- Google's
-  [official page](https://support.google.com/googleplay/android-developer/answer/14151465)
-  gates on "personal developer accounts created after November 13, 2023" and is
-  **silent on app transfers**. It describes the requirement as a property of the
-  *account*, which taken literally would mean an app under an exempt account is
-  exempt.
-- **The community sources conflict**, and neither could be read from this
-  machine — Google's forum renders its thread bodies in JavaScript, so only the
-  titles are retrievable. One is titled
-  [Transfer of App to Business account still requires closed testing!](https://support.google.com/googleplay/android-developer/thread/279206872/transfer-of-app-to-business-account-still-requires-closed-testing),
-  which is somebody in this exact position reporting this exact symptom; another
-  asks for a
-  [waiver for existing apps moved personal → org](https://support.google.com/googleplay/android-developer/thread/409685281/personal-to-org-account-14-day-closed-testing-waiver-for-existing-apps).
-  Titles corroborate the console; they do not report a resolution.
-- Secondary write-ups split. Some say a transferred app inherits the
-  requirement and no waiver is given; others say it should not apply and a
-  persistent display is worth a support ticket. Every one of them sells tester
-  recruitment.
-- **Nothing shipped is blocked.** 1.2.3 released to closed testing without
-  complaint. This gates production only.
+**What is left is arithmetic.** Six testers are opted in. The gate is twelve,
+opted in **continuously for fourteen days**, and the clock does not start until
+the twelfth. So the earliest possible production access is fourteen days after
+the sixth new opt-in, and nothing shipped, uploaded or fixed moves that date.
 
-So it is genuinely unresolved, and the honest summary is that the requirement
-may follow the app rather than the account — which the official page does not
-say and the forum titles suggest.
+Three things make the fortnight go wrong, all of them avoidable:
 
-**Uploading builds does not advance this.** The gate counts twelve testers
-*opted in continuously for fourteen days*; binaries pushed to the closed track
-are not progress toward it. If the opted-in count is below twelve the clock
-reads zero however active the track is. Worth stating because an active track
-feels like progress and is not.
+1. **Recruit a buffer, not exactly six.** The counter resets if the opted-in
+   number drops below twelve, and a reset costs the whole fourteen days rather
+   than the days since the drop. Aim for fifteen or sixteen. The marginal
+   tester is free; the marginal reset is two weeks.
+2. **Opt-in is the counted event, not installation.** A tester who is sent the
+   link, means well and never clicks it counts for nothing. Chase the click
+   specifically, and confirm the count in the console rather than against the
+   list of people who said yes.
+3. **Tell testers not to leave the programme when they lose interest.** The
+   opt-out is one button on the same page as the opt-in, it is the obvious
+   thing to press when someone is done looking, and it is indistinguishable
+   from a reset trigger. Ask them to stay opted in until told otherwise.
 
-Two things to do, in order:
+**Uploading builds is still not progress.** Restated because an active track
+feels like movement and the clock does not count releases.
 
-1. **Release → Production → Create new release.** The authority, over any card
-   on the account home page — that surface carries generic onboarding. Gated
-   means a testing-requirements message and an "apply for production access"
-   flow with a tester counter. Ungated closes this item.
-2. ~~**If gated, open a Play Developer Support ticket**~~ **Done 2026-08-15.**
-   A ticket is open, citing the completed transfer. This is the case the
-   documentation does not cover, so it is a question for the people who can
-   read the account's state rather than one to answer from policy pages.
-
-   When the reply lands, record **which** question it answered: whether the
-   requirement is evaluated against the *current* owner or the account of
-   original publication. A reply that merely restates the policy page answers
-   neither, and is worth pushing back on once — that page is silent on
-   transfers, which is why the ticket exists.
-
-**Start recruiting testers now, in parallel, rather than waiting for the
-answer.** The gate is fourteen *continuous* days behind twelve opted-in
-testers, so a bad answer received in a week costs three weeks, not one. Twelve
-opt-ins standing when the reply arrives cost nothing if the answer is good —
-they are people who wanted the app — and save the whole fortnight if it is
-bad. This is the rare case where hedging is strictly cheaper than deciding.
-
-If it does apply, recruitment is the whole route. Registering yet another
-account is not one: the app is already where it should be, and a third account
-would mean a new package name and re-doing signing, the listing and the store
-presence, to escape a gate that a fortnight of testers clears.
+The tester list is worth attaching as a **Google Group** rather than a raw
+email list if it is not one already: members can then be added and removed
+without touching the track, which matters when the count has to be held above a
+threshold for a fortnight. Countries were widened to worldwide on 2026-08-10,
+so a tester anywhere can install and that is not a hidden blocker.
 
 ---
 

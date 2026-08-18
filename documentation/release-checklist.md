@@ -89,12 +89,13 @@ signing key's fingerprint already attached to `com.musashi.paco`. Earlier
 revisions of this file listed it as an outstanding Draft; it was not, because
 Google now registers package names itself. See step 1.
 
-**Closed testing is clear; production may not be.** 1.2.3 released to closed
+**Closed testing is clear; production is gated.** 1.2.3 released to closed
 testing on 2026-08-15 without complaint. The twelve-testers-for-fourteen-days
-gate on *production* was recorded as resolved the same day and then unresolved
-again within hours, because the Play Console still displays it — see the
-12-testers note in step 0 and the reopened item in
-[OPEN-ITEMS.md](./OPEN-ITEMS.md). Nothing already shipped is affected.
+gate on *production* was recorded as resolved that day, unresolved again within
+hours, and settled against us on 2026-08-18 by Google support: it follows a
+transferred app. Six of the twelve testers are opted in — see the 12-testers
+note in step 0 and the item in [OPEN-ITEMS.md](./OPEN-ITEMS.md). **Nothing
+already shipped is affected**, on either store.
 
 Paste this into Play Console → App content → Privacy policy:
 
@@ -152,43 +153,39 @@ below can start until it clears, so do it first.
 > (Settings → System → Multiple users) and deleting it afterwards keeps the two
 > accounts from ever mixing.
 
-> **The 12-testers rule — and why it does not apply here.** *Personal*
-> developer accounts registered from late 2023 onward must run a **closed test
-> with at least 12 testers opted in for 14 continuous days** before they can
-> even apply for production access. The 14 days do not start until the twelfth
-> tester has opted in, and the counter resets if you drop below twelve.
+> **The 12-testers rule, and it does apply here.** *Personal* developer
+> accounts registered from late 2023 onward must run a **closed test with at
+> least 12 testers opted in for 14 continuous days** before they can even apply
+> for production access. The 14 days do not start until the twelfth tester has
+> opted in, and the counter resets if you drop below twelve.
 >
-> **This account is an organization account, and Google exempts those** — which
-> is true as a rule and was not enough to close the question. An earlier
-> revision of this note said the requirement had been removed, "confirmed
-> 2026-08-15", on the strength of the account type alone. **The Play Console
-> still displayed the requirement afterwards**, so that confirmation was the
-> rule being read, not the console being checked.
+> **Settled 2026-08-18 by Google support: the gate follows the app through a
+> transfer.** It is evaluated against the account of *original publication*,
+> not the current owner. Paco was published under a personal account registered
+> in 2026 and later moved to the company's organization account by app
+> transfer; organization accounts are exempt as a rule, and this app is not,
+> because it did not start there. Support's only offered workaround was
+> republishing under a different bundle ID, which has been declined — the
+> reasoning is in [OPEN-ITEMS.md](./OPEN-ITEMS.md).
 >
-> **What actually happened here was an app transfer, not a converted account.**
-> Google does not convert accounts. Paco was published under a personal account
-> registered in 2026 — squarely inside the rule — and later moved to the
-> company's organization account by the app transfer process. Whether the gate
-> moves with the app is the open question; Google's own page —
+> **This note said the opposite twice, and both times the console was already
+> saying otherwise.** An earlier revision recorded the requirement as removed,
+> "confirmed 2026-08-15", on the strength of the account type alone; a later one
+> softened it to an open question while the Play Console kept displaying the
+> gate. Google's own page —
 > [App testing requirements for new personal developer accounts](https://support.google.com/googleplay/android-developer/answer/14151465)
 > — describes the requirement as a property of the *account* and says nothing
-> about transfers, while the developer forum carries threads titled for exactly
-> this symptom. See the reopened item in
-> [OPEN-ITEMS.md](./OPEN-ITEMS.md) for the full state and the support-ticket
-> route.
+> about transfers, which is what both wrong readings were reading.
 >
-> **Trust the console over the rule.** The observable that settles it is
-> **Release → Production → Create new release**: if production is gated, the
-> page says so and offers an "apply for production access" flow with a tester
-> counter. A card on the account home page is weaker evidence — that surface
-> carries generic onboarding — but it is not nothing. Closed testing is
-> unaffected either way; this gates production only, and **pushing binaries to
-> the closed track is not progress toward it** — the clock counts twelve
-> testers opted in continuously, not releases.
+> **Trust the console over the rule.** Three revisions of this note, and the
+> console was right in every one of them. The observable is **Release →
+> Production → Create new release**: a gated account gets a
+> testing-requirements message and an "apply for production access" flow with a
+> tester counter.
 >
-> Left in place rather than deleted because it is still the first thing to check
-> on any new account, and because a future reader finding the closed track
-> populated deserves to know why it was started.
+> Closed testing is unaffected and always was; this gates **production** only.
+> **Pushing binaries to the closed track is not progress toward it** — the clock
+> counts twelve testers opted in continuously, not releases.
 
 ### 1. Register the package name
 
@@ -356,10 +353,12 @@ Then **Store settings** for category (Art & Design) and contact details, and
 
 ### 6. Closed testing, then production
 
-Closed testing is now a choice rather than a gate — see the 12-testers note in
-step 0. It is still worth running for what it is actually good at, which is
-finding out whether the app works on hardware nobody here owns; it is no longer
-something production waits on.
+**Closed testing is the gate, not a choice** — see the 12-testers note in step
+0, which said the opposite until Google support settled it on 2026-08-18.
+Production waits on twelve testers opted in for fourteen continuous days. It is
+also still good at the thing it is nominally for, which is finding out whether
+the app works on hardware nobody here owns — the black screen in retro 040 came
+from a tester's phone, not from this desk.
 
 **Testing → Closed testing → Create new release.** Upload
 `app-release.aab`, paste the release notes from `listing.md`, add testers.
@@ -381,8 +380,9 @@ The track page has three tabs, and the first release only fills in one of them:
 Click the opt-in link on a real phone before sending it to anyone: a broken
 first impression costs more than the two minutes of checking.
 
-**Production** is **Release → Production → Create new release**, and on this
-account nothing gates it but the review itself.
+**Production** is **Release → Production → Create new release**. On this app
+that page is where the gate shows itself, and it stays shut until the tester
+count and the fourteen days are both satisfied.
 
 ### Automating what comes next
 
