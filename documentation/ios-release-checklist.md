@@ -507,6 +507,27 @@ Review is usually a day or two. A first submission from a new account gets the
 most thorough look the app will ever get, which is the reasoning behind the tip
 link decision in `store/listing-appstore.md` — settle that before submitting.
 
+### 8. Release it
+
+**Approval is not publication.** Having chosen manual release in step 7, an
+approved version sits at **Pending Developer Release** and stays there
+indefinitely. Nothing ships until someone opens the version in App Store
+Connect and presses **Release This Version**. That is the whole step — no
+rebuild, no re-upload, no second review.
+
+The status then moves to *Processing for App Store* and on to *Ready for
+Distribution*. The listing generally appears within a couple of hours, but
+search indexing and the slower regional storefronts can take up to a day; an
+app that is not findable twenty minutes after release is behaving normally.
+Check the App Store URL itself rather than searching for the name, because the
+URL is live before the index is.
+
+Two things only become available once a version has actually shipped:
+**automatic release**, which is a reasonable default for later updates now that
+the listing has been read by human eyes, and **phased release**, which rolls an
+update out over seven days and applies to updates only — never to a first
+release.
+
 ---
 
 ## Every release
