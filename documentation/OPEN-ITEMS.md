@@ -36,8 +36,11 @@ on 2026-08-15 — the safe area, the anchor scroll, the zoom lock and the
 tile-jump landing — is not carried here any more, and the soft-keyboard fix
 closed on the Galaxy S9 on 2026-08-16 with the black screen gone and a
 smaller thing left behind, which is a raised concern below rather than open
-work. What is left here is one question about a store account that was closed
-too early.
+work. The App Store release went live on 2026-08-18.
+
+**One item is left, and it is the Play one.** Not a defect and not a decision
+this repo can take — a question about an account, waiting on somebody at
+Google.
 
 ### 8. Does the twelve-tester gate survive an app transfer?
 **Raised:** 025 · **Reopened 2026-08-15 · Play support ticket open, awaiting reply**

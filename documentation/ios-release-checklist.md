@@ -504,8 +504,7 @@ In App Store Connect, on the version:
 6. Submit.
 
 Review is usually a day or two. A first submission from a new account gets the
-most thorough look the app will ever get, which is the reasoning behind the tip
-link decision in `store/listing-appstore.md` — settle that before submitting.
+most thorough look the app will ever get.
 
 ### 8. Release it
 
